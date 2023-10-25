@@ -20,15 +20,16 @@ const Navbar: React.FC = () => {
               </div>
 
               <div className="hidden sm:flex sm:items-center">
-                <a href="#" className="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">Products</a>
-                <a href="#" className="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">Marketplace</a>
-                <a href="#" className="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">Partners</a>
-                <a href="#" className="text-gray-800 text-sm font-semibold hover:text-purple-600">Pricing</a>
+                <a href="#" className="text-white text-sm font-semibold hover:text-purple-600 mr-4">Home</a>
+                <a href="#" className="text-white text-sm font-semibold hover:text-purple-600 mr-4">About</a>
+                <a href="#" className="text-white text-sm font-semibold hover:text-purple-600 mr-4">Resources</a>
+                <a href="#" className="text-white text-sm font-semibold hover:text-purple-600">Find Tutor </a>
+                <a href="#" className="text-white text-sm font-semibold hover:text-purple-600"> Become Tutor</a>
               </div>
 
               <div className="hidden sm:flex sm:items-center">
-                <a href="#" className="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">Sign in</a>
-                <a href="#" className="text-gray-800 text-sm font-semibold border px-4 py-2 rounded-lg hover:text-purple-600 hover:border-purple-600">Sign up</a>
+                <a href="#" className="text-white text-sm font-semibold hover:text-purple-600 mr-4">Sign in</a>
+                <a href="#" className="text-white text-sm font-semibold border px-4 py-2 rounded-lg hover:text-purple-600 hover:border-purple-600">Sign up</a>
               </div>
 
               <div className="sm:hidden cursor-pointer" onClick={toggleNavbar}>
@@ -39,10 +40,12 @@ const Navbar: React.FC = () => {
             </div>
             <div className={`block sm:hidden bg-3447AE border-t-2 py-2 ${open ? '' : 'hidden'}`}>
               <div className="flex flex-col">
-                <a href="#" className="text-white text-sm font-semibold hover:text-purple-600 mb-1">Products</a>
-                <a href="#" className="text-white text-sm font-semibold hover:text-purple-600 mb-1">Marketplace</a>
-                <a href="#" className="text-white text-sm font-semibold hover:text-purple-600 mb-1">Partners</a>
-                <a href="#" className="text-white text-sm font-semibold hover:text-purple-600 mb-1">Pricing</a>
+                <a href="#" className="text-white text-sm font-semibold hover:text-purple-600 mb-1">Home</a>
+                <a href="#" className="text-white text-sm font-semibold hover:text-purple-600 mb-1">About</a>
+                <a href="#" className="text-white text-sm font-semibold hover:text-purple-600 mb-1">Resource</a>
+                <a href="#" className="text-white text-sm font-semibold hover:text-purple-600 mb-1">Find Tutor</a>
+                <a href="#" className="text-white text-sm font-semibold hover:text-purple-600 mb-1">Become Tutor</a>
+
                 <div className="flex justify-between items-center border-t-2 pt-2">
                   <a href="#" className="text-white text-sm font-semibold hover:text-purple-600 mr-4">Sign in</a>
                   <a href="#" className="text-white text-sm font-semibold border px-4 py-1 rounded-lg hover:text-purple-600 hover:border-purple-600">Sign up</a>

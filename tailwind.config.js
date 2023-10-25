@@ -10,6 +10,9 @@ export default {
         '3447AE': '#3447AE',
         "9ED0F5":"#9ED0F5"
       },
+      width: {
+        '128':"32rem"
+      }
     },
   },
  

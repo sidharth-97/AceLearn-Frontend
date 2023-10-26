@@ -33,7 +33,7 @@ const TutorOnBoard: React.FC = () => {
     }
   };
 
-  const progress = totalSteps > 0 ? (step / (totalSteps - 1)) * 100 : 100; // If no steps, set progress to 100
+  const progress = totalSteps > 0 ? (step / (totalSteps - 1)) * 100 : 100; 
 
   return (
     <section className="bg-[#F4F7FF] py-20 lg:py-[120px] flex flex-row">
@@ -69,6 +69,7 @@ const TutorOnBoard: React.FC = () => {
               {pageDisplay()}
               <div className="footer mt-4">
                 <button
+                  type='button'
                   disabled={step === 0}
                   onClick={() => {
                     setStep((current) => current - 1);
@@ -78,6 +79,7 @@ const TutorOnBoard: React.FC = () => {
                   Prev
                 </button>
                 <button
+                  type='button'
                   onClick={handleNext}
                   className="px-4 py-2 bg-blue-500 text-white rounded-md"
                 >

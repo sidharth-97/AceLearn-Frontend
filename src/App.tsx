@@ -8,6 +8,7 @@ import Navbar from "./components/common/navbar";
 // import TutorLogin from "./pages/tutor/TutorLogin";
 import TutorSignup from "./pages/tutor/TutorSignup";
 import OTPInput from "./components/common/OTPInput";
+import TutorOnBoard from "./components/tutors/tutorOnBoard";
 
 function App() {
   const element = useRoutes([
@@ -39,6 +40,7 @@ function App() {
           element: <Signin user={"tutor"} />,
         },
         { path: "signup", element: <TutorSignup /> },
+        {path:"tutoronboarding",element:<TutorOnBoard/>}
       ],
     },
   ]);

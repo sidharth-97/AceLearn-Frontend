@@ -4,10 +4,18 @@ import image2 from '../../assets/online-lecturing-distance-learning-opportunitie
 import Step1 from './step1';
 import Step2 from './step2';
 import Step3 from './step3';
+import OTPInput from '../common/OTPInput';
+import { signup, signupFinal } from '../../api/tutorapi';
 
 const TutorOnBoard: React.FC = () => {
   const [step, setStep] = useState(0);
-  const [title, setTitle] = useState(['Step1', 'Step2', 'Step3']);
+  const [title, setTitle] = useState(['Step1', 'Step2', 'Step3','Step4']);
+  const [otp, setOTP] = useState("")
+  
+  function handleOTPChange(otp: string): void {
+    setOTP(otp);
+  }
+
   const [formData, setFormData] = useState({
     subject: '',
     rate: '',
@@ -20,18 +28,22 @@ const TutorOnBoard: React.FC = () => {
       return <Step1 formData={formData} setFormData={setFormData} />;
     } else if (step === 1) {
       return <Step2 formData={formData} setFormData={setFormData} />;
-    } else {
+    } else if(step==2) {
       return <Step3 formData={formData} setFormData={setFormData} />;
+    } else {
+      return <OTPInput onOTPChange={handleOTPChange}/>
     }
   };
 
-  const handleNext = () => {
+  const handleNext = async() => {
     if (step === totalSteps - 1) {
-      alert('Form submitted');
+      const result =await signupFinal({...formData,otp:otp})
+      alert('Form submitted'+result);
     } else {
       setStep((current) => current + 1);
     }
   };
+
 
   const progress = totalSteps > 0 ? (step / (totalSteps - 1)) * 100 : 100; 
 

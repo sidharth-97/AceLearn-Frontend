@@ -1,5 +1,8 @@
 import React,{useState} from "react";
 import image from "../../assets/WhatsApp Image 2023-10-13 at 1.41.45 PM.jpeg";
+import { signup } from "../../api/tutorapi";
+import { formToJSON } from "axios";
+import { useNavigate } from "react-router-dom";
 
 interface register {
   type: string;
@@ -14,10 +17,22 @@ const TutorSignup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [Cpassword, setCpassword] = useState("");
+  
+  const navigate=useNavigate()
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const formData = {
+      username: name,
+      email,
+      password,
+    }
+    const result = await signup(formData)
+    if (result?.status) {
+      navigate("/tutor/tutorOnboarding")
+    }
   };
+
 
   return (
     <section className="bg-[#F4F7FF] py-20 lg:py-[120px] flex flex-row">

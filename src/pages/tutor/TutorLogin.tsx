@@ -1,13 +1,13 @@
 import React from "react";
 import image from "../../assets/WhatsApp Image 2023-10-13 at 1.41.45 PM.jpeg";
 
-interface register {
+interface login {
   type: string;
   placeholder: string;
   name: string;
 }
 
-const Signup = () => {
+const TutorLogin = () => {
   return (
     <section className="bg-[#F4F7FF] py-20 lg:py-[120px] flex flex-row">
       <div className="container mx-auto">
@@ -22,30 +22,24 @@ const Signup = () => {
                   />
                 </a>
               </div>
-                          <form>
-                          <InputBox type="text" name="name" placeholder="Your full name" />
+              <form>
                 <InputBox type="email" name="email" placeholder="Email" />
                 <InputBox
                   type="password"
                   name="password"
                   placeholder="Password"
                 />
-                 <InputBox
-                  type="password"
-                  name="Cpassword"
-                  placeholder="Confirm Password"
-                />
-                              
+
                 <div className="mb-10">
                   <button
                     className="border-primary w-full cursor-pointer rounded-md border bg-3447AE py-3 px-5 text-base text-white transition hover:bg-opacity-90"
                     type="submit"
                   >
-                    Sign Up
+                    Sign In
                   </button>
                 </div>
               </form>
-              <p className="mb-6 text-base text-[#adadad]">Register With</p>
+              <p className="mb-6 text-base text-[#adadad]">Connect With</p>
               <ul className="-mx-2 mb-12 flex justify-between">
                 <li className="w-full px-2">
                   <a
@@ -351,9 +345,9 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default TutorLogin;
 
-const InputBox: React.FC<register> = ({ type, placeholder, name }) => {
+const InputBox: React.FC<login> = ({ type, placeholder, name }) => {
   return (
     <div className="mb-6">
       <input

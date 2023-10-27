@@ -1,21 +1,24 @@
 import React,{useState} from "react";
 import image from "../../assets/WhatsApp Image 2023-10-13 at 1.41.45 PM.jpeg";
 
-interface login {
+interface register {
   type: string;
   placeholder: string;
   name: string;
-  value?: string
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  value?: string;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
 }
 
-interface propstype {
-  user: string;
-}
+const TutorSignup = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [Cpassword, setCpassword] = useState("");
 
-const Signin: React.FC<propstype> = ({ user }) => {
-  const [email, setEmail] = useState("")
-  const [password,setPassword]=useState("")
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
+
   return (
     <section className="bg-[#F4F7FF] py-20 lg:py-[120px] flex flex-row">
       <div className="container mx-auto">
@@ -23,16 +26,41 @@ const Signin: React.FC<propstype> = ({ user }) => {
           <div className="relative mx-auto max-w-[925px] overflow-hidden rounded-lg bg-white py-16 px-10 text-center sm:px-12 md:px-[60px] flex flex-row">
             <div className="w-full lg:w-1/2">
               <div className="mb-10 text-center md:mb-16">
-                <h1 className="text-2xl font-bold">{user=="student"?"Student Login":"Tutor Login"}</h1>
+                <a href="/#" className="mx-auto inline-block max-w-[160px]">
+                  <img
+                    src="https://cdn.tailgrids.com/2.0/image/assets/images/logo/logo.svg"
+                    alt="logo"
+                  />
+                </a>
               </div>
-              <form>
-                <InputBox type="email" name="email" placeholder="Email" value={email} onChange={(e)=>setEmail(e.target.value)}/>
+              <form onSubmit={handleSubmit}>
+                <InputBox
+                  type="text"
+                  name="name"
+                  placeholder="Your full name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+                <InputBox
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
                 <InputBox
                   type="password"
                   name="password"
                   placeholder="Password"
                   value={password}
-                  onChange={(e)=>setPassword(e.target.value)}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <InputBox
+                  type="password"
+                  name="Cpassword"
+                  placeholder="Confirm Password"
+                  value={Cpassword}
+                  onChange={(e) => setCpassword(e.target.value)}
                 />
 
                 <div className="mb-10">
@@ -40,11 +68,11 @@ const Signin: React.FC<propstype> = ({ user }) => {
                     className="border-primary w-full cursor-pointer rounded-md border bg-3447AE py-3 px-5 text-base text-white transition hover:bg-opacity-90"
                     type="submit"
                   >
-                    Sign In
+                    Sign Up
                   </button>
                 </div>
               </form>
-              <p className="mb-6 text-base text-[#adadad]">Connect With</p>
+              <p className="mb-6 text-base text-[#adadad]">Register With</p>
               <ul className="-mx-2 mb-12 flex justify-between">
                 <li className="w-full px-2">
                   <a
@@ -351,9 +379,15 @@ const Signin: React.FC<propstype> = ({ user }) => {
   );
 };
 
-export default Signin;
+export default TutorSignup;
 
-const InputBox: React.FC<login> = ({ type, placeholder, name,value,onChange }) => {
+const InputBox: React.FC<register> = ({
+  type,
+  placeholder,
+  name,
+  value,
+  onChange,
+}) => {
   return (
     <div className="mb-6">
       <input

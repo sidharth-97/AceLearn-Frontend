@@ -1,21 +1,59 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import image from "../../assets/WhatsApp Image 2023-10-13 at 1.41.45 PM.jpeg";
+import { signup, signupfinal } from "../../api/studentapi";
+import OTPInput from "../../components/common/OTPInput";
+import { useNavigate } from "react-router-dom";
 
-interface login {
+interface register {
   type: string;
   placeholder: string;
   name: string;
-  value?: string
+  value?: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-interface propstype {
-  user: string;
+const Signup = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [Cpassword, setCpassword] = useState("");
+  const[completed,setCompleted]=useState(false)
+  const [otp, setOTP] = useState<string>(''); 
+
+  const navigate=useNavigate()
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = {
+      username: name,
+      email,
+      password,
+    };
+
+
+    const result = await signup(formData);
+    if (result?.status) {
+      setCompleted(true)
+    }
+  };
+
+  function handleOTPChange(otp: string): void {
+    setOTP(otp);
+  }
+
+ async function handleFinalSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    const formData = {
+      username: name,
+      email,
+      password,
+      otp
+   };
+   
+   const result=await signupfinal(formData)
+   if(result?.status==200)navigate('/students/login')
 }
 
-const Signin: React.FC<propstype> = ({ user }) => {
-  const [email, setEmail] = useState("")
-  const [password,setPassword]=useState("")
   return (
     <section className="bg-[#F4F7FF] py-20 lg:py-[120px] flex flex-row">
       <div className="container mx-auto">
@@ -23,16 +61,41 @@ const Signin: React.FC<propstype> = ({ user }) => {
           <div className="relative mx-auto max-w-[925px] overflow-hidden rounded-lg bg-white py-16 px-10 text-center sm:px-12 md:px-[60px] flex flex-row">
             <div className="w-full lg:w-1/2">
               <div className="mb-10 text-center md:mb-16">
-                <h1 className="text-2xl font-bold">{user=="student"?"Student Login":"Tutor Login"}</h1>
+                <a href="/#" className="mx-auto inline-block max-w-[160px]">
+                  <img
+                    src="https://cdn.tailgrids.com/2.0/image/assets/images/logo/logo.svg"
+                    alt="logo"
+                  />
+                </a>
               </div>
-              <form>
-                <InputBox type="email" name="email" placeholder="Email" value={email} onChange={(e)=>setEmail(e.target.value)}/>
+              {completed?(<form onSubmit={handleFinalSubmit}><OTPInput onOTPChange={handleOTPChange} /></form>):(<form onSubmit={handleSubmit}>
+                <InputBox
+                  type="text"
+                  name="name"
+                  placeholder="Your full name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+                <InputBox
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
                 <InputBox
                   type="password"
                   name="password"
                   placeholder="Password"
                   value={password}
-                  onChange={(e)=>setPassword(e.target.value)}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <InputBox
+                  type="password"
+                  name="Cpassword"
+                  placeholder="Confirm Password"
+                  value={Cpassword}
+                  onChange={(e) => setCpassword(e.target.value)}
                 />
 
                 <div className="mb-10">
@@ -40,11 +103,11 @@ const Signin: React.FC<propstype> = ({ user }) => {
                     className="border-primary w-full cursor-pointer rounded-md border bg-3447AE py-3 px-5 text-base text-white transition hover:bg-opacity-90"
                     type="submit"
                   >
-                    Sign In
+                    Sign Up
                   </button>
                 </div>
-              </form>
-              <p className="mb-6 text-base text-[#adadad]">Connect With</p>
+              </form>)}
+            {!completed&&( <><p className="mb-6 text-base text-[#adadad]">Register With</p>
               <ul className="-mx-2 mb-12 flex justify-between">
                 <li className="w-full px-2">
                   <a
@@ -103,11 +166,11 @@ const Signin: React.FC<propstype> = ({ user }) => {
                     </svg>
                   </a>
                 </li>
-              </ul>
+                </ul>
               <a
                 href="/#"
                 className="mb-2 inline-block text-base text-[#adadad] hover:text-primary hover:underline"
-              >
+                >
                 Forget Password?
               </a>
               <p className="text-base text-[#adadad]">
@@ -116,6 +179,7 @@ const Signin: React.FC<propstype> = ({ user }) => {
                   Sign Up
                 </a>
               </p>
+                </>)}
               <div>
                 <span className="absolute top-1 right-1">
                   <svg
@@ -351,9 +415,15 @@ const Signin: React.FC<propstype> = ({ user }) => {
   );
 };
 
-export default Signin;
+export default Signup;
 
-const InputBox: React.FC<login> = ({ type, placeholder, name,value,onChange }) => {
+const InputBox: React.FC<register> = ({
+  type,
+  placeholder,
+  name,
+  value,
+  onChange,
+}) => {
   return (
     <div className="mb-6">
       <input

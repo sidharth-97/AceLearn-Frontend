@@ -1,6 +1,6 @@
 import Navbar from "../../components/common/navbar";
 import Signin from "../../components/common/Signin";
-import Signup from "../../components/common/Signup";
+import Signup from "./Signup";
 import homeIcon from "../../assets/svgexport-1.svg";
 import icon1 from "../../assets/26220662-623f-4697-bd29-b27e3ef7f513hth.jpg";
 import icon2 from "../../assets/26220662-623f-4697-bd29-b27e3ef7f513fdf.jpg";

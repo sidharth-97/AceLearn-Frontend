@@ -20,3 +20,13 @@ export const signupfinal = async (student: Object)=>{
         
     }
 }
+
+export const login = async (loginData: Object)=>{
+    try {
+        const response = await Api.post(studentRoutes.login, loginData) 
+        return response
+    } catch (error) {
+        console.log(error);
+        
+    }
+}

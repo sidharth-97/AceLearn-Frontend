@@ -19,3 +19,13 @@ export const signupFinal = async (tutor: Object)=>{
         
     }
 }
+
+export const Tutorlogin = async (data: Object)=>{
+    try {
+        const response = await Api.post(tutorRoutes.login, data)
+        return response
+    } catch (error) {
+        console.log(error);
+        
+    }
+}

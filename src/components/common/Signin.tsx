@@ -1,5 +1,9 @@
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
 import image from "../../assets/WhatsApp Image 2023-10-13 at 1.41.45 PM.jpeg";
+import { login } from "../../api/studentapi";
+import {Tutorlogin} from "../../api/tutorapi"
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 interface login {
   type: string;
@@ -15,7 +19,36 @@ interface propstype {
 
 const Signin: React.FC<propstype> = ({ user }) => {
   const [email, setEmail] = useState("")
-  const [password,setPassword]=useState("")
+  const [password, setPassword] = useState("")
+  
+  const navigate=useNavigate()
+
+  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const formData={
+      email,password
+    }
+    if (user == 'student') {
+      let response = await login(formData)
+      console.log(response);
+      
+      if (response?.status == 200) {
+        toast.success("Login successfull")
+        navigate('/home')
+      } else if (!response) {
+        toast.error("Email/password wrong!!")
+      }
+    } else {
+      let response = await Tutorlogin(formData)
+      if (response?.status == 200) {
+        toast.success("Login successfull")
+        navigate('/totor/dashboard')
+      } else if (!response) {
+        toast.error("Email/password wrong!!")
+      }
+    }
+}
+
   return (
     <section className="bg-[#F4F7FF] py-20 lg:py-[120px] flex flex-row">
       <div className="container mx-auto">
@@ -25,7 +58,7 @@ const Signin: React.FC<propstype> = ({ user }) => {
               <div className="mb-10 text-center md:mb-16">
                 <h1 className="text-2xl font-bold">{user=="student"?"Student Login":"Tutor Login"}</h1>
               </div>
-              <form>
+              <form onSubmit={handleSubmit}>
                 <InputBox type="email" name="email" placeholder="Email" value={email} onChange={(e)=>setEmail(e.target.value)}/>
                 <InputBox
                   type="password"

@@ -8,7 +8,7 @@ import { IconContext } from 'react-icons';
 import avatar from "../../assets/26220662-623f-4697-bd29-b27e3ef7f513fdf.jpg";
 import logo from '../../assets/image-removebg-preview.png'
 
-function Navbar() {
+function StudentSidebar() {
   const [sidebar, setSidebar] = useState(false);
 
   const showSidebar = () => setSidebar(!sidebar);
@@ -59,4 +59,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default StudentSidebar;

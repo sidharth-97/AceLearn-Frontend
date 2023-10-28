@@ -4,6 +4,9 @@ import { login } from "../../api/studentapi";
 import {Tutorlogin} from "../../api/tutorapi"
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import {useDispatch,useSelector} from 'react-redux'
+import { loginStudent } from "../../slice/authSlice";
+import {loginTutor} from "../../slice/authSlice"
 
 interface login {
   type: string;
@@ -21,7 +24,8 @@ const Signin: React.FC<propstype> = ({ user }) => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   
-  const navigate=useNavigate()
+  const navigate = useNavigate()
+  const dispatch=useDispatch()
 
   const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -34,13 +38,15 @@ const Signin: React.FC<propstype> = ({ user }) => {
       
       if (response?.status == 200) {
         toast.success("Login successfull")
-        navigate('/home')
+        dispatch(loginStudent(response.data))
+        navigate('/')
       } else if (!response) {
         toast.error("Email/password wrong!!")
       }
     } else {
       let response = await Tutorlogin(formData)
       if (response?.status == 200) {
+        dispatch(loginTutor(response.data))
         toast.success("Login successfull")
         navigate('/totor/dashboard')
       } else if (!response) {

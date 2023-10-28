@@ -1,9 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = {
-    isStudent: localStorage.getItem('student') ?? null,
-    isTutor:localStorage.getItem('tutor')??null
-}
+const isStudentStored = localStorage.getItem('student');
+const isStudent = isStudentStored ? JSON.parse(isStudentStored) : null;
+
+const isTutorStored = localStorage.getItem('tutor')
+const isTutor=isTutorStored?JSON.parse(isTutorStored):null
+
+const initialState: { isStudent: boolean | null, isTutor: boolean | null } = {
+  isStudent: isStudent,
+  isTutor: isTutor
+};
+
 
 const authSlice = createSlice({
     name: 'auth',
@@ -11,7 +18,7 @@ const authSlice = createSlice({
     reducers: {
         loginStudent: (state, action) => {
             state.isStudent = action.payload
-            localStorage.setItem('student',action.payload)
+            localStorage.setItem('student',JSON.stringify(action.payload))
         },
         logoutstudent: (state, action) => {
             state.isStudent = null
@@ -28,6 +35,6 @@ const authSlice = createSlice({
     }
 })
 
-export const { loginStudent, logoutstudent } = authSlice.actions
+export const { loginStudent, logoutstudent,loginTutor,logoutTutor } = authSlice.actions
 
 export default authSlice.reducer 

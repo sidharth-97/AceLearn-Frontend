@@ -2,12 +2,15 @@ import React from "react";
 import avatar from "../../assets/26220662-623f-4697-bd29-b27e3ef7f513fdf.jpg";
 import icon from "../../assets/online-lecturing-distance-learning-opportunities-self-education-internet-courses-e-learning-technologies_335657-3279.svg";
 import classes from "../../assets/Screenshot 2023-10-24 212602.png";
-import StudentSidebar from "../../components/students/UserSidebar";
+import StudentSidebar from "../../components/students/StudentSidebar";
+import Navbar from "../../components/common/navbar";
 
 const StudentProfile = () => {
   return (
-    <div>
-      <StudentSidebar />
+    <>
+      <Navbar/>
+    <div className="flex flex-row">
+   <StudentSidebar/>
    
       <div className="p-5 lg:p-14 xl:p-16 bg-9ED0F5">
         <div className="flex bg-white justify-center items-center p-5">
@@ -61,7 +64,7 @@ const StudentProfile = () => {
         </div>
       </div>
       </div>
-
+      </>
   );
 };
 

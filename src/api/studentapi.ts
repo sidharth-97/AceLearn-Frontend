@@ -30,3 +30,12 @@ export const login = async (loginData: Object)=>{
         
     }
 }
+
+export const editStudent = async (data: Object)=>{
+    try {
+        const response = await Api.post(studentRoutes.editProfile, data)
+        return response
+    } catch (error) {
+        console.log(error)
+    }
+}

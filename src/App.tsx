@@ -9,6 +9,10 @@ import Navbar from "./components/common/navbar";
 import TutorSignup from "./pages/tutor/TutorSignup";
 import OTPInput from "./components/common/OTPInput";
 import TutorOnBoard from "./components/tutors/tutorOnBoard";
+import TutorProfile from "./pages/tutor/TutorProfile";
+import StudentProfile from "./pages/student/StudentProfile";
+import EditStudentProfile from "./pages/student/edit-profile";
+import PrivateRoute from "./components/common/PrivateRoute";
 
 function App() {
   const element = useRoutes([
@@ -28,8 +32,17 @@ function App() {
             </>
           ),
         },
-        { path: "login", element: <Signin user={"student"} />},
+        { path: "login", element: <Signin user={"student"} /> },
         { path: "signup", element: <Signup /> },
+        { path: "dashboard", element: <StudentProfile /> },
+        {
+          path: "profile",
+          element: (
+            <PrivateRoute>
+              <EditStudentProfile />
+            </PrivateRoute>
+          ),
+        },
       ],
     },
     {
@@ -40,7 +53,8 @@ function App() {
           element: <Signin user={"tutor"} />,
         },
         { path: "signup", element: <TutorSignup /> },
-        {path:"tutoronboarding",element:<TutorOnBoard/>}
+        { path: "tutoronboarding", element: <TutorOnBoard /> },
+        { path: "tutordashboard", element: <TutorProfile /> },
       ],
     },
   ]);

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import logo from "../../assets/image-removebg-preview.png";
+import { Link } from "react-router-dom";
 
 const Navbar: React.FC = () => {
   const [open, setOpen] = useState(false);
@@ -15,61 +16,41 @@ const Navbar: React.FC = () => {
           <div className="container mx-auto px-8">
             <div className="flex items-center justify-between py-4">
               <div>
-                <img
+               <Link to={'/'}> <img
                   className="w-32 h-13 text-purple-600"
                   src={logo}
-                  alt="sdd"
-                />
+                  alt="logo"
+                /></Link>
               </div>
 
               <div className="hidden sm:flex sm:items-center">
-                <a
-                  href="#"
-                  className="text-white text-sm font-semibold relative inline-block mr-4 group"
-                >
-                  Home
-                  <span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
-                </a>
-                <a
-                  href="#"
-                  className="text-white text-sm font-semibold hover:text-purple-600 mr-4"
-                >
-                  About
-                </a>
-                <a
-                  href="#"
-                  className="text-white text-sm font-semibold hover:text-purple-600 mr-4"
-                >
-                  Resources
-                </a>
-                <a
-                  href="#"
-                  className="text-white text-sm font-semibold hover:text-purple-600"
-                >
-                  Find Tutor{" "}
-                </a>
-                <a
-                  href="#"
-                  className="text-white text-sm font-semibold hover:text-purple-600"
-                >
-                  {" "}
-                  Become Tutor
-                </a>
+                <Link to={"/"} className="text-white text-sm font-semibold relative inline-block mr-4 group">
+                  Home<span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
+                </Link>
+                <Link to={"/"} className="text-white text-sm font-semibold relative inline-block mr-4 group">
+                  About<span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
+                </Link>
+                <Link to={"/"} className="text-white text-sm font-semibold relative inline-block mr-4 group">
+                  Resource<span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
+                </Link>
+                <Link to={"/"} className="text-white text-sm font-semibold relative inline-block mr-4 group">
+                  Find Tutor<span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
+                </Link>
+                <Link to={"/tutor/signup"} className="text-white text-sm font-semibold relative inline-block mr-4 group">
+                  Become Tutor<span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
+                </Link>
               </div>
 
               <div className="hidden sm:flex sm:items-center">
-                <a
-                  href="#"
-                  className="text-white text-sm font-semibold hover:text-purple-600 mr-4"
-                >
-                  Sign in
-                </a>
-                <a
-                  href="#"
+              <Link to={"/student"} className="text-white text-sm font-semibold relative inline-block mr-4 group">
+                  Sign in<span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
+                </Link>
+                <Link
+                  to={'/student/signup'}
                   className="text-white text-sm font-semibold border px-4 py-2 rounded-lg hover:text-purple-600 hover:border-purple-600"
                 >
                   Sign up
-                </a>
+                </Link>
               </div>
 
               <div className="sm:hidden cursor-pointer" onClick={toggleNavbar}>

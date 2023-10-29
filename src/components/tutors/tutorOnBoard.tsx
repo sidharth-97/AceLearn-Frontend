@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import image1 from '../../assets/WhatsApp Image 2023-10-13 at 1.41.45 PM.jpeg';
 import image2 from '../../assets/online-lecturing-distance-learning-opportunities-self-education-internet-courses-e-learning-technologies_335657-3279.svg'
 import Step1 from './step1';
@@ -6,12 +6,15 @@ import Step2 from './step2';
 import Step3 from './step3';
 import OTPInput from '../common/OTPInput';
 import { signup, signupFinal } from '../../api/tutorapi';
+import { useNavigate } from 'react-router-dom';
 
 const TutorOnBoard: React.FC = () => {
   const [step, setStep] = useState(0);
   const [title, setTitle] = useState(['Step1', 'Step2', 'Step3','Step4']);
   const [otp, setOTP] = useState("")
   
+  const navigate=useNavigate()
+
   function handleOTPChange(otp: string): void {
     setOTP(otp);
   }
@@ -37,13 +40,25 @@ const TutorOnBoard: React.FC = () => {
 
   const handleNext = async() => {
     if (step === totalSteps - 1) {
-      const result =await signupFinal({...formData,otp:otp})
-      alert('Form submitted'+result);
+      const result = await signupFinal({ ...formData, otp: otp })
+      if (result?.status == 200) {
+        navigate('/tutor/dashboard')
+      }
     } else {
       setStep((current) => current + 1);
     }
   };
 
+  useEffect(() => {
+    const isSignupStepCompleted = localStorage.getItem('signupStepCompleted');
+
+    if (!isSignupStepCompleted) {
+    navigate('/tutor/signup')
+    }
+    return () => {
+      localStorage.removeItem('signupStepCompleted')
+    }
+  }, []);
 
   const progress = totalSteps > 0 ? (step / (totalSteps - 1)) * 100 : 100; 
 

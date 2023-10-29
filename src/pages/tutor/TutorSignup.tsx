@@ -2,7 +2,8 @@ import React,{useState} from "react";
 import image from "../../assets/WhatsApp Image 2023-10-13 at 1.41.45 PM.jpeg";
 import { signup } from "../../api/tutorapi";
 import { formToJSON } from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Navbar from "../../components/common/navbar";
 
 interface register {
   type: string;
@@ -23,30 +24,28 @@ const TutorSignup = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = {
-      username: name,
+      name,
       email,
       password,
     }
     const result = await signup(formData)
     if (result?.status) {
+      localStorage.setItem('signupStepCompleted', 'true');
       navigate("/tutor/tutorOnboarding")
     }
   };
 
-
   return (
+    <>
+      <Navbar/>
     <section className="bg-[#F4F7FF] py-20 lg:py-[120px] flex flex-row">
       <div className="container mx-auto">
         <div className="w-full px-4">
           <div className="relative mx-auto max-w-[925px] overflow-hidden rounded-lg bg-white py-16 px-10 text-center sm:px-12 md:px-[60px] flex flex-row">
             <div className="w-full lg:w-1/2">
               <div className="mb-10 text-center md:mb-16">
-                <a href="/#" className="mx-auto inline-block max-w-[160px]">
-                  <img
-                    src="https://cdn.tailgrids.com/2.0/image/assets/images/logo/logo.svg"
-                    alt="logo"
-                  />
-                </a>
+              <h1 className="text-2xl font-bold">Join as Tutor</h1>
+
               </div>
               <form onSubmit={handleSubmit}>
                 <InputBox
@@ -147,17 +146,15 @@ const TutorSignup = () => {
                   </a>
                 </li>
               </ul>
-              <a
+              {/* <a
                 href="/#"
                 className="mb-2 inline-block text-base text-[#adadad] hover:text-primary hover:underline"
               >
                 Forget Password?
-              </a>
+              </a> */}
               <p className="text-base text-[#adadad]">
-                Not a member yet?
-                <a href="/#" className="text-primary hover:underline">
-                  Sign Up
-                </a>
+                Already a member?
+                  <Link to={'/tutor/login'} className="text-primary hover:underline">Login</Link>
               </p>
               <div>
                 <span className="absolute top-1 right-1">
@@ -390,7 +387,8 @@ const TutorSignup = () => {
           </div>
         </div>
       </div>
-    </section>
+      </section>
+      </>
   );
 };
 

@@ -14,11 +14,13 @@ import StudentProfile from "./pages/student/StudentProfile";
 import EditStudentProfile from "./pages/student/edit-profile";
 import PrivateRoute from "./components/common/PrivateRoute";
 import EditTutorProfile from "./pages/tutor/EditProfile";
+import ErrorPage from "./pages/ErrorPage";
 
 function App() {
   const element = useRoutes([
     {
       path: "/",
+      errorElement:<ErrorPage/>,
       element: <Home />,
     },
     {
@@ -58,7 +60,10 @@ function App() {
         { path: "tutordashboard", element: <TutorProfile /> },
         {path:"edit-profile",element:<EditTutorProfile/>}
       ],
-    },
+    }, {
+      path: "*",
+      element:(<><Navbar/><ErrorPage/></>)
+    }
   ]);
 
   return element;

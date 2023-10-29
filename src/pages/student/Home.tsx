@@ -1,19 +1,16 @@
 import Navbar from "../../components/common/navbar";
-import Signin from "../../components/common/Signin";
-import Signup from "./Signup";
 import homeIcon from "../../assets/svgexport-1.svg";
 import icon1 from "../../assets/26220662-623f-4697-bd29-b27e3ef7f513hth.jpg";
 import icon2 from "../../assets/26220662-623f-4697-bd29-b27e3ef7f513fdf.jpg";
 import icon3 from "../../assets/6fsfsdfsf.jpg";
 import icon4 from "../../assets/26220662-623f-4697-bd29-b27e3ef7f513.jpg";
 import icon5 from "../../assets/clipart2614421.png"
+import { Link } from "react-router-dom";
 
 function Home() {
   return (
     <>
       <Navbar />
-      {/* <Signin/> */}
-      {/* <Signup/> */}
       <div className="min-h-screen flex flex-col md:flex-row justify-center items-center bg-9ED0F5">
         <div className="max-w-[50%] text-center md:text-left p-4 md:p-0">
           <h1 className="text-6xl">Take the first step</h1>
@@ -27,7 +24,7 @@ function Home() {
             type="button"
             className="mt-3 inline-block rounded bg-3447AE px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-3447AE-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-3447AE-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-3447AE-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
           >
-            Join as Studnet
+            <Link to={'/student/signup'}>Join as Student</Link>
           </button>
         </div>
         <div>

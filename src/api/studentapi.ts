@@ -39,3 +39,12 @@ export const editStudent = async (data: Object)=>{
         console.log(error)
     }
 }
+
+export const studentDetails = async (id: string)=>{
+    try {
+        const response = await Api.get(`${studentRoutes.studentDetails}/${id}`)
+        return response
+    } catch (error) {
+        console.log(error);
+    }
+}

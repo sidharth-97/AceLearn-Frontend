@@ -1,25 +1,31 @@
 import React, { useState } from "react";
-import { editStudent } from "../../api/studentapi";
 import { useSelector } from "react-redux";
+import { TutorEditProfile } from "../../api/tutorapi";
 
 
-const EditProfile = ({data}) => {
+const EditProfileComponent = ({data}) => {
   const [name, setName] = useState(data.username)
   const [password, Setpassword] = useState("")
   const [cpassword,SetCpassword]=useState("")
-  const [mobile, Setmobile] = useState(data.mobile)
+    const [mobile, Setmobile] = useState(data.mobile)
+    const [bio, Setbio] = useState(data.bio)
+    const [fees, Setfees] = useState(data.fees)
+    const [subject,Setsubject]=useState(data.subject)
 
-  const { isStudent }  = useSelector((state:any) => state.auth)
+  const { isTutor }  = useSelector((state:any) => state.auth)
   
   const handleSubmit = async (e:React.FormEvent) => {
     e.preventDefault()
     const formData = {
-      username: name,
+      name,
       password,
       mobile,
-      email: isStudent.email
+        email: isTutor.email,
+        bio,
+        fees,
+      subject
     }
-    const response = await editStudent(formData)
+    const response = await TutorEditProfile(formData)
     console.log(response);
     
   }
@@ -64,6 +70,57 @@ const EditProfile = ({data}) => {
                 value={mobile}
                 onChange={(e)=>Setmobile(e.target.value)}
                   name="mobile"
+                  className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                />
+              </div>
+                  </div>
+                  <div className="mt-4">
+              <label
+                htmlFor="subject"
+                className="block text-sm font-medium text-gray-700 undefined"
+              >
+                Subject
+              </label>
+              <div className="flex flex-col items-start">
+                <input
+                type="subject"
+                value={subject}
+                onChange={(e)=>Setsubject(e.target.value)}
+                  name="subject"
+                  className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                />
+              </div>
+                  </div>
+                  <div className="mt-4">
+              <label
+                htmlFor="fees"
+                className="block text-sm font-medium text-gray-700 undefined"
+              >
+                Fees
+              </label>
+              <div className="flex flex-col items-start">
+                <input
+                type="fees"
+                value={fees}
+                onChange={(e)=>Setfees(e.target.value)}
+                  name="fees"
+                  className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                />
+              </div>
+                  </div>
+                  <div className="mt-4">
+              <label
+                htmlFor="bio"
+                className="block text-sm font-medium text-gray-700 undefined"
+              >
+                Bio
+              </label>
+              <div className="flex flex-col items-start">
+                <input
+                type="bio"
+                value={bio}
+                onChange={(e)=>Setbio(e.target.value)}
+                  name="bio"
                   className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 />
               </div>
@@ -116,4 +173,4 @@ const EditProfile = ({data}) => {
   );
 };
 
-export default EditProfile;
+export default EditProfileComponent;

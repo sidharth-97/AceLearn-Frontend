@@ -29,3 +29,23 @@ export const Tutorlogin = async (data: Object)=>{
         
     }
 }
+
+export const TutorDetails = async (id: string) => {
+
+    try {
+        const response = await Api.post(tutorRoutes.tutorDetails, id)
+        return response
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
+export const TutorEditProfile = async (data: Object) => {
+    try {
+        const response = await Api.post(tutorRoutes.editProfile, data)
+        return response
+    } catch (error) {
+        console.log(error); 
+    }
+}

@@ -13,6 +13,7 @@ import TutorProfile from "./pages/tutor/TutorProfile";
 import StudentProfile from "./pages/student/StudentProfile";
 import EditStudentProfile from "./pages/student/edit-profile";
 import PrivateRoute from "./components/common/PrivateRoute";
+import EditTutorProfile from "./pages/tutor/EditProfile";
 
 function App() {
   const element = useRoutes([
@@ -55,6 +56,7 @@ function App() {
         { path: "signup", element: <TutorSignup /> },
         { path: "tutoronboarding", element: <TutorOnBoard /> },
         { path: "tutordashboard", element: <TutorProfile /> },
+        {path:"edit-profile",element:<EditTutorProfile/>}
       ],
     },
   ]);

@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 const PrivateRoute = ({ children }) => {
   const { isStudent} = useSelector((state:any) => state.auth);
 
-  return isStudent ? children : <Navigate to="/student/login" replace />;
+  return isStudent ? children : <Navigate to="/studentlogin" replace />;
 };
 
 export default PrivateRoute;

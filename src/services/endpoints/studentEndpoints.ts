@@ -4,7 +4,8 @@ const studentRoutes = {
     signup: "/students/signup",
     verifyOTP: "/students/signupfinal",
     logout:"/students/logout",
-    editProfile:"/students/edit-profile"
+    editProfile: "/students/edit-profile",
+    studentDetails:"/students/student-details"
 }
 
 export default studentRoutes

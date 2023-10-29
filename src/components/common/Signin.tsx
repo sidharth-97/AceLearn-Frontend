@@ -7,6 +7,8 @@ import { toast } from "react-toastify";
 import {useDispatch,useSelector} from 'react-redux'
 import { loginStudent } from "../../slice/authSlice";
 import {loginTutor} from "../../slice/authSlice"
+import ColorToggleButton from "../UI/ToggleButton";
+import { Link } from "react-router-dom";
 
 interface login {
   type: string;
@@ -25,7 +27,19 @@ const Signin: React.FC<propstype> = ({ user }) => {
   const [password, setPassword] = useState("")
   
   const navigate = useNavigate()
-  const dispatch=useDispatch()
+  const dispatch = useDispatch()
+  
+  const { isStudent } = useSelector((state: any) => state.auth)
+  const {isTutor}=useSelector((state:any)=>state.auth)
+
+  useEffect(() => {
+    if (isStudent) {
+      navigate('/student/dashboard')
+    } else if(isTutor) {
+      navigate('/tutor/dashboard')
+    }
+  }, [])
+  
 
   const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -53,7 +67,8 @@ const Signin: React.FC<propstype> = ({ user }) => {
         toast.error("Email/password wrong!!")
       }
     }
-}
+  }
+  
 
   return (
     <section className="bg-[#F4F7FF] py-20 lg:py-[120px] flex flex-row">
@@ -62,7 +77,8 @@ const Signin: React.FC<propstype> = ({ user }) => {
           <div className="relative mx-auto max-w-[925px] overflow-hidden rounded-lg bg-white py-16 px-10 text-center sm:px-12 md:px-[60px] flex flex-row">
             <div className="w-full lg:w-1/2">
               <div className="mb-10 text-center md:mb-16">
-                <h1 className="text-2xl font-bold">{user=="student"?"Student Login":"Tutor Login"}</h1>
+                {/* <h1 className="text-2xl font-bold">{user=="student"?"Student Login":"Tutor Login"}</h1> */}
+                <ColorToggleButton/>
               </div>
               <form onSubmit={handleSubmit}>
                 <InputBox type="email" name="email" placeholder="Email" value={email} onChange={(e)=>setEmail(e.target.value)}/>
@@ -151,9 +167,7 @@ const Signin: React.FC<propstype> = ({ user }) => {
               </a>
               <p className="text-base text-[#adadad]">
                 Not a member yet?
-                <a href="/#" className="text-primary hover:underline">
-                  Sign Up
-                </a>
+                <Link to={user=='student'?'/student/signup':'/tutor/signup'} className="text-primary hover:underline">Sign Up</Link>
               </p>
               <div>
                 <span className="absolute top-1 right-1">

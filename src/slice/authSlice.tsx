@@ -4,11 +4,15 @@ const isStudentStored = localStorage.getItem('student');
 const isStudent = isStudentStored ? JSON.parse(isStudentStored) : null;
 
 const isTutorStored = localStorage.getItem('tutor')
-const isTutor=isTutorStored?JSON.parse(isTutorStored):null
+const isTutor = isTutorStored ? JSON.parse(isTutorStored) : null
 
-const initialState: { isStudent: boolean | null, isTutor: boolean | null } = {
+const isAdminStored = localStorage.getItem("admin")
+const isAdmin=isAdminStored?JSON.parse(isAdminStored):null
+
+const initialState: { isStudent: boolean | null, isTutor: boolean | null ,isAdmin:boolean|null } = {
   isStudent: isStudent,
-  isTutor: isTutor
+    isTutor: isTutor,
+  isAdmin:isAdmin
 };
 
 
@@ -31,10 +35,18 @@ const authSlice = createSlice({
         logoutTutor: (state, action) => {
             state.isTutor = null
             localStorage.removeItem('tutor')
+        },
+        loginAdmin: (state, action) => {
+            state.isAdmin = action.payload
+            localStorage.setItem('admin', JSON.stringify(action.payload))
+        },
+        logoutAdmin: (state, action) => {
+            state.isAdmin = null
+            localStorage.removeItem('admin')
         }
     }
 })
 
-export const { loginStudent, logoutstudent,loginTutor,logoutTutor } = authSlice.actions
+export const { loginStudent, logoutstudent,loginTutor,logoutTutor,loginAdmin,logoutAdmin } = authSlice.actions
 
 export default authSlice.reducer 

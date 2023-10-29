@@ -15,6 +15,7 @@ import EditTutorProfile from "./pages/tutor/EditProfile";
 import ErrorPage from "./pages/ErrorPage";
 import AdminDash from "./pages/admin/adminDash";
 import AdminLogin from "./pages/admin/AdminLogin";
+import StudentManagement from "./pages/admin/StudentManagement";
 
 function App() {
   const element = useRoutes([
@@ -43,7 +44,8 @@ function App() {
       path: "/admin",
       children: [
         { path: "login", element: <AdminLogin /> },
-        {path:"dashboard",element:<AdminDash/>}
+        { path: "dashboard", element: <AdminDash /> },
+        {path:'students',element:<StudentManagement/>}
       ]
     },
     { path: "*", element: <><Navbar /><ErrorPage /></> },

@@ -1,6 +1,59 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
+import { blockStudent, getUserData } from "../../api/adminapi";
+import { useQuery } from "react-query";
 
 const Students = () => {
+  const [userData, setUserData] = useState([]);
+
+  const {
+    data: studentData,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryFn: () => getUserData(),
+  });
+
+  useEffect(() => {
+    if (studentData?.data) {
+      setUserData(studentData.data);
+      console.log(userData);
+      
+    }
+  }, [studentData,userData]);
+
+
+  if (isLoading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div className="loader"></div>
+      </div>
+    );
+  }
+
+  const blockstudent = async (id: string) => {
+    const response = await blockStudent(id);
+    if (response?.status==200) {
+      setUserData((prevData) =>
+      prevData.map((user) => {
+        if (user._id === id) {
+          // If the user is found by their ID, change block to unblock or vice versa
+          return { ...user, isBlocked: !user.isBlocked }; // Assuming 'block' is a boolean property
+        }
+        return user; // Return the user as it is if it's not the one you want to update
+      })
+    );
+    
+    }
+  };
+  
+
   return (
     <div className="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 pr-10 lg:px-8">
       <div className="align-middle rounded-tl-lg rounded-tr-lg inline-block w-full py-4 overflow-hidden bg-white shadow-lg px-12">
@@ -61,86 +114,66 @@ const Students = () => {
                 Status
               </th>
               <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
-                Created At
+                Action
               </th>
               <th className="px-6 py-3 border-b-2 border-gray-300"></th>
             </tr>
           </thead>
           <tbody className="bg-white">
-            <tr>
-              <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-                <div className="flex items-center">
-                  <div>
-                    <div className="text-sm leading-5 text-gray-800">#1</div>
+            {
+              userData.length&&userData.map((students,index) => (
+                <tr id={`${index}`}>
+                <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
+                  <div className="flex items-center">
+                    <div>
+                      <div className="text-sm leading-5 text-gray-800">#1</div>
+                    </div>
                   </div>
-                </div>
-              </td>
-              <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-                <div className="text-sm leading-5 text-blue-900">
-                  Damilare Anjorin
-                </div>
-              </td>
-              <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-                damilareanjorin1@gmail.com
-              </td>
-              <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-                +2348106420637
-              </td>
-              <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-                <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                  <span
-                    aria-hidden
-                    className="absolute inset-0 bg-green-200 opacity-50 rounded-full"
-                  ></span>
-                  <span className="relative text-xs">Blocked</span>
-                </span>
-              </td>
-              <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-blue-900 text-sm leading-5">
-                September 12
-              </td>
-              <td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5">
-                <button className="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none">
-                  View Details
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-                <div className="flex items-center">
-                  <div>
-                    <div className="text-sm leading-5 text-gray-800">#1</div>
+                </td>
+                <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
+                  <div className="text-sm leading-5 text-blue-900">
+               {students.username}
                   </div>
-                </div>
-              </td>
-              <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-                <div className="text-sm leading-5 text-blue-900">
-                  Damilare Anjorin
-                </div>
-              </td>
-              <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-                damilareanjorin1@gmail.com
-              </td>
-              <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-                +2348106420637
-              </td>
-              <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-                <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                  <span
-                    aria-hidden
-                    className="absolute inset-0 bg-red-200 opacity-50 rounded-full"
-                  ></span>
-                  <span className="relative text-xs">Unblocked</span>
-                </span>
-              </td>
-              <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-blue-900 text-sm leading-5">
-                September 12
-              </td>
-              <td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5">
-                <button className="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none">
-                  View Details
-                </button>
-              </td>
-            </tr>
+                </td>
+                <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
+                  {students.email}
+                </td>
+                <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
+                  +2348106420637
+                </td>
+                  {
+                    students.isBlocked ? <>
+                     <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
+                  <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                    <span
+                      aria-hidden
+                      className="absolute inset-0 bg-green-200 opacity-50 rounded-full"
+                    ></span>
+                    <span className="relative text-xs">Blocked</span>
+                  </span>
+                      </td></> : <>
+                      <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
+                  <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                    <span
+                      aria-hidden
+                      className="absolute inset-0 bg-green-200 opacity-50 rounded-full"
+                    ></span>
+                    <span className="relative text-xs">Not Blocked</span>
+                  </span>
+                </td></>
+               }
+                <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-blue-900 text-sm leading-5">
+                  <button className="bg-red-300 rounded p-2" onClick={()=>blockstudent(students._id)}>{students.isBlocked?"Unblock":"Block"}</button>
+                </td>
+                <td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5">
+                  <button className="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none">
+                    View Details
+                  </button>
+                </td>
+              </tr>
+              ))
+           }
+            
           </tbody>
         </table>
         <div className="sm:flex-1 sm:flex sm:items-center sm:justify-between mt-4 work-sans">

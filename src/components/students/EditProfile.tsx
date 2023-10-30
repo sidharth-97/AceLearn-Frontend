@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { editStudent } from "../../api/studentapi";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 
 const EditProfile = ({data}) => {
@@ -20,8 +21,11 @@ const EditProfile = ({data}) => {
       email: isStudent.email
     }
     const response = await editStudent(formData)
-    console.log(response);
     
+  }
+  const navigate=useNavigate()
+  if (!data) {
+    navigate('/student/login')
   }
   
   return (

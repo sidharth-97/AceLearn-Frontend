@@ -56,7 +56,7 @@ const TutorOnBoard: React.FC = () => {
     navigate('/tutor/signup')
     }
     return () => {
-      localStorage.removeItem('signupStepCompleted')
+      // localStorage.removeItem('signupStepCompleted')
     }
   }, []);
 

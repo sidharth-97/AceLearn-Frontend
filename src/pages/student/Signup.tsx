@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import image from "../../assets/WhatsApp Image 2023-10-13 at 1.41.45 PM.jpeg";
 import { signup, signupfinal } from "../../api/studentapi";
 import OTPInput from "../../components/common/OTPInput";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../../components/common/navbar";
 import { toast } from "react-toastify";
-
+import { GoogleLogin,CredentialResponse } from "@react-oauth/google";
+import {jwtDecode} from 'jwt-decode';
 
 interface register {
   type: string;
@@ -22,11 +23,27 @@ const Signup = () => {
   const [Cpassword, setCpassword] = useState("");
   const[completed,setCompleted]=useState(false)
   const [otp, setOTP] = useState<string>(''); 
+  const[error,setError]=useState(false)
 
   const navigate=useNavigate()
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const trimmedName = name.trim();
+  const trimmedEmail = email.trim();
+  const trimmedPassword = password.trim();
+  const trimmedConfirmPassword =Cpassword.trim();
+
+ 
+  if (!trimmedName || !trimmedEmail || !trimmedPassword || !trimmedConfirmPassword) {
+    toast.error('Please fill in all fields.');
+    return;
+  }
+
+  if (trimmedPassword !== trimmedConfirmPassword) {
+    toast.error('Passwords do not match');
+    return;
+  }
     const formData = {
       username: name,
       email,
@@ -60,13 +77,37 @@ const Signup = () => {
      toast.success("Signup Successfull")
      navigate('/student')
    } else {
-     toast.error("Something went wrong")
+     toast.error("Something went wrong");
+     console.log("here");
      navigate('/student/signup')
+     setError(true)
    }
-}
+  }
 
+
+  const getGoogleUser = async (response: CredentialResponse) => {
+    
+    const decode: Object = jwtDecode(response.credential as string)
+    const data = {
+      email: decode.email,
+      username: decode.name,
+      password: "123"
+    }
+    const result = await signupfinal(data)
+    console.log(result);
+  
+    if (result?.status == 200) {
+      toast.success("Signup Successfull")
+      navigate('/student')
+    } else {
+      toast.error("Email already exists");
+      console.log("here");
+    
+    }
+  }
   return (
     <>
+  
     <Navbar/>
     <section className="bg-[#F4F7FF] py-20 lg:py-[120px] flex flex-row">
       <div className="container mx-auto">
@@ -112,7 +153,7 @@ const Signup = () => {
                   value={Cpassword}
                   onChange={(e) => setCpassword(e.target.value)}
                 />
-
+                    <span>{ error&& "Email already exists"}</span>
                 <div className="mb-10">
                   <button
                     className="border-primary w-full cursor-pointer rounded-md border bg-3447AE py-3 px-5 text-base text-white transition hover:bg-opacity-90"
@@ -123,7 +164,7 @@ const Signup = () => {
                 </div>
               </form>)}
             {!completed&&( <><p className="mb-6 text-base text-[#adadad]">Register With</p>
-              <ul className="-mx-2 mb-12 flex justify-between">
+              {/* <ul className="-mx-2 mb-12 flex justify-between">
                 <li className="w-full px-2">
                   <a
                     href="/#"
@@ -181,8 +222,13 @@ const Signup = () => {
                     </svg>
                   </a>
                 </li>
-                </ul>
-          
+                </ul> */}
+                  <div className="mx-2 mb-12 flex justify-center">
+
+           <GoogleLogin onSuccess={(response)=>{getGoogleUser(response)}
+      } onError={()=>console.log("Error")
+      }/>
+                  </div>
               <p className="text-base text-[#adadad]">
                 Already a member
                     <Link to={'/student/login'} className="text-primary hover:underline">Login</Link>
@@ -420,6 +466,7 @@ const Signup = () => {
         </div>
       </div>
       </section>
+     
       </>
   );
 };

@@ -1,5 +1,7 @@
 import tutorRoutes from "../services/endpoints/tutorEndpoints";
 import Api from "../services/api";
+import { toast } from "react-toastify";
+
 
 export const signup = async (tutor: Object) => {
     try {
@@ -7,6 +9,7 @@ export const signup = async (tutor: Object) => {
         return response
     } catch (error) {
         console.log(error)
+        toast.error(error.response.data)
     }
 }
 
@@ -16,7 +19,7 @@ export const signupFinal = async (tutor: Object)=>{
         return response
     } catch (error) {
         console.log(error);
-        
+        toast.error(error.response.data)
     }
 }
 
@@ -26,7 +29,7 @@ export const Tutorlogin = async (data: Object)=>{
         return response
     } catch (error) {
         console.log(error);
-        
+        toast.error(error.response.data)
     }
 }
 
@@ -37,7 +40,7 @@ export const TutorDetails = async (id: string) => {
         return response
     } catch (error) {
         console.log(error);
-        
+        toast.error(error.response.data)
     }
 }
 
@@ -47,5 +50,16 @@ export const TutorEditProfile = async (data: Object) => {
         return response
     } catch (error) {
         console.log(error); 
+        toast.error(error.response.data)
+    }
+}
+
+export const tutorLogout = async ()=>{
+    try {
+        const response = await Api.post(tutorRoutes.logout)
+        return response
+    } catch (error) {
+        console.log(error);
+        
     }
 }

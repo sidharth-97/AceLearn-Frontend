@@ -1,17 +1,17 @@
 import React from 'react'
 import AdminSidebar from '../../components/admin/AdminHome'
-import Students from '../../components/admin/Students'
+import Tutors from '../../components/admin/Tutors'
 
-const StudentManagement = () => {
+const TutorManagement = () => {
   return (
     <section className="flex gap-6">
     <AdminSidebar />
     <div className="m-3 text-xl text-gray-900 font-semibold">
-      Student Management
-      <Students />
+      Tutor Management
+      <Tutors/>
     </div>
   </section>
   )
 }
 
-export default StudentManagement
+export default TutorManagement

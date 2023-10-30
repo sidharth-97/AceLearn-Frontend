@@ -4,6 +4,7 @@ import { signup } from "../../api/tutorapi";
 import { formToJSON } from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../../components/common/navbar";
+import {toast} from 'react-toastify'
 
 interface register {
   type: string;
@@ -18,18 +19,36 @@ const TutorSignup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [Cpassword, setCpassword] = useState("");
+
   
   const navigate=useNavigate()
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const trimmedName = name.trim();
+    const trimmedEmail = email.trim();
+    const trimmedPassword = password.trim();
+    const trimmedConfirmPassword =Cpassword.trim();
+  
+   
+    if (!trimmedName || !trimmedEmail || !trimmedPassword || !trimmedConfirmPassword) {
+      toast.error('Please fill in all fields.');
+      return;
+    }
+  
+    if (trimmedPassword !== trimmedConfirmPassword) {
+      toast.error('Passwords do not match');
+      return;
+    }
     const formData = {
       name,
       email,
       password,
     }
     const result = await signup(formData)
-    if (result?.status) {
+    console.log(result);
+    
+    if (result) {
       localStorage.setItem('signupStepCompleted', 'true');
       navigate("/tutor/tutorOnboarding")
     }

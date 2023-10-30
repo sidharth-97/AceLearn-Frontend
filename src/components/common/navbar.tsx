@@ -1,13 +1,38 @@
 import React, { useState } from "react";
 import logo from "../../assets/image-removebg-preview.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../api/studentapi";
+import { tutorLogout } from "../../api/tutorapi";
+import { logoutTutor, logoutstudent } from "../../slice/authSlice";
+import { toast } from "react-toastify";
 
 const Navbar: React.FC = () => {
   const [open, setOpen] = useState(false);
 
+  const dispatch=useDispatch()
+  const { isStudent } = useSelector((state: any) => state.auth)
+  const {isTutor}=useSelector((state:any)=>state.auth)
+
+const navigate=useNavigate()
+
   const toggleNavbar = () => {
     setOpen(!open);
   };
+
+  const handleLogout = async () => {
+    if (isStudent) {
+      const response = await logout()
+      dispatch(logoutstudent())
+      toast.success("Logout Success")
+      navigate('/student/login')
+    } else if (isTutor) {
+      const response = await tutorLogout()
+      dispatch(logoutTutor())
+      toast.success("Logout Success")
+      navigate('/tutor/login')
+    }
+  }
 
   return (
     <>
@@ -42,15 +67,22 @@ const Navbar: React.FC = () => {
               </div>
 
               <div className="hidden sm:flex sm:items-center">
-              <Link to={"/student"} className="text-white text-sm font-semibold relative inline-block mr-4 group">
-                  Sign in<span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
-                </Link>
-                <Link
-                  to={'/student/signup'}
-                  className="text-white text-sm font-semibold border px-4 py-2 rounded-lg hover:text-purple-600 hover:border-purple-600"
-                >
-                  Sign up
-                </Link>
+            { isStudent || isTutor?<><button onClick={handleLogout} className="text-white text-sm font-semibold relative inline-block mr-4 group">
+                Logout<span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
+              </button> <Link to={isStudent?"/student/dashboard":"/tutor/dashboard"} className="text-white text-sm font-semibold relative inline-block mr-4 group">
+                My Profile<span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
+              </Link></>: <>
+                
+            <Link to={"/student"} className="text-white text-sm font-semibold relative inline-block mr-4 group">
+                Sign in<span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
+              </Link>
+              <Link
+                to={'/student/signup'}
+                className="text-white text-sm font-semibold border px-4 py-2 rounded-lg hover:text-purple-600 hover:border-purple-600"
+              >
+                Sign up
+              </Link>
+              </>}
               </div>
 
               <div className="sm:hidden cursor-pointer" onClick={toggleNavbar}>

@@ -1,47 +1,47 @@
 import React, { useState,useEffect } from "react";
-import { blockStudent, getUserData } from "../../api/adminapi";
+import { blockStudent, blockTutor, getTutorData } from "../../api/adminapi";
 import { useQuery } from "react-query";
 
-const Students = () => {
-  const [userData, setUserData] = useState([]);
+const Tutors = () => {
+  const [tutorData, setTutorData] = useState([]);
   const [searchQuery, setSearchQuery] = useState(''); 
 
-  useEffect(() => {
-    const list = async function () {
-        try {
-          const res = await getUserData()
-            setUserData(res?.data);
-            console.log(res);
-            
-        } catch (error) {
-          console.error('Error fetching user data:', error);
-        }
-      };
-    list();
+ 
+    useEffect(() => {
+        const list = async function () {
+            try {
+              const res = await getTutorData()
+                setTutorData(res?.data);
+                console.log(res);
+                
+            } catch (error) {
+              console.error('Error fetching user data:', error);
+            }
+          };
+        list();
 },[])
 
-
-    const filteredUsers = userData.filter((user:any) =>
-    user?.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    user?.email.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+const filteredUsers = tutorData.filter((user:any) =>
+user?.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+user?.email.toLowerCase().includes(searchQuery.toLowerCase())
+);
 
 
   const blockstudent = async (id: string) => {
-    const response = await blockStudent(id);
+    const response = await blockTutor(id);
     if (response?.status==200) {
-      setUserData((prevData:any) =>
-      prevData.map((user:any) => {
-        if (user._id === id) {
-          return { ...user, isBlocked: !user.isBlocked }; 
+      setTutorData((prevData:any) =>
+      prevData.map((tutor:any) => {
+        if (tutor._id === id) {
+    
+          return { ...tutor, isBlocked: !tutor.isBlocked };
         }
-        return user; 
+        return tutor; 
       })
     );
     
     }
   };
-  console.log(searchQuery);
   
 
   return (
@@ -99,9 +99,9 @@ const Students = () => {
               <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
                 Email
               </th>
-              {/* <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
+              <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
                 Phone
-              </th> */}
+              </th>
               <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
                 Status
               </th>
@@ -113,26 +113,26 @@ const Students = () => {
           </thead>
           <tbody className="bg-white">
             {
-              filteredUsers.length&&userData.map((students,index) => (
+              filteredUsers.length&&tutorData.map((students,index) => (
                 <tr id={`${index}`}>
                 <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
                   <div className="flex items-center">
                     <div>
-                        <div className="text-sm leading-5 text-gray-800">{index + 1}</div>
+                      <div className="text-sm leading-5 text-gray-800">#1</div>
                     </div>
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
                   <div className="text-sm leading-5 text-blue-900">
-               {students.username}
+               {students.tutorname}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
                   {students.email}
                 </td>
-                {/* <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
+                <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
                   +2348106420637
-                </td> */}
+                </td>
                   {
                     students.isBlocked ? <>
                      <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
@@ -168,8 +168,8 @@ const Students = () => {
             
           </tbody>
         </table>
-        <div className="sm:flex-1 sm:flex sm:items-center sm:justify-between mt-4 work-sans">
-          {/* <div>
+        {/* <div className="sm:flex-1 sm:flex sm:items-center sm:justify-between mt-4 work-sans">
+          <div>
             <p className="text-sm leading-5 text-blue-700">
               Showing
               <span className="font-medium">1</span>
@@ -179,8 +179,8 @@ const Students = () => {
               <span className="font-medium">2000</span>
               results
             </p>
-          </div> */}
-          {/* <div>
+          </div>
+          <div>
             <nav className="relative z-0 inline-flex shadow-sm">
               <div></div>
               <div>
@@ -203,7 +203,7 @@ const Students = () => {
                   3
                 </a>
               </div>
-              <div v-if="pagination.current_page < pagination.last_page">
+               <div v-if="pagination.current_page < pagination.last_page">
                 <a
                   href="#"
                   className="-ml-px relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-500 hover:text-gray-400 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150"
@@ -221,13 +221,13 @@ const Students = () => {
                     />
                   </svg>
                 </a>
-              </div>
+              </div> 
             </nav>
-          </div> */}
-        </div>
+          </div>
+        </div> */}
       </div>
     </div>
   );
 };
 
-export default Students;
+export default Tutors;

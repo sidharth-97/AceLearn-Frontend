@@ -1,12 +1,15 @@
-import React from "react";
+import React,{useEffect} from "react";
 import StudentSidebar from "../../components/students/StudentSidebar";
 import Navbar from "../../components/common/navbar";
 import EditProfile from "../../components/students/EditProfile";
 import { useQuery } from "react-query";
 import { studentDetails } from "../../api/studentapi";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const EditStudentProfile = () => {
+
+const navigate=useNavigate()
 
 const {isStudent}=useSelector((state:any)=>state.auth)
 
@@ -25,10 +28,12 @@ console.log(student?.data);
 
     )
   }
-
-  if (isError) {
-    return ;
-  }
+  useEffect(() => {
+    if (isError) {
+        navigate('/student/login');
+    }
+  }, [isError, navigate]);
+  
   return (
     <div className="text-black bg-9ED0F5">
       <Navbar />

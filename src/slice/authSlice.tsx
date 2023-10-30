@@ -24,7 +24,7 @@ const authSlice = createSlice({
             state.isStudent = action.payload
             localStorage.setItem('student',JSON.stringify(action.payload))
         },
-        logoutstudent: (state, action) => {
+        logoutstudent: (state) => {
             state.isStudent = null
             localStorage.removeItem('student')
         },
@@ -32,7 +32,7 @@ const authSlice = createSlice({
             state.isTutor = action.payload
             localStorage.setItem('tutor', action.payload)
         },
-        logoutTutor: (state, action) => {
+        logoutTutor: (state) => {
             state.isTutor = null
             localStorage.removeItem('tutor')
         },
@@ -40,7 +40,7 @@ const authSlice = createSlice({
             state.isAdmin = action.payload
             localStorage.setItem('admin', JSON.stringify(action.payload))
         },
-        logoutAdmin: (state, action) => {
+        logoutAdmin: (state) => {
             state.isAdmin = null
             localStorage.removeItem('admin')
         }

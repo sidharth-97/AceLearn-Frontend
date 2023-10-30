@@ -1,5 +1,6 @@
 import Api from "../services/api";
 import AdminRoutes from "../services/endpoints/adminEndpoints";
+import { toast } from "react-toastify";
 
 
 export const adminLogin = async (data: Object)=>{
@@ -8,7 +9,7 @@ export const adminLogin = async (data: Object)=>{
     return response
     } catch (error) {
         console.log(error);
-        
+        toast.error(error.response.data)
     }
     
 }
@@ -19,7 +20,7 @@ export const getUserData = async () => {
         return response
     } catch (error) {
         console.log(error);
-        
+        toast.error(error.response.data)
     }
 }
 
@@ -29,7 +30,7 @@ export const getTutorData = async () => {
         return response
     } catch (error) {
         console.log(error);
-        
+        toast.error(error.response.data)
     }
 }
 
@@ -39,6 +40,7 @@ export const blockStudent = async (id:string) => {
         return response
     } catch (error) {
         console.log(error);
+        toast.error(error.response.data)
     }
 }
 
@@ -48,6 +50,6 @@ export const blockTutor = async (id: string) => {
         return response
     } catch (error) {
         console.log(error);
-        
+        toast.error(error.response.data)
     }
 }

@@ -54,8 +54,6 @@ const Signin: React.FC<propstype> = ({ user }) => {
         toast.success("Login successfull")
         dispatch(loginStudent(response.data))
         navigate('/')
-      } else if (!response) {
-        toast.error("Email/password wrong!!")
       }
     } else {
       let response = await Tutorlogin(formData)
@@ -63,9 +61,7 @@ const Signin: React.FC<propstype> = ({ user }) => {
         dispatch(loginTutor(response.data))
         toast.success("Login successfull")
         navigate('/totor/dashboard')
-      } else if (!response) {
-        toast.error("Email/password wrong!!")
-      }
+      } 
     }
   }
   

@@ -9,8 +9,8 @@ import { Link } from "react-router-dom";
 
 const TutorSidebar = () => {
   const menus = [
-    { name: "dashboard", link: "/", icon: MdOutlineDashboard },
-    { name: "Profile", link: "/", icon: AiOutlineUser },
+    { name: "dashboard", link: "/tutor/tutordashboard", icon: MdOutlineDashboard },
+    { name: "Profile", link: "/tutor/edit-profile", icon: AiOutlineUser },
     { name: "messages", link: "/", icon: FiMessageSquare },
     { name: "analytics", link: "/", icon: TbReportAnalytics, margin: true },
     { name: "File Manager", link: "/", icon: FiFolder },

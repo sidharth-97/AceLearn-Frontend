@@ -10,11 +10,11 @@ import { toast } from "react-toastify";
 const Navbar: React.FC = () => {
   const [open, setOpen] = useState(false);
 
-  const dispatch=useDispatch()
-  const { isStudent } = useSelector((state: any) => state.auth)
-  const {isTutor}=useSelector((state:any)=>state.auth)
+  const dispatch = useDispatch();
+  const { isStudent } = useSelector((state: any) => state.auth);
+  const { isTutor } = useSelector((state: any) => state.auth);
 
-const navigate=useNavigate()
+  const navigate = useNavigate();
 
   const toggleNavbar = () => {
     setOpen(!open);
@@ -22,17 +22,17 @@ const navigate=useNavigate()
 
   const handleLogout = async () => {
     if (isStudent) {
-      const response = await logout()
-      dispatch(logoutstudent())
-      toast.success("Logout Success")
-      navigate('/student/login')
+      const response = await logout();
+      dispatch(logoutstudent());
+      toast.success("Logout Success");
+      navigate("/student/login");
     } else if (isTutor) {
-      const response = await tutorLogout()
-      dispatch(logoutTutor())
-      toast.success("Logout Success")
-      navigate('/tutor/login')
+      const response = await tutorLogout();
+      dispatch(logoutTutor());
+      toast.success("Logout Success");
+      navigate("/tutor/login");
     }
-  }
+  };
 
   return (
     <>
@@ -41,48 +41,100 @@ const navigate=useNavigate()
           <div className="container mx-auto px-8">
             <div className="flex items-center justify-between py-4">
               <div>
-               <Link to={'/'}> <img
-                  className="w-32 h-13 text-purple-600"
-                  src={logo}
-                  alt="logo"
-                /></Link>
-              </div>
-
-              <div className="hidden sm:flex sm:items-center">
-                <Link to={"/"} className="text-white text-sm font-semibold relative inline-block mr-4 group">
-                  Home<span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
-                </Link>
-                <Link to={"/"} className="text-white text-sm font-semibold relative inline-block mr-4 group">
-                  About<span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
-                </Link>
-                <Link to={"/"} className="text-white text-sm font-semibold relative inline-block mr-4 group">
-                  Resource<span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
-                </Link>
-                <Link to={"/"} className="text-white text-sm font-semibold relative inline-block mr-4 group">
-                  Find Tutor<span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
-                </Link>
-                <Link to={"/tutor/signup"} className="text-white text-sm font-semibold relative inline-block mr-4 group">
-                  Become Tutor<span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
+                <Link to={"/"}>
+                  {" "}
+                  <img
+                    className="w-32 h-13 text-purple-600"
+                    src={logo}
+                    alt="logo"
+                  />
                 </Link>
               </div>
 
               <div className="hidden sm:flex sm:items-center">
-            { isStudent || isTutor?<><button onClick={handleLogout} className="text-white text-sm font-semibold relative inline-block mr-4 group">
-                Logout<span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
-              </button> <Link to={isStudent?"/student/dashboard":"/tutor/tutordashboard"} className="text-white text-sm font-semibold relative inline-block mr-4 group">
-                My Profile<span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
-              </Link></>: <>
-                
-            <Link to={"/student"} className="text-white text-sm font-semibold relative inline-block mr-4 group">
-                Sign in<span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
-              </Link>
-              <Link
-                to={'/student/signup'}
-                className="text-white text-sm font-semibold border px-4 py-2 rounded-lg hover:text-purple-600 hover:border-purple-600"
-              >
-                Sign up
-              </Link>
-              </>}
+                <Link
+                  to={"/"}
+                  className="text-white text-sm font-semibold relative inline-block mr-4 group"
+                >
+                  Home
+                  <span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
+                </Link>
+                <Link
+                  to={"/"}
+                  className="text-white text-sm font-semibold relative inline-block mr-4 group"
+                >
+                  About
+                  <span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
+                </Link>
+                <Link
+                  to={"/"}
+                  className="text-white text-sm font-semibold relative inline-block mr-4 group"
+                >
+                  Resource
+                  <span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
+                </Link>
+                <Link
+                  to={"/"}
+                  className="text-white text-sm font-semibold relative inline-block mr-4 group"
+                >
+                  Find Tutor
+                  <span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
+                </Link>
+                <Link
+                  to={"/tutor/signup"}
+                  className="text-white text-sm font-semibold relative inline-block mr-4 group"
+                >
+                  Become Tutor
+                  <span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
+                </Link>
+              </div>
+
+              <div className="hidden sm:flex sm:items-center">
+                {isStudent || isTutor ? (
+                  <div className="flex justify-center items-center text-center">
+                   
+                    <Link
+                      to={
+                        isStudent
+                          ? "/student/dashboard"
+                          : "/tutor/tutordashboard"
+                      }
+                      className="text-white text-sm font-semibold relative inline-block mr-4 group"
+                    >
+                      <div className="flex flex-row justify-center items-center">
+                         {isTutor && (
+                        <img className="w-6 rounded-full mr-1"  src={isTutor.image} alt="" />
+                      )}
+                       My Profile
+                      <span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
+                      </div>
+                     
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="text-white text-sm font-semibold relative inline-block mr-4 group"
+                    >
+                      Logout
+                      <span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
+                    </button>
+                  </div>
+                ) : (
+                  <>
+                    <Link
+                      to={"/student"}
+                      className="text-white text-sm font-semibold relative inline-block mr-4 group"
+                    >
+                      Sign in
+                      <span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
+                    </Link>
+                    <Link
+                      to={"/student/signup"}
+                      className="text-white text-sm font-semibold border px-4 py-2 rounded-lg hover:text-purple-600 hover:border-purple-600"
+                    >
+                      Sign up
+                    </Link>
+                  </>
+                )}
               </div>
 
               <div className="sm:hidden cursor-pointer" onClick={toggleNavbar}>

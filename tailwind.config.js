@@ -8,7 +8,8 @@ export default {
     extend: {
       backgroundColor: {
         '3447AE': '#3447AE',
-        "9ED0F5":"#9ED0F5"
+        "9ED0F5": "#9ED0F5",
+        'D9E2EC':"#D9E2EC"
       },
       width: {
         '128':"32rem"

@@ -2,6 +2,7 @@ import avatar from "../../assets/26220662-623f-4697-bd29-b27e3ef7f513fdf.jpg";
 import icon from "../../assets/online-lecturing-distance-learning-opportunities-self-education-internet-courses-e-learning-technologies_335657-3279.svg";
 import classes from "../../assets/Screenshot 2023-10-24 212602.png";
 import Navbar from "../../components/common/navbar";
+import TutorSidebar from "../../components/tutors/TutorSidebar";
 
 const TutorProfile = () => {
   return (
@@ -9,30 +10,11 @@ const TutorProfile = () => {
       <Navbar/>
 
     <div className="flex">
-      <div className="bg-white text-black w-1/6 h-screen p-4">
-        <div className="text-center mb-4">
-          <img
-            src={avatar}
-            alt="Profile"
-            className="w-20 h-20 rounded-full mx-auto"
-          />
-          <p className="text-lg font-semibold mt-2">Sidhath</p>
-
-          <p className="text-gray-600">sidharth@gmail.com</p>
-        </div>
-        <ul className="mt-4">
-          <li className="hover:bg-3447AE hover:text-white rounded-md p-2 cursor-pointer">
-            Edit Profile
-          </li>
-          <li className="hover:bg-3447AE hover:text-white rounded-md p-2 cursor-pointer">
-            Logout
-          </li>
-          <li className="hover:bg-3447AE hover:text-white rounded-md p-2 cursor-pointer">
-            Other Option
-          </li>
-        </ul>
-      </div>
-      <div className="w-5/6 p-4 bg-9ED0F5">
+   
+        <TutorSidebar/>
+       
+      
+      <div className="w-full p-4 bg-9ED0F5">
         <div className="flex bg-white justify-center items-center p-5 rounded-3xl">
           {" "}
           {/* Reduced padding */}

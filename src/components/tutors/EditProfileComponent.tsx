@@ -2,16 +2,19 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { TutorEditProfile } from "../../api/tutorapi";
 import { useMutation, useQuery, useQueryClient } from "react-query";
+import {toast} from 'react-toastify'
+import { useNavigate } from "react-router-dom";
 
 const EditProfileComponent = ({ data }) => {
   const [name, setName] = useState(data.name);
   const [mobile, setMobile] = useState(data.mobile);
   const [bio, setBio] = useState(data.bio);
-  const [fees, setFees] = useState(data.fees);
+  const [fees, setFees] = useState(data.fee);
   const [subject, setSubject] = useState(data.subject);
   const [image, setImage] = useState<File | null>(null);
   const { isTutor } = useSelector((state) => state.auth);
-
+  const navigate = useNavigate()
+  
   const [formData, setFormData] = useState({
     password: "",
     cpassword: "",
@@ -47,10 +50,12 @@ const EditProfileComponent = ({ data }) => {
     console.log(tutorData, "after");
 
     mutate(tutorData);
+    toast.success("Updated Successfully")
+    navigate('/tutor/tutordashboard')
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0 bg-gray-50">
+    <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0 bg-D9E2EC">
       <div className="w-full px-6 py-4 mt-6 overflow-hidden bg-white shadow-md sm:max-w-md sm:rounded-lg">
         <div>
           <a href="/">

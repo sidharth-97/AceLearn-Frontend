@@ -5,24 +5,23 @@ import { useDispatch } from "react-redux";
 import { openModal } from "../../slice/modalSlice";
 import Modal from "../UI/Modal";
 
-interface Tutor{
-  _id?: string,
-  name:string,
-  email: string,
-  password: string,
-  mobileNo: string,
-  subject: Array<string>,
-  fee: string
-  image:string
-  bio: string
-  isBlocked:boolean
+interface Tutor {
+  _id?: string;
+  name: string;
+  email: string;
+  password: string;
+  mobileNo: string;
+  subject: Array<string>;
+  fee: string;
+  image: string;
+  bio: string;
+  isBlocked: boolean;
 }
 
 const Tutors = () => {
   const [tutorData, setTutorData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedUserId, setSelectedUserId] = useState(null);
-
 
   useEffect(() => {
     const list = async function () {
@@ -43,8 +42,6 @@ const Tutors = () => {
       user?.email.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-
-
   const BlockTutor = async (id: string) => {
     const response = await blockTutor(id);
     if (response?.status == 200) {
@@ -59,16 +56,16 @@ const Tutors = () => {
     }
   };
 
-  const dispatch = useDispatch()
-  
+  const dispatch = useDispatch();
+
   const handleBlockButton = (id) => {
     setSelectedUserId(id);
-  dispatch(openModal())
-}
+    dispatch(openModal());
+  };
 
   return (
     <div className="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 pr-10 lg:px-8">
-      <Modal functionToCall={BlockTutor} id={selectedUserId}/>
+      <Modal functionToCall={BlockTutor} id={selectedUserId} />
       <div className="align-middle rounded-tl-lg rounded-tr-lg inline-block w-full py-4 overflow-hidden bg-white shadow-lg px-12">
         <div className="flex justify-between">
           <div className="inline-flex border rounded w-7/12 px-2 lg:px-6 h-12 bg-transparent">
@@ -113,9 +110,7 @@ const Tutors = () => {
         <table className="min-w-full">
           <thead>
             <tr>
-              <th className="px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-blue-500 tracking-wider">
-                ID
-              </th>
+              <th className="px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-blue-500 tracking-wider"></th>
               <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
                 Fullname
               </th>
@@ -136,13 +131,13 @@ const Tutors = () => {
           </thead>
           <tbody className="bg-white">
             {filteredUsers.length &&
-              tutorData.map((tutors:Tutor, index) => (
-                <tr id={`${index+Date.now()}`}>
+              tutorData.map((tutors: Tutor, index) => (
+                <tr id={`${index + Date.now()}`}>
                   <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
                     <div className="flex items-center">
                       <div>
                         <div className="text-sm leading-5 text-gray-800">
-                          #1
+                          <img className="w-6" src={tutors.image} alt="" />
                         </div>
                       </div>
                     </div>
@@ -184,7 +179,7 @@ const Tutors = () => {
                     </>
                   )}
                   <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-blue-900 text-sm leading-5">
-                  <button
+                    <button
                       className={`bg-transparent border ${
                         tutors.isBlocked
                           ? "border-green-500 text-green-500"
@@ -193,7 +188,9 @@ const Tutors = () => {
                         tutors.isBlocked ? "green-500" : "red-500"
                       } hover:text-black transition-all duration-300`}
                       onClick={() => handleBlockButton(tutors._id)}
-                    >  {tutors.isBlocked ? "Unblock" : "Block"}
+                    >
+                      {" "}
+                      {tutors.isBlocked ? "Unblock" : "Block"}
                     </button>
                   </td>
                   <td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5">
@@ -205,63 +202,6 @@ const Tutors = () => {
               ))}
           </tbody>
         </table>
-        {/* <div className="sm:flex-1 sm:flex sm:items-center sm:justify-between mt-4 work-sans">
-          <div>
-            <p className="text-sm leading-5 text-blue-700">
-              Showing
-              <span className="font-medium">1</span>
-              to
-              <span className="font-medium">200</span>
-              of
-              <span className="font-medium">2000</span>
-              results
-            </p>
-          </div>
-          <div>
-            <nav className="relative z-0 inline-flex shadow-sm">
-              <div></div>
-              <div>
-                <a
-                  href="#"
-                  className="-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm leading-5 font-medium text-blue-700 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-tertiary active:text-gray-700 transition ease-in-out duration-150 hover:bg-tertiary"
-                >
-                  1
-                </a>
-                <a
-                  href="#"
-                  className="-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm leading-5 font-medium text-blue-600 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-tertiary active:text-gray-700 transition ease-in-out duration-150 hover:bg-tertiary"
-                >
-                  2
-                </a>
-                <a
-                  href="#"
-                  className="-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm leading-5 font-medium text-blue-600 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-tertiary active:text-gray-700 transition ease-in-out duration-150 hover:bg-tertiary"
-                >
-                  3
-                </a>
-              </div>
-               <div v-if="pagination.current_page < pagination.last_page">
-                <a
-                  href="#"
-                  className="-ml-px relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-500 hover:text-gray-400 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150"
-                  aria-label="Next"
-                >
-                  <svg
-                    className="h-5 w-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                      clip-rule="evenodd"
-                    />
-                  </svg>
-                </a>
-              </div> 
-            </nav>
-          </div>
-        </div> */}
       </div>
     </div>
   );

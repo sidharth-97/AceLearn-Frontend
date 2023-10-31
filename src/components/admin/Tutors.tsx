@@ -1,10 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { blockStudent, blockTutor, getTutorData } from "../../api/adminapi";
 import { useQuery } from "react-query";
+import { useDispatch } from "react-redux";
+import { openModal } from "../../slice/modalSlice";
+import Modal from "../UI/Modal";
+
+interface Tutor{
+  _id?: string,
+  name:string,
+  email: string,
+  password: string,
+  mobileNo: string,
+  subject: Array<string>,
+  fee: string
+  image:string
+  bio: string
+  isBlocked:boolean
+}
 
 const Tutors = () => {
   const [tutorData, setTutorData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedUserId, setSelectedUserId] = useState(null);
+
 
   useEffect(() => {
     const list = async function () {
@@ -24,9 +42,10 @@ const Tutors = () => {
       user?.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       user?.email.toLowerCase().includes(searchQuery.toLowerCase())
   );
-console.log(filteredUsers);
 
-  const blockstudent = async (id: string) => {
+
+
+  const BlockTutor = async (id: string) => {
     const response = await blockTutor(id);
     if (response?.status == 200) {
       setTutorData((prevData: any) =>
@@ -40,8 +59,16 @@ console.log(filteredUsers);
     }
   };
 
+  const dispatch = useDispatch()
+  
+  const handleBlockButton = (id) => {
+    setSelectedUserId(id);
+  dispatch(openModal())
+}
+
   return (
     <div className="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 pr-10 lg:px-8">
+      <Modal functionToCall={BlockTutor} id={selectedUserId}/>
       <div className="align-middle rounded-tl-lg rounded-tr-lg inline-block w-full py-4 overflow-hidden bg-white shadow-lg px-12">
         <div className="flex justify-between">
           <div className="inline-flex border rounded w-7/12 px-2 lg:px-6 h-12 bg-transparent">
@@ -109,8 +136,8 @@ console.log(filteredUsers);
           </thead>
           <tbody className="bg-white">
             {filteredUsers.length &&
-              tutorData.map((students, index) => (
-                <tr id={`${index}`}>
+              tutorData.map((tutors:Tutor, index) => (
+                <tr id={`${index+Date.now()}`}>
                   <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
                     <div className="flex items-center">
                       <div>
@@ -122,16 +149,16 @@ console.log(filteredUsers);
                   </td>
                   <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
                     <div className="text-sm leading-5 text-blue-900">
-                      {students.tutorname}
+                      {tutors.name}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-                    {students.email}
+                    {tutors.email}
                   </td>
                   <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-                    +2348106420637
+                    {tutors.subject}
                   </td>
-                  {students.isBlocked ? (
+                  {tutors.isBlocked ? (
                     <>
                       <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
                         <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
@@ -157,11 +184,16 @@ console.log(filteredUsers);
                     </>
                   )}
                   <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-blue-900 text-sm leading-5">
-                    <button
-                      className="bg-red-300 rounded p-2"
-                      onClick={() => blockstudent(students._id)}
-                    >
-                      {students.isBlocked ? "Unblock" : "Block"}
+                  <button
+                      className={`bg-transparent border ${
+                        tutors.isBlocked
+                          ? "border-green-500 text-green-500"
+                          : "border-red-500 text-red-500"
+                      } rounded-md py-2 px-4 hover:bg-${
+                        tutors.isBlocked ? "green-500" : "red-500"
+                      } hover:text-black transition-all duration-300`}
+                      onClick={() => handleBlockButton(tutors._id)}
+                    >  {tutors.isBlocked ? "Unblock" : "Block"}
                     </button>
                   </td>
                   <td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5">

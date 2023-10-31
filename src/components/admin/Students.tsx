@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { blockStudent, getUserData } from "../../api/adminapi";
 import { useQuery } from "react-query";
+import Modal from "../UI/Modal";
+import { useDispatch } from "react-redux";
+import { closeModal, openModal } from "../../slice/modalSlice";
 
 interface Student {
   _id: string;
@@ -14,6 +17,7 @@ interface Student {
 const Students = () => {
   const [userData, setUserData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedUserId, setSelectedUserId] = useState(null);
 
   useEffect(() => {
     const list = async function () {
@@ -35,7 +39,9 @@ const Students = () => {
   );
 console.log(filteredUsers,"users");
 
-  const blockstudent = async (id: string) => {
+  const blockstudents = async (id: string) => {
+    console.log("userblocked");
+    
     const response = await blockStudent(id);
     if (response?.status == 200) {
       setUserData((prevData: any) =>
@@ -48,10 +54,16 @@ console.log(filteredUsers,"users");
       );
     }
   };
-  console.log(searchQuery);
+  const dispatch = useDispatch()
+  
+  const handleBlockButton = (id) => {
+    setSelectedUserId(id);
+  dispatch(openModal())
+}
 
   return (
     <div className="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 pr-10 lg:px-8">
+        <Modal functionToCall={blockstudents} id={selectedUserId} />
       <div className="align-middle rounded-tl-lg rounded-tr-lg inline-block w-full py-4 overflow-hidden bg-white shadow-lg px-12">
         <div className="flex justify-between">
           <div className="inline-flex border rounded w-7/12 px-2 lg:px-6 h-12 bg-transparent">
@@ -175,10 +187,11 @@ console.log(filteredUsers,"users");
                       } rounded-md py-2 px-4 hover:bg-${
                         students.isBlocked ? "green-500" : "red-500"
                       } hover:text-black transition-all duration-300`}
-                      onClick={() => blockstudent(students._id)}
+                      onClick={() => handleBlockButton(students._id)}
                     >
                       {students.isBlocked ? "Unblock" : "Block"}
                     </button>
+                  
                   </td>
                   <td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5">
                     <button className="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none">

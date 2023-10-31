@@ -14,7 +14,7 @@ const AdminSidebar = () => {
   const menus = [
     { name: "dashboard", link: "/", icon: MdOutlineDashboard },
     { name: "students", link: "/admin/students", icon: AiOutlineUser },
-    { name: "tutors", link: "/admin/tutor", icon: FiMessageSquare },
+    { name: "tutors", link: "/admin/tutors", icon: FiMessageSquare },
     { name: "analytics", link: "/", icon: TbReportAnalytics, margin: true },
     { name: "File Manager", link: "/", icon: FiFolder },
     { name: "Cart", link: "/", icon: FiShoppingCart },

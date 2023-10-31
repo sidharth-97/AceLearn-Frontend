@@ -36,7 +36,7 @@ export const Tutorlogin = async (data: Object)=>{
 export const TutorDetails = async (id: string) => {
 
     try {
-        const response = await Api.post(tutorRoutes.tutorDetails, id)
+        const response = await Api.get(`${tutorRoutes.tutorDetails}/${id}`)
         return response
     } catch (error) {
         console.log(error);

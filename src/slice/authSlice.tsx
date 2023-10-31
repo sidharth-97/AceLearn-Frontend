@@ -30,7 +30,7 @@ const authSlice = createSlice({
         },
         loginTutor: (state, action) => {
             state.isTutor = action.payload
-            localStorage.setItem('tutor', action.payload)
+            localStorage.setItem('tutor',JSON.stringify(action.payload))
         },
         logoutTutor: (state) => {
             state.isTutor = null

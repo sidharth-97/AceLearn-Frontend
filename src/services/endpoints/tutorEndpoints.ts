@@ -3,8 +3,8 @@ const tutorRoutes = {
     signup: "/tutors/signup",
     otpverify:'/tutors/signupfinal',
     logout:"/tutors/logout",
-    tutorDetails: "/tutor/tutor-details",
-    editProfile:"/tutor/edit-profile"
+    tutorDetails: "/tutors/tutor-details",
+    editProfile:"/tutors/edit-profile"
 }
 
 export default tutorRoutes

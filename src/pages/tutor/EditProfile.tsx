@@ -7,7 +7,9 @@ import {useQuery} from 'react-query'
 import { TutorDetails } from '../../api/tutorapi'
 
 const EditTutorProfile = () => {
-    const { isTutor } = useSelector((state: any) => state.auth)
+  const { isTutor } = useSelector((state: any) => state.auth)
+  console.log(isTutor._id);
+  
     
     const { data:tutor, isLoading, isError } = useQuery({
         queryFn: () => TutorDetails(isTutor._id),

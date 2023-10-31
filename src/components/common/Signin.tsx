@@ -60,7 +60,7 @@ const Signin: React.FC<propstype> = ({ user }) => {
       if (response?.status == 200) {
         dispatch(loginTutor(response.data))
         toast.success("Login successfull")
-        navigate('/totor/dashboard')
+        navigate('/tutor/tutordashboard')
       } 
     }
   }

@@ -49,11 +49,6 @@ export const studentDetails = async (id: string)=>{
         const response = await Api.get(`${studentRoutes.studentDetails}/${id}`)
         return response
     } catch (error) {
-        if (error.response.status == 401) {
-            console.log("reached here");
-            
-        }
-        console.log(error);
         toast.error(error.response.data)
     }
 }

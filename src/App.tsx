@@ -38,7 +38,7 @@ function App() {
     {
       path: "/tutor",
       children: [
-        { path: "login", element: <Signin user={"tutor"} /> },
+        { path: "login", element:<><Navbar/> <Signin user={"tutor"} /></> },
         { path: "signup", element: <TutorSignup /> },
         { path: "tutoronboarding", element: <TutorOnBoard /> },
         { path: "tutordashboard", element: <TutorProfile /> },

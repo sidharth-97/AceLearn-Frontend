@@ -230,8 +230,8 @@ const Signup = () => {
       }/>
                   </div>
               <p className="text-base text-[#adadad]">
-                Already a member
-                    <Link to={'/student/login'} className="text-primary hover:underline">Login</Link>
+                Already a member 
+                    <Link to={'/student/login'} className="text-primary hover:underline"> Login</Link>
               </p>
                 </>)}
               <div>

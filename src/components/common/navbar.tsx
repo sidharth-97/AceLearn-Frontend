@@ -69,7 +69,7 @@ const navigate=useNavigate()
               <div className="hidden sm:flex sm:items-center">
             { isStudent || isTutor?<><button onClick={handleLogout} className="text-white text-sm font-semibold relative inline-block mr-4 group">
                 Logout<span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
-              </button> <Link to={isStudent?"/student/dashboard":"/tutor/dashboard"} className="text-white text-sm font-semibold relative inline-block mr-4 group">
+              </button> <Link to={isStudent?"/student/dashboard":"/tutor/tutordashboard"} className="text-white text-sm font-semibold relative inline-block mr-4 group">
                 My Profile<span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
               </Link></>: <>
                 

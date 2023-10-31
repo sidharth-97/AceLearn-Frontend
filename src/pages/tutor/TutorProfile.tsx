@@ -1,9 +1,13 @@
 import avatar from "../../assets/26220662-623f-4697-bd29-b27e3ef7f513fdf.jpg";
 import icon from "../../assets/online-lecturing-distance-learning-opportunities-self-education-internet-courses-e-learning-technologies_335657-3279.svg";
 import classes from "../../assets/Screenshot 2023-10-24 212602.png";
+import Navbar from "../../components/common/navbar";
 
 const TutorProfile = () => {
   return (
+    <>
+      <Navbar/>
+
     <div className="flex">
       <div className="bg-white text-black w-1/6 h-screen p-4">
         <div className="text-center mb-4">
@@ -29,7 +33,7 @@ const TutorProfile = () => {
         </ul>
       </div>
       <div className="w-5/6 p-4 bg-9ED0F5">
-        <div className="flex bg-white justify-center items-center p-2">
+        <div className="flex bg-white justify-center items-center p-5 rounded-3xl">
           {" "}
           {/* Reduced padding */}
           <div>
@@ -79,7 +83,8 @@ const TutorProfile = () => {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+      </>
   );
 };
 

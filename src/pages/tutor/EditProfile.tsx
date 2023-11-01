@@ -21,7 +21,15 @@ const EditTutorProfile = () => {
             <div className="loader"></div>
           </div>
         )
-    }
+  }
+  if (isError) {
+    console.log("errorrrrrrrrrrrrrr");
+    
+    
+  }
+
+  console.log(tutor,"this is the tutor");
+  
   return (
     <div className="text-black bg-9ED0F5">
    <Navbar/>

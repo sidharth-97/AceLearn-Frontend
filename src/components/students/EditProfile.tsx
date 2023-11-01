@@ -1,15 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { editStudent } from "../../api/studentapi";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
+interface Student {
+  _id: string;
+  username: string;
+  email: string;
+  mobile?: string;
+  password: string;
+  isBlocked: boolean;
+}
+interface EditProfileProps {
+  data: Student;
+}
 
-const EditProfile = ({data}) => {
+const EditProfile:React.FC<EditProfileProps> = ({data}) => {
   const [name, setName] = useState(data.username)
   const [password, Setpassword] = useState("")
   const [cpassword,SetCpassword]=useState("")
   const [mobile, Setmobile] = useState(data.mobile)
 
-  const { isStudent }  = useSelector((state:any) => state.auth)
+  const { isStudent } = useSelector((state: any) => state.auth)
+  
+  const navigate=useNavigate()
   
   const handleSubmit = async (e:React.FormEvent) => {
     e.preventDefault()
@@ -20,10 +34,8 @@ const EditProfile = ({data}) => {
       email: isStudent.email
     }
     const response = await editStudent(formData)
-    
+  
   }
-
-
   
   return (
   

@@ -42,7 +42,7 @@ const TutorOnBoard: React.FC = () => {
     if (step === totalSteps - 1) {
       const result = await signupFinal({ ...formData, otp: otp })
       if (result?.status == 200) {
-        navigate('/tutor/dashboard')
+        navigate('/tutor/tutordashboard')
       }
     } else {
       setStep((current) => current + 1);

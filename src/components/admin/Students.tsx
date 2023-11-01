@@ -56,7 +56,7 @@ console.log(filteredUsers,"users");
   };
   const dispatch = useDispatch()
   
-  const handleBlockButton = (id) => {
+  const handleBlockButton = (id:string) => {
     setSelectedUserId(id);
   dispatch(openModal())
 }

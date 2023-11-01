@@ -9,12 +9,13 @@ import { useNavigate } from "react-router-dom";
 
 const EditStudentProfile = () => {
 
+  
 const navigate=useNavigate()
 
 const {isStudent}=useSelector((state:any)=>state.auth)
 
   const { data:student, isLoading, isError } = useQuery({
-    queryFn: () => studentDetails(isStudent._id),
+    queryFn: () =>studentDetails(isStudent._id) ,
     queryKey:['data']
   });
 
@@ -28,11 +29,17 @@ console.log(student?.data);
 
     )
   }
-  useEffect(() => {
-    if (isError) {
-        navigate('/student/login');
-    }
-  }, [isError, navigate]);
+  if (isError) {
+  console.log("error is here");
+  
+  }
+  
+ 
+  // useEffect(() => {
+  //   if (isError) {
+  //       navigate('/student/login');
+  //   }
+  // }, [isError, navigate]);
   
   return (
     <div className="text-black bg-9ED0F5">

@@ -40,6 +40,8 @@ export const TutorDetails = async (id: string) => {
         return response
     } catch (error) {
         console.log(error);
+    
+        
         toast.error(error.response.data)
     }
 }

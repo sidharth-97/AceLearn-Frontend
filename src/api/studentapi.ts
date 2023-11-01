@@ -2,6 +2,7 @@ import studentRoutes from "../services/endpoints/studentEndpoints";
 import Api from "../services/api";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { handleErrors } from "../middleware/ErrorHandler";
 
 
 export const signup = async (student:Object) => {
@@ -46,11 +47,13 @@ export const editStudent = async (data: Object)=>{
 
 export const studentDetails = async (id: string)=>{
     try {
-        const response = await Api.get(`${studentRoutes.studentDetails}/${id}`)
+    const response = await Api.get(`${studentRoutes.studentDetails}/${id}`)
         return response
-    } catch (error) {
-        toast.error(error.response.data)
-    }
+} catch (error) {
+    return handleErrors(error)
+}
+        
+ 
 }
 
 export const logout = async () => {

@@ -4,7 +4,9 @@ const tutorRoutes = {
     otpverify:'/tutors/signupfinal',
     logout:"/tutors/logout",
     tutorDetails: "/tutors/tutor-details",
-    editProfile:"/tutors/edit-profile"
+    editProfile: "/tutors/edit-profile",
+    
+    getalltutors:"/tutors/alltutors"
 }
 
 export default tutorRoutes

@@ -18,6 +18,7 @@ import AdminLogin from "./pages/admin/AdminLogin";
 import StudentManagement from "./pages/admin/StudentManagement";
 import TutorManagement from "./pages/admin/TutorManagement";
 import { useEffect } from "react";
+import DisplayTutor from "./pages/tutor/displayTutor";
 
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
         { path: "tutoronboarding", element: <TutorOnBoard /> },
         { path: "tutordashboard", element: <TutorProfile /> },
         { path: "edit-profile", element: <TutorPrivate><EditTutorProfile /></TutorPrivate> },
+        { path:"tutorProfile/:id", element:<DisplayTutor/>}
       ],
     },
     {

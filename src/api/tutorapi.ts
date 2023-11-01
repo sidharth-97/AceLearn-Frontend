@@ -62,6 +62,16 @@ export const tutorLogout = async ()=>{
         return response
     } catch (error) {
         console.log(error);
-        
+        toast.error(error.response.data)
+    }
+}
+
+export const getalltutors = async () => {
+    try {
+        const response = await Api.get(tutorRoutes.getalltutors)
+        return response
+    } catch (error) {
+        console.log(error);
+        toast.error(error.response.data)
     }
 }

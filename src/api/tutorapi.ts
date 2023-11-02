@@ -75,3 +75,12 @@ export const getalltutors = async () => {
         toast.error(error.response.data)
     }
 }
+
+export const scheduledate = async (data) => {
+    try {
+        const response = await Api.post(tutorRoutes.scheduleTime,data)
+        return response
+    } catch (error) {
+        toast.error(error.response.data)
+    }
+}

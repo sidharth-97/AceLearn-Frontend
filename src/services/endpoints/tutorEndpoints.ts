@@ -6,7 +6,9 @@ const tutorRoutes = {
     tutorDetails: "/tutors/tutor-details",
     editProfile: "/tutors/edit-profile",
     
-    getalltutors:"/tutors/alltutors"
+    getalltutors: "/tutors/alltutors",
+    
+    scheduleTime:"/tutors/scheduledate"
 }
 
 export default tutorRoutes

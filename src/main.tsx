@@ -17,13 +17,11 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <ErrorBoundary>
           <QueryClientProvider client={queryClient}>
             <GoogleOAuthProvider clientId="1042989167797-hgehckk478bvdt8o8e6pskhsgbura5ro.apps.googleusercontent.com">
               <App />
             </GoogleOAuthProvider>
           </QueryClientProvider>
-        </ErrorBoundary>
         <ToastContainer />
       </BrowserRouter>
     </Provider>

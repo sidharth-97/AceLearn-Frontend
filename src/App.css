@@ -22,4 +22,14 @@
   }
 
 
+  .my-custom-calendar {
+    /* Add your calendar-specific styles here */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .my-custom-calendar .react-calendar__tile--active {
+    color: red; /* Change the color to your desired color */
+  }
   

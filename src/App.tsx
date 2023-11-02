@@ -19,6 +19,7 @@ import StudentManagement from "./pages/admin/StudentManagement";
 import TutorManagement from "./pages/admin/TutorManagement";
 import { useEffect } from "react";
 import DisplayTutor from "./pages/tutor/displayTutor";
+import BookTutor from "./pages/student/BookTutor";
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
         { path: "signup", element: <Signup /> },
         { path: "dashboard", element: <StudentProfile /> },
         { path: "profile", element: <PrivateRoute><EditStudentProfile /></PrivateRoute> },
+        {path:"booktutor",element:<BookTutor/>}
       ],
     },
     {

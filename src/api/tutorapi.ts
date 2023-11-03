@@ -84,3 +84,21 @@ export const scheduledate = async (data) => {
         toast.error(error.response.data)
     }
 }
+
+export const changeSchedule = async (data) => {
+    try {
+        const response = await Api.post(tutorRoutes.changeSchedule, data)
+        return response
+    } catch {
+        toast.error(error.response.data)
+    }
+}
+
+export const bookTutor = async (data) => {
+    try {
+        const response = await Api.post(tutorRoutes.bookTutor, data)
+        return response
+    } catch (error) {
+        toast.error(error.response.data)
+    }
+}

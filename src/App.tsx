@@ -35,7 +35,7 @@ function App() {
         { path: "signup", element: <Signup /> },
         { path: "dashboard", element: <StudentProfile /> },
         { path: "profile", element: <PrivateRoute><EditStudentProfile /></PrivateRoute> },
-        {path:"booktutor",element:<BookTutor/>}
+        {path:"booktutor/:id",element:<BookTutor/>}
       ],
     },
     {

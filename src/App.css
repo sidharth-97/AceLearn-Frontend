@@ -33,3 +33,22 @@
     color: red; /* Change the color to your desired color */
   }
   
+  .my-booking-calendar .react-calendar__tile--active {
+    color: rgb(14, 127, 233)
+  }
+
+  .animated-button {
+    animation: slideIn 0.5s forwards;
+  }
+  
+  @keyframes slideIn {
+    from {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  

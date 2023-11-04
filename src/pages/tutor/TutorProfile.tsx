@@ -35,10 +35,14 @@ const TutorProfile = () => {
       tutor: isTutor._id,
       timing: {
         date: givenDate,
-        student: value,
+        
       },
     };
+    console.log(data);
+    
     const reponse = await scheduledate(data);
+    console.log(reponse);
+    
 
     setSchedule(reponse?.data.timing);
   };
@@ -172,7 +176,7 @@ const TutorProfile = () => {
 				               	<span className="text-sm font-bold tracki uppercase text-gray-400">Vestibulum diam nunc</span>
 				                      </div>
 		                      	</div> */}
-                  <div className="relative col-span-12 px-4 space-y-6 sm:col-span-9">
+                  {/* <div className="relative col-span-12 px-4 space-y-6 sm:col-span-9">
                     {schedule.map((schedules, index) => (
                       <div className="col-span-12 space-y-12 relative px-4 sm:col-span-8 sm:space-y-8 sm:before:absolute sm:before:top-2 sm:before:bottom-0 sm:before:w-0.5 sm:before:-left-3 before:bg-gray-700">
                         <div className="flex flex-col sm:relative sm:before:absolute sm:before:top-2 sm:before:w-4 sm:before:h-4 sm:before:rounded-full sm:before:left-[-35px] sm:before:z-[1] before:bg-violet-400">
@@ -180,14 +184,14 @@ const TutorProfile = () => {
                             {" "}
                             {new Date(schedules.date).toLocaleString()}{" "}
                           </h3>
-                          {/* <time className="text-xs tracki uppercase text-gray-400">Dec 2020</time> */}
+                          <time className="text-xs tracki uppercase text-gray-400">Dec 2020</time>
                           <p className="mt-3">
-                            {/* Pellentesque feugiat ante at nisl efficitur, in mollis orci scelerisque. Interdum et malesuada fames ac ante ipsum primis in faucibus. */}
+                            Pellentesque feugiat ante at nisl efficitur, in mollis orci scelerisque. Interdum et malesuada fames ac ante ipsum primis in faucibus.
                           </p>
                         </div>
                       </div>
                     ))}
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </section>

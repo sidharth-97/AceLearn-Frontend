@@ -102,3 +102,12 @@ export const bookTutor = async (data) => {
         toast.error(error.response.data)
     }
 }
+
+export const getTutorSchedule = async (id) => {
+    try {
+        const response = await Api.get(`${tutorRoutes.getTutorSchedule}/${id}`)
+        return response
+    } catch (error) {
+        toast.error(error.response.data)
+    }
+}

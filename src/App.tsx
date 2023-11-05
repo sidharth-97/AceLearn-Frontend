@@ -22,6 +22,7 @@ import DisplayTutor from "./pages/tutor/displayTutor";
 import BookTutor from "./pages/student/BookTutor";
 import RequestTutor from "./pages/student/HireTutor";
 import Requests from "./pages/student/Requests";
+import TutorJobs from "./pages/tutor/TutorJobs";
 
 
 function App() {
@@ -51,7 +52,7 @@ function App() {
         { path: "tutordashboard", element: <TutorProfile /> },
         { path: "edit-profile", element: <TutorPrivate><EditTutorProfile /></TutorPrivate> },
         { path: "tutorProfile/:id", element: <DisplayTutor /> },
-       
+       {path:"tutorjobs",element:<TutorJobs/>}
       ],
     },
     {

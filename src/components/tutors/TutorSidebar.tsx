@@ -11,7 +11,7 @@ const TutorSidebar = () => {
   const menus = [
     { name: "dashboard", link: "/tutor/tutordashboard", icon: MdOutlineDashboard },
     { name: "Profile", link: "/tutor/edit-profile", icon: AiOutlineUser },
-    { name: "messages", link: "/", icon: FiMessageSquare },
+    { name: "tutor jobs", link: "/tutor/tutorjobs", icon: FiMessageSquare },
     { name: "analytics", link: "/", icon: TbReportAnalytics, margin: true },
     { name: "File Manager", link: "/", icon: FiFolder },
     { name: "Cart", link: "/", icon: FiShoppingCart },

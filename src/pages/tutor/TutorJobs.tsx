@@ -1,0 +1,81 @@
+import React from "react";
+import Navbar from "../../components/common/navbar";
+import TutorSidebar from "../../components/tutors/TutorSidebar";
+
+const TutorJobs = () => {
+  const tutorJobs = [
+    {
+      _id: "1",
+      subject: "Mathematics",
+      class: "10th",
+      timeRange: "Evening",
+    },
+    {
+      _id: "2",
+      subject: "Physics",
+      class: "+2",
+      timeRange: "Morning",
+    },
+    {
+      _id: "3",
+      subject: "English",
+      class: "8th",
+      timeRange: "Afternoon",
+    },
+    // Add more job objects as needed
+  ];
+  return (
+    <div>
+      <Navbar />
+      <div className="flex flex-row w-full">
+        <TutorSidebar />
+        <div className="w-full">
+          <div className="flex justify-center items-center flex-col w-full mt-10">
+            <h1 className="text-3xl font-bold mb-4">
+              Available Jobs for Tutors
+            </h1>
+            {tutorJobs.map((job) => (
+              <div
+                key={job._id}
+                className="max-w-2xl bg-gray-100 rounded-xl shadow-md p-6 mb-4 w-full"
+              >
+                <div className="mb-6">
+                  <h2 className="text-2xl font-bold mb-4">Job Details</h2>
+                  <div className="bg-white p-4 rounded-xl shadow-md">
+                    <p>
+                      <strong>Subject:</strong> {job.subject}
+                    </p>
+                    <p>
+                      <strong>Class:</strong> {job.class}
+                    </p>
+                    <p>
+                      <strong>Time Range:</strong> {job.timeRange}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mb-4">
+                  <h2 className="text-2xl font-bold mb-4">
+                    Apply for this Job
+                  </h2>
+                  <button
+                    //   onClick={() => handleApply(job._id)}
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4"
+                  >
+                    Apply
+                  </button>
+                  <input
+                    type="datetime-local"
+                    className="py-2 px-4 border rounded"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default TutorJobs;

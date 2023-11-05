@@ -11,7 +11,9 @@ const tutorRoutes = {
     scheduleTime: "/tutors/scheduledate",
     changeSchedule: "/tutors/changeSchedule",
     bookTutor: "/tutors/booktutor",
-    getTutorSchedule:"/tutors/tutorschedule"
+    getTutorSchedule: "/tutors/tutorschedule",
+    getAllJobs: "/tutors/getallposting",
+    applyTutorJobs:"/tutors/applytutorjob"
 }
 
 export default tutorRoutes

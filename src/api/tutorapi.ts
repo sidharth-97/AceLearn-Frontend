@@ -111,3 +111,26 @@ export const getTutorSchedule = async (id) => {
         toast.error(error.response.data)
     }
 }
+
+export const getAllJobs = async () => {
+    try {
+        const response = await Api.get(tutorRoutes.getAllJobs)
+        return response
+    } catch (error) {
+        toast.error(error.response.data)
+    }
+}
+
+export const applyTutorJobs = async (data: {
+    id:string
+    tutor: string,
+    fee: string,
+    date: Date,
+  }) => {
+    try {
+        const response = await Api.post(tutorRoutes.applyTutorJobs, data)
+        return response
+    } catch (error) {
+        toast.error(error.response.data)
+    }
+}

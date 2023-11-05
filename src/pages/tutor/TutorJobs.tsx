@@ -1,29 +1,56 @@
-import React from "react";
+import { useState } from "react";
 import Navbar from "../../components/common/navbar";
 import TutorSidebar from "../../components/tutors/TutorSidebar";
+import { useMutation, useQuery } from "react-query";
+import { applyTutorJobs, getAllJobs } from "../../api/tutorapi";
+import { useSelector } from "react-redux";
 
 const TutorJobs = () => {
-  const tutorJobs = [
-    {
-      _id: "1",
-      subject: "Mathematics",
-      class: "10th",
-      timeRange: "Evening",
-    },
-    {
-      _id: "2",
-      subject: "Physics",
-      class: "+2",
-      timeRange: "Morning",
-    },
-    {
-      _id: "3",
-      subject: "English",
-      class: "8th",
-      timeRange: "Afternoon",
-    },
-    // Add more job objects as needed
-  ];
+
+    const [time, setTime] = useState("")
+    console.log(time,"this is the time");
+    
+const{isTutor}=useSelector((state)=>state.auth)
+
+    const { data, isLoading, isError } = useQuery({
+        queryFn: () => getAllJobs(),
+        queryKey: ["tutorJobs"]
+    });
+    console.log(data);
+    
+    
+      const tutorJobs = data?.data;
+    
+      if (isLoading) {
+        return <div>Loading...</div>;
+      }
+    
+      if (isError) {
+        return <div>Error occurred while fetching data.</div>;
+      }
+
+    const applyjobmutation=useMutation((formData)=>applyTutorJobs(formData) )
+    
+    const handleApply = async (id: {
+        id:string
+        tutor: string,
+        fee: string,
+        date: Date,
+      }) => {
+        const formData = {
+            id: id,
+            tutor: isTutor._id,
+            fee: isTutor.fee,
+            date:time
+        }
+        // try {
+            await applyjobmutation.mutateAsync(formData)
+        // } catch (error) {
+        //     console.log(error);  
+        // }
+    }
+
+    
   return (
     <div>
       <Navbar />
@@ -59,12 +86,12 @@ const TutorJobs = () => {
                     Apply for this Job
                   </h2>
                   <button
-                    //   onClick={() => handleApply(job._id)}
+                      onClick={() => handleApply(job.student)}
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4"
                   >
                     Apply
                   </button>
-                  <input
+                  <input value={time} onChange={(e)=>setTime(e.target.value)}
                     type="datetime-local"
                     className="py-2 px-4 border rounded"
                   />

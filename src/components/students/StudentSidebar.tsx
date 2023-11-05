@@ -9,9 +9,9 @@ import { Link } from "react-router-dom";
 
 const StudentSidebar = () => {
   const menus = [
-    { name: "dashboard", link: "/", icon: MdOutlineDashboard },
+    { name: "dashboard", link: "/student", icon: MdOutlineDashboard },
     { name: "edit profile", link: "/student/profile", icon: AiOutlineUser },
-    { name: "messages", link: "/", icon: FiMessageSquare },
+    { name: "request", link: "/student/requesttutor", icon: FiMessageSquare },
     { name: "analytics", link: "/", icon: TbReportAnalytics, margin: true },
     { name: "File Manager", link: "/", icon: FiFolder },
     { name: "Cart", link: "/", icon: FiShoppingCart },

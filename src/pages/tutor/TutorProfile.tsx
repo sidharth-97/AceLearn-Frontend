@@ -163,6 +163,7 @@ const TutorProfile = () => {
                 <div key={index} className="bg-gray-100 p-4 mt-4 rounded-md">
                   <p>Date: {new Date(schedules.date).toLocaleString()}</p>
                   <p>Student: {schedules.student}</p>
+                  {typeof(schedules.student)=="undefined" &&<button>Cancel</button>}
                 </div>
               ))}
             </div>

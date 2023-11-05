@@ -65,3 +65,18 @@ export const logout = async () => {
         
     }
 }
+
+export const postJob = async (formData: {
+    student: string,
+    subject: string,
+    timeRange: string,
+    class: string
+  }) => {
+    try {
+      const response = await Api.post(studentRoutes.hireTutor, formData);
+      return response;
+    } catch (error) {
+      toast.error(error.response.data);
+    }
+  }
+  

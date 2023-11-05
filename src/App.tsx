@@ -20,6 +20,7 @@ import TutorManagement from "./pages/admin/TutorManagement";
 import { useEffect } from "react";
 import DisplayTutor from "./pages/tutor/displayTutor";
 import BookTutor from "./pages/student/BookTutor";
+import RequestTutor from "./pages/student/RequestTutor";
 
 
 function App() {
@@ -35,7 +36,8 @@ function App() {
         { path: "signup", element: <Signup /> },
         { path: "dashboard", element: <StudentProfile /> },
         { path: "profile", element: <PrivateRoute><EditStudentProfile /></PrivateRoute> },
-        {path:"booktutor/:id",element:<BookTutor/>}
+        { path: "booktutor/:id", element: <BookTutor /> },
+        {path:"requesttutor",element:<RequestTutor/>}
       ],
     },
     {
@@ -46,7 +48,8 @@ function App() {
         { path: "tutoronboarding", element: <TutorOnBoard /> },
         { path: "tutordashboard", element: <TutorProfile /> },
         { path: "edit-profile", element: <TutorPrivate><EditTutorProfile /></TutorPrivate> },
-        { path:"tutorProfile/:id", element:<DisplayTutor/>}
+        { path: "tutorProfile/:id", element: <DisplayTutor /> },
+       
       ],
     },
     {

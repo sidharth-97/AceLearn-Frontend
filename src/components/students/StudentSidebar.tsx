@@ -11,8 +11,8 @@ const StudentSidebar = () => {
   const menus = [
     { name: "dashboard", link: "/student", icon: MdOutlineDashboard },
     { name: "edit profile", link: "/student/profile", icon: AiOutlineUser },
-    { name: "request", link: "/student/requesttutor", icon: FiMessageSquare },
-    { name: "analytics", link: "/", icon: TbReportAnalytics, margin: true },
+    { name: "hire a tutor", link: "/student/requesttutor", icon: FiMessageSquare },
+    { name: "requests", link: "/student/requests", icon: TbReportAnalytics, margin: true },
     { name: "File Manager", link: "/", icon: FiFolder },
     { name: "Cart", link: "/", icon: FiShoppingCart },
     { name: "Saved", link: "/", icon: AiOutlineHeart, margin: true },

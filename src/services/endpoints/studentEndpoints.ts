@@ -7,7 +7,8 @@ const studentRoutes = {
     editProfile: "/students/edit-profile",
     studentDetails: "/students/student-details",
     
-    hireTutor:"/students/addjob"
+    hireTutor: "/students/addjob",
+    viewRequestStatus:"/students/student-job-request"
 }
 
 export default studentRoutes

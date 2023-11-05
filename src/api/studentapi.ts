@@ -80,3 +80,11 @@ export const postJob = async (formData: {
     }
   }
   
+export const viewRequest = async (id: string)=>{
+      try {
+          const response = await Api.get(`${studentRoutes.viewRequestStatus}/${id}`)
+          return response
+      } catch (error) {
+        toast.error(error.response.data)
+      }
+  }

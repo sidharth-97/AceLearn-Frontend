@@ -49,7 +49,7 @@ function App() {
         { path: "login", element:<><Navbar/> <Signin user={"tutor"} /></> },
         { path: "signup", element: <TutorSignup /> },
         { path: "tutoronboarding", element: <TutorOnBoard /> },
-        { path: "tutordashboard", element: <TutorProfile /> },
+        { path: "tutordashboard", element: <TutorPrivate><TutorProfile /></TutorPrivate> },
         { path: "edit-profile", element: <TutorPrivate><EditTutorProfile /></TutorPrivate> },
         { path: "tutorProfile/:id", element: <DisplayTutor /> },
        {path:"tutorjobs",element:<TutorJobs/>}

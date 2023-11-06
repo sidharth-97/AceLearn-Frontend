@@ -46,6 +46,12 @@ const Signin: React.FC<propstype> = ({ user }) => {
 
   const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    const trimmedEmail = email.trim();
+    const trimmedPassword = password.trim();
+    if (!trimmedEmail || !trimmedPassword) {
+      toast.error("Please fill all fields")
+      return
+    }
     const formData={
       email,password
     }

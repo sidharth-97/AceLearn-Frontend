@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "../../components/common/navbar";
 import TutorSidebar from "../../components/tutors/TutorSidebar";
 import { useMutation, useQuery } from "react-query";
@@ -6,51 +6,55 @@ import { applyTutorJobs, getAllJobs } from "../../api/tutorapi";
 import { useSelector } from "react-redux";
 
 const TutorJobs = () => {
+  const [time, setTime] = useState("");
+  const [tutorJobs, setTutorJobs] = useState([]);
+  console.log(time, "this is the time");
 
-    const [time, setTime] = useState("")
-    console.log(time,"this is the time");
-    
-const{isTutor}=useSelector((state)=>state.auth)
+  const { isTutor } = useSelector((state) => state.auth);
 
-    const { data, isLoading, isError } = useQuery({
-        queryFn: () => getAllJobs(),
-        queryKey: ["tutorJobs"]
-    });
-    console.log(data);
-    
-    
-      const tutorJobs = data?.data;
-    
-      if (isLoading) {
-        return <div>Loading...</div>;
+  const { data, isLoading, isError, refetch } = useQuery({
+    queryFn: () => getAllJobs(),
+    enabled: false,
+    queryKey: ["tutorJobs"],
+    onSuccess: (data) => {
+      if (data) {
+        setTutorJobs(data.data);
       }
-    
-      if (isError) {
-        return <div>Error occurred while fetching data.</div>;
-      }
+    },
+  });
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
+  const applyjobmutation = useMutation((formData) => applyTutorJobs(formData));
+  console.log(data);
 
-    const applyjobmutation=useMutation((formData)=>applyTutorJobs(formData) )
-    
-    const handleApply = async (id: {
-        id:string
-        tutor: string,
-        fee: string,
-        date: Date,
-      }) => {
-        const formData = {
-            id: id,
-            tutor: isTutor._id,
-            fee: isTutor.fee,
-            date:time
-        }
-        // try {
-            await applyjobmutation.mutateAsync(formData)
-        // } catch (error) {
-        //     console.log(error);  
-        // }
-    }
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
-    
+  if (isError) {
+    return <div>Error occurred while fetching data.</div>;
+  }
+
+  const handleApply = async (id: {
+    id: string;
+    tutor: string;
+    fee: string;
+    date: Date;
+  }) => {
+    const formData = {
+      id: id,
+      tutor: isTutor._id,
+      fee: isTutor.fee,
+      date: time,
+    };
+    // try {
+    await applyjobmutation.mutateAsync(formData);
+    // } catch (error) {
+    //     console.log(error);
+    // }
+  };
+
   return (
     <div>
       <Navbar />
@@ -89,12 +93,14 @@ const{isTutor}=useSelector((state)=>state.auth)
                     Apply for this Job
                   </h2>
                   <button
-                      onClick={() => handleApply(job.student)}
+                    onClick={() => handleApply(job.student)}
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4"
                   >
                     Apply
                   </button>
-                  <input value={time} onChange={(e)=>setTime(e.target.value)}
+                  <input
+                    value={time}
+                    onChange={(e) => setTime(e.target.value)}
                     type="datetime-local"
                     className="py-2 px-4 border rounded"
                   />

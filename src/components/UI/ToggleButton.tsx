@@ -5,17 +5,16 @@ import { useNavigate } from 'react-router-dom';
 
 export default function ColorToggleButton() {
   const [alignment, setAlignment] = React.useState('student');
+  const navigate = useNavigate();
 
-    const navigate=useNavigate()
   const handleChange = (
     event: React.MouseEvent<HTMLElement>,
     newAlignment: string,
   ) => {
-      if (newAlignment) {
-          
-          setAlignment(newAlignment);
-          navigate(`/${newAlignment}/login`)
-      }
+    if (newAlignment) {
+      navigate(`/${newAlignment}/login`);
+      setAlignment(newAlignment);
+    }
   };
 
   return (

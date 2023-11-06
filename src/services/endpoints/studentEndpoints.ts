@@ -8,7 +8,8 @@ const studentRoutes = {
     studentDetails: "/students/student-details",
     
     hireTutor: "/students/addjob",
-    viewRequestStatus:"/students/student-job-request"
+    viewRequestStatus: "/students/student-job-request",
+    bookTutorByPost:"/students/book-tutor-by-post"
 }
 
 export default studentRoutes

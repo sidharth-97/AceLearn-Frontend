@@ -87,4 +87,13 @@ export const viewRequest = async (id: string)=>{
       } catch (error) {
         toast.error(error.response.data)
       }
-  }
+}
+  
+export const bookTutorByPost = async (data)=>{
+    try {
+        const response = await Api.post(studentRoutes.bookTutorByPost, data)
+        return response
+    } catch (error) {
+        toast.error(error.response.data)
+    }
+}

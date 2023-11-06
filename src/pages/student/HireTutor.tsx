@@ -27,7 +27,8 @@ const RequestTutor = () => {
       student: isStudent._id,
       subject: subject,
       timeRange: timerange,
-      class:stdclass
+      class: stdclass,
+      description:description
     }
     try {
       const response = await postJobMutation.mutateAsync(formData);

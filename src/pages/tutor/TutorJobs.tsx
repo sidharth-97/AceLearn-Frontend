@@ -78,6 +78,9 @@ const{isTutor}=useSelector((state)=>state.auth)
                     <p>
                       <strong>Time Range:</strong> {job.timeRange}
                     </p>
+                    <p>
+                      <strong>Description:</strong> {job.description}
+                    </p>
                   </div>
                 </div>
 

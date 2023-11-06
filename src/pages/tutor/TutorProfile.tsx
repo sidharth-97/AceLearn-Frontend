@@ -6,13 +6,26 @@ import Navbar from "../../components/common/navbar";
 import TutorSidebar from "../../components/tutors/TutorSidebar";
 import "react-calendar/dist/Calendar.css";
 import Calendar from "react-calendar";
-import { scheduledate } from "../../api/tutorapi";
+import { changeSchedule, getTutorSchedule, scheduledate } from "../../api/tutorapi";
+import { useQuery } from "react-query";
+import {toast} from 'react-toastify'
 
 const TutorProfile = () => {
   const { isTutor } = useSelector((state: any) => state.auth);
   const [value, onChange] = useState<Date | [Date, Date]>();
   const [selectedTime, setSelectedTime] = useState("");
   const [schedule, setSchedule] = useState([]);
+
+  const { data, isLoading, isError } = useQuery({
+    queryFn: () => getTutorSchedule(isTutor._id),
+    queryKey: ["timeline"],
+    onSuccess: (data) => {
+      if (data) {
+        setSchedule(data?.data[0].timing);
+      }
+    },
+  });
+  
 
   const handleTimeChange = (event) => {
     setSelectedTime(event.target.value);
@@ -44,8 +57,19 @@ const TutorProfile = () => {
     console.log(reponse);
     
 
-    setSchedule(reponse?.data.timing);
+    
   };
+
+  const handleCancel = async(date) => {
+    const obj = {
+      tutor: isTutor._id,
+      timing: {
+        date:date
+      }
+    }
+    const response = await changeSchedule(obj)
+    if(response?.status==200)toast.success("Cancelled Successfully")
+  }
 
   return (
     <>
@@ -57,7 +81,6 @@ const TutorProfile = () => {
         <div className="w-full p-4 bg-9ED0F5">
           <div className="flex bg-white justify-center items-center p-5 rounded-3xl">
             {" "}
-            {/* Reduced padding */}
             <div>
               <h2 className="font-semibold text-2xl">
                 Welcome {isTutor.name},
@@ -158,15 +181,15 @@ const TutorProfile = () => {
             <h2 className="font-semibold text-2xl">
               Your schedule for this week
             </h2>
-            <div className="mt-4">
+            {/* <div className="mt-4">
               {schedule.map((schedules, index) => (
                 <div key={index} className="bg-gray-100 p-4 mt-4 rounded-md">
                   <p>Date: {new Date(schedules.date).toLocaleString()}</p>
                   <p>Student: {schedules.student}</p>
-                  {typeof(schedules.student)=="undefined" &&<button>Cancel</button>}
+                  {typeof(schedules.student)=="undefined" &&<button onClick={()=>handleCancel(schedules.date)}>Cancel</button>}
                 </div>
               ))}
-            </div>
+            </div> */}
 
             <section className="bg-white text-gray-600">
               <div className="container max-w-5xl px-4 py-12 mx-auto">
@@ -177,22 +200,25 @@ const TutorProfile = () => {
 				               	<span className="text-sm font-bold tracki uppercase text-gray-400">Vestibulum diam nunc</span>
 				                      </div>
 		                      	</div> */}
-                  {/* <div className="relative col-span-12 px-4 space-y-6 sm:col-span-9">
+                  <div className="relative col-span-12 px-4 space-y-6 sm:col-span-9">
                     {schedule.map((schedules, index) => (
                       <div className="col-span-12 space-y-12 relative px-4 sm:col-span-8 sm:space-y-8 sm:before:absolute sm:before:top-2 sm:before:bottom-0 sm:before:w-0.5 sm:before:-left-3 before:bg-gray-700">
-                        <div className="flex flex-col sm:relative sm:before:absolute sm:before:top-2 sm:before:w-4 sm:before:h-4 sm:before:rounded-full sm:before:left-[-35px] sm:before:z-[1] before:bg-violet-400">
+                        <div className="flex flex-col sm:relative sm:before:absolute sm:before:top-2 sm:before:w-4 sm:before:h-4 sm:before:rounded-full sm:before:left-[-35px] sm:before:z-[1] before:bg-blue-400">
                           <h3 className="text-xl font-semibold tracki">
                             {" "}
                             {new Date(schedules.date).toLocaleString()}{" "}
                           </h3>
-                          <time className="text-xs tracki uppercase text-gray-400">Dec 2020</time>
-                          <p className="mt-3">
+                          {/* <time className="text-xs tracki uppercase text-gray-400">Dec 2020</time> */}
+                          <p>Student Id: {schedules.student}</p>
+                          {typeof(schedules.student)=="undefined"?<button className="bg-red-500 hover:bg-red-700 w-36 h-10 rounded-full text-white font-semibold shadow-md focus:outline-none focus:ring focus:border-red-300" onClick={()=>handleCancel(schedules.date)}>Cancel this class</button>:<p className="text-green-400 font-bold">Booked</p>}
+                          {/* <p className="mt-3">
                             Pellentesque feugiat ante at nisl efficitur, in mollis orci scelerisque. Interdum et malesuada fames ac ante ipsum primis in faucibus.
-                          </p>
+                          </p> */}
+
                         </div>
                       </div>
                     ))}
-                  </div> */}
+                  </div>
                 </div>
               </div>
             </section>

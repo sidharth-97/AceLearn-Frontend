@@ -81,8 +81,8 @@ const Requests = () => {
                       <strong>Fee:</strong> {tutor.fee}
                     </p>
                     <p>
-                      <strong>Date:</strong>{new Date(tutor.date).toDateString()}
-                    </p>
+                    <strong>Date: </strong>{new Date(tutor.date).toLocaleDateString()}
+<strong> Time: </strong> {new Date(tutor.date).toLocaleTimeString()}                    </p>
                   </div>
                   <button
                     onClick={() => handleAccept(tutor.tutor._id,tutor.date)}

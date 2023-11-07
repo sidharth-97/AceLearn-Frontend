@@ -3,49 +3,61 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import Navbar from "../../components/common/navbar";
 import img from "../../assets/Screenshot_2023-11-02_000343-removebg-preview.png";
-import { useQuery,useMutation } from "react-query";
+import { useQuery, useMutation } from "react-query";
 import { bookTutor, getTutorSchedule } from "../../api/tutorapi";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { toast } from 'react-toastify'
+import { toast } from "react-toastify";
 
 const BookTutor = () => {
   const today = new Date();
   const [value, onChange] = useState<Date>(today);
   const [tutorSchedule, setTutorSchedule] = useState<any>({});
-  const[object,setObject]=useState({})
+  const [object, setObject] = useState({});
+  const [includedDates, setIncludedDates] = useState<Date[]>([]);
 
   const params: any = useParams();
   const { isStudent } = useSelector((state: any) => state.auth);
-  const { data: schedules, isLoading, isError, refetch } = useQuery("schedule", () =>
-  getTutorSchedule(params.id), {
-    onSuccess: (data) => {
+  const {
+    data: schedules,
+    isLoading,
+    isError,
+    refetch,
+  } = useQuery("schedule", () => getTutorSchedule(params.id), {
+    onSuccess: (data) => {  
+
+      const included = data.data[0].timing
+      .filter((item) => !item.student)
+      .map((item) => new Date(item.date));
+      setIncludedDates(included); // 
+
       const groupedDates = data.data[0].timing.reduce(
         (grouped: any, item: any) => {
-          console.log(item.date,"item.date");
-          
-          const date = new Date(item.date).toLocaleDateString();
-console.log(date,"date");
+        includedDates.push(item.date)
+          if (!item.student) {
+            const date = new Date(item.date).toLocaleDateString();
+            console.log(date, "date");
 
-          if (!grouped[date]) {
-            grouped[date] = [];
+            if (!grouped[date]) {
+              grouped[date] = [];
+            }
+            const datee = new Date(item.date); // Convert the string to a Date object
+            const hours = String(datee.getUTCHours()).padStart(2, "0"); // Get hours in 2-digit format
+            const minutes = String(datee.getUTCMinutes()).padStart(2, "0"); // Get minutes in 2-digit format
+            const timeString = `${hours}:${minutes}`; // Create a time string in HH:MM format
+
+            grouped[date].push(timeString);
           }
-          const datee = new Date(item.date); // Convert the string to a Date object
-          const hours = String(datee.getUTCHours()).padStart(2, '0'); // Get hours in 2-digit format
-          const minutes = String(datee.getUTCMinutes()).padStart(2, '0'); // Get minutes in 2-digit format
-          const timeString = `${hours}:${minutes}`; // Create a time string in HH:MM format
-          
-          grouped[date].push(timeString);
           return grouped;
         },
         {}
       );
       setTutorSchedule(groupedDates);
     },
-  }
-);
-console.log(tutorSchedule,"tutorSchedule");
-
+  });
+  console.log(schedules, "tutorSchedule");
+  console.log(includedDates,"included dates");
+  
 
   const bookTutorMutation = useMutation(bookTutor, {
     onSuccess: (data) => {
@@ -55,31 +67,32 @@ console.log(tutorSchedule,"tutorSchedule");
     onError: (error) => {
       console.error("Error while booking tutor: ", error);
       toast.error("Booking failed");
-    }
+    },
   });
 
   const handleClick = async (time: string) => {
     const givenDate = new Date(`${value}`);
     const givenHour = time;
     const [hours, minutes] = givenHour.split(":").map(Number);
-  
+
     givenDate.setHours(hours);
-  givenDate.setMinutes(minutes);
+    givenDate.setMinutes(minutes);
 
-  const utcDate = new Date(givenDate.getTime() - (givenDate.getTimezoneOffset() * 60000));
+    const utcDate = new Date(
+      givenDate.getTime() - givenDate.getTimezoneOffset() * 60000
+    );
 
-  const object1 = {
-    tutor: params.id,
-    timing: {
-      date: utcDate.toISOString(), // Send the UTC date to the API
-      student: isStudent._id,
-    },
-  };
-  
+    const object1 = {
+      tutor: params.id,
+      timing: {
+        date: utcDate.toISOString(), // Send the UTC date to the API
+        student: isStudent._id,
+      },
+    };
+
     // Perform the booking action using mutation
     bookTutorMutation.mutate(object1);
   };
-  
 
   useEffect(() => {
     // Refetch tutor schedules after successful booking
@@ -88,7 +101,7 @@ console.log(tutorSchedule,"tutorSchedule");
       refetch();
     }
   }, [bookTutorMutation.isSuccess, refetch]);
-  
+
   return (
     <>
       <Navbar />
@@ -116,7 +129,12 @@ console.log(tutorSchedule,"tutorSchedule");
             <div className="border p-4 rounded">
               <Calendar
                 onChange={onChange}
-                value={value}
+                tileDisabled={({ date }) =>
+                !includedDates.some(
+                  (includedDate) =>
+                    date.toDateString() === includedDate.toDateString()
+                )
+              }                value={value}
                 className="my-booking-calendar"
               />
             </div>
@@ -130,7 +148,7 @@ console.log(tutorSchedule,"tutorSchedule");
               {tutorSchedule[value.toLocaleDateString()] &&
                 tutorSchedule[value.toLocaleDateString()].map((time, index) => (
                   <button
-                    onClick={()=>handleClick(time)}
+                    onClick={() => handleClick(time)}
                     key={index}
                     className="rounded-lg bg-blue-100 px-4 py-2 font-medium text-blue-900 active:scale-95 animated-button"
                   >

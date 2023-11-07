@@ -23,6 +23,7 @@ import BookTutor from "./pages/student/BookTutor";
 import RequestTutor from "./pages/student/HireTutor";
 import Requests from "./pages/student/Requests";
 import TutorJobs from "./pages/tutor/TutorJobs";
+import TutorCardGrid from "./pages/tutor/AllTutors";
 
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
         { path: "login", element:<><Navbar/> <Signin user={"tutor"} /></> },
         { path: "signup", element: <TutorSignup /> },
         { path: "tutoronboarding", element: <TutorOnBoard /> },
+        {path:"all-tutors",element:<TutorCardGrid/>},
         { path: "tutordashboard", element: <TutorPrivate><TutorProfile /></TutorPrivate> },
         { path: "edit-profile", element: <TutorPrivate><EditTutorProfile /></TutorPrivate> },
         { path: "tutorProfile/:id", element: <DisplayTutor /> },

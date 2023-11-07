@@ -6,9 +6,13 @@ import Navbar from "../../components/common/navbar";
 import TutorSidebar from "../../components/tutors/TutorSidebar";
 import "react-calendar/dist/Calendar.css";
 import Calendar from "react-calendar";
-import { changeSchedule, getTutorSchedule, scheduledate } from "../../api/tutorapi";
+import {
+  changeSchedule,
+  getTutorSchedule,
+  scheduledate,
+} from "../../api/tutorapi";
 import { useQuery } from "react-query";
-import {toast} from 'react-toastify'
+import { toast } from "react-toastify";
 
 const TutorProfile = () => {
   const { isTutor } = useSelector((state: any) => state.auth);
@@ -25,7 +29,6 @@ const TutorProfile = () => {
       }
     },
   });
-  
 
   const handleTimeChange = (event) => {
     setSelectedTime(event.target.value);
@@ -36,40 +39,37 @@ const TutorProfile = () => {
   const handleSchedule = async () => {
     const givenDate = new Date(`${value}`);
     const givenHour = selectedTime;
+    console.log(givenDate);
 
     const [hours, minutes] = givenHour.split(":").map(Number);
 
-    givenDate.setHours(hours);
-    givenDate.setMinutes(minutes);
-
+ 
+    givenDate.setHours(hours + 5); // Adding 5 hours to adjust for the time zone
+    givenDate.setMinutes(minutes + 30);
+    
     console.log(givenDate, "divvng");
-
     const data = {
       tutor: isTutor._id,
       timing: {
-        date: givenDate,
-        
+        date: `${givenDate}`,
       },
     };
     console.log(data);
-    
+
     const reponse = await scheduledate(data);
     console.log(reponse);
-    
-
-    
   };
 
-  const handleCancel = async(date) => {
+  const handleCancel = async (date) => {
     const obj = {
       tutor: isTutor._id,
       timing: {
-        date:date
-      }
-    }
-    const response = await changeSchedule(obj)
-    if(response?.status==200)toast.success("Cancelled Successfully")
-  }
+        date: date,
+      },
+    };
+    const response = await changeSchedule(obj);
+    if (response?.status == 200) toast.success("Cancelled Successfully");
+  };
 
   return (
     <>
@@ -132,50 +132,45 @@ const TutorProfile = () => {
           </div>
 
           <div className="">
-            
-          <div className="bg-white mt-8 flex flex-col gap-3 justify-center items-center p-9">
-            <div>
-              <h2 className="font-semibold text-2xl">Schedule your class</h2>
-            </div>
-            <div className="flex flex-row gap-10 mt-5">
+            <div className="bg-white mt-8 flex flex-col gap-3 justify-center items-center p-9">
               <div>
-                {" "}
-                <Calendar
-                  value={value}
-                  onChange={onChange}
-                  className="my-custom-calendar"
-                />
+                <h2 className="font-semibold text-2xl">Schedule your class</h2>
               </div>
-              <div>
-                <p className="font-serif text-xl font-bold text-blue-900">
-                  Select a time
-                </p>
-                <input
-                  type="time"
-                  value={selectedTime}
-                  onChange={handleTimeChange}
-                  className="mt-2 p-2.5 rounded-lg border  border-blue-300 bg-blue-100 text-blue-800 outline-none ring-opacity-30 focus:ring focus:ring-blue-300"
-                />
-                {value && (
-                  <p className="pt-5 text-lg font-semibold">
-                    Class on {value instanceof Date && value.toDateString()} at{" "}
-                    {selectedTime}
+              <div className="flex flex-row gap-10 mt-5">
+                <div>
+                  {" "}
+                  <Calendar
+                    value={value}
+                    onChange={onChange}
+                    className="my-custom-calendar"
+                  />
+                </div>
+                <div>
+                  <p className="font-serif text-xl font-bold text-blue-900">
+                    Select a time
                   </p>
-                )}
-                <button
-                  onClick={handleSchedule}
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mb-2 mt-5"
-                >
-                  Schedule
-                </button>
+                  <input
+                    type="time"
+                    value={selectedTime}
+                    onChange={handleTimeChange}
+                    className="mt-2 p-2.5 rounded-lg border  border-blue-300 bg-blue-100 text-blue-800 outline-none ring-opacity-30 focus:ring focus:ring-blue-300"
+                  />
+                  {value && (
+                    <p className="pt-5 text-lg font-semibold">
+                      Class on {value instanceof Date && value.toDateString()}{" "}
+                      at {selectedTime}
+                    </p>
+                  )}
+                  <button
+                    onClick={handleSchedule}
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mb-2 mt-5"
+                  >
+                    Schedule
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-</div>
-
-
-
-
 
           <div className="bg-white text-black mt-6 p-4">
             <h2 className="font-semibold text-2xl">
@@ -205,16 +200,27 @@ const TutorProfile = () => {
                       <div className="col-span-12 space-y-12 relative px-4 sm:col-span-8 sm:space-y-8 sm:before:absolute sm:before:top-2 sm:before:bottom-0 sm:before:w-0.5 sm:before:-left-3 before:bg-gray-700">
                         <div className="flex flex-col sm:relative sm:before:absolute sm:before:top-2 sm:before:w-4 sm:before:h-4 sm:before:rounded-full sm:before:left-[-35px] sm:before:z-[1] before:bg-blue-400">
                           <h3 className="text-xl font-semibold tracki">
-                            {" "}
-                            {new Date(schedules.date).toLocaleString()}{" "}
+                            {new Date(schedules.date)
+                              .toISOString()
+                              .slice(0, 16)
+                              .replace("T", " ")}
                           </h3>
+
                           {/* <time className="text-xs tracki uppercase text-gray-400">Dec 2020</time> */}
                           <p>Student Id: {schedules.student}</p>
-                          {typeof(schedules.student)=="undefined"?<button className="bg-red-500 hover:bg-red-700 w-36 h-10 rounded-full text-white font-semibold shadow-md focus:outline-none focus:ring focus:border-red-300" onClick={()=>handleCancel(schedules.date)}>Cancel this class</button>:<p className="text-green-400 font-bold">Booked</p>}
+                          {typeof schedules.student == "undefined" ? (
+                            <button
+                              className="bg-red-500 hover:bg-red-700 w-36 h-10 rounded-full text-white font-semibold shadow-md focus:outline-none focus:ring focus:border-red-300"
+                              onClick={() => handleCancel(schedules.date)}
+                            >
+                              Cancel this class
+                            </button>
+                          ) : (
+                            <p className="text-green-400 font-bold">Booked</p>
+                          )}
                           {/* <p className="mt-3">
                             Pellentesque feugiat ante at nisl efficitur, in mollis orci scelerisque. Interdum et malesuada fames ac ante ipsum primis in faucibus.
                           </p> */}
-
                         </div>
                       </div>
                     ))}

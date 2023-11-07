@@ -38,57 +38,59 @@ function Home() {
       {/* top */}
       <h1 className="text-4xl font-bold text-center mt-7">WHAT WE OFFER</h1>
       <div className="p-4 flex items-center justify-center">
-        <div className="flex flex-col">
-          <div className="flex-1 flex">
-            <div className="flex items-center p-4 m-2 rounded-lg">
-              <img
-                src={icon1}
-                alt="Image Description"
-                className="w-1/4 max-h-36 mr-4"
-              />
-              <div className="flex-1">
-                <h2 className="text-xl font-bold">Online Tutoring</h2>
-                <p>Book one-on-one sessions with our tutors</p>
-              </div>
-            </div>
-            <div className="flex items-center p-4 m-2 rounded-lg">
-              <img
-                src={icon2}
-                alt="Image Description"
-                className="w-1/4 max-h-36 mr-4"
-              />
-              <div className="flex-1">
-                <h2 className="text-xl font-bold">Study Materials</h2>
-                <p>You can access free study materials from our tutors</p>
-              </div>
-            </div>
-          </div>
-          <div className="flex-1 flex">
-            <div className="flex items-center p-4 m-2 rounded-lg">
-              <img
-                src={icon3}
-                alt="Image Description"
-                className="w-1/4 max-h-36 mr-4"
-              />
-              <div className="flex-1">
-                <h2 className="text-xl font-bold">Homework Help</h2>
-                <p>You can post your doubts or assignment questions.</p>
-                <p>our experts will solve that to you.</p>
-              </div>
-            </div>
-            <div className="flex items-center p-4 m-2 rounded-lg">
-              <img
-                src={icon4}
-                alt="Image Description"
-                className="w-1/4 max-h-36 mr-4"
-              />
-              <div className="flex-1">
-                <h2 className="text-xl font-bold">Mentoring</h2>
-                <p>Feel free to chat with your mentor.</p>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div className="flex flex-col">
+  <div className="flex-1 flex">
+    <div className="flex items-center p-4 m-2 rounded-lg transform transition duration-300 hover:scale-110">
+      <img
+        src={icon1}
+        alt="Image Description"
+        className="w-1/4 max-h-36 mr-4"
+      />
+      <div className="flex-1">
+        <h2 className="text-xl font-bold">Online Tutoring</h2>
+        <p>Book one-on-one sessions with our tutors</p>
+      </div>
+    </div>
+    <div className="flex items-center p-4 m-2 rounded-lg transform transition duration-300 hover:scale-110">
+      <img
+        src={icon2}
+        alt="Image Description"
+        className="w-1/4 max-h-36 mr-4"
+      />
+      <div className="flex-1">
+        <h2 className="text-xl font-bold">Study Materials</h2>
+        <p>You can access free study materials from our tutors</p>
+      </div>
+    </div>
+  </div>
+  <div className="flex-1 flex">
+    <div className="flex items-center p-4 m-2 rounded-lg transform transition duration-300 hover:scale-110">
+      <img
+        src={icon3}
+        alt="Image Description"
+        className="w-1/4 max-h-36 mr-4"
+      />
+      <div className="flex-1">
+        <h2 className="text-xl font-bold">Homework Help</h2>
+        <p>You can post your doubts or assignment questions.</p>
+        <p>Our experts will solve them for you.</p>
+      </div>
+    </div>
+    <div className="flex items-center p-4 m-2 rounded-lg transform transition duration-300 hover:scale-110">
+      <img
+        src={icon4}
+        alt="Image Description"
+        className="w-1/4 max-h-36 mr-4"
+      />
+      <div className="flex-1">
+        <h2 className="text-xl font-bold">Mentoring</h2>
+        <p>Feel free to chat with your mentor.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
       </div>
       <h1 className="text-4xl text-center font-bold mt-7">Out Top Tutors</h1>
       <TutorsCards />
@@ -102,7 +104,7 @@ function Home() {
       </div>
       <div className="p-4 mt-2">
         <div className="flex flex-wrap -mx-4 justify-start items-center">
-          <div className="w-full md:w-1/2 px-4 mb-8 flex justify-end pre">
+          <div className="w-full md:w-1/2 px-4 mb-8 flex justify-end pre transform transition duration-300 hover:scale-105">
             <div className="w-full md:max-w-sm min-h-96 relative border-2 border-blue-500 rounded-lg shadow-md">
               <img
                 src="https://uploads-ssl.webflow.com/5e6c62141489070e82c24bcf/63d7c1e6e00e4c33a581f2ae_woman-teacher_1f469-200d-1f3eb.png"
@@ -126,14 +128,14 @@ function Home() {
               </div>
             </div>
           </div>
-          <div className="w-full md:w-1/2 px-4 mb-8 flex">
+          <div className="w-full md:w-1/2 px-4 mb-8 flex transform transition duration-300 hover:scale-105">
             <div className="w-full md:max-w-sm min-h-96 border-2 border-yellow-500 rounded-lg shadow-md relative">
               <img
                 src="https://uploads-ssl.webflow.com/5e6c62141489070e82c24bcf/63d7c1e68c4fb44b56d192b2_student_1f9d1-200d-1f393.png"
                 alt="Top Image"
                 className="absolute top-0 w-full h-10 object-contain"
               />
-              <div className="p-4 mt-2">
+              <div className="p-4 mt-2 ">
                 <h2 className="text-xl font-bold mb-2 mt-4">Tutor Premium</h2>
                 <ul className="list-disc pl-4 mb-4">
                   <li>

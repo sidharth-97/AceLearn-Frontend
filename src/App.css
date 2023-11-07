@@ -51,4 +51,19 @@
       opacity: 1;
     }
   }
-  
+  /* for the scrollbar */
+  /* Targeting scrollbar track */
+::-webkit-scrollbar {
+  width: 10px; /* Width of the scrollbar */
+}
+
+/* Targeting scrollbar handle */
+::-webkit-scrollbar-thumb {
+  background: #888; /* Background color of the handle */
+  border-radius: 5px; /* Border radius of the handle */
+}
+
+/* Targeting scrollbar track on hover */
+::-webkit-scrollbar:hover {
+  background: #f0f0f0; /* Background color on hover */
+}

@@ -9,7 +9,8 @@ const studentRoutes = {
     
     hireTutor: "/students/addjob",
     viewRequestStatus: "/students/student-job-request",
-    bookTutorByPost:"/students/book-tutor-by-post"
+    bookTutorByPost: "/students/book-tutor-by-post",
+    scheduleofstudent:"/students/getStudentSchedule"
 }
 
 export default studentRoutes

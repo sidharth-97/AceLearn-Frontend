@@ -4,6 +4,7 @@ import { useQuery } from "react-query";
 import { useDispatch } from "react-redux";
 import { openModal } from "../../slice/modalSlice";
 import Modal from "../UI/Modal";
+import Pagination from "../UI/Pagination";
 
 interface Tutor {
   _id?: string;
@@ -22,6 +23,7 @@ const Tutors = () => {
   const [tutorData, setTutorData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedUserId, setSelectedUserId] = useState(null);
+  const[activePage,setActivePage]=useState(1)
 
   useEffect(() => {
     const list = async function () {
@@ -62,6 +64,13 @@ const Tutors = () => {
     setSelectedUserId(id);
     dispatch(openModal());
   };
+
+  const itemsPerPage = 2
+  const limit=Math.round(tutorData.length/2)
+  const startIndex = (activePage - 1) * itemsPerPage
+  const endIndex = activePage * itemsPerPage
+  
+  const paginatedTutorData=tutorData.slice(startIndex,endIndex)
 
   return (
     <div className="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 pr-10 lg:px-8">
@@ -131,7 +140,7 @@ const Tutors = () => {
           </thead>
           <tbody className="bg-white">
             {filteredUsers.length &&
-              tutorData.map((tutors: Tutor, index) => (
+             paginatedTutorData.map((tutors: Tutor, index) => (
                 <tr id={`${index + Date.now()}`}>
                   <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
                     <div className="flex items-center">
@@ -202,6 +211,9 @@ const Tutors = () => {
               ))}
           </tbody>
         </table>
+        <div className="text-black flex justify-center h-10 w-full p-1 mb-1">
+        <Pagination active={activePage} setActive={setActivePage} limit={ limit} />
+        </div>
       </div>
     </div>
   );

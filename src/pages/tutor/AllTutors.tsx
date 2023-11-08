@@ -3,6 +3,7 @@ import Navbar from '../../components/common/navbar';
 import { useQuery } from 'react-query';
 import { getalltutors } from '../../api/tutorapi';
 import { Link } from 'react-router-dom';
+import SearchInput from '../../components/UI/SearchInput';
 
 const TutorCardGrid = () => {
 const [tutorData,setTutorData]=useState([])
@@ -20,12 +21,17 @@ const { data, isLoading, isError } = useQuery({
 console.log(tutorData);
 
     return (
-  <>  <Navbar/>
+      <>  <Navbar />
+        <div className=' h-36 bg-3447AE text-white'>
+          <div className='text-right'>
+            <h1 className=' text-5xl font-bold me-32'>Find Your <br />Perfect Tutor</h1>
+</div>
+          </div>
       <div className="text-center p-10">
-          
+     
       <h1 className="font-bold text-4xl mb-4">Find the best Tutors</h1>
       {/* <h1 className="text-3xl">Tailwind CSS</h1> */}
-      
+          <SearchInput data={tutorData } />
       {/* Grid Section */}
       <section
         id="Projects"
@@ -39,7 +45,7 @@ console.log(tutorData);
               <img
                 src={`${tutor.image}`}
                 alt="Product"
-                className=" h-60 w-72 object-cover rounded-t-xl"
+                className=" h-60 w-72 object-contain rounded-t-xl"
               />
               <div className="px-4 py-3 w-72">
                 <span className="text-gray-400 mr-3 uppercase text-xs">{ tutor.subject}</span>

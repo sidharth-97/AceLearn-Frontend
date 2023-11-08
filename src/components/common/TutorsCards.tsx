@@ -1,5 +1,6 @@
 import React,{useEffect,useState} from 'react'
 import { getalltutors } from '../../api/tutorapi'
+import { Link } from 'react-router-dom'
 
 const TutorsCards = () => {
   const [tutorList, setTutorList] = useState([])
@@ -18,8 +19,8 @@ functn()
   
   return (
     <div className="p-1 flex flex-wrap items-center justify-center">
-    {tutorList.map((tutor,index) => (
-      <div key={index} className={`flex-shrink-0 m-6 relative overflow-hidden bg-${index === 1 ? 'orange' : index === 2 ? 'teal' : 'purple'}-500 rounded-lg max-w-xs shadow-lg transform transition duration-300 hover:scale-110`}>
+      {tutorList.map((tutor, index) => (
+      <Link to={`/tutor/tutorProfile/${tutor._id}`}>    <div key={index} className={`flex-shrink-0 m-6 relative overflow-hidden bg-${index === 1 ? 'orange' : index === 2 ? 'teal' : 'purple'}-500 rounded-lg max-w-xs shadow-lg transform transition duration-300 hover:scale-110`}>
         <svg className="absolute bottom-0 left-0 mb-8" viewBox="0 0 375 283" fill="none" style={{ transform: 'scale(1.5)', opacity: 0.1 }}>
           <rect x="159.52" y="175" width="152" height="152" rx="8" transform={`rotate(-45 159.52 175)`} fill="white" />
           <rect y="107.48" width="152" height="152" rx="8" transform={`rotate(-45 0 107.48)`} fill="white" />
@@ -36,6 +37,8 @@ functn()
           </div>
         </div>
       </div>
+      </Link>
+  
     ))}
   </div>
   )

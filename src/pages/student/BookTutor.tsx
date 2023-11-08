@@ -41,10 +41,10 @@ const BookTutor = () => {
             if (!grouped[date]) {
               grouped[date] = [];
             }
-            const datee = new Date(item.date); // Convert the string to a Date object
-            const hours = String(datee.getUTCHours()).padStart(2, "0"); // Get hours in 2-digit format
-            const minutes = String(datee.getUTCMinutes()).padStart(2, "0"); // Get minutes in 2-digit format
-            const timeString = `${hours}:${minutes}`; // Create a time string in HH:MM format
+            const datee = new Date(item.date);
+            const hours = String(datee.getUTCHours()).padStart(2, "0"); 
+            const minutes = String(datee.getUTCMinutes()).padStart(2, "0"); 
+            const timeString = `${hours}:${minutes}`;
 
             grouped[date].push(timeString);
           }
@@ -85,19 +85,16 @@ const BookTutor = () => {
     const object1 = {
       tutor: params.id,
       timing: {
-        date: utcDate.toISOString(), // Send the UTC date to the API
+        date: utcDate.toISOString(),
         student: isStudent._id,
       },
     };
 
-    // Perform the booking action using mutation
     bookTutorMutation.mutate(object1);
   };
 
   useEffect(() => {
-    // Refetch tutor schedules after successful booking
     if (bookTutorMutation.isSuccess) {
-      // toast.success("Booking sucessfull")
       refetch();
     }
   }, [bookTutorMutation.isSuccess, refetch]);

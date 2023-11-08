@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { TutorDetails } from "../../api/tutorapi";
 import Navbar from "../../components/common/navbar";
+import { Link } from "react-router-dom";
 
 const DisplayTutor = () => {
   const tutorId = useParams();
@@ -51,9 +52,11 @@ const DisplayTutor = () => {
             </ul>
           </div>
                         <div className="my-4 flex flex-col">
-                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mb-2">
-  Book a lesson
-                            </button>
+             
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mb-2">   <Link to={`/student/booktutor/${tutorId.id}`}>
+  Book a lesson </Link>
+                  </button>
+               
                             <button className="bg-white hover:bg-blue-200 text-blue-500 font-bold py-2 px-4 rounded-full">
   Contact Me
 </button>

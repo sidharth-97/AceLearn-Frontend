@@ -5,7 +5,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 
 export default function SearchInput({data}) {
   return (
-    <Stack spacing={2} sx={{ width: 300 }}>
+    <Stack spacing={2} sx={{ width: 400 }}>
      
       <Autocomplete
         freeSolo
@@ -15,7 +15,7 @@ export default function SearchInput({data}) {
         renderInput={(params) => (
           <TextField
             {...params}
-            label="Search input"
+            label="Search Tutors"
             InputProps={{
               ...params.InputProps,
               type: 'search',

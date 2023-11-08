@@ -74,7 +74,7 @@ const Navbar: React.FC = () => {
                   <span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
                 </Link>
                 <Link
-                  to={"/"}
+                  to={"/tutor/all-tutors"}
                   className="text-white text-sm font-semibold relative inline-block mr-4 group"
                 >
                   Find Tutor

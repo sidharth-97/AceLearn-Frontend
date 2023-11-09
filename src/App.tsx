@@ -24,13 +24,21 @@ import RequestTutor from "./pages/student/HireTutor";
 import Requests from "./pages/student/Requests";
 import TutorJobs from "./pages/tutor/TutorJobs";
 import TutorCardGrid from "./pages/tutor/AllTutors";
+import SuccessPage from "./components/common/SucessPage";
+import PaymentFailed from "./components/common/PaymentFailed";
 
 
 function App() {
 
   
   const element = useRoutes([
-    { path: "/", element: <Home />, errorElement: <ErrorPage /> },
+    {
+      path: "/",
+      children: [
+      {index:true,element:<Home/>},
+        { path: "success", element: <SuccessPage /> },
+      {path:"failed",element:<PaymentFailed/>}
+    ]},
     {
       path: "/student",
       children: [

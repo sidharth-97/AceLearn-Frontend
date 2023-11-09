@@ -10,7 +10,8 @@ const studentRoutes = {
     hireTutor: "/students/addjob",
     viewRequestStatus: "/students/student-job-request",
     bookTutorByPost: "/students/book-tutor-by-post",
-    scheduleofstudent:"/students/getStudentSchedule"
+    scheduleofstudent: "/students/getStudentSchedule",
+    paymentsession:"/students/payment"
 }
 
 export default studentRoutes

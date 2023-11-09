@@ -5,17 +5,24 @@ import Navbar from "../../components/common/navbar";
 import img from "../../assets/Screenshot_2023-11-02_000343-removebg-preview.png";
 import { useQuery, useMutation } from "react-query";
 import { bookTutor, getTutorSchedule } from "../../api/tutorapi";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { loadStripe } from "@stripe/stripe-js";
+import { paymentsession } from "../../api/studentapi";
+
+const stripePromise=loadStripe("pk_test_51OA4ziSEjtBzAge5ZAWJV2Y2EW4v8d0iUt4DHgoUX09VWYiYhsJcUCARpvHLYj5ZLmjxNyCYLyEgJwcQugm6C3YL00VmY9Z4jW")
 
 const BookTutor = () => {
   const today = new Date();
   const [value, onChange] = useState<Date>(today);
   const [tutorSchedule, setTutorSchedule] = useState<any>({});
-  const [object, setObject] = useState({});
+  const [timeArray, setTimeArray] = useState([]);
   const [includedDates, setIncludedDates] = useState<Date[]>([]);
+  const [stripe, setStripe] = useState(null);
 
+
+  const navigate=useNavigate()
   const params: any = useParams();
   const { isStudent } = useSelector((state: any) => state.auth);
   const {
@@ -36,7 +43,6 @@ const BookTutor = () => {
         includedDates.push(item.date)
           if (!item.student) {
             const date = new Date(item.date).toLocaleDateString();
-            console.log(date, "date");
 
             if (!grouped[date]) {
               grouped[date] = [];
@@ -55,12 +61,11 @@ const BookTutor = () => {
       setTutorSchedule(groupedDates);
     },
   });
-  console.log(schedules, "tutorSchedule");
-  console.log(includedDates,"included dates");
   
 
   const bookTutorMutation = useMutation(bookTutor, {
     onSuccess: (data) => {
+
       toast.success("Booking successful");
       refetch();
     },
@@ -70,8 +75,8 @@ const BookTutor = () => {
     },
   });
 
-  const handleClick = async (time: string) => {
-    const givenDate = new Date(`${value}`);
+  const handleClick = (time: string) => {
+    const givenDate = new Date(value); // Using 'value' directly as it's already a Date object
     const givenHour = time;
     const [hours, minutes] = givenHour.split(":").map(Number);
 
@@ -81,16 +86,35 @@ const BookTutor = () => {
     const utcDate = new Date(
       givenDate.getTime() - givenDate.getTimezoneOffset() * 60000
     );
+    const utcToString = utcDate.toISOString();
 
-    const object1 = {
+    setTimeArray((prevTimeArray) => [...prevTimeArray, utcToString]); // Update using the previous state
+
+    console.log(timeArray, "time array");
+    
+}
+
+  const handleSubmit = async () => {
+  console.log("here");
+     const object1 = {
       tutor: params.id,
       timing: {
-        date: utcDate.toISOString(),
+        date: timeArray,
         student: isStudent._id,
       },
     };
+  if (!stripe) {
+    const stripeInstance = await stripePromise;
+    setStripe(stripeInstance);
+    }
+    const response = await paymentsession(object1)
+    if (response) {
+      window.location.href=response.data.url
+    }
+ 
 
     bookTutorMutation.mutate(object1);
+    setTimeArray([])
   };
 
   useEffect(() => {
@@ -153,8 +177,12 @@ const BookTutor = () => {
                   </button>
                 ))}
             </div>
-          </div>
+            <div className=" h-60 flex items-center w-80">
+            <button className="rounded-lg w-full bg-blue-100 px-4 py-2 font-medium text-blue-900 active:scale-95 animated-button" onClick={()=>handleSubmit()}>Submit</button>
+            </div>
+          </div> 
         </div>
+      
       </div>
     </>
   );

@@ -106,3 +106,12 @@ export const getStudentSchedule = async (id: string) => {
         toast.error(error.response.data)
     }
 }
+export const paymentsession = async (obj:any) => {
+    try {
+        const response = await Api.post(studentRoutes.paymentsession,obj)
+        return response
+    } catch (error) {
+        console.log(error);
+        
+    }
+}

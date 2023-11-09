@@ -63,17 +63,17 @@ const BookTutor = () => {
   });
   
 
-  const bookTutorMutation = useMutation(bookTutor, {
-    onSuccess: (data) => {
+  // const bookTutorMutation = useMutation(bookTutor, {
+  //   onSuccess: (data) => {
 
-      toast.success("Booking successful");
-      refetch();
-    },
-    onError: (error) => {
-      console.error("Error while booking tutor: ", error);
-      toast.error("Booking failed");
-    },
-  });
+  //     toast.success("Booking successful");
+  //     refetch();
+  //   },
+  //   onError: (error) => {
+  //     console.error("Error while booking tutor: ", error);
+  //     toast.error("Booking failed");
+  //   },
+  // });
 
   const handleClick = (time: string) => {
     const givenDate = new Date(value); // Using 'value' directly as it's already a Date object
@@ -113,15 +113,15 @@ const BookTutor = () => {
     }
  
 
-    bookTutorMutation.mutate(object1);
-    setTimeArray([])
+    // bookTutorMutation.mutate(object1);
+    // setTimeArray([])
   };
 
-  useEffect(() => {
-    if (bookTutorMutation.isSuccess) {
-      refetch();
-    }
-  }, [bookTutorMutation.isSuccess, refetch]);
+  // useEffect(() => {
+  //   if (bookTutorMutation.isSuccess) {
+  //     refetch();
+  //   }
+  // }, [bookTutorMutation.isSuccess, refetch]);
 
   return (
     <>

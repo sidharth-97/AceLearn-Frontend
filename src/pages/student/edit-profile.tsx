@@ -20,7 +20,7 @@ const EditStudentProfile = () => {
     isError,
   } = useQuery({
     queryFn: () => studentDetails(isStudent._id),
-    queryKey: ["data"],
+ 
   });
 
   console.log(student?.data);

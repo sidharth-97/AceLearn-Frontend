@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import icon from "../../assets/online-lecturing-distance-learning-opportunities-self-education-internet-courses-e-learning-technologies_335657-3279.svg";
 import classes from "../../assets/Screenshot 2023-10-24 212602.png";
@@ -13,12 +13,16 @@ import {
 } from "../../api/tutorapi";
 import { useQuery } from "react-query";
 import { toast } from "react-toastify";
+import socket from "../../services/socket";
+import { useNavigate } from "react-router-dom";
 
 const TutorProfile = () => {
   const { isTutor } = useSelector((state: any) => state.auth);
   const [value, onChange] = useState<Date | [Date, Date]>();
   const [selectedTime, setSelectedTime] = useState("");
   const [schedule, setSchedule] = useState([]);
+
+  const navigate=useNavigate()
 
   const { data, isLoading, isError } = useQuery({
     queryFn: () => getTutorSchedule(isTutor._id),
@@ -57,7 +61,6 @@ const TutorProfile = () => {
     console.log(data);
 
     const reponse = await scheduledate(data);
-    console.log(reponse);
   };
 
   const handleCancel = async (date) => {
@@ -70,6 +73,31 @@ const TutorProfile = () => {
     const response = await changeSchedule(obj);
     if (response?.status == 200) toast.success("Cancelled Successfully");
   };
+
+  //socket io
+  const Socket = socket
+  const tutor = isTutor._id;
+  const room=1
+  const StartClass = useCallback(() => {
+    console.log("Callback");
+    
+      Socket.emit('room:join',{tutor,room});
+  }, [Socket]);
+  
+  const handleJoinRoom = useCallback((data:{tutor:string,room:string}) => {
+    const { tutor, room } = data
+    navigate(`/room/${room}`)
+    
+},[])
+
+  useEffect(() => {
+    Socket.on('room:join',handleJoinRoom);
+
+    // Clean up event listener when component unmounts
+    return () => {
+        Socket.off('room:join');
+    };
+}, []);
 
   return (
     <>
@@ -216,7 +244,11 @@ const TutorProfile = () => {
                               Cancel this class
                             </button>
                           ) : (
-                            <p className="text-green-400 font-bold">Booked</p>
+                              <>
+                                <p className="text-green-400 font-bold">Booked</p>
+                                <button onClick={()=>StartClass()}>Start Class</button>
+                              </>
+                            
                           )}
                           {/* <p className="mt-3">
                             Pellentesque feugiat ante at nisl efficitur, in mollis orci scelerisque. Interdum et malesuada fames ac ante ipsum primis in faucibus.

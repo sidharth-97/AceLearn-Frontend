@@ -26,6 +26,7 @@ import TutorJobs from "./pages/tutor/TutorJobs";
 import TutorCardGrid from "./pages/tutor/AllTutors";
 import SuccessPage from "./components/common/SucessPage";
 import PaymentFailed from "./components/common/PaymentFailed";
+import VideoCall from "./components/common/VideoCall";
 
 
 function App() {
@@ -37,7 +38,8 @@ function App() {
       children: [
       {index:true,element:<Home/>},
         { path: "success", element: <SuccessPage /> },
-      {path:"failed",element:<PaymentFailed/>}
+        { path: "failed", element: <PaymentFailed /> },
+        {path:"room/:roomId",element: <VideoCall/>}
     ]},
     {
       path: "/student",

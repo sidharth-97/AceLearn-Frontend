@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { TutorDetails } from "../../api/tutorapi";
 import Navbar from "../../components/common/navbar";
 import { Link } from "react-router-dom";
+import ReviewArticle from "../../components/common/ReviewComponent";
 
 const DisplayTutor = () => {
   const tutorId = useParams();
@@ -313,6 +314,10 @@ const DisplayTutor = () => {
                 </div>
               </div>
             </div>
+            <div className="mt-5">
+                <ReviewArticle/>
+            </div>
+            
           </div>
         </div>
       </div>

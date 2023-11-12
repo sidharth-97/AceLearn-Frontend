@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import avatar from "../../assets/26220662-623f-4697-bd29-b27e3ef7f513fdf.jpg";
 import icon from "../../assets/online-lecturing-distance-learning-opportunities-self-education-internet-courses-e-learning-technologies_335657-3279.svg";
 import classes from "../../assets/Screenshot 2023-10-24 212602.png";
@@ -7,10 +7,14 @@ import Navbar from "../../components/common/navbar";
 import { useQuery } from "react-query";
 import { getStudentSchedule } from "../../api/studentapi";
 import { useSelector } from "react-redux";
+import socket from "../../services/socket";
+import { useNavigate } from "react-router-dom";
 
 const StudentProfile = () => {
   const [schedule, setSchedule] = useState([]);
   const { isStudent } = useSelector((state) => state.auth);
+const navigate=useNavigate()
+
   const { data, isLoading, isError } = useQuery({
     queryFn: () => getStudentSchedule(isStudent._id),
     queryKey: ["StdSchedule"],
@@ -21,6 +25,29 @@ const StudentProfile = () => {
     },
   });
   console.log(schedule);
+
+
+const student=isStudent._id
+  const StartClass = useCallback((id) => {
+    console.log("Callback");
+    let room="1"
+    socket.emit('room:join', { student, room });
+    
+  }, [socket]);
+  const handleJoinRoom = useCallback((data:{tutor:string,room:string}) => {
+    const { tutor, room } = data
+    navigate(`/room/${room}`)
+    
+  }, [])
+  
+  useEffect(() => {
+    socket.on('room:join',handleJoinRoom);
+
+    // Clean up event listener when component unmounts
+    return () => {
+        socket.off('room:join');
+    };
+}, []);
 
   return (
     <>
@@ -98,12 +125,16 @@ const StudentProfile = () => {
                     </span>
                     <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900">
                       {" "}
-                      {new Date(schedules.timing.date).toLocaleString()}{" "}
+                      {new Date(schedules.timing.date)
+                              .toISOString()
+                              .slice(0, 16)
+                              .replace("T", " ")}{" "}
                     </h3>
                     {/* <time className="block mb-2 text-sm font-normal leading-none text-gray-400">Released on January 13th, 2022</time> */}
                     <p className="mb-4 text-base font-normal text-gray-500">
                       Tutor : {schedules.tutorDetails[0].name}
                     </p>
+                    <button onClick={()=>StartClass(schedules.tutorDetails[0]._id)}>Start Class</button>
                     {/* <a href="#" className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-200 focus:text-blue-700">Download ZIP</a> */}
                   </li>
                 ))}

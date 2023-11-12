@@ -6,6 +6,7 @@ import camera from '../../assets/camera.png';
 import invite from '../../assets/invite.png';
 import mic from '../../assets/mic.png'
 import phone from '../../assets/phone.png'
+import { LuScreenShare, LuScreenShareOff } from 'react-icons/lu'
 
 type UserData = {
   tutor: string;
@@ -158,7 +159,7 @@ const VideoCall: React.FC = () => {
     <>
       <div className="grid grid-cols-1 h-screen overflow-hidden bg-black">
         {" "}
-        {remoteSocketId && <button className="bg-white text-black z-50" onClick={handleCallUser}>Call</button>}
+        {remoteSocketId && <button className=" text-white z-50" onClick={handleCallUser}>Call</button>}
         <div>
         <video
           autoPlay
@@ -190,19 +191,31 @@ const VideoCall: React.FC = () => {
     
       </div>
       <div id="controls">
-        <div className="control-container" id="camera-btn">
-          <img src={camera} />
-        </div>
+       
+          {/* {myStream && <button onClick={sendStreams}>Send stream</button>} */}
+
+          {myStream &&  <div className="control-container" id="camera-btn"><img src={camera} onClick={sendStreams}/>  </div>}
+      
 
         <div className="control-container" id="mic-btn">
           <img src={mic} />
         </div>
 
+       
+          {remoteSocketId &&  <div className="control-container" id="mic-invite"><img src={invite} onClick={handleCallUser}/> </div>}
+          {/* {remoteSocketId && <button className=" text-white z-50" >Call</button>} */}
+       
+
         <div className="control-container" id="screen-share-btn">
           {isScreenSharing ? (
-            <button onClick={handleStopScreenShare}>Stop Screen Share</button>
+            <LuScreenShareOff onClick={handleStopScreenShare}/>
+            // <button >Stop Screen Share</button>
           ) : (
-            <button onClick={handleStartScreenShare}>Start Screen Share</button>
+             
+            <div onClick={handleStartScreenShare} style={{ color: 'white', cursor: 'pointer' }}>
+            <LuScreenShare size={24} />
+          </div>
+              
           )}
         </div>
 

@@ -77,7 +77,7 @@ const TutorProfile = () => {
   //socket io
   const Socket = socket
   const tutor = isTutor._id;
-  const room=1
+  const room="1";
   const StartClass = useCallback(() => {
     console.log("Callback");
     

@@ -4,7 +4,7 @@ import "react-calendar/dist/Calendar.css";
 import Navbar from "../../components/common/navbar";
 import img from "../../assets/Screenshot_2023-11-02_000343-removebg-preview.png";
 import { useQuery, useMutation } from "react-query";
-import { bookTutor, getTutorSchedule } from "../../api/tutorapi";
+import { TutorDetails, bookTutor, getTutorSchedule } from "../../api/tutorapi";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -17,7 +17,7 @@ const BookTutor = () => {
   const today = new Date();
   const [value, onChange] = useState<Date>(today);
   const [tutorSchedule, setTutorSchedule] = useState<any>({});
-  const [timeArray, setTimeArray] = useState([]);
+  const [timeArray, setTimeArray] = useState(new Set());
   const [includedDates, setIncludedDates] = useState<Date[]>([]);
   const [stripe, setStripe] = useState(null);
 
@@ -75,6 +75,8 @@ const BookTutor = () => {
   //   },
   // });
 
+ 
+
   const handleClick = (time: string) => {
     const givenDate = new Date(value); // Using 'value' directly as it's already a Date object
     const givenHour = time;
@@ -88,21 +90,29 @@ const BookTutor = () => {
     );
     const utcToString = utcDate.toISOString();
 
-    setTimeArray((prevTimeArray) => [...prevTimeArray, utcToString]); // Update using the previous state
+    setTimeArray((prevTimeArray) =>new Set(prevTimeArray.add(utcToString)) ) // Update using the previous state
 
-    console.log(timeArray, "time array");
     
-}
+  }
+  console.log(timeArray, "time array");
 
+  
   const handleSubmit = async () => {
-  console.log("here");
-     const object1 = {
-      tutor: params.id,
+    console.log("here");
+    const tutordetails = await TutorDetails(params.id)
+    
+    let object1
+    if (tutordetails) {
+         object1 = {
+       tutor: params.id,
+       fees: Array.from(timeArray).length*tutordetails.data.fee,
       timing: {
-        date: timeArray,
+        date: Array.from(timeArray),
         student: isStudent._id,
       },
     };
+    }
+   
   if (!stripe) {
     const stripeInstance = await stripePromise;
     setStripe(stripeInstance);
@@ -177,6 +187,29 @@ const BookTutor = () => {
                   </button>
                 ))}
             </div>
+     
+<div className="mt-5">
+  <p className="font-serif text-xl font-bold text-blue-900 mb-2">
+    Selected Times
+  </p>
+  <ul>
+    {Array.from(timeArray).map((utcDateString, index) => {
+      const [datePart, timePart] = utcDateString.split('T');
+      const [hours, minutes] = timePart.split(':');
+
+      return (
+        <li key={index}>
+          Date: {datePart}, Time: {hours}:{minutes}
+        </li>
+      );
+    })}
+  </ul>
+</div>
+
+
+
+
+
             <div className=" h-60 flex items-center w-80">
             <button className="rounded-lg w-full bg-blue-100 px-4 py-2 font-medium text-blue-900 active:scale-95 animated-button" onClick={()=>handleSubmit()}>Submit</button>
             </div>

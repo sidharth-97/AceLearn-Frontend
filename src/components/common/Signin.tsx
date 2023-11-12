@@ -63,6 +63,8 @@ const Signin: React.FC<propstype> = ({ user }) => {
         toast.success("Login successfull")
         dispatch(loginStudent(response.data))
         navigate('/')
+      } else {
+        toast.error("Invalid credentials")
       }
     } else {
       let response = await Tutorlogin(formData)
@@ -70,6 +72,8 @@ const Signin: React.FC<propstype> = ({ user }) => {
         dispatch(loginTutor(response.data))
         toast.success("Login successfull")
         navigate('/tutor/tutordashboard')
+      } else {
+        
       } 
     }
   }

@@ -81,8 +81,8 @@
 
 
 .control-container{
-background-color: rgb(179, 102, 249, .9);
-padding: 20px;
+background-color: rgba(79, 71, 86, 0.9);
+padding: 18px;
 border-radius: 50%;
 display: flex;
 justify-content: center;
@@ -106,7 +106,7 @@ cursor: pointer;
   height: 170px;
   width: 300px;
   border-radius: 5px;
-  border:2px solid #b366f9;
+  border:2px solid #b3a9bd;
   -webkit-box-shadow: 3px 3px 15px -1px rgba(0,0,0,0.77);
   box-shadow: 3px 3px 15px -1px rgba(0,0,0,0.77);
   z-index: 999;

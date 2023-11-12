@@ -24,38 +24,12 @@ const EditStudentProfile = () => {
   });
 
   console.log(student?.data);
-
-  // if (isLoading) {
-  //   return (
-  //     <div
-  //       style={{
-  //         display: "flex",
-  //         justifyContent: "center",
-  //         alignItems: "center",
-  //         height: "100vh",
-  //       }}
-  //     >
-  //       {/* <div className="loader"></div> */}
-  //       <div>
-  //         <SkeletonTheme baseColor="#202020" highlightColor="#444">
-  //           <Skeleton count={5} />
-  //         </SkeletonTheme>
-  //       </div>
-  //     </div>
-  //   );
-  // }
   if (isError) {
     console.log("error is here");
   }
 
-  // useEffect(() => {
-  //   if (isError) {
-  //       navigate('/student/login');
-  //   }
-  // }, [isError, navigate]);
-
   return (
-    <div className="text-black bg-9ED0F5">
+    <div className="text-black">
     <Navbar />
     <div className="flex flex-row">
       <StudentSidebar />
@@ -63,8 +37,8 @@ const EditStudentProfile = () => {
         {isLoading ? (
          <MySkeleton/>
         ) : (
-          <div>
-            {student && student.data && ( // Checking if student and student.data are available
+          <div className=" bg-9ED0F5">
+            {student && student.data && (
               <EditProfile data={student.data} />
             )}
           </div>

@@ -47,7 +47,7 @@ const RequestTutor = () => {
       <Navbar />
       <div className="flex flex-row">
         <StudentSidebar />
-        <div className="p-8 w-3/4 text-center">
+        <div className="p-8 w-full text-center bg-D9E2EC">
           <h2 className="text-2xl font-bold mb-10 mt-10">Hire a tutor</h2>
           <div className="text-left">
             <form className="max-w-sm mx-auto" onSubmit={handleSubmit}>
@@ -87,10 +87,10 @@ const RequestTutor = () => {
                     <option value="+1">+1</option>
                   </select>
                 </div>
-                <div className="my-3">
+                <div className="my-3 bg-white">
                   <select value={timerange} onChange={(e)=>setTimerange(e.target.value)}
                     id="timerange"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-white"
                   >
                     <option selected>Choose your time</option>
                     <option value="Morning">Morning</option>
@@ -99,7 +99,7 @@ const RequestTutor = () => {
                     <option value="Night">Night</option>
                   </select>
                 </div>
-                <div className="mt-5">
+                <div className="mt-5 bg-white">
                   <TextField
                     value={description}
                     onChange={(e)=>setDescription(e.target.value)}

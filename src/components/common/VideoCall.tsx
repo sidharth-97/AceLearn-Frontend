@@ -16,6 +16,8 @@ const VideoCall: React.FC = () => {
   const [remoteSocketId, setremoteSocketId] = useState(null);
   const [myStream, setMyStream] = useState("");
   const [remoteStream, setRemoteStream] = useState("");
+  const [isScreenSharing, setIsScreenSharing] = useState(false);
+  const [screenStream, setScreenStream] = useState<MediaStream | null>(null);
 
   const handleUserJoined = useCallback(({ tutor, id }: UserData) => {
     console.log(tutor, id);
@@ -125,6 +127,25 @@ const VideoCall: React.FC = () => {
     handleNegoNeedFinal,
   ]);
 
+
+  const handleStartScreenShare = async () => {
+    try {
+      const stream = await peer.startScreenShare(myStream);
+      socket.emit('startScreenShare', { to: remoteSocketId });
+      setIsScreenSharing(true);
+      setScreenStream(stream);
+    } catch (error) {
+      console.error('Error starting screen share:', error);
+    }
+  };
+
+  const handleStopScreenShare = () => {
+    peer.stopScreenShare(myStream, screenStream);
+    socket.emit('stopScreenShare', { to: remoteSocketId });
+    setIsScreenSharing(false);
+    setScreenStream(null);
+  };
+
   return (
     // <div>
     //   <h1>Video Call Room</h1>
@@ -137,23 +158,36 @@ const VideoCall: React.FC = () => {
     <>
       <div className="grid grid-cols-1 h-screen overflow-hidden bg-black">
         {" "}
-        {remoteSocketId && <button onClick={handleCallUser}>Call</button>}
-        <ReactPlayer
-          playing
+        {remoteSocketId && <button className="bg-white text-black z-50" onClick={handleCallUser}>Call</button>}
+        <div>
+        <video
+          autoPlay
+          playsInline
           muted
-          height={"90%"}
-          width={"100%"}
-          url={myStream}
-        />{" "}
-        <div className="smallFrame">
-        <ReactPlayer
-          playing
-          muted
-          height={"90%"}
-          width={"100%"}
-          url={remoteStream}
+          height="90%"
+          width="100%"
+          ref={(video) => {
+            if (video && myStream instanceof MediaStream) {
+              video.srcObject = myStream;
+            }
+          }}
         />
       </div>
+      <div className="smallFrame">
+        <video
+          autoPlay
+          playsInline
+          muted
+          height="90%"
+          width="100%"
+          ref={(video) => {
+            if (video && remoteStream instanceof MediaStream) {
+              video.srcObject = remoteStream;
+            }
+          }}
+        />
+      </div>
+    
       </div>
       <div id="controls">
         <div className="control-container" id="camera-btn">
@@ -162,6 +196,14 @@ const VideoCall: React.FC = () => {
 
         <div className="control-container" id="mic-btn">
           <img src={mic} />
+        </div>
+
+        <div className="control-container" id="screen-share-btn">
+          {isScreenSharing ? (
+            <button onClick={handleStopScreenShare}>Stop Screen Share</button>
+          ) : (
+            <button onClick={handleStartScreenShare}>Start Screen Share</button>
+          )}
         </div>
 
         <a href="lobby.html">

@@ -28,6 +28,7 @@ import SuccessPage from "./components/common/SucessPage";
 import PaymentFailed from "./components/common/PaymentFailed";
 import VideoCall from "./components/common/VideoCall";
 import FeedbackPage from "./pages/common/FeedbackPage";
+import Subjects from "./pages/admin/Subjects";
 
 
 function App() {
@@ -75,7 +76,8 @@ function App() {
         { path: "login", element: <AdminLogin /> },
         { path: "dashboard", element: <AdminDash /> },
         { path: 'students', element:<AdminPrivate><StudentManagement /></AdminPrivate>  },
-        { path: 'tutors', element: <AdminPrivate><TutorManagement/></AdminPrivate> }
+        { path: 'tutors', element: <AdminPrivate><TutorManagement /></AdminPrivate> },
+        { path:"subjects",element:<Subjects/>}
       ]
     },
     { path: "*", element: <><Navbar /><ErrorPage /></> },

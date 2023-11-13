@@ -53,3 +53,14 @@ export const blockTutor = async (id: string) => {
         toast.error(error.response.data)
     }
 }
+
+export const addSubjects = async (subject: string) => {
+    try {
+        const response = await Api.post(AdminRoutes.addSubjects, subject)
+        return response
+    } catch (error) {
+        console.log(error);
+        toast.error(error.response.data)
+        
+    }
+}

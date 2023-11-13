@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { openModal } from "../../slice/modalSlice";
 import Modal from "../UI/Modal";
 import Pagination from "../UI/Pagination";
+import MySkeleton from "../UI/Skeleton";
 
 interface Tutor {
   _id?: string;
@@ -25,24 +26,22 @@ const Tutors = () => {
   const [selectedUserId, setSelectedUserId] = useState(null);
   const[activePage,setActivePage]=useState(1)
 
-  useEffect(() => {
-    const list = async function () {
-      try {
-        const res = await getTutorData();
-        setTutorData(res?.data);
-        console.log(res);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-    list();
-  }, []);
+  const { data: tutorDataResponse,isLoading } = useQuery("tutorData", getTutorData);
 
-  const filteredUsers = tutorData.filter(
+  useEffect(() => {
+    // Set tutor data when the response is available
+    if (tutorDataResponse) {
+      setTutorData(tutorDataResponse.data);
+    }
+  }, [tutorDataResponse]);
+
+ const filteredUsers = tutorData.filter(
     (user: any) =>
-      user?.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      user?.email.toLowerCase().includes(searchQuery.toLowerCase())
+      user.name.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
+      user.email.toLowerCase().startsWith(searchQuery.toLowerCase())
   );
+  console.log(filteredUsers);
+  
 
   const BlockTutor = async (id: string) => {
     const response = await blockTutor(id);
@@ -66,14 +65,15 @@ const Tutors = () => {
   };
 
   const itemsPerPage = 2
-  const limit=Math.round(tutorData.length/2)
+  const limit=Math.round(filteredUsers.length/2)
   const startIndex = (activePage - 1) * itemsPerPage
   const endIndex = activePage * itemsPerPage
   
-  const paginatedTutorData=tutorData.slice(startIndex,endIndex)
+  const paginatedTutorData=filteredUsers.slice(startIndex,endIndex)
 
   return (
     <div className="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 pr-10 lg:px-8">
+      {isLoading && <MySkeleton/>}
       <Modal functionToCall={BlockTutor} id={selectedUserId} />
       <div className="align-middle rounded-tl-lg rounded-tr-lg inline-block w-full py-4 overflow-hidden bg-white shadow-lg px-12">
         <div className="flex justify-between">

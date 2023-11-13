@@ -5,6 +5,7 @@ import Modal from "../UI/Modal";
 import { useDispatch } from "react-redux";
 import { closeModal, openModal } from "../../slice/modalSlice";
 import Pagination from "../UI/Pagination";
+import MySkeleton from "../UI/Skeleton";
 
 interface Student {
   _id: string;
@@ -21,23 +22,18 @@ const Students = () => {
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [activePage,setActivePage]=useState(1)
 
-  useEffect(() => {
-    const list = async function () {
-      try {
-        const res = await getUserData();
-        setUserData(res?.data);
-        console.log(res);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-    list();
-  }, []);
+  const { data: userDataa, error, isLoading } = useQuery("userData", getUserData);
 
-  const filteredUsers = userData.filter(
+  useEffect(() => {
+    if (userDataa) {
+      setUserData(userDataa?.data)
+    }
+  },[userDataa])
+
+  const filteredUsers = userData?.filter(
     (user: any) =>
-      user?.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      user?.email.toLowerCase().includes(searchQuery.toLowerCase())
+      user?.username.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
+      user?.email.toLowerCase().startsWith(searchQuery.toLowerCase())
   );
 console.log(filteredUsers,"users");
 
@@ -72,6 +68,7 @@ console.log(filteredUsers,"users");
 
   return (
     <div className="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 pr-10 lg:px-8">
+        {isLoading && <MySkeleton/>}
         <Modal functionToCall={blockstudents} id={selectedUserId} />
       <div className="align-middle rounded-tl-lg rounded-tr-lg inline-block w-full py-4 overflow-hidden bg-white shadow-lg px-12">
         <div className="flex justify-between">

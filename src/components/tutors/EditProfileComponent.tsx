@@ -31,6 +31,7 @@ const EditProfileComponent = ({ data }) => {
     mutationFn: TutorEditProfile,
     onSuccess: (data) => {
       queryClient.setQueryData(["tutorData"], data);
+      if(data?.status!==200)toast.error("Blocked by admin")
     },
   });
   const handleSubmit = async (e: React.FormEvent) => {
@@ -50,7 +51,7 @@ const EditProfileComponent = ({ data }) => {
     console.log(tutorData, "after");
 
     mutate(tutorData);
-    toast.success("Updated Successfully")
+    
     navigate('/tutor/tutordashboard')
   };
 

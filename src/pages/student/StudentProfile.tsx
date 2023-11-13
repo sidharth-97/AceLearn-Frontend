@@ -74,6 +74,41 @@ const student=isStudent._id
             <img className="w-128" src={icon} alt="" />
           </div> */}
           {/* </div> */}
+          <div className="bg-white shadow-md rounded-md p-6 w-full">
+      <div className="flex items-center space-x-4">
+        <img
+          src="/path-to-profile-picture.jpg"
+          alt="Profile"
+          className="w-16 h-16 rounded-full object-cover"
+        />
+        <div>
+                <h2 className="text-2xl font-semibold">Student Name</h2>
+                <span className="bg-green-500 text-white font-semibold px-2 py-1 rounded-md">
+              Premium
+            </span>
+          <p className="text-gray-500">Grade: 10</p>
+          <p className="text-gray-500">School: XYZ High School</p>
+        </div>
+      </div>
+
+      <div className="mt-4 flex justify-between items-center">
+        <div>
+          <h3 className="text-lg font-semibold">Contact Information</h3>
+          <p className="text-gray-500">Email: student@example.com</p>
+          <p className="text-gray-500">Phone: +123 456 7890</p>
+        </div>
+        <div className="flex items-center">
+          <div className="bg-yellow-300 p-4 rounded-full mr-4">
+            {/* Wallet icon or any other wallet-related content */}
+            💰
+          </div>
+          <div>
+            <p className="text-gray-700 font-semibold">Wallet Balance</p>
+            <p className="text-xl text-yellow-700 font-bold">{`$ 500 `}</p>
+          </div>
+        </div>
+      </div>
+    </div>
           <div className="flex flex-row h-24 justify-between mt-3 mx-1">
             <div className="flex flex-row h-28 items-center bg-white text-center font-semibold rounded-3xl p-4">
               <div>

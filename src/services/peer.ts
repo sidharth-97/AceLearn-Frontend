@@ -30,6 +30,12 @@ class PeerService{
             return ans
         }
     }
+    async sendStreams(stream) {
+  for (const track of stream.getTracks()) {
+    this.peer.addTrack(track, stream);
+  }
+}
+
 
     async setLocalDescription(ans) {
         if (this.peer) {

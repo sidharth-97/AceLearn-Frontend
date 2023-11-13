@@ -119,7 +119,9 @@ const Tutors = () => {
         <table className="min-w-full">
           <thead>
             <tr>
-              <th className="px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-blue-500 tracking-wider"></th>
+              <th className="px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-blue-500 tracking-wider">
+                
+              </th>
               <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
                 Fullname
               </th>
@@ -145,8 +147,8 @@ const Tutors = () => {
                   <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
                     <div className="flex items-center">
                       <div>
-                        <div className="text-sm leading-5 text-gray-800">
-                          <img className="w-6" src={tutors.image} alt="" />
+                        <div className="text-sm  text-gray-800">
+                          <img className="w-10" src={tutors.image} alt="" />
                         </div>
                       </div>
                     </div>

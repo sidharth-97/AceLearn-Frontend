@@ -41,6 +41,9 @@ const TutorProfile = () => {
   console.log(value);
 
   const handleSchedule = async () => {
+    if (!value) {
+     return  toast.error("Pick a date and time")
+    }
     const givenDate = new Date(`${value}`);
     const givenHour = selectedTime;
     console.log(givenDate);
@@ -169,6 +172,7 @@ const TutorProfile = () => {
                   {" "}
                   <Calendar
                     value={value}
+                    tileDisabled={({ date }) => date < new Date()}
                     onChange={onChange}
                     className="my-custom-calendar"
                   />

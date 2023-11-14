@@ -106,7 +106,7 @@ const TutorSignup = () => {
                 </div>
               </form>
               <p className="mb-6 text-base text-[#adadad]">Register With</p>
-              <ul className="-mx-2 mb-12 flex justify-between">
+              {/* <ul className="-mx-2 mb-12 flex justify-between">
                 <li className="w-full px-2">
                   <a
                     href="/#"
@@ -164,7 +164,7 @@ const TutorSignup = () => {
                     </svg>
                   </a>
                 </li>
-              </ul>
+              </ul> */}
               {/* <a
                 href="/#"
                 className="mb-2 inline-block text-base text-[#adadad] hover:text-primary hover:underline"

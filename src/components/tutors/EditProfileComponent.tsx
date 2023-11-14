@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { TutorEditProfile } from "../../api/tutorapi";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import {toast} from 'react-toastify'
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 const EditProfileComponent = ({ data }) => {
@@ -13,8 +13,8 @@ const EditProfileComponent = ({ data }) => {
   const [subject, setSubject] = useState(data.subject);
   const [image, setImage] = useState<File | null>(null);
   const { isTutor } = useSelector((state) => state.auth);
-  const navigate = useNavigate()
-  
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     password: "",
     cpassword: "",
@@ -30,8 +30,8 @@ const EditProfileComponent = ({ data }) => {
   const { status, mutate } = useMutation({
     mutationFn: TutorEditProfile,
     onSuccess: (data) => {
-      queryClient.setQueryData(["tutorData"], data);
-      if(data?.status!==200)toast.error("Blocked by admin")
+      queryClient.setQueryData([], data);
+      if (data?.status !== 200) toast.error("Blocked by admin");
     },
   });
   const handleSubmit = async (e: React.FormEvent) => {
@@ -51,19 +51,17 @@ const EditProfileComponent = ({ data }) => {
     console.log(tutorData, "after");
 
     mutate(tutorData);
-    
-    navigate('/tutor/tutordashboard')
+
+    navigate("/tutor/tutordashboard");
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0 bg-D9E2EC">
+    <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0 bg-light-blue">
       <div className="w-full px-6 py-4 mt-6 overflow-hidden bg-white shadow-md sm:max-w-md sm:rounded-lg">
         <div>
-          <a href="/">
-            <h3 className="text-4xl text-center font-bold text-black pb-6 mb-3">
+            <h3 className="text-4xl text-left font-boldfg text-black pb-6 mb-3">
               Edit Profile
             </h3>
-          </a>
         </div>
         <form onSubmit={handleSubmit} encType="multipart/form-data">
           <div>

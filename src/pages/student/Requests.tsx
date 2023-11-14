@@ -47,7 +47,7 @@ const Requests = () => {
         <StudentSidebar />
         <div className="flex justify-center items-center flex-col w-full">
           <h1 className="text-3xl font-bold mb-4">Your Requests</h1>
-          <div className="max-w-2xl w-full bg-gray-100 rounded-xl shadow-md p-6">
+          {jobPosting &&     <div className="max-w-2xl w-full bg-gray-100 rounded-xl shadow-md p-6">
             <div className="mb-6">
               <h2 className="text-2xl font-bold mb-4">Job Posting Details</h2>
               <div className="bg-white p-4 rounded-xl shadow-md">
@@ -93,7 +93,8 @@ const Requests = () => {
                 </div>
               ))}
             </div>
-          </div>
+          </div>}
+      
         </div>
       </div>
     </div>

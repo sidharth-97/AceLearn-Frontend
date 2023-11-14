@@ -82,7 +82,7 @@ const student=isStudent._id
           className="w-16 h-16 rounded-full object-cover"
         />
         <div>
-                <h2 className="text-2xl font-semibold">Student Name</h2>
+                <h2 className="text-2xl font-semibold">{isStudent.username}</h2>
                 <span className="bg-green-500 text-white font-semibold px-2 py-1 rounded-md">
               Premium
             </span>
@@ -94,7 +94,7 @@ const student=isStudent._id
       <div className="mt-4 flex justify-between items-center">
         <div>
           <h3 className="text-lg font-semibold">Contact Information</h3>
-          <p className="text-gray-500">Email: student@example.com</p>
+          <p className="text-gray-500">Email: {isStudent.email}</p>
           <p className="text-gray-500">Phone: +123 456 7890</p>
         </div>
         <div className="flex items-center">

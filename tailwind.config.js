@@ -10,7 +10,8 @@ export default {
         '3447AE': '#3447AE',
         "9ED0F5": "#9ED0F5",
         'D9E2EC': "#D9E2EC",
-        'B7DFFC':" #B7DFFC"
+        'B7DFFC': " #B7DFFC",
+        'light-blue':"#e6f2ff"
       },
       width: {
         '128':"32rem"

@@ -1,6 +1,7 @@
 import tutorRoutes from "../services/endpoints/tutorEndpoints";
 import Api from "../services/api";
 import { toast } from "react-toastify";
+import { handleErrors } from "../middleware/ErrorHandler";
 
 
 export const signup = async (tutor: Object) => {
@@ -39,10 +40,9 @@ export const TutorDetails = async (id: string) => {
         const response = await Api.get(`${tutorRoutes.tutorDetails}/${id}`)
         return response
     } catch (error) {
-        console.log(error);
     
         
-        toast.error(error.response.data)
+        handleErrors(error)
     }
 }
 
@@ -50,9 +50,8 @@ export const TutorEditProfile = async (data: Object) => {
     try {
         const response = await Api.post(tutorRoutes.editProfile, data)
         return response
-    } catch (error) {
-        console.log(error); 
-        toast.error(error.response.data)
+    } catch (error) { 
+        handleErrors(error)
     }
 }
 

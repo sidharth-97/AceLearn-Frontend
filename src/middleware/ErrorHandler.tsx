@@ -5,12 +5,16 @@ import { AxiosError } from 'axios';
 export const handleErrors = (error:AxiosError) => {
 
     if (error) {
+        console.log(error,"error from handler");
         
-        if (error.response && error.response.status == 401) {
-            console.log(error);
-            <Navigate to='/' replace />
+        if (error.response && error.response.data?.message=="Blocked by Admin" ) {
+            localStorage.removeItem("tutor")
+            location.href="/tutor/login"
+            
+        } else {
+            toast.error(error.response?.data)
         }
         
-        toast.error("user blocked")
+        
     }
 };

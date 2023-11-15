@@ -6,7 +6,7 @@ import { getalltutors } from '../../api/tutorapi';
 import { Link } from 'react-router-dom';
 import SearchInput from '../../components/UI/SearchInput';
 
-const TutorCardGrid = () => {
+const TutorCardGrid = ({Data,selectedFilters}) => {
   const [tutorData, setTutorData] = useState([]);
 
   const { data, isLoading, isError } = useQuery({
@@ -18,7 +18,34 @@ const TutorCardGrid = () => {
       }
     },
   });
+  console.log(selectedFilters, "this is the selected filters");
+  console.log(tutorData,"this is the tutuor data");
+  
 
+  const filteredData = Object.keys(selectedFilters).length !== 0
+  ? data?.data?.filter((tutor) => {
+      const tutorSubjects = tutor.subject || [];
+      const tutorClasses = tutor.classes || [];
+      const tutorPrice = tutor.fee || 0;
+
+      const subjectFilter = selectedFilters.subject?.length
+        ? tutorSubjects.some((subject) => selectedFilters.subject.includes(subject))
+        : true;
+
+      const classFilter = selectedFilters.classes?.length
+        ? tutorClasses.some((classItem) => selectedFilters.classes.includes(classItem))
+        : true;
+
+      const priceFilter =
+        selectedFilters.price?.length === 2
+          ? tutorPrice >= selectedFilters.price[0] && tutorPrice <= selectedFilters.price[1]
+          : true;
+
+      return subjectFilter && classFilter && priceFilter;
+    })
+  : tutorData;
+
+  
   return (
     <>
 
@@ -59,7 +86,7 @@ const TutorCardGrid = () => {
                   </div>
                 </div>
               ))
-            : tutorData.map((tutor, index) => (
+            : filteredData.map((tutor, index) => (
                 <Link to={`/tutor/tutorProfile/${tutor._id}`} key={index}>
                   <div className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
                     <a href="#">

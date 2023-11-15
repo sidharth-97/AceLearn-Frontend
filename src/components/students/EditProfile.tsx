@@ -9,6 +9,8 @@ const EditProfile = ({ data }) => {
   const [cpassword, setCpassword] = useState("");
   const [mobile, setMobile] = useState(data.mobile);
   const [toggle, setToggle] = useState(true);
+  const [image, setImage] = useState<File | null>(null);
+
 
   const { isStudent } = useSelector((state) => state.auth);
 
@@ -16,17 +18,20 @@ const EditProfile = ({ data }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = {
-      username: name,
-      password,
-      mobile,
-      email: isStudent.email,
-    };
+    const formData = new FormData()
+    formData.append("email",data.email)
+    formData.append("username", name)
+    formData.append("mobile", mobile)
+    formData.append("image",image)
     const response = await editStudent(formData);
   };
 
-  const handlePassword = () => {
+  const handlePassword = async() => {
     // Handle password change
+    const formData = {
+      password
+    }
+    const response=await editStudent(formData)
   };
 
   return (
@@ -48,13 +53,13 @@ const EditProfile = ({ data }) => {
             <div className="w-1/4 mr-6">
             {/* Add your profile picture component or code here */}
             <img
-              src="https://placekitten.com/150/150" // Replace with the actual image source
+              src={isStudent.image} // Replace with the actual image source
               alt="Profile"
               className="w-full h-auto rounded-full"
             />
           </div>
             <div>
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit} encType="multipart/form-data">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700">
                     Name
@@ -80,6 +85,18 @@ const EditProfile = ({ data }) => {
                   />
                 </div>
                 <div className="mt-4">
+                  <label htmlFor="mobile" className="block text-sm font-medium text-gray-700">
+                    Mobile
+                  </label>
+                <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => setImage(e.target.files?.[0] || null)}
+                name="image"
+                className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              />
+</div>
+                {/* <div className="mt-4">
                   <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                     Password
                   </label>
@@ -102,7 +119,7 @@ const EditProfile = ({ data }) => {
                     name="password_confirmation"
                     className="block w-full mt-1 border rounded-md shadow-sm focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                   />
-                </div>
+                </div> */}
                 <div className="flex items-center justify-center mt-4">
                   <button
                     type="submit"

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import image from "../../assets/WhatsApp Image 2023-10-13 at 1.41.45 PM.jpeg";
+import imagee from "../../assets/WhatsApp Image 2023-10-13 at 1.41.45 PM.jpeg";
 import { signup, signupfinal } from "../../api/studentapi";
 import OTPInput from "../../components/common/OTPInput";
 import { Link, useNavigate } from "react-router-dom";
@@ -23,7 +23,9 @@ const Signup = () => {
   const [Cpassword, setCpassword] = useState("");
   const[completed,setCompleted]=useState(false)
   const [otp, setOTP] = useState<string>(''); 
-  const[error,setError]=useState(false)
+  const [error, setError] = useState(false)
+  const [image, setImage] = useState<File | null>(null);
+  const [mobile, setMobile] = useState("");
 
   const navigate=useNavigate()
 
@@ -45,11 +47,11 @@ const Signup = () => {
     return;
   }
     const formData = {
-      username: name,
+      name,
       email,
-      password,
-    };
-
+      password
+    }
+    
 
     const result = await signup(formData);
     if (result?.status) {
@@ -63,13 +65,14 @@ const Signup = () => {
 
  async function handleFinalSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    const formData = {
-      username: name,
-      email,
-      password,
-      otp
-   };
-   
+  
+    const formData = new FormData()
+    formData.append("username", name)
+    formData.append("email", email)
+    formData.append("password", password)
+    formData.append("mobile", mobile)
+   formData.append("image", image)
+   formData.append("otp",otp)
    const result = await signupfinal(formData)
    console.log(result);
    
@@ -117,7 +120,7 @@ const Signup = () => {
               <div className="mb-10 text-center md:mb-16">
               <h1 className="text-2xl font-bold">Join as Student</h1>
               </div>
-              {completed?(<form onSubmit={handleFinalSubmit}><OTPInput onOTPChange={handleOTPChange} /><div className="mb-10 mt-5">
+              {completed?(<form onSubmit={handleFinalSubmit} encType="multipart/form-data"><OTPInput onOTPChange={handleOTPChange} /><div className="mb-10 mt-5">
                   <button
                     className="border-primary w-full cursor-pointer rounded-md border bg-3447AE py-3 px-5 text-base text-white transition hover:bg-opacity-90"
                     type="submit"
@@ -138,6 +141,13 @@ const Signup = () => {
                   placeholder="Email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <InputBox
+                  type="text"
+                  name="mobile"
+                  placeholder="Your mobile no"
+                  value={mobile}
+                  onChange={(e) => setMobile(e.target.value)}
                 />
                 <InputBox
                   type="password"
@@ -145,7 +155,14 @@ const Signup = () => {
                   placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                />
+                    />
+                       <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => setImage(e.target.files?.[0] || null)}
+                name="image"
+                className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              />
                 <InputBox
                   type="password"
                   name="Cpassword"
@@ -457,7 +474,7 @@ const Signup = () => {
               {" "}
               {/* The container for the image */}
               <img
-                src={image}
+                src={imagee}
                 alt=""
                 style={{ maxWidth: "100%", height: "auto" }}
               />

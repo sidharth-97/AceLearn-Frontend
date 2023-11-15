@@ -23,12 +23,13 @@ import BookTutor from "./pages/student/BookTutor";
 import RequestTutor from "./pages/student/HireTutor";
 import Requests from "./pages/student/Requests";
 import TutorJobs from "./pages/tutor/TutorJobs";
-import TutorCardGrid from "./pages/tutor/AllTutors";
+import TutorCardGrid from "./pages/tutor/TutorCardGrid";
 import SuccessPage from "./components/common/SucessPage";
 import PaymentFailed from "./components/common/PaymentFailed";
 import VideoCall from "./components/common/VideoCall";
 import FeedbackPage from "./pages/common/FeedbackPage";
 import Subjects from "./pages/admin/Subjects";
+import AllTutors from "./pages/tutor/AllTutors";
 
 
 function App() {
@@ -63,7 +64,7 @@ function App() {
         { path: "login", element:<><Navbar/> <Signin user={"tutor"} /></> },
         { path: "signup", element: <TutorSignup /> },
         { path: "tutoronboarding", element: <TutorOnBoard /> },
-        {path:"all-tutors",element:<TutorCardGrid/>},
+        {path:"all-tutors",element:<AllTutors/>},
         { path: "tutordashboard", element: <TutorPrivate><TutorProfile /></TutorPrivate> },
         { path: "edit-profile", element: <TutorPrivate><EditTutorProfile /></TutorPrivate> },
         { path: "tutorProfile/:id", element: <DisplayTutor /> },

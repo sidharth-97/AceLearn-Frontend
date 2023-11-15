@@ -64,3 +64,22 @@ export const addSubjects = async (subject: string) => {
         
     }
 }
+
+export const findSubjects = async () => {
+    try {
+        const response = await Api.get(AdminRoutes.findSubjects) 
+        return response
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
+export const deleteSubject = async (data: object)=>{
+    try {
+        const response = await Api.put(AdminRoutes.deleteSubject,data)
+        return response
+    } catch (error) {
+        console.log(error);
+    }
+}

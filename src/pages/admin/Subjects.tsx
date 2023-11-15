@@ -1,64 +1,79 @@
-import React, { useState } from 'react';
-import AdminSidebar from '../../components/admin/AdminHome';
-import { useMutation, useQueryClient } from 'react-query';
-import { addSubjects } from '../../api/adminapi';
+import React, { useState } from "react";
+import AdminSidebar from "../../components/admin/AdminHome";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { addSubjects, deleteSubject, findSubjects } from "../../api/adminapi";
 
 const Subjects = () => {
-  const [subject, setSubject] = useState('');
-  const [classInfo, setClassInfo] = useState('');
-  const [subjects, setSubjects] = useState([]);
-  const [classes, setClasses] = useState([]);
+  const [subject, setSubject] = useState("");
+  const [classInfo, setClassInfo] = useState("");
+
+  const { data: response, isLoading } = useQuery({
+    queryFn: () => findSubjects(),
+    queryKey: ["subjects"],
+  });
 
   const queryClient = useQueryClient();
 
-  const addSubjectMutation = useMutation((subjectData) => addSubjects(subjectData), {
-    onSuccess: () => {
-        queryClient.invalidateQueries(['subjects']);
-    },
-  });
-console.log(subject,"subjeed");
+  const addSubjectMutation = useMutation(
+    (subjectData) => addSubjects(subjectData),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["subjects"]);
+      },
+    }
+  );
 
-    const handleAddSubject = () => {
-        console.log('Adding subject:', subject);
+  const deleteSubjectMutation = useMutation(
+    (subjectData) => deleteSubject(subjectData),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["subjects"]);
+      },
+    }
+  );
 
-      
+  const handleAddSubject = () => {
+    console.log("Adding subject:", subject);
+
     if (subject.trim()) {
-      addSubjectMutation.mutate({subject:subject});
-      setSubject('');
+      addSubjectMutation.mutate({ subject: subject });
+      setSubject("");
     }
   };
 
-    const handleAddClass = () => {
-      console.log("add class");
-      
+  const handleAddClass = () => {
+    console.log("add class");
+
     if (classInfo.trim()) {
-      addSubjectMutation.mutate({class:classInfo})
-      setClassInfo('');
+      addSubjectMutation.mutate({ class: classInfo });
+      setClassInfo("");
     }
   };
 
-  const handleDeleteSubject = (index) => {
-    const updatedSubjects = [...subjects];
-    updatedSubjects.splice(index, 1);
-    setSubjects(updatedSubjects);
+  const handleDeleteSubject = (subject: string) => {
+    console.log(subject, "this is the au");
+
+    deleteSubjectMutation.mutate({ subject: subject });
+    setSubject("");
   };
 
-  const handleDeleteClass = (index) => {
-    const updatedClasses = [...classes];
-    updatedClasses.splice(index, 1);
-    setClasses(updatedClasses);
+  const handleDeleteClass = (classes: string) => {
+    deleteSubjectMutation.mutate({ class: classes });
   };
 
   return (
     <div className="flex flex-row">
-      <AdminSidebar />
-      <div className="max-w-md mx-auto mt-8 p-6 w-1/2 h-screen bg-white shadow-md rounded-md">
-        <h1 className="text-3xl font-bold mb-6 text-center">Subjects and Classes</h1>
-
-        {/* Add Subject Section */}
-        <div className="mb-6">
-          <h2 className="text-xl font-bold mb-2">Add Subject</h2>
-          <div className="flex">
+    <AdminSidebar />
+  
+    <div className="mx-auto mt-8 p-6 bg-white shadow-md rounded-md">
+      <h1 className="text-3xl font-bold mb-6 text-center">
+        Subjects and Classes
+      </h1>
+  
+      <div className="flex gap-14">
+        <div className="mb-8">
+          <h2 className="text-xl font-bold mb-4">Add Subject</h2>
+          <div className="flex items-center">
             <input
               type="text"
               value={subject}
@@ -67,18 +82,21 @@ console.log(subject,"subjeed");
               className="flex-grow px-4 py-2 mr-2 focus:outline-none"
             />
             <button
-             onClick={handleAddSubject}
+              onClick={handleAddSubject}
               className="bg-blue-500 text-white px-4 py-2 rounded"
             >
               Add
             </button>
           </div>
           <ul>
-            {subjects.map((subject, index) => (
-              <li key={index} className="flex justify-between items-center border-b py-3">
+            {response?.data.subject.map((subject, index) => (
+              <li
+                key={index}
+                className="flex justify-between items-center border-b py-3"
+              >
                 <span className="text-lg">{subject}</span>
                 <button
-                  onClick={() => handleDeleteSubject(index)}
+                  onClick={() => handleDeleteSubject(subject)}
                   className="text-red-500 hover:text-red-700 focus:outline-none"
                 >
                   Delete
@@ -87,11 +105,10 @@ console.log(subject,"subjeed");
             ))}
           </ul>
         </div>
-
-        {/* Add Class Section */}
+  
         <div>
-          <h2 className="text-xl font-bold mb-2">Add Class</h2>
-          <div className="flex">
+          <h2 className="text-xl font-bold mb-4">Add Class</h2>
+          <div className="flex items-center">
             <input
               type="text"
               value={classInfo}
@@ -107,11 +124,14 @@ console.log(subject,"subjeed");
             </button>
           </div>
           <ul>
-            {classes.map((classInfo, index) => (
-              <li key={index} className="flex justify-between items-center border-b py-3">
+            {response?.data.class.map((classInfo, index) => (
+              <li
+                key={index}
+                className="flex justify-between items-center border-b py-3"
+              >
                 <span className="text-lg">{classInfo}</span>
                 <button
-                  onClick={() => handleDeleteClass(index)}
+                  onClick={() => handleDeleteClass(classInfo)}
                   className="text-red-500 hover:text-red-700 focus:outline-none"
                 >
                   Delete
@@ -122,6 +142,8 @@ console.log(subject,"subjeed");
         </div>
       </div>
     </div>
+  </div>
+  
   );
 };
 

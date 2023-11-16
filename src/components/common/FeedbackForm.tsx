@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 import Typography from '@mui/material/Typography';
 import Rating from '@mui/material/Rating';
+import { useMutation, useQuery } from 'react-query';
+import { addReview, getOldReview } from '../../api/tutorapi';
+import { useSelector } from 'react-redux';
 
 const FeedbackForm = () => {
   const [value, setValue] = useState(0);
   const [comment, setComment] = useState('');
+
+  const { isStudent } = useSelector((state)=>state.auth)
 
   const handleRatingChange = (event, newValue) => {
     setValue(newValue);
@@ -14,12 +19,27 @@ const FeedbackForm = () => {
     setComment(e.target.value);
   };
 
+  const { data:oldReview } = useQuery({
+    queryFn: () => getOldReview("653e3a04f4025f5297ebc07e")
+  })
+
+  
+
+  const AddTutorReviewMutation=useMutation((data:{ id: string; student: string; rating: number; description: string; })=>addReview(data))
+
   const handleSubmit = () => {
-    // Add your logic to submit the feedback (rating and comment) to the server
     console.log('Rating:', value);
     console.log('Comment:', comment);
+    const data = {
+      id: "653e3a04f4025f5297ebc07e",
+      student: isStudent._id,
+      rating: value,
+      description:comment
+    }
+    AddTutorReviewMutation.mutate(data);
 
-    // Clear the form after submission
+    console.log('Mutation status:', AddTutorReviewMutation.status);
+
     setValue(0);
     setComment('');
   };
@@ -32,7 +52,7 @@ const FeedbackForm = () => {
         <Typography component="legend">Rating</Typography>
         <Rating
           name="simple-controlled"
-          value={value}
+          value={oldReview?.data.rating}
           onChange={handleRatingChange}
         />
       </div>
@@ -40,16 +60,16 @@ const FeedbackForm = () => {
       <div className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2">Comment</label>
         <textarea
-          className="w-full border rounded-md p-2"
-        rows={4}
-          value={comment}
+          className="w-full border text-black rounded-md p-2"
+          rows={4}
+          value={ oldReview?.data?.description}
           onChange={handleCommentChange}
         ></textarea>
       </div>
 
       <button
         className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-        onClick={handleSubmit}
+        onClick={()=>handleSubmit()}
       >
         Submit Feedback
       </button>

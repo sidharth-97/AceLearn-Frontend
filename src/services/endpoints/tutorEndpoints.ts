@@ -13,7 +13,10 @@ const tutorRoutes = {
     bookTutor: "/tutors/booktutor",
     getTutorSchedule: "/tutors/tutorschedule",
     getAllJobs: "/tutors/getallposting",
-    applyTutorJobs:"/tutors/applytutorjob"
+    applyTutorJobs: "/tutors/applytutorjob",
+    addReview: "/tutors/add-review",
+    getTutorReview: "/tutors/get-review",
+    getOldReview:"/tutors/old-review"
 }
 
 export default tutorRoutes

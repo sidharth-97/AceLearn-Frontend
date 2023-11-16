@@ -2,6 +2,7 @@ import React from 'react';
 import FeedbackForm from '../../components/common/FeedbackForm';
 
 const FeedbackPage = () => {
+
   return (
 
     <section>

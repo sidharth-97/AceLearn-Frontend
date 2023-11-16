@@ -133,3 +133,30 @@ export const applyTutorJobs = async (data: {
         toast.error(error.response.data)
     }
 }
+
+export const addReview = async (data) => {
+    try {
+        const response = await Api.post(tutorRoutes.addReview, data)
+        return response
+    } catch (error) {
+       toast.error(error)
+    }
+}
+
+export const getTutorReview = async (id) => {
+    try {
+        const response = await Api.post(`${tutorRoutes.getTutorReview}/${id}`)
+        return response
+    } catch (error) {
+        toast.error(error)
+    }
+}
+
+export const getOldReview = async (id) => {
+    try {
+        const response=await Api.get(`${tutorRoutes.getOldReview}/${id}`)
+        return response
+    } catch (error) {
+        toast.error(error)
+    }
+}

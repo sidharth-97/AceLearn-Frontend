@@ -2,12 +2,12 @@ import React, { useCallback, useEffect, useState } from "react";
 import socket from "../../services/socket";
 import ReactPlayer from "react-player";
 import peer from "../../services/peer";
-import camera from '../../assets/camera.png';
-import invite from '../../assets/invite.png';
-import mic from '../../assets/mic.png'
-import phone from '../../assets/phone.png'
-import { LuScreenShare, LuScreenShareOff } from 'react-icons/lu'
-import { Link } from "react-router-dom";
+import camera from "../../assets/camera.png";
+import invite from "../../assets/invite.png";
+import mic from "../../assets/mic.png";
+import phone from "../../assets/phone.png";
+import { LuScreenShare, LuScreenShareOff } from "react-icons/lu";
+import { Link, useParams } from "react-router-dom";
 
 type UserData = {
   tutor: string;
@@ -21,6 +21,10 @@ const VideoCall: React.FC = () => {
   const [isScreenSharing, setIsScreenSharing] = useState(false);
   const [screenStream, setScreenStream] = useState<MediaStream | null>(null);
 
+  const params = useParams()
+  console.log(params.id,"this is the id");
+  
+
   const handleUserJoined = useCallback(({ tutor, id }: UserData) => {
     console.log(tutor, id);
     setremoteSocketId(id as any);
@@ -29,10 +33,10 @@ const VideoCall: React.FC = () => {
   let constrains = {
     video: {
       width: { min: 640, ideal: 1920, max: 1920 },
-      height: { min: 480, ideal: 1080, max: 1080 }
+      height: { min: 480, ideal: 1080, max: 1080 },
     },
-    audio: true
-  }
+    audio: true,
+  };
 
   const handleCallUser = useCallback(async () => {
     const stream = await navigator.mediaDevices.getUserMedia(constrains);
@@ -129,49 +133,46 @@ const VideoCall: React.FC = () => {
     handleNegoNeedFinal,
   ]);
 
-
-  const handleStartScreenShare=async()=> {
+  const handleStartScreenShare = async () => {
     try {
       const screenStream = await peer.startScreenShare(myStream);
-      socket.emit('startScreenShare', { to: remoteSocketId });
-  
+      socket.emit("startScreenShare", { to: remoteSocketId });
+
       // Send the new screen stream to the peer
       peer.sendStreams(screenStream);
       setIsScreenSharing(true);
       setScreenStream(screenStream);
     } catch (error) {
-      console.error('Error starting screen share:', error);
+      console.error("Error starting screen share:", error);
     }
-  }
-  
+  };
 
   const handleStopScreenShare = async () => {
     try {
       peer.stopScreenShare(myStream, screenStream);
-      socket.emit('stopScreenShare', { to: remoteSocketId });
-  
+      socket.emit("stopScreenShare", { to: remoteSocketId });
+
       // Stop screen sharing locally
       setIsScreenSharing(false);
       setScreenStream(null);
-  
+
       // Get a new stream without screen sharing
       const newStream = await navigator.mediaDevices.getUserMedia(constrains);
-  
+
       // Send the updated stream to the peer
       peer.sendStreams(newStream);
       setMyStream(newStream);
     } catch (error) {
-      console.error('Error stopping screen share:', error);
+      console.error("Error stopping screen share:", error);
     }
   };
-  
+
   const handleLeaveCall = () => {
-    setMyStream(""); 
-    setRemoteStream(""); 
-    setIsScreenSharing(false); 
-    setScreenStream(null); 
-  }
-  
+    setMyStream("");
+    setRemoteStream("");
+    setIsScreenSharing(false);
+    setScreenStream(null);
+  };
 
   return (
     // <div>
@@ -187,72 +188,77 @@ const VideoCall: React.FC = () => {
         {" "}
         {/* {remoteSocketId && <button className=" text-white z-50" onClick={handleCallUser}>Call</button>} */}
         <div>
-        <video
-          autoPlay
-          playsInline
-          muted
-          height="90%"
-          width="100%"
-          ref={(video) => {
-            if (video && remoteStream instanceof MediaStream) {
-              video.srcObject = remoteStream;
-            }
-          }}
-        />
-      </div>  
-      <div className="smallFrame">
-      <video
-          autoPlay
-          playsInline
-          muted
-          height="90%"
-          width="100%"
-          ref={(video) => {
-            if (video && myStream instanceof MediaStream) {
-              video.srcObject = myStream;
-            }
-          }}
-        />
-      </div>
-    
+          <video
+            autoPlay
+            playsInline
+            muted
+            height="90%"
+            width="100%"
+            ref={(video) => {
+              if (video && remoteStream instanceof MediaStream) {
+                video.srcObject = remoteStream;
+              }
+            }}
+          />
+        </div>
+        <div className="smallFrame">
+          <video
+            autoPlay
+            playsInline
+            muted
+            height="90%"
+            width="100%"
+            ref={(video) => {
+              if (video && myStream instanceof MediaStream) {
+                video.srcObject = myStream;
+              }
+            }}
+          />
+        </div>
       </div>
       <div id="controls">
-       
-          {/* {myStream && <button onClick={sendStreams}>Send stream</button>} */}
+        {/* {myStream && <button onClick={sendStreams}>Send stream</button>} */}
 
-          {myStream &&  <div className="control-container" id="camera-btn"><img src={camera} onClick={sendStreams}/>  </div>}
-      
+        {myStream && (
+          <div className="control-container" id="camera-btn">
+            <img src={camera} onClick={sendStreams} />{" "}
+          </div>
+        )}
 
         <div className="control-container" id="mic-btn">
           <img src={mic} />
         </div>
 
-       
-          {remoteSocketId &&  <div className="control-container" id="mic-invite"><img src={invite} onClick={handleCallUser}/> </div>}
-          {/* {remoteSocketId && <button className=" text-white z-50" >Call</button>} */}
-       
+        {remoteSocketId && (
+          <div className="control-container" id="mic-invite">
+            <img src={invite} onClick={handleCallUser} />{" "}
+          </div>
+        )}
+        {/* {remoteSocketId && <button className=" text-white z-50" >Call</button>} */}
 
         <div className="control-container" id="screen-share-btn">
           {isScreenSharing ? (
-            <LuScreenShareOff onClick={handleStopScreenShare}/>
-            // <button >Stop Screen Share</button>
+            <LuScreenShareOff onClick={handleStopScreenShare} />
           ) : (
-             
-            <div onClick={handleStartScreenShare} style={{ color: 'white', cursor: 'pointer' }}>
-            <LuScreenShare size={24} />
-          </div>
-              
+            // <button >Stop Screen Share</button>
+            <div
+              onClick={handleStartScreenShare}
+              style={{ color: "white", cursor: "pointer" }}
+            >
+              <LuScreenShare size={24} />
+            </div>
           )}
         </div>
 
-        
-        <Link to={'/feedback-page'}>
-          <div className="control-container" id="leave-btn" onClick={handleLeaveCall}>
-          
+        <Link to={`/feedback-page/${params.roomId}`}>
+          <div
+            className="control-container"
+            id="leave-btn"
+            onClick={handleLeaveCall}
+          >
             <img src={phone} />
           </div>
-          </Link>
-          
+        </Link>
       </div>
     </>
 

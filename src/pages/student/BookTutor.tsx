@@ -109,6 +109,7 @@ const BookTutor = () => {
       timing: {
         date: Array.from(timeArray),
         student: isStudent._id,
+        fee:tutordetails.data.fee
       },
     };
     }

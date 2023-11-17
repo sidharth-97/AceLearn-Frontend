@@ -80,11 +80,14 @@ const TutorProfile = () => {
   //socket io
   const Socket = socket
   const tutor = isTutor._id;
-  const room="1";
-  const StartClass = useCallback(() => {
-    console.log("Callback");
-    
+ 
+  
+  const StartClass = useCallback((id) => {
+    console.log("Callback",id);
+    const room =id
       Socket.emit('room:join',{tutor,room});
+      
+    
   }, [Socket]);
   
   const handleJoinRoom = useCallback((data:{tutor:string,room:string}) => {
@@ -250,7 +253,7 @@ const TutorProfile = () => {
                           ) : (
                               <>
                                 <p className="text-green-400 font-bold">Booked</p>
-                                <button onClick={()=>StartClass()}>Start Class</button>
+                                <button onClick={()=>StartClass(schedules._id)}>Start Class</button>
                               </>
                             
                           )}

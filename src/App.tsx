@@ -43,7 +43,7 @@ function App() {
         { path: "success", element: <SuccessPage /> },
         { path: "failed", element: <PaymentFailed /> },
         { path: "room/:roomId", element: <VideoCall /> },
-        { path:"feedback-page",element:<FeedbackPage/>}
+        { path:"feedback-page/:id",element:<FeedbackPage/>}
     ]},
     {
       path: "/student",

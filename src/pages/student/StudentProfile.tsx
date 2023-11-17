@@ -30,7 +30,7 @@ const navigate=useNavigate()
 const student=isStudent._id
   const StartClass = useCallback((id) => {
     console.log("Callback");
-    let room="1"
+    let room=id
     socket.emit('room:join', { student, room });
     
   }, [socket]);

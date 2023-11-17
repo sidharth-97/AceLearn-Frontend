@@ -145,7 +145,7 @@ export const addReview = async (data) => {
 
 export const getTutorReview = async (id) => {
     try {
-        const response = await Api.post(`${tutorRoutes.getTutorReview}/${id}`)
+        const response = await Api.get(`${tutorRoutes.getTutorReview}/${id}`)
         return response
     } catch (error) {
         toast.error(error)
@@ -158,5 +158,15 @@ export const getOldReview = async (id) => {
         return response
     } catch (error) {
         toast.error(error)
+    }
+}
+
+export const tutorPayment = async (data) => {
+    try {
+        const response = await Api.put(tutorRoutes.tutorPayment, data)
+        return response
+    } catch (error) {
+        console.log(error);
+        
     }
 }

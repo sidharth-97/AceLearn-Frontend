@@ -28,11 +28,15 @@ const navigate=useNavigate()
 
 
 const student=isStudent._id
-  const StartClass = useCallback((id) => {
+  const StartClass = useCallback((id,schedule) => {
     console.log("Callback");
     let room=id
     socket.emit('room:join', { student, room });
-    
+    const data = {
+      tutor: schedule.tutor,
+      student:isStudent._id
+    }
+      localStorage.setItem("videocall",JSON.stringify(data))
   }, [socket]);
   const handleJoinRoom = useCallback((data:{tutor:string,room:string}) => {
     const { tutor, room } = data
@@ -169,7 +173,7 @@ const student=isStudent._id
                     <p className="mb-4 text-base font-normal text-gray-500">
                       Tutor : {schedules.tutorDetails[0].name}
                     </p>
-                    <button onClick={()=>StartClass(schedules.tutorDetails[0]._id)}>Start Class</button>
+                    <button onClick={()=>StartClass(schedules.timing._id,schedules)}>Start Class</button>
                     {/* <a href="#" className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-200 focus:text-blue-700">Download ZIP</a> */}
                   </li>
                 ))}

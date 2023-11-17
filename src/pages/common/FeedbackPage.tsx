@@ -1,7 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import FeedbackForm from '../../components/common/FeedbackForm';
+import { useParams } from 'react-router-dom';
+import { tutorPayment } from '../../api/tutorapi';
 
 const FeedbackPage = () => {
+    const params = useParams()
+    
+    useEffect(() => {
+        if (localStorage.getItem("student")) {
+               let videoCallData=JSON.parse(localStorage.getItem("videocall")) 
+        const data = {
+            id: params.id,
+            tutor:videoCallData.tutor
+        }
+        const functn =async() =>{
+             await tutorPayment(data)  
+        }
+        functn()
+        localStorage.removeItem("videocall")
+        }
+    
+     
+    },[])
 
   return (
 

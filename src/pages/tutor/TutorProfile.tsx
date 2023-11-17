@@ -82,11 +82,14 @@ const TutorProfile = () => {
   const tutor = isTutor._id;
  
   
-  const StartClass = useCallback((id) => {
-    console.log("Callback",id);
-    const room =id
-      Socket.emit('room:join',{tutor,room});
-      
+  const StartClass = useCallback((schedule) => {
+    const room =schedule._id
+    Socket.emit('room:join', { tutor, room });
+    const data = {
+      tutor: isTutor._id,
+      student:schedule.student
+    }
+      localStorage.setItem("videocall",JSON.stringify(data))
     
   }, [Socket]);
   
@@ -253,7 +256,7 @@ const TutorProfile = () => {
                           ) : (
                               <>
                                 <p className="text-green-400 font-bold">Booked</p>
-                                <button onClick={()=>StartClass(schedules._id)}>Start Class</button>
+                                <button onClick={()=>StartClass(schedules)}>Start Class</button>
                               </>
                             
                           )}

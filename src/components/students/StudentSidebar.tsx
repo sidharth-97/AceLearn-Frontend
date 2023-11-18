@@ -13,7 +13,7 @@ const StudentSidebar = () => {
     { name: "edit profile", link: "/student/profile", icon: AiOutlineUser },
     { name: "hire a tutor", link: "/student/requesttutor", icon: FiMessageSquare },
     { name: "requests", link: "/student/requests", icon: TbReportAnalytics, margin: true },
-    { name: "File Manager", link: "/", icon: FiFolder },
+    { name: "notifications", link: "/student/notifications", icon: FiFolder },
     { name: "Cart", link: "/", icon: FiShoppingCart },
     { name: "Saved", link: "/", icon: AiOutlineHeart, margin: true },
     { name: "Setting", link: "/", icon: RiSettings4Line },

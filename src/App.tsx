@@ -30,6 +30,8 @@ import VideoCall from "./components/common/VideoCall";
 import FeedbackPage from "./pages/common/FeedbackPage";
 import Subjects from "./pages/admin/Subjects";
 import AllTutors from "./pages/tutor/AllTutors";
+import NotificationsPage from "./pages/student/NotificationsPage";
+import NotificationPage from "./pages/tutor/NotificationPage";
 
 
 function App() {
@@ -55,7 +57,8 @@ function App() {
         { path: "profile", element: <PrivateRoute><EditStudentProfile /></PrivateRoute> },
         { path: "booktutor/:id", element: <BookTutor /> },
         { path: "requesttutor", element: <RequestTutor /> },
-        {path:"requests",element:<Requests/> }
+        { path: "requests", element: <Requests /> },
+        { path: "notifications", element: <NotificationsPage /> },
       ],
     },
     {
@@ -68,7 +71,8 @@ function App() {
         { path: "tutordashboard", element: <TutorPrivate><TutorProfile /></TutorPrivate> },
         { path: "edit-profile", element: <TutorPrivate><EditTutorProfile /></TutorPrivate> },
         { path: "tutorProfile/:id", element: <DisplayTutor /> },
-       {path:"tutorjobs",element:<TutorJobs/>}
+        { path: "tutorjobs", element: <TutorJobs /> },
+       {path:"notifications",element:<NotificationPage/>}
       ],
     },
     {

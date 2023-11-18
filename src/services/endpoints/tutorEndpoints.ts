@@ -10,6 +10,7 @@ const tutorRoutes = {
     
     scheduleTime: "/tutors/scheduledate",
     changeSchedule: "/tutors/changeSchedule",
+    chancelBooking:"/tutors/cancel-booking",
     bookTutor: "/tutors/booktutor",
     getTutorSchedule: "/tutors/tutorschedule",
     getAllJobs: "/tutors/getallposting",

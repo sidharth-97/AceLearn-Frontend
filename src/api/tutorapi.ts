@@ -170,3 +170,13 @@ export const tutorPayment = async (data) => {
         
     }
 }
+
+export const cancelBooking = async (data) => {
+    try {
+        const response = await Api.post(tutorRoutes.chancelBooking, data)
+        return response
+    } catch (error) {
+        console.log(error);
+        
+    }
+}

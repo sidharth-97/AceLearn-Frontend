@@ -4,11 +4,12 @@ import icon from "../../assets/online-lecturing-distance-learning-opportunities-
 import classes from "../../assets/Screenshot 2023-10-24 212602.png";
 import StudentSidebar from "../../components/students/StudentSidebar";
 import Navbar from "../../components/common/navbar";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { getStudentSchedule } from "../../api/studentapi";
 import { useSelector } from "react-redux";
 import socket from "../../services/socket";
 import { useNavigate } from "react-router-dom";
+import { cancelBooking } from "../../api/tutorapi";
 
 const StudentProfile = () => {
   const [schedule, setSchedule] = useState([]);
@@ -51,7 +52,23 @@ const student=isStudent._id
     return () => {
         socket.off('room:join');
     };
-}, []);
+  }, []);
+
+  
+  const handleCancel = async(data:any) => {
+    const obj = {
+      tutor: data.tutor,
+      fee: data.timing.fee,
+      id: data.timing.student,
+      timing: {
+        date: data.timing.date,
+      },
+
+    }
+    const response = await cancelBooking(obj)
+    console.log(response);
+    
+  }
 
   return (
     <>
@@ -175,6 +192,7 @@ const student=isStudent._id
                     </p>
                     <button onClick={()=>StartClass(schedules.timing._id,schedules)}>Start Class</button>
                     {/* <a href="#" className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-200 focus:text-blue-700">Download ZIP</a> */}
+                    <button onClick={()=>handleCancel(schedules)}>Cancel</button>
                   </li>
                 ))}
               </ol>
@@ -188,4 +206,4 @@ const student=isStudent._id
   );
 };
 
-export default StudentProfile;
+export default StudentProfile

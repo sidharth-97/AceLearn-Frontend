@@ -11,32 +11,34 @@ const EditProfile = ({ data }) => {
   const [toggle, setToggle] = useState(true);
   const [image, setImage] = useState<File | null>(null);
 
-
   const { isStudent } = useSelector((state) => state.auth);
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData()
-    formData.append("email",data.email)
-    formData.append("username", name)
-    formData.append("mobile", mobile)
-    formData.append("image",image)
+    const formData = new FormData();
+    formData.append("email", data.email);
+    formData.append("username", name);
+    formData.append("mobile", mobile);
+    formData.append("image", image);
     const response = await editStudent(formData);
+    console.log(response);
   };
 
-  const handlePassword = async() => {
+  const handlePassword = async () => {
     // Handle password change
     const formData = {
-      password
-    }
-    const response=await editStudent(formData)
+      password,
+    };
+    const response = await editStudent(formData);
   };
 
   return (
     <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0 bg-D9E2EC">
-    <div className="w-full px-6 py-4 mt-6 overflow-hidden bg-white shadow-md sm:max-w-3xl sm:rounded-lg"> {/* Updated max-width */}
+      <div className="w-full px-6 py-4 mt-6 overflow-hidden bg-white shadow-md sm:max-w-3xl sm:rounded-lg">
+        {" "}
+        {/* Updated max-width */}
         <div>
           <h3 className="text-4xl text-center font-bold text-black pb-6 mb-3">
             Account Setting
@@ -45,23 +47,26 @@ const EditProfile = ({ data }) => {
         <div>
           <ul className="flex gap-5 p-5">
             <li onClick={() => setToggle(true)}>Profile</li>
-            <li onChange={() => setToggle(false)}>Password</li>
+            <li onClick={() => setToggle(false)}>Password</li>
           </ul>
         </div>
         {toggle ? (
           <div className="flex flex-row">
             <div className="w-1/4 mr-6">
-            {/* Add your profile picture component or code here */}
-            <img
-              src={isStudent.image} // Replace with the actual image source
-              alt="Profile"
-              className="w-full h-auto rounded-full"
-            />
-          </div>
+              {/* Add your profile picture component or code here */}
+              <img
+                src={isStudent.image} // Replace with the actual image source
+                alt="Profile"
+                className="w-full h-auto rounded-full"
+              />
+            </div>
             <div>
               <form onSubmit={handleSubmit} encType="multipart/form-data">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-medium text-gray-700"
+                  >
                     Name
                   </label>
                   <input
@@ -73,7 +78,10 @@ const EditProfile = ({ data }) => {
                   />
                 </div>
                 <div className="mt-4">
-                  <label htmlFor="mobile" className="block text-sm font-medium text-gray-700">
+                  <label
+                    htmlFor="mobile"
+                    className="block text-sm font-medium text-gray-700"
+                  >
                     Mobile
                   </label>
                   <input
@@ -85,17 +93,20 @@ const EditProfile = ({ data }) => {
                   />
                 </div>
                 <div className="mt-4">
-                  <label htmlFor="mobile" className="block text-sm font-medium text-gray-700">
+                  <label
+                    htmlFor="mobile"
+                    className="block text-sm font-medium text-gray-700"
+                  >
                     Mobile
                   </label>
-                <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => setImage(e.target.files?.[0] || null)}
-                name="image"
-                className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              />
-</div>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => setImage(e.target.files?.[0] || null)}
+                    name="image"
+                    className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                  />
+                </div>
                 {/* <div className="mt-4">
                   <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                     Password
@@ -135,7 +146,10 @@ const EditProfile = ({ data }) => {
           <div>
             <form onSubmit={handlePassword}>
               <div className="mt-4">
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Password
                 </label>
                 <input
@@ -147,7 +161,10 @@ const EditProfile = ({ data }) => {
                 />
               </div>
               <div className="mt-4">
-                <label htmlFor="password_confirmation" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="password_confirmation"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Confirm Password
                 </label>
                 <input
@@ -157,8 +174,8 @@ const EditProfile = ({ data }) => {
                   name="password_confirmation"
                   className="block w-full mt-1 border rounded-md shadow-sm focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 />
-                </div>
-                <button type="submit">Change Password</button>
+              </div>
+              <button type="submit">Change Password</button>
             </form>
           </div>
         )}

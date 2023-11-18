@@ -4,6 +4,7 @@ import { TutorEditProfile } from "../../api/tutorapi";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { Input } from "@mui/material";
 
 const EditProfileComponent = ({ data }) => {
   const [name, setName] = useState(data.name);
@@ -12,6 +13,8 @@ const EditProfileComponent = ({ data }) => {
   const [fees, setFees] = useState(data.fee);
   const [subject, setSubject] = useState(data.subject);
   const [image, setImage] = useState<File | null>(null);
+  const [toggle, setToggle] = useState(true);
+
   const { isTutor } = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
@@ -31,7 +34,7 @@ const EditProfileComponent = ({ data }) => {
     mutationFn: TutorEditProfile,
     onSuccess: (data) => {
       queryClient.setQueryData([], data);
-      if (data?.status !== 200) toast.error("Blocked by admin");
+      if (data?.status !== 200) toast.error("Not updated");
     },
   });
   const handleSubmit = async (e: React.FormEvent) => {
@@ -43,11 +46,16 @@ const EditProfileComponent = ({ data }) => {
     tutorData.append("name", name);
     tutorData.append("email", isTutor.email);
     tutorData.append("password", password);
-    tutorData.append("mobileNo", mobile);
+    tutorData.append("oldPassword",cpassword)
+    tutorData.append("mobile", mobile);
     tutorData.append("bio", bio);
     tutorData.append("fee", fees);
     tutorData.append("subject", subject);
-    if (image) tutorData.append("image", image);
+    if (image) {
+      tutorData.append("image", image);
+    } else {
+      tutorData.append("image",isTutor.image)
+    }
     console.log(tutorData, "after");
 
     mutate(tutorData);
@@ -57,12 +65,29 @@ const EditProfileComponent = ({ data }) => {
 
   return (
     <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0 bg-light-blue">
-      <div className="w-full px-6 py-4 mt-6 overflow-hidden bg-white shadow-md sm:max-w-md sm:rounded-lg">
-        <div>
-            <h3 className="text-4xl text-left font-boldfg text-black pb-6 mb-3">
-              Edit Profile
-            </h3>
-        </div>
+    <div className="w-1/2 px-6 py-4 mt-6 overflow-hidden bg-white shadow-md sm:max-w-lg sm:rounded-lg">
+      <div>
+        <h3 className="text-4xl text-left font-bold text-black pb-6 mb-3">
+          Edit Profile
+        </h3>
+      </div>
+      <div>
+        <ul className="flex gap-5 p-5">
+          <li onClick={() => setToggle(true)}>Profile</li>
+          <li onClick={() => setToggle(false)}>Password</li>
+        </ul>
+      </div>
+        {toggle ? (
+            <div className="flex flex-row">
+            <div className="w-1/4 mr-6">
+              {/* Add your profile picture component or code here */}
+              <img
+                src={isTutor.image} // Replace with the actual image source
+                alt="Profile"
+                className="w-full h-auto rounded-full"
+              />
+            </div>
+            <div>
         <form onSubmit={handleSubmit} encType="multipart/form-data">
           <div>
             <label
@@ -159,49 +184,61 @@ const EditProfileComponent = ({ data }) => {
               />
             </div>
           </div>
-          <div className="mt-4">
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-700 undefined"
-            >
-              Password
-            </label>
-            <div className="flex flex-col items-start">
+       
+          
+          <div className="flex items-center justify-center mt-4">
+              <button
+                type="submit"
+                className="inline-flex items-center px-4 py-2 ml-4 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-gray-900 border border-transparent rounded-md active:bg-gray-900 false"
+              >
+                Edit
+              </button>
+            </div>
+              </form>
+            </div>
+            </div>
+        ) : (
+          <form onSubmit={handleSubmit}>
+            <div className="mt-4">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Password
+                </label>
               <input
                 type="password"
                 value={password}
                 onChange={inputHandler}
                 name="password"
-                className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                className="block w-full mt-1 border rounded-md shadow-sm focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
               />
             </div>
-          </div>
-          <div className="mt-4">
-            <label
-              htmlFor="password_confirmation"
-              className="block text-sm font-medium text-gray-700 undefined"
-            >
-              Confirm Password
-            </label>
-            <div className="flex flex-col items-start">
+            <div className="mt-4">
+              <label
+                htmlFor="password_confirmation"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Confirm Password
+              </label>
               <input
                 type="password"
                 value={cpassword}
                 onChange={inputHandler}
-                name="password_confirmation"
-                className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                name="cpassword"
+                className="block w-full mt-1 border rounded-md shadow-sm focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
               />
             </div>
-          </div>
-          <div className="flex items-center justify-center mt-4">
-            <button
-              type="submit"
-              className="inline-flex items-center px-4 py-2 ml-4 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-gray-900 border border-transparent rounded-md active:bg-gray-900 false"
-            >
-              Edit
-            </button>
-          </div>
-        </form>
+            <div className="flex items-center justify-center mt-4">
+              <button
+                type="submit"
+                className="inline-flex items-center px-4 py-2 ml-4 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-gray-900 border border-transparent rounded-md active:bg-gray-900 false"
+              >
+                Change Password
+              </button>
+            </div>
+          </form>
+        )}
       </div>
     </div>
   );

@@ -12,7 +12,7 @@ const TutorSidebar = () => {
     { name: "dashboard", link: "/tutor/tutordashboard", icon: MdOutlineDashboard },
     { name: "Profile", link: "/tutor/edit-profile", icon: AiOutlineUser },
     { name: "tutor jobs", link: "/tutor/tutorjobs", icon: FiMessageSquare },
-    { name: "analytics", link: "/", icon: TbReportAnalytics, margin: true },
+    { name: "shedules", link: "/tutor/schedules", icon: TbReportAnalytics, margin: true },
     { name: "File Manager", link: "/", icon: FiFolder },
     { name: "Cart", link: "/", icon: FiShoppingCart },
     { name: "Saved", link: "/", icon: AiOutlineHeart, margin: true },

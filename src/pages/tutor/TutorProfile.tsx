@@ -66,9 +66,11 @@ const TutorProfile = () => {
     const reponse = await scheduledate(data);
   };
 
-  const handleCancel = async (date) => {
+  const handleCancel = async (date,fee,student) => {
     const obj = {
       tutor: isTutor._id,
+      fee: fee,
+      id:student,
       timing: {
         date: date,
       },
@@ -246,20 +248,27 @@ const TutorProfile = () => {
 
                           {/* <time className="text-xs tracki uppercase text-gray-400">Dec 2020</time> */}
                           <p>Student Id: {schedules.student}</p>
-                          {typeof schedules.student == "undefined" ? (
+                           <>
                             <button
                               className="bg-red-500 hover:bg-red-700 w-36 h-10 rounded-full text-white font-semibold shadow-md focus:outline-none focus:ring focus:border-red-300"
-                              onClick={() => handleCancel(schedules.date)}
+                              onClick={() => handleCancel(schedules.date,schedules.fee,schedules.student)}
                             >
                               Cancel this class
-                            </button>
-                          ) : (
-                              <>
-                                <p className="text-green-400 font-bold">Booked</p>
-                                <button onClick={()=>StartClass(schedules)}>Start Class</button>
+                     
+                                <>
+                                  <p className="text-green-400 font-bold">Booked</p>
+                                  {schedules.date <= new Date() && <button onClick={() => StartClass(schedules)}>Start Class</button>}
+                              
                               </>
+                       
+                            </button>
+                          
+                              
+                          
+                          </>
+                          
                             
-                          )}
+                          
                           {/* <p className="mt-3">
                             Pellentesque feugiat ante at nisl efficitur, in mollis orci scelerisque. Interdum et malesuada fames ac ante ipsum primis in faucibus.
                           </p> */}

@@ -32,6 +32,7 @@ import Subjects from "./pages/admin/Subjects";
 import AllTutors from "./pages/tutor/AllTutors";
 import NotificationsPage from "./pages/student/NotificationsPage";
 import NotificationPage from "./pages/tutor/NotificationPage";
+import Messenger from "./pages/student/Messenger";
 
 
 function App() {
@@ -59,6 +60,7 @@ function App() {
         { path: "requesttutor", element: <RequestTutor /> },
         { path: "requests", element: <Requests /> },
         { path: "notifications", element: <NotificationsPage /> },
+        {path:"messenger",element:<Messenger/>}
       ],
     },
     {

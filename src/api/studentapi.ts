@@ -140,10 +140,19 @@ export const paymentsession = async (obj: any) => {
 
 export const showNotifications = async (id)=>{
   try {
-    const response = await Api.get(`${studentRoutes}/${id}`)
+    const response = await Api.get(`${studentRoutes.studentNotifications}/${id}`)
     return response
   } catch (error) {
     console.log(error);
     
+  }
+}
+
+export const getConversations = async (id:string) => {
+  try {
+    const response = await Api.get(`${studentRoutes.studentConversations}/${id}`)
+    return response
+  } catch (error) {
+    console.log(error)
   }
 }

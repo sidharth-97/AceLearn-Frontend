@@ -12,7 +12,8 @@ const studentRoutes = {
     bookTutorByPost: "/students/book-tutor-by-post",
     scheduleofstudent: "/students/getStudentSchedule",
     paymentsession: "/students/payment",
-    studentNotifications:"/students/notifictions"
+    studentNotifications: "/students/notifictions",
+    studentConversations:"/students/get-conversations"
 }
 
 export default studentRoutes

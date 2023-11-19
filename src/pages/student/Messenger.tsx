@@ -1,9 +1,22 @@
-import React from 'react';
-import Navbar from '../../components/common/navbar';
-import Conversation from '../../components/common/conversation';
-import Message from '../../components/common/Message';
+import React, { useState } from "react";
+import Navbar from "../../components/common/navbar";
+import Conversation from "../../components/common/conversation";
+import Message from "../../components/common/Message";
+import { useSelector } from "react-redux";
+import { useQuery } from "react-query";
+import { getConversations } from "../../api/studentapi";
 
 const Messenger = () => {
+  const { isStudent } = useSelector((state) => state.auth);
+  const { data: conversations } = useQuery({
+    queryFn: () => getConversations(isStudent._id),
+
+    // Add isStudent._id as a dependency
+    enabled: Boolean(isStudent._id),
+  });
+
+  console.log(conversations, "conv");
+
   return (
     <>
       <Navbar />
@@ -12,14 +25,20 @@ const Messenger = () => {
           <input
             placeholder="Search for friends"
             className="w-full p-2 border-b border-gray-300"
-                  />
-                 <Conversation/> 
+          />
+          {conversations?.data?.map((conv) => (
+            <Conversation
+              key={conv?._id}
+              conversation={conv}
+              currentUser={isStudent._id}
+            />
+          ))}
         </div>
         <div className="w-1/2 flex flex-col relative">
           <div className="overflow-y-scroll p-4 flex-grow">
-                      {/* chatBoxTop content */}
-                      <Message own={true} />
-                      <Message own={false} />
+            {/* chatBoxTop content */}
+            <Message own={true} />
+            <Message own={false} />
           </div>
           <div className="p-4 flex items-center justify-between">
             <textarea
@@ -30,9 +49,7 @@ const Messenger = () => {
               Send
             </button>
           </div>
-          <span className="absolute top-10 text-5xl text-gray-300 cursor-default">
-          
-          </span>
+          <span className="absolute top-10 text-5xl text-gray-300 cursor-default"></span>
         </div>
         <div className="w-1/4 p-4 border-l border-gray-300">
           {/* chatOnline content */}

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 type FormData = {
     subject: string;
-    rate: string;
+    fee: string;
     bio: string;
   };
 
@@ -20,8 +20,8 @@ const Step2:React.FC<Step2Props> = ({ formData, setFormData }) => {
       <input
         type="number"
         min={0}
-        value={formData.rate}
-        onChange={(e) => setFormData({ ...formData, rate: e.target.value })}
+        value={formData.fee}
+        onChange={(e) => setFormData({ ...formData, fee: e.target.value })}
         className="block w-full px-4 py-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-500"
       />
     </div>

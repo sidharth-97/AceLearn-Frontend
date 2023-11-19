@@ -180,3 +180,13 @@ export const cancelBooking = async (data) => {
         
     }
 }
+
+export const tutorNotifications = async (id) => {
+    try {
+        const response = await Api.get(`${tutorRoutes.tutorNotifications}/${id}`)
+        return response
+    } catch (error) {
+        console.log(error);
+        
+    }
+}

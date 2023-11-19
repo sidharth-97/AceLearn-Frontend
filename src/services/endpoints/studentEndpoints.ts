@@ -11,7 +11,8 @@ const studentRoutes = {
     viewRequestStatus: "/students/student-job-request",
     bookTutorByPost: "/students/book-tutor-by-post",
     scheduleofstudent: "/students/getStudentSchedule",
-    paymentsession:"/students/payment"
+    paymentsession: "/students/payment",
+    studentNotifications:"/students/notifictions"
 }
 
 export default studentRoutes

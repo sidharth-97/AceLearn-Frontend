@@ -18,7 +18,8 @@ const tutorRoutes = {
     addReview: "/tutors/add-review",
     getTutorReview: "/tutors/get-review",
     getOldReview: "/tutors/old-review",
-    tutorPayment:"/tutors/tutor-payment"
+    tutorPayment: "/tutors/tutor-payment",
+    tutorNotifications:"/tutors/notifications"
 }
 
 export default tutorRoutes

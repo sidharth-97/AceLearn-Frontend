@@ -137,3 +137,13 @@ export const paymentsession = async (obj: any) => {
     console.log(error);
   }
 };
+
+export const showNotifications = async (id)=>{
+  try {
+    const response = await Api.get(`${studentRoutes}/${id}`)
+    return response
+  } catch (error) {
+    console.log(error);
+    
+  }
+}

@@ -1,6 +1,7 @@
 import React from 'react'
+import {format} from 'timeago.js'
 
-const Message = ({own}) => { 
+const Message = ({message,own}) => { 
   return (
       // Assuming you have 'own', 'message', and 'format' as props or state in your React component
      
@@ -12,10 +13,10 @@ const Message = ({own}) => {
       alt=""
     />
     <p className={`${own ? 'bg-gray-200 text-black' : 'bg-blue-500 text-white'} p-3 rounded-2xl max-w-[300px]`}>
-      {"this is the message"}
+      {message.text}
     </p>
   </div>
-  <div className="text-xs mt-3 messageBottom">{"format(message.createdAt)"}</div>
+  <div className="text-xs mt-3 messageBottom">{format(message.createdAt)}</div>
 </div>
 
 

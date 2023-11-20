@@ -156,3 +156,13 @@ export const getConversations = async (id:string) => {
     console.log(error)
   }
 }
+
+export const getMesssages = async (id: string) => {
+  try {
+    const response = await Api.get(`${studentRoutes.getMessages}/${id}`)
+    return response
+  } catch (error) {
+    console.log(error);
+    
+  }
+}

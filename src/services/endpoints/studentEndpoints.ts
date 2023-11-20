@@ -13,7 +13,8 @@ const studentRoutes = {
     scheduleofstudent: "/students/getStudentSchedule",
     paymentsession: "/students/payment",
     studentNotifications: "/students/notifictions",
-    studentConversations:"/students/get-conversations"
+    studentConversations: "/students/get-conversations",
+    getMessages: "/students/get-messages"
 }
 
 export default studentRoutes

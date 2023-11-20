@@ -166,3 +166,12 @@ export const getMesssages = async (id: string) => {
     
   }
 }
+
+export const addMessages = async (data: any)=>{
+  try {
+    const response = await Api.post(studentRoutes.addMessages, data)
+    return response
+  } catch (error) {
+    
+  }
+}

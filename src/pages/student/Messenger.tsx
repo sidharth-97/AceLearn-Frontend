@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Navbar from "../../components/common/navbar";
 import Conversation from "../../components/common/conversation";
 import Message from "../../components/common/Message";
 import { useSelector } from "react-redux";
 import { useQuery } from "react-query";
-import { getConversations, getMesssages } from "../../api/studentapi";
+import { addMessages, getConversations, getMesssages } from "../../api/studentapi";
 
 const Messenger = () => {
     const [currentChat, setCurrentChat] = useState(null)
   const [messages, setMessages] = useState([])
-  const [newMessage,setNewMessage]=useState([])
+  const [newMessage, setNewMessage] = useState([])
+  const scrollRef=useRef()
   const { isStudent } = useSelector((state) => state.auth);
   const { data: conversations } = useQuery({
     queryFn: () => getConversations(isStudent._id),
@@ -34,10 +35,16 @@ const Messenger = () => {
     const message = {
       sender: isStudent._id,
       text: newMessage,
-      conversationId=currentChat._id
+      conversationId:currentChat._id
     }
-    const res=await addM
+    const res = await addMessages(message)
+    console.log(res);
+    setMessages([...message,res?.data])
   }
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({behavior:"smooth"})
+  },[messages])
 
   return (
     <>
@@ -62,10 +69,11 @@ const Messenger = () => {
           <div className="overflow-y-scroll p-4 flex-grow">
             {/* chatBoxTop content */}
             {messages.map((m) => (
-              <Message message={m} own={m.sender ==isStudent._id} />
+              <div ref={scrollRef}>
+                              <Message message={m} own={m.sender ==isStudent._id} />
+
+              </div>
             ))}
-           
-            
           </div>
           <div className="p-4 flex items-center justify-between">
             <textarea

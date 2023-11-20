@@ -14,7 +14,8 @@ const studentRoutes = {
     paymentsession: "/students/payment",
     studentNotifications: "/students/notifictions",
     studentConversations: "/students/get-conversations",
-    getMessages: "/students/get-messages"
+    getMessages: "/students/get-messages",
+    addMessages:"students/add-message"
 }
 
 export default studentRoutes

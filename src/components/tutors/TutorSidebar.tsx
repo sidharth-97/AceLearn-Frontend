@@ -14,7 +14,7 @@ const TutorSidebar = () => {
     { name: "tutor jobs", link: "/tutor/tutorjobs", icon: FiMessageSquare },
     { name: "shedules", link: "/tutor/schedules", icon: TbReportAnalytics, margin: true },
     { name: "notifications", link: "/tutor/notifications", icon: FiFolder },
-    { name: "Cart", link: "/", icon: FiShoppingCart },
+    { name: "messenger", link: "/tutor/messenger", icon: FiShoppingCart },
     { name: "Saved", link: "/", icon: AiOutlineHeart, margin: true },
     { name: "Setting", link: "/", icon: RiSettings4Line },
   ];

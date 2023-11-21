@@ -19,7 +19,10 @@ const tutorRoutes = {
     getTutorReview: "/tutors/get-review",
     getOldReview: "/tutors/old-review",
     tutorPayment: "/tutors/tutor-payment",
-    tutorNotifications:"/tutors/notifications"
+    tutorNotifications: "/tutors/notifications",
+    conversations: "/tutors/get-conversations",
+    getMessages: "/tutors/get-messages",
+    addMessages:"/students/add-message"
 }
 
 export default tutorRoutes

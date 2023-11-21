@@ -181,9 +181,39 @@ export const cancelBooking = async (data) => {
     }
 }
 
-export const tutorNotifications = async (id) => {
+export const tutorNotifications = async (id:string) => {
     try {
         const response = await Api.get(`${tutorRoutes.tutorNotifications}/${id}`)
+        return response
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
+export const tutorConversations = async (id:string) => {
+    try {
+        const response = await Api.get(`${tutorRoutes.conversations}/${id}`)
+        return response
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
+export const getMessages = async (id: string) => {
+    try {
+        const response = await Api.get(`${tutorRoutes.getMessages}/${id}`)
+        return response
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
+export const addMessages = async (data: any) => {
+    try {
+        const response = await Api.post(tutorRoutes.addMessages, data)
         return response
     } catch (error) {
         console.log(error);

@@ -33,6 +33,7 @@ import AllTutors from "./pages/tutor/AllTutors";
 import NotificationsPage from "./pages/student/NotificationsPage";
 import NotificationPage from "./pages/tutor/NotificationPage";
 import Messenger from "./pages/student/Messenger";
+import MessengerTutor from "./pages/tutor/Messenger";
 
 
 function App() {
@@ -74,7 +75,8 @@ function App() {
         { path: "edit-profile", element: <TutorPrivate><EditTutorProfile /></TutorPrivate> },
         { path: "tutorProfile/:id", element: <DisplayTutor /> },
         { path: "tutorjobs", element: <TutorJobs /> },
-       {path:"notifications",element:<NotificationPage/>}
+        { path: "notifications", element: <NotificationPage /> },
+       { path:"messenger",element:<MessengerTutor/>}
       ],
     },
     {

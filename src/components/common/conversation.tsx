@@ -6,8 +6,15 @@ const Conversation = ({ conversation,currentUser }) => {
     const [user, setUser] = useState(null)
 
     
-    useEffect(() => {
-        const othersId = conversation.members.find((m) => m != currentUser._id)
+  useEffect(() => {
+      
+      const othersId = conversation.members.find((m) => m != currentUser)
+    console.log(othersId, "othersid");
+    console.log(conversation.members, "members");
+    console.log(currentUser);
+    
+    
+      
         const getUser = async () => {
             const res = await studentDetails(othersId)
             console.log(res,"res");

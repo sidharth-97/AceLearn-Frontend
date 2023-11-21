@@ -15,7 +15,8 @@ const studentRoutes = {
     studentNotifications: "/students/notifictions",
     studentConversations: "/students/get-conversations",
     getMessages: "/students/get-messages",
-    addMessages:"students/add-message"
+    addMessages: "students/add-message",
+    getAllUsers:"/students/getAllUsers"
 }
 
 export default studentRoutes

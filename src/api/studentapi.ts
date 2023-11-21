@@ -172,6 +172,16 @@ export const addMessages = async (data: any)=>{
     const response = await Api.post(studentRoutes.addMessages, data)
     return response
   } catch (error) {
+    console.log(error);
     
+  }
+}
+
+export const getAllUsers = async (id: string) => {
+  try {
+    const response = await Api.get(`${studentRoutes.getAllUsers}/${id}`)
+    return response
+  } catch (error) {
+    console.log(error);
   }
 }

@@ -2,6 +2,7 @@ import tutorRoutes from "../services/endpoints/tutorEndpoints";
 import Api from "../services/api";
 import { toast } from "react-toastify";
 import { handleErrors } from "../middleware/ErrorHandler";
+import studentRoutes from "../services/endpoints/studentEndpoints";
 
 
 export const signup = async (tutor: Object) => {
@@ -220,3 +221,7 @@ export const addMessages = async (data: any) => {
         
     }
 }
+
+
+  
+  

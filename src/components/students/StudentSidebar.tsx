@@ -3,19 +3,22 @@ import { HiMenuAlt3 } from "react-icons/hi";
 import { MdOutlineDashboard } from "react-icons/md";
 import { RiSettings4Line } from "react-icons/ri";
 import { TbReportAnalytics } from "react-icons/tb";
-import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
-import { FiMessageSquare, FiFolder, FiShoppingCart } from "react-icons/fi";
+import { AiOutlineUser} from "react-icons/ai";
+import { FiMessageSquare} from "react-icons/fi";
 import { Link } from "react-router-dom";
+import { MdOutlineNotificationsActive } from "react-icons/md";
+import { GrSchedule } from "react-icons/gr";
+import { IoIosList } from "react-icons/io";
 
 const StudentSidebar = () => {
   const menus = [
     { name: "dashboard", link: "/student", icon: MdOutlineDashboard },
     { name: "edit profile", link: "/student/profile", icon: AiOutlineUser },
-    { name: "hire a tutor", link: "/student/requesttutor", icon: FiMessageSquare },
+    { name: "hire a tutor", link: "/student/requesttutor", icon: IoIosList },
     { name: "requests", link: "/student/requests", icon: TbReportAnalytics, margin: true },
-    { name: "notifications", link: "/student/notifications", icon: FiFolder },
-    { name: "messenger", link: "/student/messenger", icon: FiShoppingCart },
-    { name: "Saved", link: "/", icon: AiOutlineHeart, margin: true },
+    { name: "notifications", link: "/student/notifications", icon: MdOutlineNotificationsActive },
+    { name: "messenger", link: "/student/messenger", icon: FiMessageSquare },
+    { name: "schedule", link: "/student/schedule", icon: GrSchedule, margin: true },
     { name: "Setting", link: "/", icon: RiSettings4Line },
   ];
   const [open, setOpen] = useState(true);

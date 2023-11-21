@@ -34,6 +34,8 @@ import NotificationsPage from "./pages/student/NotificationsPage";
 import NotificationPage from "./pages/tutor/NotificationPage";
 import Messenger from "./pages/student/Messenger";
 import MessengerTutor from "./pages/tutor/Messenger";
+import TutorSchedulePage from "./pages/tutor/SchedulePage";
+import StudentSchedule from "./pages/student/StudentSchedule";
 
 
 function App() {
@@ -61,7 +63,8 @@ function App() {
         { path: "requesttutor", element: <RequestTutor /> },
         { path: "requests", element: <Requests /> },
         { path: "notifications", element: <NotificationsPage /> },
-        {path:"messenger",element:<Messenger/>}
+        { path: "messenger", element: <Messenger /> },
+        { path: "schedule", element: <StudentSchedule /> }
       ],
     },
     {
@@ -76,7 +79,8 @@ function App() {
         { path: "tutorProfile/:id", element: <DisplayTutor /> },
         { path: "tutorjobs", element: <TutorJobs /> },
         { path: "notifications", element: <NotificationPage /> },
-       { path:"messenger",element:<MessengerTutor/>}
+        { path: "messenger", element: <MessengerTutor /> },
+        { path:"tutor-schedule",element:<TutorSchedulePage/>}
       ],
     },
     {

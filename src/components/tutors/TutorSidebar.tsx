@@ -2,19 +2,22 @@ import React, { useState } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { MdOutlineDashboard } from "react-icons/md";
 import { RiSettings4Line } from "react-icons/ri";
-import { TbReportAnalytics } from "react-icons/tb";
 import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
-import { FiMessageSquare, FiFolder, FiShoppingCart } from "react-icons/fi";
+import { FiMessageSquare} from "react-icons/fi";
+import { MdOutlineNotificationsActive } from "react-icons/md";
+import { GrSchedule } from "react-icons/gr";
+import { IoIosList } from "react-icons/io";
+
 import { Link } from "react-router-dom";
 
 const TutorSidebar = () => {
   const menus = [
     { name: "dashboard", link: "/tutor/tutordashboard", icon: MdOutlineDashboard },
     { name: "Profile", link: "/tutor/edit-profile", icon: AiOutlineUser },
-    { name: "tutor jobs", link: "/tutor/tutorjobs", icon: FiMessageSquare },
-    { name: "shedules", link: "/tutor/schedules", icon: TbReportAnalytics, margin: true },
-    { name: "notifications", link: "/tutor/notifications", icon: FiFolder },
-    { name: "messenger", link: "/tutor/messenger", icon: FiShoppingCart },
+    { name: "tutor jobs", link: "/tutor/tutorjobs", icon: IoIosList },
+    { name: "shedules", link: "/tutor/tutor-schedule", icon:GrSchedule, margin: true },
+    { name: "notifications", link: "/tutor/notifications", icon: MdOutlineNotificationsActive },
+    { name: "messenger", link: "/tutor/messenger", icon: FiMessageSquare},
     { name: "Saved", link: "/", icon: AiOutlineHeart, margin: true },
     { name: "Setting", link: "/", icon: RiSettings4Line },
   ];

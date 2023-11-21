@@ -12,64 +12,8 @@ import { useNavigate } from "react-router-dom";
 import { cancelBooking } from "../../api/tutorapi";
 
 const StudentProfile = () => {
-  const [schedule, setSchedule] = useState([]);
+
   const { isStudent } = useSelector((state) => state.auth);
-const navigate=useNavigate()
-
-  const { data, isLoading, isError } = useQuery({
-    queryFn: () => getStudentSchedule(isStudent._id),
-    queryKey: ["StdSchedule"],
-    onSuccess: (data) => {
-      if (data) {
-        setSchedule(data.data);
-      }
-    },
-  });
-  console.log(schedule);
-
-
-const student=isStudent._id
-  const StartClass = useCallback((id,schedule) => {
-    console.log("Callback");
-    let room=id
-    socket.emit('room:join', { student, room });
-    const data = {
-      tutor: schedule.tutor,
-      student:isStudent._id
-    }
-      localStorage.setItem("videocall",JSON.stringify(data))
-  }, [socket]);
-  const handleJoinRoom = useCallback((data:{tutor:string,room:string}) => {
-    const { tutor, room } = data
-    navigate(`/room/${room}`)
-    
-  }, [])
-  
-  useEffect(() => {
-    socket.on('room:join',handleJoinRoom);
-
-    // Clean up event listener when component unmounts
-    return () => {
-        socket.off('room:join');
-    };
-  }, []);
-
-  
-  const handleCancel = async(data:any) => {
-    const obj = {
-      tutor: data.tutor,
-      fee: data.timing.fee,
-      id: data.timing.student,
-      timing: {
-        date: data.timing.date,
-      },
-
-    }
-    const response = await cancelBooking(obj)
-    console.log(response);
-    
-  }
-
   return (
     <>
       <Navbar />
@@ -96,40 +40,40 @@ const student=isStudent._id
           </div> */}
           {/* </div> */}
           <div className="bg-white shadow-md rounded-md p-6 w-full">
-      <div className="flex items-center space-x-4">
-        <img
-          src="/path-to-profile-picture.jpg"
-          alt="Profile"
-          className="w-16 h-16 rounded-full object-cover"
-        />
-        <div>
+            <div className="flex items-center space-x-4">
+              <img
+                src="/path-to-profile-picture.jpg"
+                alt="Profile"
+                className="w-16 h-16 rounded-full object-cover"
+              />
+              <div>
                 <h2 className="text-2xl font-semibold">{isStudent.username}</h2>
                 <span className="bg-green-500 text-white font-semibold px-2 py-1 rounded-md">
-              Premium
-            </span>
-          <p className="text-gray-500">Grade: 10</p>
-          <p className="text-gray-500">School: XYZ High School</p>
-        </div>
-      </div>
+                  Premium
+                </span>
+                <p className="text-gray-500">Grade: 10</p>
+                <p className="text-gray-500">School: XYZ High School</p>
+              </div>
+            </div>
 
-      <div className="mt-4 flex justify-between items-center">
-        <div>
-          <h3 className="text-lg font-semibold">Contact Information</h3>
-          <p className="text-gray-500">Email: {isStudent.email}</p>
-          <p className="text-gray-500">Phone: +123 456 7890</p>
-        </div>
-        <div className="flex items-center">
-          <div className="bg-yellow-300 p-4 rounded-full mr-4">
-            {/* Wallet icon or any other wallet-related content */}
-            💰
+            <div className="mt-4 flex justify-between items-center">
+              <div>
+                <h3 className="text-lg font-semibold">Contact Information</h3>
+                <p className="text-gray-500">Email: {isStudent.email}</p>
+                <p className="text-gray-500">Phone: +123 456 7890</p>
+              </div>
+              <div className="flex items-center">
+                <div className="bg-yellow-300 p-4 rounded-full mr-4">
+                  {/* Wallet icon or any other wallet-related content */}
+                  💰
+                </div>
+                <div>
+                  <p className="text-gray-700 font-semibold">Wallet Balance</p>
+                  <p className="text-xl text-yellow-700 font-bold">{`$ 500 `}</p>
+                </div>
+              </div>
+            </div>
           </div>
-          <div>
-            <p className="text-gray-700 font-semibold">Wallet Balance</p>
-            <p className="text-xl text-yellow-700 font-bold">{`$ 500 `}</p>
-          </div>
-        </div>
-      </div>
-    </div>
           <div className="flex flex-row h-24 justify-between mt-3 mx-1">
             <div className="flex flex-row h-28 items-center bg-white text-center font-semibold rounded-3xl p-4">
               <div>
@@ -159,51 +103,58 @@ const student=isStudent._id
               </div>
             </div>
           </div>
-          <div>
+          {/* <div>
             <div className="bg-white text-black mt-6 p-4">
               <h2 className="font-semibold text-2xl">
                 Your schedule for this week
               </h2>
               <div className=" ms-4 mt-9">
-                   <ol className="relative border-l border-gray-200">
-                {schedule.map((schedules, index) => (
-                  <li className="mb-10 ml-6">
-                    <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-8 ring-white">
-                      <svg
-                        className="w-2.5 h-2.5 text-blue-800"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
+                <ol className="relative border-l border-gray-200">
+                  {schedule.map((schedules, index) => (
+                    <li className="mb-10 ml-6">
+                      <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-8 ring-white">
+                        <svg
+                          className="w-2.5 h-2.5 text-blue-800"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                        </svg>
+                      </span>
+                      <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900">
+                        {" "}
+                        {new Date(schedules.timing.date)
+                          .toISOString()
+                          .slice(0, 16)
+                          .replace("T", " ")}{" "}
+                      </h3>
+                  
+                      <p className="mb-4 text-base font-normal text-gray-500">
+                        Tutor : {schedules.tutorDetails[0].name}
+                      </p>
+                      <button
+                        onClick={() =>
+                          StartClass(schedules.timing._id, schedules)
+                        }
                       >
-                        <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
-                      </svg>
-                    </span>
-                    <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900">
-                      {" "}
-                      {new Date(schedules.timing.date)
-                              .toISOString()
-                              .slice(0, 16)
-                              .replace("T", " ")}{" "}
-                    </h3>
-                    {/* <time className="block mb-2 text-sm font-normal leading-none text-gray-400">Released on January 13th, 2022</time> */}
-                    <p className="mb-4 text-base font-normal text-gray-500">
-                      Tutor : {schedules.tutorDetails[0].name}
-                    </p>
-                    <button onClick={()=>StartClass(schedules.timing._id,schedules)}>Start Class</button>
-                    {/* <a href="#" className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-200 focus:text-blue-700">Download ZIP</a> */}
-                    <button onClick={()=>handleCancel(schedules)}>Cancel</button>
-                  </li>
-                ))}
-              </ol>
-</div>
-           
+                        Start Class
+                      </button>
+                    
+                      <button onClick={() => handleCancel(schedules)}>
+                        Cancel
+                      </button>
+                    </li>
+                  ))}
+                </ol>
+              </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </>
   );
 };
 
-export default StudentProfile
+export default StudentProfile;

@@ -7,6 +7,7 @@ import Step3 from './step3';
 import OTPInput from '../common/OTPInput';
 import { signup, signupFinal } from '../../api/tutorapi';
 import { useNavigate } from 'react-router-dom';
+import {toast} from 'react-toastify'
 
 const TutorOnBoard: React.FC = () => {
   const [step, setStep] = useState(0);
@@ -43,6 +44,7 @@ const TutorOnBoard: React.FC = () => {
       const result = await signupFinal({ ...formData, otp: otp })
       if (result?.status == 200) {
         navigate('/tutor/tutordashboard')
+        toast.success("Signup successfull")
       }
     } else {
       setStep((current) => current + 1);

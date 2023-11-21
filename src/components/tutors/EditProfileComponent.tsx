@@ -61,6 +61,7 @@ const EditProfileComponent = ({ data }) => {
     mutate(tutorData);
 
     navigate("/tutor/tutordashboard");
+    toast.success("Profile Edited")
   };
 
   return (
@@ -82,7 +83,7 @@ const EditProfileComponent = ({ data }) => {
             <div className="w-1/4 mr-6">
               {/* Add your profile picture component or code here */}
               <img
-                src={isTutor.image} // Replace with the actual image source
+                src={data.image} // Replace with the actual image source
                 alt="Profile"
                 className="w-full h-auto rounded-full"
               />

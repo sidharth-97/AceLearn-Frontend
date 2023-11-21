@@ -4,6 +4,7 @@ import TutorSidebar from "../../components/tutors/TutorSidebar";
 import { useMutation, useQuery } from "react-query";
 import { applyTutorJobs, getAllJobs } from "../../api/tutorapi";
 import { useSelector } from "react-redux";
+import {toast} from 'react-toastify'
 
 const TutorJobs = () => {
   const [time, setTime] = useState("");
@@ -50,11 +51,12 @@ const TutorJobs = () => {
     };
     // try {
     await applyjobmutation.mutateAsync(formData);
+    toast.success("Applied Successfully")
     // } catch (error) {
     //     console.log(error);
     // }
   };
-
+  const currentDateTime = new Date().toISOString().slice(0, 16); 
   return (
     <div>
       <Navbar />
@@ -100,6 +102,7 @@ const TutorJobs = () => {
                   </button>
                   <input
                     value={time}
+                    min={currentDateTime}
                     onChange={(e) => setTime(e.target.value)}
                     type="datetime-local"
                     className="py-2 px-4 border rounded"

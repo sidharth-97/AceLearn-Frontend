@@ -156,20 +156,20 @@ const Signup = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                     />
-                       <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => setImage(e.target.files?.[0] || null)}
-                name="image"
-                className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              />
+                   
                 <InputBox
                   type="password"
                   name="Cpassword"
                   placeholder="Confirm Password"
                   value={Cpassword}
                   onChange={(e) => setCpassword(e.target.value)}
-                />
+                />    <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => setImage(e.target.files?.[0] || null)}
+                name="image"
+                className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              />
                     <span>{ error&& "Email already exists"}</span>
                 <div className="mb-10">
                   <button

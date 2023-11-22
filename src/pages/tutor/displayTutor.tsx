@@ -4,10 +4,14 @@ import { TutorDetails } from "../../api/tutorapi";
 import Navbar from "../../components/common/navbar";
 import { Link } from "react-router-dom";
 import ReviewArticle from "../../components/common/ReviewComponent";
+import { addConversations } from "../../api/studentapi";
+import { useSelector } from "react-redux";
 
 const DisplayTutor = () => {
   const tutorId = useParams();
   const [tutor, setTutor] = useState({});
+
+  const {isStudent}=useSelector((state)=>state.auth)
 
   useEffect(() => {
     const getData = async () => {
@@ -17,6 +21,16 @@ const DisplayTutor = () => {
 
     getData();
   }, []);
+
+  const addContact = async () => {
+    const data = {
+      receiverId: tutorId.id,
+      senderId:isStudent._id
+    }
+    const res = await addConversations(data)
+    console.log(res);
+    
+  }
 
   return (
     <>
@@ -64,7 +78,7 @@ const DisplayTutor = () => {
                 </Link>
               </button>
 
-              <button className="bg-white hover:bg-blue-200 text-blue-500 font-bold py-2 px-4 rounded-full">
+              <button onClick={addContact} className="bg-white hover:bg-blue-200 text-blue-500 font-bold py-2 px-4 rounded-full">
                 Contact Me
               </button>
             </div>

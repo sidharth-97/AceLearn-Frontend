@@ -39,7 +39,7 @@ const Signin: React.FC<propstype> = ({ user }) => {
     if (isStudent) {
       navigate('/student/dashboard')
     } else if(isTutor) {
-      navigate('/tutor/dashboard')
+      navigate('/tutor/tutor-dashboard')
     }
   }, [])
   

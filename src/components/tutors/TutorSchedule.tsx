@@ -134,17 +134,17 @@ const TutorSchedule = () => {
                                   schedules.student
                                 )
                               }
-                            >
+                              >
                               Cancel this class
                               <>
+                              </></button>
                                 {/* <p className="text-green-400 font-bold">Booked</p> */}
-                                {schedules.date <= new Date() && (
+                                {new Date(schedules.date) >= new Date() && (
                                   <button onClick={() => StartClass(schedules)}>
                                     Start Class
                                   </button>
                                 )}
-                              </>
-                            </button>
+                            
                           </>
 
                           {/* <p className="mt-3">

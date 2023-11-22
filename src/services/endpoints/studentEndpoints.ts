@@ -12,8 +12,9 @@ const studentRoutes = {
     bookTutorByPost: "/students/book-tutor-by-post",
     scheduleofstudent: "/students/getStudentSchedule",
     paymentsession: "/students/payment",
-    studentNotifications: "/students/notifictions",
+    studentNotifications: "/students/notifications",
     studentConversations: "/students/get-conversations",
+    addConversations:"/students/conversation",
     getMessages: "/students/get-messages",
     addMessages: "students/add-message",
     getAllUsers:"/students/getAllUsers"

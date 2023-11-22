@@ -5,7 +5,7 @@ import classes from "../../assets/Screenshot 2023-10-24 212602.png";
 import StudentSidebar from "../../components/students/StudentSidebar";
 import Navbar from "../../components/common/navbar";
 import { useMutation, useQuery } from "react-query";
-import { getStudentSchedule } from "../../api/studentapi";
+import { getStudentSchedule, studentDetails } from "../../api/studentapi";
 import { useSelector } from "react-redux";
 import socket from "../../services/socket";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +14,11 @@ import { cancelBooking } from "../../api/tutorapi";
 const StudentProfile = () => {
 
   const { isStudent } = useSelector((state) => state.auth);
+  const { data } = useQuery({
+    queryFn:()=>studentDetails(isStudent._id)
+  })
+  console.log(data?.data)
+  
   return (
     <>
       <Navbar />
@@ -42,9 +47,9 @@ const StudentProfile = () => {
           <div className="bg-white shadow-md rounded-md p-6 w-full">
             <div className="flex items-center space-x-4">
               <img
-                src="/path-to-profile-picture.jpg"
+                src={data?.data.image}
                 alt="Profile"
-                className="w-16 h-16 rounded-full object-cover"
+                className="w-24 h-24 rounded-full object-cover"
               />
               <div>
                 <h2 className="text-2xl font-semibold">{isStudent.username}</h2>
@@ -69,7 +74,7 @@ const StudentProfile = () => {
                 </div>
                 <div>
                   <p className="text-gray-700 font-semibold">Wallet Balance</p>
-                  <p className="text-xl text-yellow-700 font-bold">{`$ 500 `}</p>
+                  <p className="text-xl text-yellow-700 font-bold">{`Rs ${data?.data?.wallet??0} `}</p>
                 </div>
               </div>
             </div>

@@ -5,9 +5,12 @@ import { useQuery } from 'react-query';
 import { getalltutors } from '../../api/tutorapi';
 import { Link } from 'react-router-dom';
 import SearchInput from '../../components/UI/SearchInput';
+import Pagination from '../../components/UI/Pagination'
 
 const TutorCardGrid = ({Data,selectedFilters}) => {
   const [tutorData, setTutorData] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [activePage,setActivePage]=useState(1)
 
   const { data, isLoading, isError } = useQuery({
     queryFn: () => getalltutors(),
@@ -19,11 +22,18 @@ const TutorCardGrid = ({Data,selectedFilters}) => {
     },
   });
   console.log(selectedFilters, "this is the selected filters");
-  console.log(tutorData,"this is the tutuor data");
+  console.log(tutorData, "this is the tutuor data");
+  
+  let filteredData=tutorData?.filter(
+    (user: any) =>
+    user?.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+  console.log(filteredData,"7777777777777");
   
 
-  const filteredData = Object.keys(selectedFilters).length !== 0
-  ? data?.data?.filter((tutor) => {
+
+  filteredData = Object.keys(selectedFilters).length !== 0
+  ? tutorData?.filter((tutor) => {
       const tutorSubjects = tutor.subject || [];
       const tutorClasses = tutor.classes || [];
       const tutorPrice = tutor.fee || 0;
@@ -43,15 +53,30 @@ const TutorCardGrid = ({Data,selectedFilters}) => {
 
       return subjectFilter && classFilter && priceFilter;
     })
-  : tutorData;
+  : filteredData;
 
+  console.log(searchQuery, "serrarrh");
+  
+
+  const itemsPerPage = 2
+  const limit = Math.round(filteredData.length / 2)
+  const startIndex=(activePage-1)*itemsPerPage
+  const endIndex = activePage * itemsPerPage
+  
+  const paginatedData = filteredData.slice(startIndex, endIndex)
+  
   
   return (
     <>
-
       <div className="text-center p-10">
         <div className="flex items-center justify-center w-full mb-5">
-          <SearchInput data={tutorData} />
+        <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="flex-shrink flex-grow flex-auto leading-normal tracking-wide w-px flex-1 border border-none border-l-0 rounded rounded-l-none px-3 relative focus:outline-none text-xxs lg:text-xs lg:text-base text-gray-500 font-thin"
+                placeholder="Search for tutor"
+              />
         </div>
 
         <section
@@ -86,7 +111,7 @@ const TutorCardGrid = ({Data,selectedFilters}) => {
                   </div>
                 </div>
               ))
-            : filteredData.map((tutor, index) => (
+            : paginatedData.length && paginatedData.map((tutor, index) => (
                 <Link to={`/tutor/tutorProfile/${tutor._id}`} key={index}>
                   <div className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
                     <a href="#">
@@ -134,6 +159,7 @@ const TutorCardGrid = ({Data,selectedFilters}) => {
                 </Link>
               ))}
         </section>
+        <Pagination active={activePage} setActive={setActivePage} limit={ limit} />
       </div>
     </>
   );

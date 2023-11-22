@@ -63,7 +63,8 @@ import { useNavigate } from "react-router-dom";
     console.log(data);
 
     const reponse = await scheduledate(data);
-    if(reponse?.status==200) toast.success("Scheduling success")
+    if (reponse?.status == 200) toast.success("Scheduling success")
+    
   };
 
 
@@ -120,9 +121,10 @@ import { useNavigate } from "react-router-dom";
                 adventure together and create a brighter future for our
                 students.
               </p>
-              <p className="py-1 text-base">Member since :</p>
-              <p className="text-base">Email verified :</p>
-              <p className="py-1 text-base">Mobile verified :</p>
+            
+              <p className="py-1 text-base">💰 Wallet Rs: {isTutor.wallet??0}</p>
+              {/* <p className="text-base">Email verified : true</p> */}
+              {/* <p className="py-1 text-base">Mobile verified :</p> */}
             </div>
             <div>
               <img className="w-128" src={icon} alt="" />

@@ -7,6 +7,7 @@ import { cancelBooking } from "../../api/tutorapi";
 import { getStudentSchedule } from "../../api/studentapi";
 import Navbar from "../../components/common/navbar";
 import StudentSidebar from "../../components/students/StudentSidebar";
+import { toast } from "react-toastify";
 
 const StudentSchedule = () => {
   const [schedule, setSchedule] = useState([]);
@@ -14,7 +15,12 @@ const StudentSchedule = () => {
   const { isStudent } = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
-  const { data, isLoading, isError } = useQuery({
+  const {
+    data,
+    isLoading,
+    isError,
+    refetch: refetchSchedule,
+  } = useQuery({
     queryFn: () => getStudentSchedule(isStudent._id),
     queryKey: ["StdSchedule"],
     onSuccess: (data) => {
@@ -67,6 +73,8 @@ const StudentSchedule = () => {
     };
     const response = await cancelBooking(obj);
     console.log(response);
+    await refetchSchedule();
+    toast.success("Cancelled");
   };
 
   return (
@@ -84,18 +92,27 @@ const StudentSchedule = () => {
             <div className=" ms-4 mt-9">
               <div className="flex mt-4">
                 <span
-                  className={`cursor-pointer ${toggle ? "font-semibold" : ""}`}
+                  className={`cursor-pointer ${
+                    toggle
+                      ? "font-semibold"
+                      : "text-gray-500 hover:text-gray-700"
+                  }`}
                   onClick={() => setToggle(true)}
                 >
                   Upcoming
                 </span>
                 <span
-                  className="mx-4 cursor-pointer"
+                  className={`mx-4 cursor-pointer ${
+                    !toggle
+                      ? "font-semibold"
+                      : "text-gray-500 hover:text-gray-700"
+                  }`}
                   onClick={() => setToggle(false)}
                 >
                   Session History
                 </span>
               </div>
+
               {toggle ? (
                 <ol className="relative border-l border-gray-200">
                   {schedule.map((schedules, index) =>
@@ -131,11 +148,16 @@ const StudentSchedule = () => {
                           Start Class
                         </button>
                         {/* <a href="#" className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-200 focus:text-blue-700">Download ZIP</a> */}
-                        <button className="text-red-500" onClick={() => handleCancel(schedules)}>
+                        <button
+                          className="text-red-500"
+                          onClick={() => handleCancel(schedules)}
+                        >
                           Cancel
                         </button>
                       </li>
-                    ) :""
+                    ) : (
+                      ""
+                    )
                   )}
                 </ol>
               ) : (
@@ -173,12 +195,16 @@ const StudentSchedule = () => {
                           Start Class
                         </button>
                         {/* <a href="#" className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-200 focus:text-blue-700">Download ZIP</a> */}
-                        <button className="bg-red-200" onClick={() => handleCancel(schedules)}>
+                        <button
+                          className="bg-red-200"
+                          onClick={() => handleCancel(schedules)}
+                        >
                           Cancel
                         </button>
                       </li>
-                    ) :
+                    ) : (
                       schedules.date
+                    )
                   )}
                 </ol>
               )}

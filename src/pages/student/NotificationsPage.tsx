@@ -2,8 +2,13 @@ import React from 'react'
 import StudentSidebar from '../../components/students/StudentSidebar'
 import Navbar from '../../components/common/navbar'
 import Notifications from '../../components/students/Notifications'
+import { useQuery } from 'react-query'
+import { showNotifications } from '../../api/studentapi'
+import { useSelector } from 'react-redux'
 
 const NotificationsPage = () => {
+
+  
     return (
         <div className="min-h-screen flex flex-col">
         <Navbar />

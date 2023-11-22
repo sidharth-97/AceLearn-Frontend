@@ -43,7 +43,7 @@ export const login = async (loginData: Object) => {
 
 export const editStudent = async (data: Object) => {
   try {
-    const response = await Api.post(studentRoutes.editProfile, data);
+    const response = await Api.put(studentRoutes.editProfile, data);
     return response;
   } catch (error: AxiosError<unknown> | any) {
     if (error.response && error.response.data) {
@@ -105,7 +105,7 @@ export const viewRequest = async (id: string) => {
 
 export const bookTutorByPost = async (data:any) => {
   try {
-    const response = await Api.post(studentRoutes.bookTutorByPost, data);
+    const response = await Api.put(studentRoutes.bookTutorByPost, data);
     return response;
   } catch (error: AxiosError<unknown> | any) {
     if (error.response && error.response.data) {
@@ -183,5 +183,15 @@ export const getAllUsers = async (id: string) => {
     return response
   } catch (error) {
     console.log(error);
+  }
+}
+
+export const addConversations = async (data: any) => {
+  try {
+    const response = await Api.post(studentRoutes.addConversations, data)
+    return response
+  } catch (error) {
+    console.log(error);
+    
   }
 }

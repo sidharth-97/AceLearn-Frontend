@@ -4,10 +4,13 @@ import Rating from '@mui/material/Rating';
 import { useMutation, useQuery } from 'react-query';
 import { addReview, getOldReview } from '../../api/tutorapi';
 import { useSelector } from 'react-redux';
+import {toast} from 'react-toastify'
+import { useNavigate } from 'react-router-dom';
 
 const FeedbackForm = () => {
   const [value, setValue] = useState(0);
   const [comment, setComment] = useState('');
+  const navigate=useNavigate()
 
   const { isStudent } = useSelector((state)=>state.auth)
 
@@ -23,15 +26,20 @@ const FeedbackForm = () => {
     queryFn: () => getOldReview("653e3a04f4025f5297ebc07e")
   })
 
-  
+
 
   const AddTutorReviewMutation=useMutation((data:{ id: string; student: string; rating: number; description: string; })=>addReview(data))
 
+  let local = localStorage.getItem("videocall")
+  console.log(local,"this is from local stroge");
+  
+
   const handleSubmit = () => {
     console.log('Rating:', value);
-    console.log('Comment:', comment);
+  
+    const localStorageData = local ? JSON.parse(local) : {};
     const data = {
-      id: "653e3a04f4025f5297ebc07e",
+      id: localStorageData.tutor,
       student: isStudent._id,
       rating: value,
       description:comment
@@ -42,6 +50,8 @@ const FeedbackForm = () => {
 
     setValue(0);
     setComment('');
+    toast.success("Added Review")
+    navigate('/')
   };
 
   return (

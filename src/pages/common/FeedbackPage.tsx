@@ -1,14 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import FeedbackForm from '../../components/common/FeedbackForm';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { tutorPayment } from '../../api/tutorapi';
+import { useSelector } from 'react-redux';
 
 const FeedbackPage = () => {
     const params = useParams()
+    const [state, setState] = useState("")
+    const navigate=useNavigate()
+    const { isTutor } = useSelector((state) => state.auth)
+    
+    useEffect(() => {
+        isTutor && navigate('/')
+    })
     
     useEffect(() => {
         if (localStorage.getItem("student")) {
-               let videoCallData=JSON.parse(localStorage.getItem("videocall")) 
+            let videoCallData = JSON.parse(localStorage.getItem("videocall")) 
+            setState(videoCallData)
         const data = {
             id: params.id,
             tutor:videoCallData.tutor
@@ -17,7 +26,7 @@ const FeedbackPage = () => {
              await tutorPayment(data)  
         }
         functn()
-        localStorage.removeItem("videocall")
+        // localStorage.removeItem("videocall")
         }
     
      
@@ -43,7 +52,7 @@ const FeedbackPage = () => {
                                     className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-white">
                                     <div className="flex-auto p-5 lg:p-10">
                                         <h4 className="text-2xl mb-4 text-black font-semibold">Have a suggestion?</h4>
-                                       <FeedbackForm/>
+                                          <FeedbackForm/>
                                     </div>
                                 </div>
                             </div>

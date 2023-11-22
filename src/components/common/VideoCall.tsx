@@ -22,7 +22,7 @@ const VideoCall: React.FC = () => {
   const [screenStream, setScreenStream] = useState<MediaStream | null>(null);
 
   const params = useParams()
-  console.log(params.id,"this is the id");
+  console.log(params.roomId,"this is the id");
   
 
   const handleUserJoined = useCallback(({ tutor, id }: UserData) => {

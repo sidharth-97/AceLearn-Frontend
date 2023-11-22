@@ -49,7 +49,7 @@ export const TutorDetails = async (id: string) => {
 
 export const TutorEditProfile = async (data: Object) => {
     try {
-        const response = await Api.post(tutorRoutes.editProfile, data)
+        const response = await Api.put(tutorRoutes.editProfile, data)
         return response
     } catch (error) { 
         handleErrors(error)

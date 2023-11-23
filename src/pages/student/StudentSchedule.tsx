@@ -114,7 +114,7 @@ const StudentSchedule = () => {
               </div>
 
               {toggle ? (
-                <ol className="relative border-l border-gray-200">
+                <ol className="relative border-l border-gray-200 my-5">
                   {schedule.map((schedules, index) =>
                     new Date(schedules?.timing.date) >= new Date() ? (
                       <li className="mb-10 ml-6">

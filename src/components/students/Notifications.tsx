@@ -1,20 +1,38 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useQuery } from 'react-query'
 import { showNotifications } from '../../api/studentapi'
 import { useSelector } from 'react-redux'
 
 const Notifications = () => {
-  const {isStudent}=useSelector((state)=>state.auth)
-  const { data } = useQuery({
-    queryFn:()=>showNotifications(isStudent._id)
-  })
-  console.log(data,"notifications");
+  const { isStudent } = useSelector((state) => state.auth)
+  const [notifications, setNotifications] = useState([]);
+  const { data, isLoading } = useQuery({
+    queryFn: () => showNotifications(isStudent._id)
+  });
+
+  useEffect(() => {
+    if (data) {
+      setNotifications(data?.data || []);
+    }
+  }, [data]);
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (!Array.isArray(notifications) || notifications.length === 0) {
+    console.log("no data");
+    return <p>Data not available</p>;
+  }
+
+
+  console.log(data?.data,"notifications");
   return (
     <div className="flex justify-center items-center">
       {" "}
       <div className="bg-white border border-gray-300 p-4 mb-4 shadow-md rounded-md">
         {
-          data?.data.map((notify)=>(<div className="flex items-center mt-2">
+        notifications.map((notify)=>(<div className="flex items-center mt-2">
           <div>
             <div className="bg-yellow-300 p-4 rounded-full mr-4">
               {/* Wallet icon or any other wallet-related content */}

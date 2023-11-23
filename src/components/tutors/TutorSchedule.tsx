@@ -110,7 +110,7 @@ const TutorSchedule = () => {
 				               	<span className="text-sm font-bold tracki uppercase text-gray-400">Vestibulum diam nunc</span>
 				                      </div>
 		                      	</div> */}
-                <div className="relative col-span-12 px-4 space-y-6 sm:col-span-9">
+                <div className="relative col-span-12 px-4 space-y-6 sm:col-span-9 my-5">
                   {schedule.map((schedules, index) =>
                     new Date(schedules.date) >= new Date() ? (
                       <div className="col-span-12 space-y-12 relative px-4 sm:col-span-8 sm:space-y-8 sm:before:absolute sm:before:top-2 sm:before:bottom-0 sm:before:w-0.5 sm:before:-left-3 before:bg-gray-700">
@@ -186,7 +186,7 @@ const TutorSchedule = () => {
                         </div>
                       </div>
                     ) : (
-                      "Nothing to show here"
+                      ""
                     )
                   )}
                 </div>

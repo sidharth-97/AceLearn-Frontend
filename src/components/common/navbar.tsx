@@ -22,12 +22,12 @@ const Navbar: React.FC = () => {
 
   const handleLogout = async () => {
     if (isStudent) {
-      const response = await logout();
+      await logout();
       dispatch(logoutstudent());
       toast.success("Logout Success");
       navigate("/student/login");
     } else if (isTutor) {
-      const response = await tutorLogout();
+      await tutorLogout();
       dispatch(logoutTutor());
       toast.success("Logout Success");
       navigate("/tutor/login");

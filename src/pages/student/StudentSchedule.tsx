@@ -8,11 +8,13 @@ import { getStudentSchedule } from "../../api/studentapi";
 import Navbar from "../../components/common/navbar";
 import StudentSidebar from "../../components/students/StudentSidebar";
 import { toast } from "react-toastify";
+import { RootState } from "../../store";
+import { Schedule } from "../../model/scheduleModel";
 
 const StudentSchedule = () => {
   const [schedule, setSchedule] = useState([]);
   const [toggle, setToggle] = useState(true);
-  const { isStudent } = useSelector((state) => state.auth);
+  const { isStudent } = useSelector((state:RootState) => state.auth);
   const navigate = useNavigate();
 
   const {
@@ -33,7 +35,7 @@ const StudentSchedule = () => {
 
   const student = isStudent._id;
   const StartClass = useCallback(
-    (id, schedule) => {
+    (id:string, schedule:Schedule) => {
       console.log("Callback");
       let room = id;
       socket.emit("room:join", { student, room });
@@ -115,7 +117,7 @@ const StudentSchedule = () => {
 
               {toggle ? (
                 <ol className="relative border-l border-gray-200 my-5">
-                  {schedule.map((schedules, index) =>
+                  {schedule.map((schedules:Schedule, index) =>
                     new Date(schedules?.timing.date) >= new Date() ? (
                       <li className="mb-10 ml-6">
                         <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-8 ring-white">

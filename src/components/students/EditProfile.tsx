@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { editStudent } from "../../api/studentapi";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { RootState } from "../../store";
+import { Student } from "../../model/studentModel";
 
-const EditProfile = ({ data }) => {
+const EditProfile: React.FC<{ data: Student }> = ({ data }) => {
   const [name, setName] = useState(data.username);
   const [password, setPassword] = useState("");
   const [cpassword, setCpassword] = useState("");
@@ -11,17 +13,17 @@ const EditProfile = ({ data }) => {
   const [toggle, setToggle] = useState(true);
   const [image, setImage] = useState<File | null>(null);
 
-  const { isStudent } = useSelector((state) => state.auth);
+  const { isStudent } = useSelector((state: RootState) => state.auth);
 
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("email", data.email);
     formData.append("username", name);
     formData.append("mobile", mobile);
-    formData.append("image", image);
+    if (image) formData.append("image", image);
     const response = await editStudent(formData);
     console.log(response);
   };
@@ -107,30 +109,6 @@ const EditProfile = ({ data }) => {
                     className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                   />
                 </div>
-                {/* <div className="mt-4">
-                  <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    name="password"
-                    className="block w-full mt-1 border rounded-md shadow-sm focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                  />
-                </div>
-                <div className="mt-4">
-                  <label htmlFor="password_confirmation" className="block text-sm font-medium text-gray-700">
-                    Confirm Password
-                  </label>
-                  <input
-                    type="password"
-                    value={cpassword}
-                    onChange={(e) => setCpassword(e.target.value)}
-                    name="password_confirmation"
-                    className="block w-full mt-1 border rounded-md shadow-sm focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                  />
-                </div> */}
                 <div className="flex items-center justify-center mt-4">
                   <button
                     type="submit"

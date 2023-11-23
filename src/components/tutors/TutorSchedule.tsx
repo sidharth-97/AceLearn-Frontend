@@ -6,6 +6,14 @@ import { useSelector } from "react-redux";
 import socket from "../../services/socket";
 import { useNavigate } from "react-router-dom";
 
+
+interface schedule{
+  _id:string,
+  date: Date,
+  student: string,
+  fee: Number
+}
+
 const TutorSchedule = () => {
   const { isTutor } = useSelector((state: any) => state.auth);
   const [schedule, setSchedule] = useState([]);
@@ -13,7 +21,12 @@ const TutorSchedule = () => {
 
   const navigate = useNavigate();
 
-  const { data, isLoading, isError,refetch: refetchSchedule } = useQuery({
+  const {
+    data,
+    isLoading,
+    isError,
+    refetch: refetchSchedule,
+  } = useQuery({
     queryFn: () => getTutorSchedule(isTutor._id),
     queryKey: ["timeline"],
     onSuccess: (data) => {
@@ -23,7 +36,7 @@ const TutorSchedule = () => {
     },
   });
 
-  const handleCancel = async (date, fee, student) => {
+  const handleCancel = async (date: Date, fee: Number, student: String) => {
     const obj = {
       tutor: isTutor._id,
       fee: fee,
@@ -33,8 +46,8 @@ const TutorSchedule = () => {
       },
     };
     const response = await changeSchedule(obj);
-      if (response?.status == 200) toast.success("Cancelled Successfully");
-      await refetchSchedule()
+    if (response?.status == 200) toast.success("Cancelled Successfully");
+    await refetchSchedule();
   };
 
   //socket io
@@ -42,7 +55,7 @@ const TutorSchedule = () => {
   const tutor = isTutor._id;
 
   const StartClass = useCallback(
-    (schedule) => {
+    (schedule: { _id: string; student: string }) => {
       const room = schedule._id;
       Socket.emit("room:join", { tutor, room });
       const data = {
@@ -104,14 +117,8 @@ const TutorSchedule = () => {
             </div>
             {toggle ? (
               <div className="grid gap-4 mx-4 sm:grid-cols-12">
-                {/* <div className="col-span-12 sm:col-span-3">
-				                <div className="text-center sm:text-left mb-14 before:block before:w-24 before:h-3 before:mb-5 before:rounded-md before:mx-auto sm:before:mx-0 before:bg-violet-400">
-				               	<h3 className="text-3xl font-semibold">Morbi tempor</h3>
-				               	<span className="text-sm font-bold tracki uppercase text-gray-400">Vestibulum diam nunc</span>
-				                      </div>
-		                      	</div> */}
                 <div className="relative col-span-12 px-4 space-y-6 sm:col-span-9 my-5">
-                  {schedule.map((schedules, index) =>
+                  {schedule.map((schedules:schedule, index) =>
                     new Date(schedules.date) >= new Date() ? (
                       <div className="col-span-12 space-y-12 relative px-4 sm:col-span-8 sm:space-y-8 sm:before:absolute sm:before:top-2 sm:before:bottom-0 sm:before:w-0.5 sm:before:-left-3 before:bg-gray-700">
                         <div className="flex flex-col sm:relative sm:before:absolute sm:before:top-2 sm:before:w-4 sm:before:h-4 sm:before:rounded-full sm:before:left-[-35px] sm:before:z-[1] before:bg-blue-400">
@@ -134,17 +141,16 @@ const TutorSchedule = () => {
                                   schedules.student
                                 )
                               }
-                              >
+                            >
                               Cancel this class
-                              <>
-                              </></button>
-                                {/* <p className="text-green-400 font-bold">Booked</p> */}
-                                {new Date(schedules.date) >= new Date() && (
-                                  <button onClick={() => StartClass(schedules)}>
-                                    Start Class
-                                  </button>
-                                )}
-                            
+                              <></>
+                            </button>
+                            {/* <p className="text-green-400 font-bold">Booked</p> */}
+                            {new Date(schedules.date) >= new Date() && (
+                              <button onClick={() => StartClass(schedules)}>
+                                Start Class
+                              </button>
+                            )}
                           </>
 
                           {/* <p className="mt-3">
@@ -167,7 +173,7 @@ const TutorSchedule = () => {
 				                      </div>
 		                      	</div> */}
                 <div className="relative col-span-12 px-4 space-y-6 sm:col-span-9">
-                  {schedule.map((schedules, index) =>
+                  {schedule.map((schedules:schedule, index) =>
                     new Date(schedules.date) <= new Date() ? (
                       <div className="col-span-12 space-y-12 relative px-4 sm:col-span-8 sm:space-y-8 sm:before:absolute sm:before:top-2 sm:before:bottom-0 sm:before:w-0.5 sm:before:-left-3 before:bg-gray-700">
                         <div className="flex flex-col sm:relative sm:before:absolute sm:before:top-2 sm:before:w-4 sm:before:h-4 sm:before:rounded-full sm:before:left-[-35px] sm:before:z-[1] before:bg-blue-400">

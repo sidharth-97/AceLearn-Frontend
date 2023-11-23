@@ -1,7 +1,6 @@
 import studentRoutes from "../services/endpoints/studentEndpoints";
 import Api from "../services/api";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 import { handleErrors } from "../middleware/ErrorHandler";
 import { AxiosError } from "axios";
 
@@ -54,10 +53,10 @@ export const editStudent = async (data: Object) => {
 };
 
 export const studentDetails = async (id: string) => {
-    try {
-        const response = await Api.get(`${studentRoutes.studentDetails}/${id}`);
-        return response;
-    } catch (error:  any) {
+  try {
+    const response = await Api.get(`${studentRoutes.studentDetails}/${id}`);
+    return response;
+  } catch (error: any) {
     return handleErrors(error);
   }
 };
@@ -103,7 +102,7 @@ export const viewRequest = async (id: string) => {
   }
 };
 
-export const bookTutorByPost = async (data:any) => {
+export const bookTutorByPost = async (data: any) => {
   try {
     const response = await Api.put(studentRoutes.bookTutorByPost, data);
     return response;
@@ -138,60 +137,60 @@ export const paymentsession = async (obj: any) => {
   }
 };
 
-export const showNotifications = async (id)=>{
+export const showNotifications = async (id: string) => {
   try {
-    const response = await Api.get(`${studentRoutes.studentNotifications}/${id}`)
-    return response
+    const response = await Api.get(
+      `${studentRoutes.studentNotifications}/${id}`
+    );
+    return response;
   } catch (error) {
     console.log(error);
-    
   }
-}
+};
 
-export const getConversations = async (id:string) => {
+export const getConversations = async (id: string) => {
   try {
-    const response = await Api.get(`${studentRoutes.studentConversations}/${id}`)
-    return response
+    const response = await Api.get(
+      `${studentRoutes.studentConversations}/${id}`
+    );
+    return response;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 export const getMesssages = async (id: string) => {
   try {
-    const response = await Api.get(`${studentRoutes.getMessages}/${id}`)
-    return response
+    const response = await Api.get(`${studentRoutes.getMessages}/${id}`);
+    return response;
   } catch (error) {
-    console.log(error);
-    
+    console.log(error)
   }
-}
+};
 
-export const addMessages = async (data: any)=>{
+export const addMessages = async (data: any) => {
   try {
-    const response = await Api.post(studentRoutes.addMessages, data)
-    return response
+    const response = await Api.post(studentRoutes.addMessages, data);
+    return response;
   } catch (error) {
     console.log(error);
-    
   }
-}
+};
 
 export const getAllUsers = async (id: string) => {
   try {
-    const response = await Api.get(`${studentRoutes.getAllUsers}/${id}`)
-    return response
+    const response = await Api.get(`${studentRoutes.getAllUsers}/${id}`);
+    return response;
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 export const addConversations = async (data: any) => {
   try {
-    const response = await Api.post(studentRoutes.addConversations, data)
-    return response
+    const response = await Api.post(studentRoutes.addConversations, data);
+    return response;
   } catch (error) {
     console.log(error);
-    
   }
-}
+};

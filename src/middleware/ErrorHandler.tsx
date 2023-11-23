@@ -1,20 +1,20 @@
-import { toast } from 'react-toastify';
-import { Navigate } from 'react-router-dom';
-import { AxiosError } from 'axios';
+import { toast } from "react-toastify";
+import { AxiosError } from "axios";
 
-export const handleErrors = (error:AxiosError) => {
+interface ErrorResponse {
+  message?: string;
+}
 
-    if (error) {
-        console.log(error,"error from handler");
-        
-        if (error.response && error.response.data?.message=="Blocked by Admin" ) {
-            localStorage.removeItem("tutor")
-            location.href="/tutor/login"
-            
-        } else {
-            toast.error(error.response?.data)
-        }
-        
-        
+export const handleErrors = (error: AxiosError<ErrorResponse>) => {
+  if (error) {
+    console.log(error, "error from handler");
+
+    if (error.response && error.response.data?.message == "Blocked by Admin") {
+      localStorage.removeItem("tutor");
+      location.href = "/tutor/login";
+    } else {
+      const errorMessage = error.response?.data?.message || "An error occurred";
+      toast.error(errorMessage);
     }
+  }
 };

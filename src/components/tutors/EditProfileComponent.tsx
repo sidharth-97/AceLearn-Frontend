@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { useSelector } from "react-redux";
 import { TutorEditProfile } from "../../api/tutorapi";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { Input } from "@mui/material";
+import { Tutor } from "../../model/tutorModel";
+import { RootState } from "../../store";
 
-const EditProfileComponent = ({ data }) => {
+const EditProfileComponent: React.FC<{data:Tutor }> = ({ data }) => {
   const [name, setName] = useState(data.name);
   const [mobile, setMobile] = useState(data.mobile);
   const [bio, setBio] = useState(data.bio);
@@ -15,7 +17,7 @@ const EditProfileComponent = ({ data }) => {
   const [image, setImage] = useState<File | null>(null);
   const [toggle, setToggle] = useState(true);
 
-  const { isTutor } = useSelector((state) => state.auth);
+  const { isTutor } = useSelector((state:RootState) => state.auth);
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({

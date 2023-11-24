@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import Navbar from '../../components/common/navbar';
 import { useQuery } from 'react-query';
@@ -10,60 +10,68 @@ import Pagination from '../../components/UI/Pagination'
 const TutorCardGrid = ({Data,selectedFilters}) => {
   const [tutorData, setTutorData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [activePage,setActivePage]=useState(1)
+  const [activePage, setActivePage] = useState(1);
+  const [query, setQuery] = useState("");
+  const [limit, setLimit] = useState(3);
 
-  const { data, isLoading, isError } = useQuery({
-    queryFn: () => getalltutors(),
-    queryKey: ['AllTutors'],
-    onSuccess: (response) => {
-      if (response) {
-        setTutorData(response.data);
+  const itemsPerPage = 3;
+
+  useEffect(() => {
+    // This effect is for both initial load and subsequent updates
+    const fetchData = async () => {
+      try {
+        const queryParams = new URLSearchParams();
+  
+        if (searchQuery) {
+          queryParams.append('search', searchQuery);
+        }
+  
+        Object.entries(selectedFilters).forEach(([key, value]) => {
+          if (value && value.length > 0) {
+            queryParams.append(key, value.join(','));
+          }
+        });
+  
+        queryParams.append('page', activePage.toString());
+        queryParams.append('limit', itemsPerPage.toString());
+  
+        const constructedQuery = `?${queryParams.toString()}`;
+        console.log('Constructed Query:', constructedQuery);
+        
+        // Use the callback function to ensure the most up-to-date state
+        setQuery((prevQuery) => {
+          if (prevQuery !== constructedQuery) {
+            return constructedQuery;
+          } else {
+            return prevQuery; // No need to update if the query is the same
+          }
+        });
+  
+        const response = await getalltutors(constructedQuery);
+        if (response) {
+          console.log(response.data.AllTutor, "ressssssssssssssssssssssssssssssssssss");
+  
+          setTutorData(response.data.AllTutor);
+          setLimit(Math.ceil(response.data.count / itemsPerPage));
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
-    },
-  });
+    };
+  
+    // Call the fetchData function
+    fetchData();
+  }, [searchQuery, selectedFilters, activePage, itemsPerPage]);
+  
+  
+  
+
   console.log(selectedFilters, "this is the selected filters");
-  console.log(tutorData, "this is the tutuor data");
+  console.log(tutorData, "this is the tutor data");
+  console.log(activePage, "active page");
+  console.log(query, "this is the query");
+  console.log(tutorData.slice((activePage - 1) * itemsPerPage, activePage * itemsPerPage),"sliced datat")
   
-  let filteredData=tutorData?.filter(
-    (user: any) =>
-    user?.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-  console.log(filteredData,"7777777777777");
-  
-
-
-  filteredData = Object.keys(selectedFilters).length !== 0
-  ? tutorData?.filter((tutor) => {
-      const tutorSubjects = tutor.subject || [];
-      const tutorClasses = tutor.classes || [];
-      const tutorPrice = tutor.fee || 0;
-
-      const subjectFilter = selectedFilters.subject?.length
-        ? tutorSubjects.some((subject) => selectedFilters.subject.includes(subject))
-        : true;
-
-      const classFilter = selectedFilters.classes?.length
-        ? tutorClasses.some((classItem) => selectedFilters.classes.includes(classItem))
-        : true;
-
-      const priceFilter =
-        selectedFilters.price?.length === 2
-          ? tutorPrice >= selectedFilters.price[0] && tutorPrice <= selectedFilters.price[1]
-          : true;
-
-      return subjectFilter && classFilter && priceFilter;
-    })
-  : filteredData;
-
-  console.log(searchQuery, "serrarrh");
-  
-
-  const itemsPerPage = 2
-  const limit = Math.round(filteredData.length / 2)
-  const startIndex=(activePage-1)*itemsPerPage
-  const endIndex = activePage * itemsPerPage
-  
-  const paginatedData = filteredData.slice(startIndex, endIndex)
   
   
   return (
@@ -84,7 +92,7 @@ const TutorCardGrid = ({Data,selectedFilters}) => {
           className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5"
         >
           {/* Product Cards */}
-          {isLoading
+          {!tutorData.length
             ? [1, 2, 3, 4, 5].map((index) => (
                 <div className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl" key={index}>
                   <div className="w-72 h-60 bg-gray-200 rounded-t-xl"></div>
@@ -111,7 +119,7 @@ const TutorCardGrid = ({Data,selectedFilters}) => {
                   </div>
                 </div>
               ))
-            : paginatedData.length && paginatedData.map((tutor, index) => (
+            : tutorData.map((tutor, index) => (
                 <Link to={`/tutor/tutorProfile/${tutor._id}`} key={index}>
                   <div className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
                     <a href="#">
@@ -159,7 +167,7 @@ const TutorCardGrid = ({Data,selectedFilters}) => {
                 </Link>
               ))}
         </section>
-        <Pagination active={activePage} setActive={setActivePage} limit={ limit} />
+        <Pagination activePage={activePage} setActive={setActivePage} limit={limit} />
       </div>
     </>
   );

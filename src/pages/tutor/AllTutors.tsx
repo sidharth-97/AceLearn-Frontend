@@ -15,11 +15,9 @@ import { findSubjects } from "../../api/adminapi";
 import { Slider } from "@mui/material";
 
 const sortOptions = [
-  { name: "Most Popular", href: "#", current: true },
-  { name: "Best Rating", href: "#", current: false },
-  { name: "Newest", href: "#", current: false },
-  { name: "Price: Low to High", href: "#", current: false },
-  { name: "Price: High to Low", href: "#", current: false },
+  { name: "Best Rating", value: "rating", current: false },
+  { name: "Price: Low to High", value: "low", current: false },
+  { name: "Price: High to Low", value: "high", current: false },
 ];
 
 function classNames(...classes) {
@@ -32,6 +30,7 @@ export default function AllTutors() {
   const [selectedFilters, setSelectedFilters] = useState({});
   const [value, setValue] = useState([0, 0]);
   const rawData = data?.data;
+  const [sortOption, setSortOption] = useState("Best Rating"); // Add sorting state
 
   const [filteredData, setFilteredData] = useState({
     subjects: [],
@@ -104,6 +103,12 @@ export default function AllTutors() {
     setSelectedFilters({ ...selectedFilters, price: value });
   };
   console.log(selectedFilters, "this is the selected filters");
+
+
+  const handleSortChange = (selectedSortOption) => {
+    setSortOption(selectedSortOption);
+    setSelectedFilters({ ...selectedFilters, sort: [selectedSortOption.toLowerCase()] });
+  };
 
   return (
     <>
@@ -289,18 +294,18 @@ export default function AllTutors() {
                         {sortOptions.map((option) => (
                           <Menu.Item key={option.name}>
                             {({ active }) => (
-                              <a
-                                href={option.href}
+                              <li
                                 className={classNames(
                                   option.current
                                     ? "font-medium text-gray-900"
                                     : "text-gray-500",
                                   active ? "bg-gray-100" : "",
                                   "block px-4 py-2 text-sm"
-                                )}
+                                )}onClick={() => handleSortChange(option.value)}
                               >
                                 {option.name}
-                              </a>
+                                
+                              </li>
                             )}
                           </Menu.Item>
                         ))}

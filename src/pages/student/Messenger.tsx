@@ -96,7 +96,7 @@ const Messenger = () => {
             placeholder="Search for friends"
             className="w-full p-2 border-b border-gray-300"
           />
-          {conversations?.data?.map((conv) => (
+          {conversations?.data.length && conversations?.data?.map((conv) => (
             <div onClick={() => setCurrentChat(conv)}>
               <Conversation
                 key={conv?._id}

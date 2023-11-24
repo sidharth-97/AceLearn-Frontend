@@ -1,5 +1,4 @@
 import React from "react";
-import icon from "../../assets/vecteezy_profile-icon-design-vector_5544718.jpg";
 import { useQuery } from "react-query";
 import { getTutorReview } from "../../api/tutorapi";
 import { useParams } from "react-router-dom";
@@ -14,7 +13,7 @@ const ReviewArticle = () => {
   return (
     <>
        <h1 className="text-center text-2xl font-bold mb-4">Student Reviews</h1>
-      {reviews &&
+      {!isLoading && reviews?.data.length &&
         reviews?.data.map((item) => {
           {
             console.log(item);
@@ -24,12 +23,12 @@ const ReviewArticle = () => {
               <div className="flex items-center mb-4">
                 <img
                   className="w-10 h-10 me-4 rounded-full"
-                  src={item.student.image}
+                  src={item?.student.image || ""}
                   alt=""
                 />
                 <div className="font-medium text-black">
                   <p>
-                    {item.student.username}
+                    {item?.student.username}
                     <time
                       dateTime="2014-08-16 19:00"
                       className="block text-sm text-gray-500 dark:text-gray-400"

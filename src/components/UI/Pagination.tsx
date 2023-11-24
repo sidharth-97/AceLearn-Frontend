@@ -1,13 +1,17 @@
 import React from "react";
 
 const Pagination = ({ activePage, setActive, limit }) => {
-  const handleNext = () => {
+  const handleNext = (e) => {
+    e.preventDefault();
     const next = activePage === limit ? 1 : activePage + 1;
+    console.log("Next page:", next);
     setActive(next);
   };
 
-  const handlePrev = () => {
+  const handlePrev = (e) => {
+    e.preventDefault();
     const prev = activePage === 1 ? limit : activePage - 1;
+    console.log("Prev page:", prev);
     setActive(prev);
   };
 
@@ -15,39 +19,39 @@ const Pagination = ({ activePage, setActive, limit }) => {
     <nav>
       <ul className="flex">
         <li>
-          <a
+          <button
             className="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-gray-100 bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out hover:bg-light-300"
-            href="#"
             aria-label="Previous"
-            onClick={handlePrev}
+            onClick={(e) => handlePrev(e)}
           >
             <span className="material-icons text-sm">left</span>
-          </a>
+          </button>
         </li>
         {[...Array(limit)].map((_, index) => (
           <li key={index}>
-            <a
+            <button
               className={`mx-1 flex h-9 w-9 items-center justify-center rounded-full border ${
                 activePage === index + 1
                   ? "bg-black text-white shadow-md"
                   : "border-blue-gray-100 bg-transparent"
               } p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out hover:bg-light-300`}
-              href="#"
-              onClick={() => setActive(index + 1)}
+              onClick={(e) => {
+                e.preventDefault();
+                setActive(index + 1);
+              }}
             >
               {index + 1}
-            </a>
+            </button>
           </li>
         ))}
         <li>
-          <a
+          <button
             className="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-gray-100 bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out hover:bg-light-300"
-            href="#"
             aria-label="Next"
-            onClick={handleNext}
+            onClick={(e) => handleNext(e)}
           >
             <span className="material-icons text-sm">right</span>
-          </a>
+          </button>
         </li>
       </ul>
     </nav>

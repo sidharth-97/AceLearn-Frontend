@@ -91,9 +91,9 @@ export const tutorLogout = async () => {
   }
 };
 
-export const getalltutors = async () => {
+export const getalltutors = async (query:string) => {
   try {
-    const response = await Api.get(tutorRoutes.getalltutors);
+    const response = await Api.get(`${tutorRoutes.getalltutors}/${query}`);
     return response;
   } catch (error) {
     if (error && (error as AxiosError).isAxiosError) {

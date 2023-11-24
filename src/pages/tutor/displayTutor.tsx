@@ -6,19 +6,20 @@ import { Link } from "react-router-dom";
 import ReviewArticle from "../../components/common/ReviewComponent";
 import { addConversations } from "../../api/studentapi";
 import { useSelector } from "react-redux";
+import { Tutor } from "../../model/tutorModel";
+import { RootState } from "../../store";
 
 const DisplayTutor = () => {
   const tutorId = useParams();
-  const [tutor, setTutor] = useState({});
+  const [tutor, setTutor] = useState<Tutor | {}>({});
 
-  const {isStudent}=useSelector((state)=>state.auth)
+  const {isStudent}=useSelector((state:RootState)=>state.auth)
 
   useEffect(() => {
     const getData = async () => {
       const Tutor = await TutorDetails(tutorId.id as string);
       setTutor(Tutor?.data);
     };
-
     getData();
   }, []);
 
@@ -32,6 +33,8 @@ const DisplayTutor = () => {
     
   }
 
+  const typedTutor = tutor as Tutor;
+
   return (
     <>
       <Navbar />
@@ -42,18 +45,18 @@ const DisplayTutor = () => {
               <div className="image overflow-hidden flex items-start justify-start">
                 <img
                   className="h-auto w-1/2 mx-auto "
-                  src={tutor.image}
+                  src={typedTutor.image}
                   alt=""
                 />
               </div>
               <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">
-                {tutor?.name}
+                {typedTutor?.name}
               </h1>
               <h3 className="text-gray-600 font-lg text-semibold leading-6">
                 Owner at Her Company Inc.
               </h3>
               <p className="text-sm text-gray-500 hover:text-gray-600 leading-6">
-                {tutor.bio}
+                {typedTutor.bio}
               </p>
               <ul className="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
                 <li className="flex items-center py-3">
@@ -71,16 +74,18 @@ const DisplayTutor = () => {
               </ul>
             </div>
             <div className="my-4 flex flex-col">
+              <Link to={`/student/booktutor/${tutorId.id}`}>
               <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mb-2">
                 {" "}
-                <Link to={`/student/booktutor/${tutorId.id}`}>
+             
                   Book a lesson{" "}
-                </Link>
+               
               </button>
-
-              <button onClick={addContact} className="bg-white hover:bg-blue-200 text-blue-500 font-bold py-2 px-4 rounded-full">
+              </Link>
+              <Link to={"/student/messenger"}> <button onClick={addContact} className="bg-white hover:bg-blue-200 text-blue-500 font-bold py-2 px-4 rounded-full">
                 Contact Me
-              </button>
+              </button></Link>
+             
             </div>
             <div className="bg-white p-3 hover:shadow">
               {/* <div className="flex items-center space-x-3 font-semibold text-gray-900 text-xl leading-8">
@@ -170,7 +175,7 @@ const DisplayTutor = () => {
               <div className="text-gray-700">
                 <div className="grid md:grid-cols-2 text-sm">
                   <div className="grid grid-cols-2">
-                    <div className="px-4 py-2 font-semibold">{tutor.name}</div>
+                    <div className="px-4 py-2 font-semibold">{typedTutor.name}</div>
                     <div className="px-4 py-2">Jane</div>
                   </div>
                   <div className="grid grid-cols-2">
@@ -183,7 +188,7 @@ const DisplayTutor = () => {
                   </div>
                   <div className="grid grid-cols-2">
                     <div className="px-4 py-2 font-semibold">Contact No.</div>
-                    <div className="px-4 py-2">{tutor.mobile}</div>
+                    <div className="px-4 py-2">{typedTutor.mobile}</div>
                   </div>
                   <div className="grid grid-cols-2">
                     <div className="px-4 py-2 font-semibold">
@@ -208,7 +213,7 @@ const DisplayTutor = () => {
                         className="text-blue-800"
                         href="mailto:jane@example.com"
                       >
-                        {tutor.email}
+                        {typedTutor.email}
                       </a>
                     </div>
                   </div>

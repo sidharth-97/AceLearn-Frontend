@@ -15,6 +15,8 @@ import { useQuery } from "react-query";
 import { toast } from "react-toastify";
 import socket from "../../services/socket";
 import { useNavigate } from "react-router-dom";
+import WalletHistory from "../../components/common/WalletHistory";
+
    const TutorProfile = () => {
   const { isTutor } = useSelector((state: any) => state.auth);
   const [value, onChange] = useState<Date | [Date, Date]>();
@@ -125,6 +127,7 @@ import { useNavigate } from "react-router-dom";
               <p className="py-1 text-base">💰 Wallet Rs: {isTutor.wallet??0}</p>
               {/* <p className="text-base">Email verified : true</p> */}
               {/* <p className="py-1 text-base">Mobile verified :</p> */}
+              <WalletHistory walletHistory={isTutor.walletHistory}/>
             </div>
             <div>
               <img className="w-128" src={icon} alt="" />

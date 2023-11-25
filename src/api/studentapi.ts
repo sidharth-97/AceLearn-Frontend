@@ -194,3 +194,13 @@ export const addConversations = async (data: any) => {
     console.log(error);
   }
 };
+
+export const bookWithWallet = async (data: any) => {
+  try {
+    const response = await Api.post(studentRoutes.bookWithWallet, data)
+    return response
+  } catch (error) {
+    console.log(error);
+    
+  }
+}

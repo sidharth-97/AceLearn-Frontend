@@ -5,6 +5,7 @@ import { useQuery } from "react-query";
 import { studentDetails } from "../../api/studentapi";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import WalletHistory from "../../components/common/WalletHistory";
 
 const StudentProfile = () => {
   const { isStudent } = useSelector((state: RootState) => state.auth);
@@ -48,11 +49,12 @@ const StudentProfile = () => {
                   {/* Wallet icon or any other wallet-related content */}
                   💰
                 </div>
+              
                 <div>
                   <p className="text-gray-700 font-semibold">Wallet Balance</p>
                   <p className="text-xl text-yellow-700 font-bold">{`Rs ${
                     data?.data?.wallet ?? 0
-                  } `}</p>
+                  } `}</p>  <WalletHistory walletHistory={data?.data.walletHistory}/>
                 </div>
               </div>
             </div>

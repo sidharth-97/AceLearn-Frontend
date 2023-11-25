@@ -36,11 +36,12 @@ const TutorSchedule = () => {
     },
   });
 
-  const handleCancel = async (date: Date, fee: Number, student: String) => {
+  const handleCancel = async (date: Date, fee: Number, student: String,id:string) => {
     const obj = {
       tutor: isTutor._id,
       fee: fee,
       id: student,
+      schedule:id,
       timing: {
         date: date,
       },
@@ -138,7 +139,8 @@ const TutorSchedule = () => {
                                 handleCancel(
                                   schedules.date,
                                   schedules.fee,
-                                  schedules.student
+                                  schedules.student,
+                                  schedules._id
                                 )
                               }
                             >

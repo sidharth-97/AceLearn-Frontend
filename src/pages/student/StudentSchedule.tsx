@@ -14,7 +14,7 @@ import { Schedule } from "../../model/scheduleModel";
 const StudentSchedule = () => {
   const [schedule, setSchedule] = useState([]);
   const [toggle, setToggle] = useState(true);
-  const { isStudent } = useSelector((state:RootState) => state.auth);
+  const { isStudent } = useSelector((state: RootState) => state.auth);
   const navigate = useNavigate();
 
   const {
@@ -35,7 +35,7 @@ const StudentSchedule = () => {
 
   const student = isStudent._id;
   const StartClass = useCallback(
-    (id:string, schedule:Schedule) => {
+    (id: string, schedule: Schedule) => {
       console.log("Callback");
       let room = id;
       socket.emit("room:join", { student, room });
@@ -69,6 +69,7 @@ const StudentSchedule = () => {
       tutor: data.tutor,
       fee: data.timing.fee,
       id: data.timing.student,
+      schedule: data.timing._id,
       timing: {
         date: data.timing.date,
       },
@@ -117,8 +118,8 @@ const StudentSchedule = () => {
 
               {toggle ? (
                 <ol className="relative border-l border-gray-200 my-5">
-                  {schedule.map((schedules:Schedule, index) =>
-                    new Date(schedules?.timing.date) >= new Date() ? (
+                  {schedule.map((schedules: Schedule, index) =>
+                  (  new Date(schedules?.timing.date) >= new Date() && schedules.timing.status !=="Cancelled By Student") ? (
                       <li className="mb-10 ml-6">
                         <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-8 ring-white">
                           <svg
@@ -131,31 +132,48 @@ const StudentSchedule = () => {
                             <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
                           </svg>
                         </span>
-                        <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900">
+                        <div className="bg-blue-100 p-4 rounded-xl my-4 ml-auto shadow-md w-full">
                           {" "}
-                          {new Date(schedules?.timing.date)
-                            .toISOString()
-                            .slice(0, 16)
-                            .replace("T", " ")}{" "}
-                        </h3>
-                        {/* <time className="block mb-2 text-sm font-normal leading-none text-gray-400">Released on January 13th, 2022</time> */}
-                        <p className="mb-4 text-base font-normal text-gray-500">
-                          Tutor : {schedules.tutorDetails[0].name}
-                        </p>
-                        <button
-                          onClick={() =>
-                            StartClass(schedules.timing._id, schedules)
-                          }
-                        >
-                          Start Class
-                        </button>
-                        {/* <a href="#" className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-200 focus:text-blue-700">Download ZIP</a> */}
-                        <button
-                          className="text-red-500"
-                          onClick={() => handleCancel(schedules)}
-                        >
-                          Cancel
-                        </button>
+                          <div className="flex gap-3">
+                            <div className="flex justify-center items-center">
+                              <img
+                                className="w-12 h-12 rounded-full"
+                                src={schedules.tutorDetails[0].image}
+                                alt=""
+                              />
+                            </div>
+                            <div>
+                              <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900">
+                                {"Date : "}
+                                {new Date(schedules?.timing.date)
+                                  .toISOString()
+                                  .slice(0, 16)
+                                  .replace("T", " ")}{" "}
+                              </h3>
+                              {/* <time className="block mb-2 text-sm font-normal leading-none text-gray-400">Released on January 13th, 2022</time> */}
+
+                              <p className="mb-4 text-base font-normal text-gray-500">
+                                Tutor : {schedules.tutorDetails[0].name}
+                              </p>
+
+                              <button
+                                className="text-green-600 text-lg"
+                                onClick={() =>
+                                  StartClass(schedules.timing._id, schedules)
+                                }
+                              >
+                                Start Class
+                              </button>
+                              {/* <a href="#" className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-200 focus:text-blue-700">Download ZIP</a> */}
+                              <button
+                                className="text-red-500"
+                                onClick={() => handleCancel(schedules)}
+                              >
+                                Cancel
+                              </button>
+                            </div>
+                          </div>
+                        </div>
                       </li>
                     ) : (
                       ""
@@ -165,47 +183,49 @@ const StudentSchedule = () => {
               ) : (
                 <ol className="relative border-l border-gray-200">
                   {schedule.map((schedules, index) =>
-                    new Date(schedules?.timing.date) <= new Date() ? (
+                     (
                       <li className="mb-10 ml-6">
-                        <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-8 ring-white">
-                          <svg
-                            className="w-2.5 h-2.5 text-blue-800"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                          >
-                            <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
-                          </svg>
-                        </span>
-                        <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900">
-                          {" "}
-                          {new Date(schedules.timing.date)
-                            .toISOString()
-                            .slice(0, 16)
-                            .replace("T", " ")}{" "}
-                        </h3>
-                        {/* <time className="block mb-2 text-sm font-normal leading-none text-gray-400">Released on January 13th, 2022</time> */}
-                        <p className="mb-4 text-base font-normal text-gray-500">
-                          Tutor : {schedules.tutorDetails[0].name}
-                        </p>
-                        <button
-                          onClick={() =>
-                            StartClass(schedules.timing._id, schedules)
-                          }
+                      <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-8 ring-white">
+                        <svg
+                          className="w-2.5 h-2.5 text-blue-800"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
                         >
-                          Start Class
-                        </button>
-                        {/* <a href="#" className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-200 focus:text-blue-700">Download ZIP</a> */}
-                        <button
-                          className="bg-red-200"
-                          onClick={() => handleCancel(schedules)}
-                        >
-                          Cancel
-                        </button>
-                      </li>
-                    ) : (
-                      schedules.date
+                          <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                        </svg>
+                      </span>
+                      <div className="bg-blue-100 p-4 rounded-xl my-4 ml-auto shadow-md w-full">
+                        {" "}
+                        <div className="flex gap-3">
+                          <div className="flex justify-center items-center">
+                            <img
+                              className="w-12 h-12 rounded-full"
+                              src={schedules.tutorDetails[0].image}
+                              alt=""
+                            />
+                          </div>
+                          <div>
+                            <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900">
+                              {"Date : "}
+                              {new Date(schedules?.timing.date)
+                                .toISOString()
+                                .slice(0, 16)
+                                .replace("T", " ")}{" "}
+                            </h3>
+                            {/* <time className="block mb-2 text-sm font-normal leading-none text-gray-400">Released on January 13th, 2022</time> */}
+
+                            <p className="mb-4 text-base font-normal text-gray-500">
+                              Tutor : {schedules.tutorDetails[0].name}
+                            </p>
+                            <p className="pt-1">
+                            Status: {schedules.timing.status}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
                     )
                   )}
                 </ol>

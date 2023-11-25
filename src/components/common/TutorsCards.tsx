@@ -8,8 +8,8 @@ const TutorsCards = () => {
 
   useEffect(() => {
 const functn=async () => {
-  const Tutordata = await getalltutors()
-  setTutorList(Tutordata?.data);
+  const Tutordata = await getalltutors("")
+  setTutorList(Tutordata?.data.AllTutors);
   
 }
 functn()

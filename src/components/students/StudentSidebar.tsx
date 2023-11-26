@@ -12,14 +12,14 @@ import { IoIosList } from "react-icons/io";
 
 const StudentSidebar = () => {
   const menus = [
-    { name: "dashboard", link: "/student", icon: MdOutlineDashboard },
-    { name: "edit profile", link: "/student/profile", icon: AiOutlineUser },
-    { name: "hire a tutor", link: "/student/requesttutor", icon: IoIosList },
-    { name: "requests", link: "/student/requests", icon: TbReportAnalytics, margin: true },
-    { name: "notifications", link: "/student/notifications", icon: MdOutlineNotificationsActive },
-    { name: "messenger", link: "/student/messenger", icon: FiMessageSquare },
-    { name: "schedule", link: "/student/schedule", icon: GrSchedule, margin: true },
-    { name: "Setting", link: "/", icon: RiSettings4Line },
+    { name: "Dashboard", link: "/student", icon: MdOutlineDashboard },
+    { name: "Edit profile", link: "/student/profile", icon: AiOutlineUser },
+    { name: "Hire a tutor", link: "/student/requesttutor", icon: IoIosList },
+    { name: "Requests", link: "/student/requests", icon: TbReportAnalytics, margin: true },
+    { name: "Notifications", link: "/student/notifications", icon: MdOutlineNotificationsActive },
+    { name: "Messenger", link: "/student/messenger", icon: FiMessageSquare },
+    { name: "Schedule", link: "/student/schedule", icon: GrSchedule, margin: true },
+    { name: "Homework help", link: "/student/homework-help", icon: RiSettings4Line },
   ];
   const [open, setOpen] = useState(true);
   return (

@@ -36,6 +36,7 @@ import Messenger from "./pages/student/Messenger";
 import MessengerTutor from "./pages/tutor/Messenger";
 import TutorSchedulePage from "./pages/tutor/SchedulePage";
 import StudentSchedule from "./pages/student/StudentSchedule";
+import HomeworkHelp from "./pages/student/HomeworkHelp";
 
 
 function App() {
@@ -64,7 +65,8 @@ function App() {
         { path: "requests", element: <Requests /> },
         { path: "notifications", element: <NotificationsPage /> },
         { path: "messenger", element: <Messenger /> },
-        { path: "schedule", element: <StudentSchedule /> }
+        { path: "schedule", element: <StudentSchedule /> },
+        { path:"homework-help",element:<HomeworkHelp/>}
       ],
     },
     {
@@ -73,14 +75,15 @@ function App() {
         { path: "login", element:<><Navbar/> <Signin user={"tutor"} /></> },
         { path: "signup", element: <TutorSignup /> },
         { path: "tutoronboarding", element: <TutorOnBoard /> },
-        {path:"all-tutors",element:<AllTutors/>},
+        { path:"all-tutors",element:<AllTutors/>},
         { path: "tutordashboard", element: <TutorPrivate><TutorProfile /></TutorPrivate> },
         { path: "edit-profile", element: <TutorPrivate><EditTutorProfile /></TutorPrivate> },
         { path: "tutorProfile/:id", element: <DisplayTutor /> },
         { path: "tutorjobs", element: <TutorJobs /> },
         { path: "notifications", element: <NotificationPage /> },
         { path: "messenger", element: <MessengerTutor /> },
-        { path:"tutor-schedule",element:<TutorSchedulePage/>}
+        { path: "tutor-schedule", element: <TutorSchedulePage /> },
+       
       ],
     },
     {

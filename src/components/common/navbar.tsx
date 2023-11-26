@@ -6,6 +6,7 @@ import { logout } from "../../api/studentapi";
 import { tutorLogout } from "../../api/tutorapi";
 import { logoutTutor, logoutstudent } from "../../slice/authSlice";
 import { toast } from "react-toastify";
+import NotificationDropdown from "./NotificationDropdown";
 
 const Navbar: React.FC = () => {
   const [open, setOpen] = useState(false);
@@ -117,6 +118,7 @@ const Navbar: React.FC = () => {
                       Logout
                       <span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
                     </button>
+                    <NotificationDropdown/>
                   </div>
                 ) : (
                   <>

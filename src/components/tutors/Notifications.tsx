@@ -1,4 +1,3 @@
-import React from 'react'
 import { useQuery } from 'react-query'
 import { tutorNotifications } from '../../api/tutorapi'
 import { useSelector } from 'react-redux'
@@ -24,12 +23,12 @@ const Notifications = () => {
         <div className="flex flex-col items-start justify-between">
           <div>
             <h3 className="text-lg font-semibold text-blue-600">
-              {"Amount credited to Wallet "}
+              {notify.title}
             </h3>
           </div>
           <p className="text-gray-700 mt-2">
             {
-              "Cancellation Amount of Rs.5000 has been credited to your account."
+              notify.content
             }
           </p>
           <p className="text-sm text-gray-500 mt-2">

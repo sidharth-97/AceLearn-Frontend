@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import WalletHistory from "../../components/common/WalletHistory";
 
+
 const StudentProfile = () => {
   const { isStudent } = useSelector((state: RootState) => state.auth);
   const { data } = useQuery({

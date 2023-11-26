@@ -16,6 +16,7 @@ import { toast } from "react-toastify";
 import socket from "../../services/socket";
 import { useNavigate } from "react-router-dom";
 import WalletHistory from "../../components/common/WalletHistory";
+import NotificationModal from "../../components/common/NotificationModal";
 
    const TutorProfile = () => {
   const { isTutor } = useSelector((state: any) => state.auth);
@@ -123,7 +124,7 @@ import WalletHistory from "../../components/common/WalletHistory";
                 adventure together and create a brighter future for our
                 students.
               </p>
-            
+            <NotificationModal/>
               <p className="py-1 text-base">💰 Wallet Rs: {isTutor.wallet??0}</p>
               {/* <p className="text-base">Email verified : true</p> */}
               {/* <p className="py-1 text-base">Mobile verified :</p> */}

@@ -37,6 +37,7 @@ import MessengerTutor from "./pages/tutor/Messenger";
 import TutorSchedulePage from "./pages/tutor/SchedulePage";
 import StudentSchedule from "./pages/student/StudentSchedule";
 import HomeworkHelp from "./pages/student/HomeworkHelp";
+import SolveQuestionsPage from "./pages/tutor/SolveQuestionsHome";
 
 
 function App() {
@@ -83,6 +84,7 @@ function App() {
         { path: "notifications", element: <NotificationPage /> },
         { path: "messenger", element: <MessengerTutor /> },
         { path: "tutor-schedule", element: <TutorSchedulePage /> },
+        {path:"homework-help",element:<SolveQuestionsPage/>}
        
       ],
     },

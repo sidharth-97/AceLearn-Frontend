@@ -11,8 +11,8 @@ const HomeworkHelp = () => {
           <Navbar/>
           <div className='flex'>
               <StudentSidebar />
-              {/* <ListQuestions/> */}
-              <PostQuestions/>
+              <ListQuestions/>
+              {/* <PostQuestions/> */}
           </div>
           
     </div>

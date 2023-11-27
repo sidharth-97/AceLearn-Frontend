@@ -204,3 +204,13 @@ export const bookWithWallet = async (data: any) => {
     
   }
 }
+
+export const addQuestions = async (data: any) => {
+  try {
+    const reponse = await Api.post(studentRoutes.addQuestions, data)
+    return reponse
+  } catch (error) {
+      console.log(error);
+      
+  }
+}

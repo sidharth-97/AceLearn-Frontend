@@ -1,13 +1,13 @@
 import React from "react";
 
-const ListQuestions = () => {
+const ListQuestions = ({toggleFunction}) => {
   const truncatedQuestion = "How to use React Hooks?";
   const isAnswered = true;
   const date = "2023-11-25";
 
   return (
     <div className="flex flex-col items-start w-full p-6">
-      <button className="mb-4 bg-blue-500 text-white px-4 py-2 rounded-md">
+      <button onClick={(e)=>toggleFunction(false)} className="mb-4 bg-blue-500 text-white px-4 py-2 rounded-md">
         Post a new question
       </button>
       <div className="flex">

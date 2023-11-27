@@ -18,7 +18,8 @@ const studentRoutes = {
     getMessages: "/students/get-messages",
     addMessages: "students/add-message",
     getAllUsers: "/students/getAllUsers",
-    bookWithWallet:"/students/book-tutor-wallet"
+    bookWithWallet: "/students/book-tutor-wallet",
+    addQuestions:"/students/add-questions"
 }
 
 export default studentRoutes

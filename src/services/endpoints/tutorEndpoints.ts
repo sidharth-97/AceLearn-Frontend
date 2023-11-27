@@ -22,7 +22,9 @@ const tutorRoutes = {
     tutorNotifications: "/tutors/notifications",
     conversations: "/tutors/get-conversations",
     getMessages: "/tutors/get-messages",
-    addMessages:"/students/add-message"
+    addMessages: "/students/add-message",
+    viewQuestions: "/tutors/show-unsolved",
+    submitSolution:"/tutors/submit-solution"
 }
 
 export default tutorRoutes

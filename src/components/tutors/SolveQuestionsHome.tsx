@@ -1,6 +1,7 @@
 import React from 'react'
 
-const SolveQuestionsHome = () => {
+const SolveQuestionsHome = ({toggler}) => {
+
   return (
     <body className="bg-gray-100 font-sans">
           <div className="container mx-auto p-4">
@@ -14,7 +15,7 @@ const SolveQuestionsHome = () => {
 
             <section className="flex">
               <div className="w-3/4 pr-4">
-                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                <button onClick={(e)=>toggler(true)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                   Start Solving
                 </button>
 

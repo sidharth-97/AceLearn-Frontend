@@ -14,7 +14,7 @@ const PostQuestions = () => {
   })
   console.log(subjects?.data?.subject);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async ( e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
      const formData = new FormData()
   formData.append("description", question)

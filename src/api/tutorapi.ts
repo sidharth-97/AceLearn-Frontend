@@ -336,3 +336,23 @@ export const addMessages = async (data: any) => {
     }
   }
 };
+
+export const viewQuestions = async () => {
+  try {
+    const response = await Api.get(tutorRoutes.viewQuestions)
+    return response
+  } catch (error) {
+    console.log(error);
+    
+  }
+}
+
+export const submitSolution = async (data: any) => {
+  try {
+    const response = await Api.post(tutorRoutes.submitSolution, data)
+    return response
+  } catch (error) {
+    console.log(error);
+    
+  }
+}

@@ -7,7 +7,8 @@ const AdminRoutes = {
     blockTutor: '/admin/block-tutor',
     addSubjects: "/admin/add-academic-info",
     findSubjects: "/admin/find-academic-details",
-    deleteSubject:"/admin/delete-academic-info"
+    deleteSubject: "/admin/delete-academic-info",
+    userCount:"/admin/get-user-counts"
 }
 
 export default AdminRoutes

@@ -98,3 +98,13 @@ export const deleteSubject = async (data: object) => {
     console.log(error);
   }
 };
+
+export const userCount = async () => {
+  try {
+    const response = await Api.get(AdminRoutes.userCount)
+    return response
+  } catch (error) {
+    console.log(error);
+    
+  }
+}

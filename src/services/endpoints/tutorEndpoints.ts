@@ -24,7 +24,8 @@ const tutorRoutes = {
     getMessages: "/tutors/get-messages",
     addMessages: "/students/add-message",
     viewQuestions: "/tutors/show-unsolved",
-    submitSolution:"/tutors/submit-solution"
+    submitSolution: "/tutors/submit-solution",
+    tutorSales:"/tutors/tutor-sales"
 }
 
 export default tutorRoutes

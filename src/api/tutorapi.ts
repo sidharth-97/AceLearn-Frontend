@@ -356,3 +356,13 @@ export const submitSolution = async (data: any) => {
     
   }
 }
+
+export const tutorSales = async () => {
+  try {
+    const response = await Api.get(tutorRoutes.tutorSales)
+    return response
+  } catch (error) {
+    console.log(error);
+    
+  }
+}

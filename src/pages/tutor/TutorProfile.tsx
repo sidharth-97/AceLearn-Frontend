@@ -17,6 +17,7 @@ import socket from "../../services/socket";
 import { useNavigate } from "react-router-dom";
 import WalletHistory from "../../components/common/WalletHistory";
 import NotificationModal from "../../components/common/NotificationModal";
+import TutorSalesChart from "../../components/tutors/tutorSalesChart";
 
    const TutorProfile = () => {
   const { isTutor } = useSelector((state: any) => state.auth);
@@ -204,6 +205,7 @@ import NotificationModal from "../../components/common/NotificationModal";
                   </button>
                 </div>
               </div>
+          <TutorSalesChart/>
             </div>
           </div>
         </div>

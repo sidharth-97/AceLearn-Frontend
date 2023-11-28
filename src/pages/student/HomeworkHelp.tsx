@@ -15,7 +15,7 @@ const HomeworkHelp = () => {
         {toggle ? (
           <ListQuestions toggleFunction={setToggle} />
         ) : (
-          <PostQuestions />
+            <PostQuestions toggleFunction={ setToggle} />
         )}
       </div>
     </div>

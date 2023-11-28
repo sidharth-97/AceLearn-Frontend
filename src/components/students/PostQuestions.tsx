@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import { findSubjects } from "../../api/adminapi";
 import { addQuestions } from "../../api/studentapi";
 
-const PostQuestions = () => {
+const PostQuestions = ({toggleFunction}) => {
   const [subject, setSubject] = useState("")
   const [image, setImage] = useState<File | null>(null);
   const [question,setQuestion]=useState("")
@@ -35,12 +35,18 @@ const PostQuestions = () => {
   
   return (
     <div className="container mx-auto p-4 bg-gray-100">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2 text-indigo-800">
-          Post a New Question
-        </h1>
-        <h3 className="text-gray-600">Get expert answers within hours!!!</h3>
+          <div className="mb-8">
+      <div className="flex items-center mb-4">
+        <button
+          onClick={(e)=>toggleFunction(true)}
+          className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
+        >
+          Back
+        </button>
       </div>
+      <h1 className="text-3xl font-bold mb-2 text-indigo-800">Post a New Question</h1>
+      <h3 className="text-gray-600">Get expert answers within hours!!!</h3>
+    </div>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
       <div className="flex flex-col bg-white p-6 rounded shadow-md">
         <div className="mb-4">

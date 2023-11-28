@@ -14,7 +14,7 @@ const SolveQuestionsPage = () => {
         <TutorSidebar />
         
         {
-          toggle ? <StudentQuestionsView/>:<SolveQuestionsHome toggler={setToggle} />
+          toggle ? <StudentQuestionsView toggler={setToggle} />:<SolveQuestionsHome toggler={setToggle} />
         }
         
         {/* <SolveQuestions/> */}

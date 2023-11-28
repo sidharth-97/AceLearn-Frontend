@@ -214,3 +214,13 @@ export const addQuestions = async (data: any) => {
       
   }
 }
+
+export const viewMyQuestions = async () => {
+  try {
+    const response = await Api.get(studentRoutes.viewMyQuestions)
+    return response
+  } catch (error) {
+    console.log(error);
+    
+  }
+}

@@ -6,6 +6,7 @@ import { studentDetails } from "../../api/studentapi";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import WalletHistory from "../../components/common/WalletHistory";
+import TimelineApp from "../../components/students/HeatMap";
 
 
 const StudentProfile = () => {
@@ -60,34 +61,9 @@ const StudentProfile = () => {
               </div>
             </div>
           </div>
-          <div className="flex flex-row h-24 justify-between mt-3 mx-1">
-            <div className="flex flex-row h-28 items-center bg-white text-center font-semibold rounded-3xl p-4">
-              <div>
-                <img className="h-24" src={classes} alt="" />
-              </div>
-              <div className="bg-white text-black mx-3">
-                <p className="text-2xl">Classes Taken</p>
-                <p className="text-xl">5</p>
-              </div>
-            </div>
-            <div className="flex flex-row h-28 items-center bg-white text-center font-semibold rounded-3xl p-4">
-              <div>
-                <img className="h-24" src={classes} alt="" />
-              </div>
-              <div className="bg-white text-black mx-3">
-                <p className="text-2xl">Classes Taken</p>
-                <p className="text-xl">5</p>
-              </div>
-            </div>
-            <div className="flex flex-row h-28 items-center bg-white text-center font-semibold rounded-3xl p-4">
-              <div>
-                <img className="h-24" src={classes} alt="" />
-              </div>
-              <div className="bg-white text-black mx-3">
-                <p className="text-2xl">Classes Taken</p>
-                <p className="text-xl">5</p>
-              </div>
-            </div>
+          <div className="flex flex-row justify-between mt-3 mx-1 bg-white">
+           
+            <TimelineApp/>
           </div>
         </div>
       </div>

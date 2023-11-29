@@ -20,7 +20,8 @@ const studentRoutes = {
     getAllUsers: "/students/getAllUsers",
     bookWithWallet: "/students/book-tutor-wallet",
     addQuestions: "/students/add-questions",
-    viewMyQuestions:"/students/get-student-questions"
+    viewMyQuestions: "/students/get-student-questions",
+    studentTimeline:"/students/student-timeline"
 }
 
 export default studentRoutes

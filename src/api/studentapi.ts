@@ -224,3 +224,13 @@ export const viewMyQuestions = async () => {
     
   }
 }
+
+export const studentTimeline = async () => {
+  try {
+    const response = await Api.get(studentRoutes.studentTimeline)
+    return response
+  } catch (error) {
+    console.log(error);
+    
+  }
+}

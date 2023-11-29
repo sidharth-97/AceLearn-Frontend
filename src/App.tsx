@@ -39,6 +39,7 @@ import StudentSchedule from "./pages/student/StudentSchedule";
 import HomeworkHelp from "./pages/student/HomeworkHelp";
 import SolveQuestionsPage from "./pages/tutor/SolveQuestionsHome";
 import AboutUS from "./pages/common/AboutUS";
+import ForgetPassword from "./components/common/ForgetPassword";
 
 
 function App() {
@@ -53,7 +54,8 @@ function App() {
         { path: "failed", element: <PaymentFailed /> },
         { path: "room/:roomId", element: <VideoCall /> },
         { path: "feedback-page/:id", element: <PrivateRoute><FeedbackPage /></PrivateRoute> },
-        { path:"about-us",element:<AboutUS/>}
+        { path: "about-us", element: <AboutUS /> },
+        {path:"forgot-password",element:<ForgetPassword/>}
     ]},
     {
       path: "/student",

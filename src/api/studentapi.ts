@@ -234,3 +234,33 @@ export const studentTimeline = async () => {
     
   }
 }
+
+export const forgetPasswordStep1 = async (obj:{email:string,username:string}) => {
+  try {
+    const response = await Api.post(studentRoutes.forgetPasswordStep1,obj)
+    return response
+  } catch (error) {
+    console.log(error);
+    
+  }
+}
+
+export const forgetPasswordStep2 = async (otp:{otp:string})=>{
+  try {
+    const response = await Api.post(studentRoutes.forgetPasswordStep2, otp)
+    return response
+  } catch (error) {
+    console.log(error);
+    
+  }
+}
+
+export const forgetPasswordFinal = async (data:any) => {
+  try {
+    const response = await Api.post(studentRoutes.forgetPasswordFinal, data)
+    return response
+  } catch (error) {
+    console.log(error);
+    
+  }
+}

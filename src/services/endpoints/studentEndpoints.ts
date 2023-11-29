@@ -21,7 +21,10 @@ const studentRoutes = {
     bookWithWallet: "/students/book-tutor-wallet",
     addQuestions: "/students/add-questions",
     viewMyQuestions: "/students/get-student-questions",
-    studentTimeline:"/students/student-timeline"
+    studentTimeline: "/students/student-timeline",
+    forgetPasswordStep1: "/students/forget-password-step-1",
+    forgetPasswordStep2: "/students/forget-password-step-2",
+    forgetPasswordFinal:"/students/forget-password-final"
 }
 
 export default studentRoutes

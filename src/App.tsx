@@ -38,6 +38,7 @@ import TutorSchedulePage from "./pages/tutor/SchedulePage";
 import StudentSchedule from "./pages/student/StudentSchedule";
 import HomeworkHelp from "./pages/student/HomeworkHelp";
 import SolveQuestionsPage from "./pages/tutor/SolveQuestionsHome";
+import AboutUS from "./pages/common/AboutUS";
 
 
 function App() {
@@ -51,7 +52,8 @@ function App() {
         { path: "success", element: <SuccessPage /> },
         { path: "failed", element: <PaymentFailed /> },
         { path: "room/:roomId", element: <VideoCall /> },
-        { path:"feedback-page/:id",element:<PrivateRoute><FeedbackPage/></PrivateRoute>}
+        { path: "feedback-page/:id", element: <PrivateRoute><FeedbackPage /></PrivateRoute> },
+        { path:"about-us",element:<AboutUS/>}
     ]},
     {
       path: "/student",

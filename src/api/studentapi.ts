@@ -264,3 +264,13 @@ export const forgetPasswordFinal = async (data:any) => {
     
   }
 }
+
+export const studentPremium = async (data:{fee:string}) => {
+  try {
+    const response = await Api.post(studentRoutes.studentPremium,data)
+    return response
+  } catch (error) {
+    console.log(error);
+    
+  }
+}

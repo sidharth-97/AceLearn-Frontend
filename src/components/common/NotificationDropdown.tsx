@@ -4,6 +4,7 @@ import { TutorDetails } from "../../api/tutorapi";
 import { studentDetails } from "../../api/studentapi";
 import NotificationModal from "./NotificationModal";
 import { useNavigate } from "react-router-dom";
+import { CiCalendarDate } from "react-icons/ci";
 
 const NotificationDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -75,11 +76,13 @@ const NotificationDropdown = () => {
                 href="#"
                 className="flex items-center px-4 py-3 -mx-2 transition-colors duration-300 transform border-b border-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700 dark:border-gray-700"
               >
-                <img
-                  className="flex-shrink-0 object-cover w-8 h-8 mx-1 rounded-full"
-                  src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80"
-                  alt="avatar"
-                />
+                  <div>
+              {item.type == "wallet" ? <div className="bg-yellow-300 p-4 rounded-full mr-4">
+                {/* Wallet icon or any other wallet-related content */}
+                💰
+              </div> : <div className="mr-4"> <CiCalendarDate style={{ fontSize: "3rem" }} /></div>}
+
+            </div>
                 <div className="flex flex-col items-start">
                   <p className="mx-2 text-sm text-gray-600 dark:text-white">
                     <span className="font-bold text-blue-500 hover:underline">

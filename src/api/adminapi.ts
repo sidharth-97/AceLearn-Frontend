@@ -108,3 +108,22 @@ export const userCount = async () => {
     
   }
 }
+  export const getPremiumPrice = async () => {
+    try {
+      const response = await Api.get(AdminRoutes.getPremiumPrice)
+      return response
+    } catch (error) {
+      console.log(error);
+      
+    }
+}
+
+export const setPremiumPrice = async (data:any) => {
+  try {
+    const response = await Api.post(AdminRoutes.setPremiumPrice, data)
+    return response
+  } catch (error) {
+    console.log(error);
+    
+  }
+}

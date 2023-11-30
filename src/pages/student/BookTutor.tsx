@@ -93,6 +93,7 @@ const BookTutor = () => {
 
   const handleStripePayment = async () => {
     console.log("here");
+    if(timeArray.size ==0) return toast.error("Pick a date")
     const tutordetails = await TutorDetails(params.id);
 
     let object1;

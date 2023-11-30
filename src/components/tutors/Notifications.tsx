@@ -1,6 +1,7 @@
 import { useQuery } from 'react-query'
 import { tutorNotifications } from '../../api/tutorapi'
 import { useSelector } from 'react-redux'
+import { CiCalendarDate } from 'react-icons/ci'
 
 const Notifications = () => {
   const { isTutor } =useSelector((state) => state.auth)
@@ -14,12 +15,13 @@ const Notifications = () => {
         {
           data?.data.length ? data?.data.map((notify) => (
            <div className="flex items-center mt-2">
-        <div>
-          <div className="bg-yellow-300 p-4 rounded-full mr-4">
-            {/* Wallet icon or any other wallet-related content */}
-            💰
-          </div>
-        </div>
+          <div>
+              {notify.type == "wallet" ? <div className="bg-yellow-300 p-4 rounded-full mr-4">
+                {/* Wallet icon or any other wallet-related content */}
+                💰
+              </div> : <div className="mr-4"> <CiCalendarDate style={{ fontSize: "3rem" }} /></div>}
+
+            </div>
         <div className="flex flex-col items-start justify-between">
           <div>
             <h3 className="text-lg font-semibold text-blue-600">

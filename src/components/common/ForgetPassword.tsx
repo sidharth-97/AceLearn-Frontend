@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import OTPInput from "./OTPInput";
 import { forgetPasswordStep1, forgetPasswordStep2 } from "../../api/studentapi";
 import ForgetPassFinal from "./ForgetPassFinal";
+import Navbar from "./navbar";
 
 const ForgetPassword = () => {
   const [email, setEmail] = useState("");
@@ -33,6 +34,7 @@ const ForgetPassword = () => {
 
   return (
     <div>
+      <Navbar/>
      <main
         id="content"
         role="main"
@@ -95,10 +97,10 @@ const ForgetPassword = () => {
                   </form>
                 </div>
               ) : (
-                <div>
+                <div className="w-full">
                   <form onSubmit={submitOtp}>
                     <OTPInput onOTPChange={handleOTPChange} />
-                    <button type="submit">Submit</button>
+                    <button className="bg-black text-white rounded-md p-2 mt-3 ms-5" type="submit">Submit</button>
                   </form>
                 </div>
               )

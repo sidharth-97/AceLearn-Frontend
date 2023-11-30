@@ -8,7 +8,9 @@ const AdminRoutes = {
     addSubjects: "/admin/add-academic-info",
     findSubjects: "/admin/find-academic-details",
     deleteSubject: "/admin/delete-academic-info",
-    userCount:"/admin/get-user-counts"
+    userCount: "/admin/get-user-counts",
+    getPremiumPrice: "/admin/get-premium-price",
+    setPremiumPrice:"/admin/change-premium"
 }
 
 export default AdminRoutes

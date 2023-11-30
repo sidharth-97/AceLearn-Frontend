@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useQuery } from "react-query";
 import { findSubjects } from "../../api/adminapi";
 import { addQuestions } from "../../api/studentapi";
+import {toast} from "react-toastify"
 
 const PostQuestions = ({toggleFunction}) => {
   const [subject, setSubject] = useState("")
@@ -22,7 +23,7 @@ const PostQuestions = ({toggleFunction}) => {
     formData.append("image",image)
     const result = await addQuestions(formData)
     console.log(result);
-    
+    toast.success("Posted success")
   }
 
   const handleButtonClick = (e) => {

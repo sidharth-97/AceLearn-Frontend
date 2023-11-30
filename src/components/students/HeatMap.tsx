@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'https://cdn.skypack.dev/react?min';
-import moment from 'https://cdn.skypack.dev/moment?min';
+import moment from 'moment';
 import { useQuery } from 'react-query';
 import { studentTimeline } from '../../api/studentapi';
 
@@ -58,13 +58,15 @@ function TimelineApp() {
   let weekDays = Array.from(new Array(7));
   let months = Array.from(new Array(Math.floor(days / 7)));
 
-  let min = Math.min(0, ...data.map(d => d.totalClasses || 0));
-  let max = Math.max(...data.map(d => d.totalClasses || 0));
+  let min =data.length && Math.min(0, ...data.map(d => d.totalClasses || 0));
+  let max =data.length && Math.max(...data.map(d => d.totalClasses || 0));
 
   let colorMultiplier = 1 / (max - min);
 
   return (
-    <div className='timeline'>
+    <>
+    { data.length &&
+      <div className='timeline'>
       <div className="timeline-months">
         {months.map((_, index) => <Month key={index} index={index} startDate={startDate} />)}
       </div>
@@ -90,7 +92,10 @@ function TimelineApp() {
           })}
         </div>
       </div>
-    </div>
+    </div>  
+    }
+    </>
+    
   );
 }
 

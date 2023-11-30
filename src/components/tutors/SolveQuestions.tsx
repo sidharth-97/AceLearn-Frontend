@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useQuery } from "react-query";
 import { submitSolution } from "../../api/tutorapi";
+import {toast} from 'react-toastify'
 
 const SolveQuestions = ({ question }) => {
   const [solution, setSolution] = useState("");
@@ -13,6 +14,7 @@ const SolveQuestions = ({ question }) => {
     formData.append("image", img);
     formData.append("id",question)
     const result = await submitSolution(formData);
+    toast.success("Solution submitted")
     console.log(result);
   };
 

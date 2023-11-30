@@ -28,7 +28,7 @@ const SolveQuestionsHome = ({toggler}) => {
                 </div>
               </div>
 
-              <div className="w-1/4 pl-4">
+              {/* <div className="w-1/4 pl-4">
                 <div className="bg-white p-4 rounded shadow">
                   <h2 className="text-xl font-semibold mb-2">My Stats</h2>
                   <div>
@@ -38,7 +38,7 @@ const SolveQuestionsHome = ({toggler}) => {
                     <p className="text-lg font-bold mb-2">Skipped: 1</p>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </section>
           </div>
         </body>

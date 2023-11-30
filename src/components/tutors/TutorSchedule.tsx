@@ -161,7 +161,7 @@ const TutorSchedule = () => {
                         </div>
                       </div>
                     ) : (
-                      "No upcomming schedule"
+                      ""
                     )
                   )}
                 </div>

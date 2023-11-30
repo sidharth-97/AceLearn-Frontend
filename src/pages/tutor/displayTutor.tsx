@@ -230,7 +230,7 @@ const DisplayTutor = () => {
 
             <div className="my-4"></div>
 
-            <div className="bg-white p-3 shadow-sm rounded-sm">
+            {/* <div className="bg-white p-3 shadow-sm rounded-sm">
               <div className="grid grid-cols-2">
                 <div>
                   <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
@@ -332,7 +332,7 @@ const DisplayTutor = () => {
                   </ul>
                 </div>
               </div>
-            </div>
+            </div> */}
             <div className="mt-5">
                 <ReviewArticle/>
             </div>

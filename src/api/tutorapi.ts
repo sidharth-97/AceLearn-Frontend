@@ -366,3 +366,13 @@ export const tutorSales = async () => {
     
   }
 }
+
+export const buyTutorPremium = async (data:any) => {
+  try {
+    const response = await Api.post(tutorRoutes.buyTutorPremium,data)
+    return response
+  } catch (error) {
+    console.log(error);
+    
+  }
+}

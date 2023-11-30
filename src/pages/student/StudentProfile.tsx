@@ -11,10 +11,11 @@ import TimelineApp from "../../components/students/HeatMap";
 
 const StudentProfile = () => {
   const { isStudent } = useSelector((state: RootState) => state.auth);
-  const { data } = useQuery({
+  const { data:stdData } = useQuery({
     queryFn: () => studentDetails(isStudent._id),
+    queryKey:["stdDetail"]
   });
-  console.log(data?.data);
+  console.log(stdData?.data,"wallet");
 
   return (
     <>
@@ -26,7 +27,7 @@ const StudentProfile = () => {
           <div className="bg-white shadow-md rounded-md p-6 w-full">
             <div className="flex items-center space-x-4">
               <img
-                src={data?.data.image}
+                src={stdData?.data.image}
                 alt="Profile"
                 className="w-24 h-24 rounded-full object-cover"
               />
@@ -55,16 +56,19 @@ const StudentProfile = () => {
                 <div>
                   <p className="text-gray-700 font-semibold">Wallet Balance</p>
                   <p className="text-xl text-yellow-700 font-bold">{`Rs ${
-                    data?.data?.wallet ?? 0
-                  } `}</p>  <WalletHistory walletHistory={data?.data.walletHistory}/>
+                    stdData?.data?.wallet ?? 0
+                  } `}</p>  <WalletHistory walletHistory={stdData?.data.walletHistory}/>
                 </div>
               </div>
             </div>
           </div>
-          <div className="flex flex-row justify-between mt-3 mx-1 bg-white">
+          <div className="bg-white mt-5 pt-2 ps-3 text-lg"><h1>Class timeline</h1>
+            <div className="flex flex-row justify-between mt-3 mx-1 bg-white">
            
             <TimelineApp/>
           </div>
+          </div>
+          
         </div>
       </div>
     </>

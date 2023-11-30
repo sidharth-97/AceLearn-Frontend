@@ -3,17 +3,19 @@ import { useQuery } from "react-query";
 import { viewQuestions } from "../../api/tutorapi";
 import SolveQuestions from "./SolveQuestions";
 
+// ... (import statements)
+
 const StudentQuestionsView = ({ toggler }) => {
   const [solve, setSolve] = useState(false);
   const [timeLeft, setTimeLeft] = useState(600); // 10 minutes in seconds
 
   const {
-    data: Question,
+    data: questionData,
     isLoading,
     refetch,
   } = useQuery({
     queryFn: () => viewQuestions(),
-    queryKey: ["questionView"],
+    
   });
 
   useEffect(() => {
@@ -29,10 +31,16 @@ const StudentQuestionsView = ({ toggler }) => {
     }
 
     return () => clearInterval(timer); // Cleanup the interval on component unmount
-
   }, [timeLeft, solve, toggler]);
 
-  console.log(Question, "response");
+  console.log(questionData, "response");
+
+  const handleSkipQuestion = async () => {
+    console.log("skippppp");
+    
+    await refetch();
+    setSolve(false); // Set solve to false after skipping the question
+  };
 
   return (
     <>
@@ -40,13 +48,13 @@ const StudentQuestionsView = ({ toggler }) => {
         <div className={`${!solve && "flex"} justify-between mb-4`}>
           <div className="flex items-center mb-4">
             <button
-              onClick={(e) => toggler(false)}
+              onClick={() => toggler(false)}
               className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
             >
               Back
             </button>
           </div>
-          { (
+          {(
             <h3 className="text-lg font-semibold">
               Time left: {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')}
             </h3>
@@ -54,20 +62,20 @@ const StudentQuestionsView = ({ toggler }) => {
         </div>
 
         <div className="mb-4 text-gray-700">
-          {Question?.data.description}
-          {Question?.data.image && <img src={Question?.data.image} alt="Question" />}
+          {questionData?.data.description}
+          {questionData?.data.image && <img src={questionData?.data.image} alt="Question" />}
         </div>
 
         {!solve && (
           <div className="flex space-x-4">
             <button
-              onClick={() => refetch()}
+              onClick={handleSkipQuestion}
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             >
               Skip Question
             </button>
             <button
-              onClick={(e) => setSolve(true)}
+              onClick={() => setSolve(true)}
               className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
             >
               Start Solving
@@ -75,9 +83,10 @@ const StudentQuestionsView = ({ toggler }) => {
           </div>
         )}
       </div>
-      {solve && <SolveQuestions question={Question?.data._id} />}
+      {solve && <SolveQuestions question={questionData?.data._id} />}
     </>
   );
 };
 
 export default StudentQuestionsView;
+

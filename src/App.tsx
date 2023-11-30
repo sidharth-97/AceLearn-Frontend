@@ -40,6 +40,7 @@ import HomeworkHelp from "./pages/student/HomeworkHelp";
 import SolveQuestionsPage from "./pages/tutor/SolveQuestionsHome";
 import AboutUS from "./pages/common/AboutUS";
 import ForgetPassword from "./components/common/ForgetPassword";
+import Premium from "./components/admin/Premium";
 
 
 function App() {
@@ -99,7 +100,8 @@ function App() {
         { path: "dashboard", element: <AdminDash /> },
         { path: 'students', element:<AdminPrivate><StudentManagement /></AdminPrivate>  },
         { path: 'tutors', element: <AdminPrivate><TutorManagement /></AdminPrivate> },
-        { path:"subjects",element:<Subjects/>}
+        { path: "subjects", element: <Subjects /> },
+        { path:"premium",element:<Premium/>}
       ]
     },
     { path: "*", element: <><Navbar /><ErrorPage /></> },

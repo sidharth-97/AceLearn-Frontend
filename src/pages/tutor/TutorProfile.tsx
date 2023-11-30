@@ -70,7 +70,6 @@ const TutorProfile = () => {
                 adventure together and create a brighter future for our
                 students.
               </p>
-              <NotificationModal />
               <p className="py-1 text-base">
                 💰 Wallet Rs: {isTutor.wallet ?? 0}
               </p>
@@ -83,7 +82,7 @@ const TutorProfile = () => {
             </div>
           </div>
 
-          <div className="flex flex-row h-24 justify-between mt-3 mx-1">
+          {/* <div className="flex flex-row h-24 justify-between mt-3 mx-1">
             <div className="flex flex-row h-28 items-center bg-white text-center font-semibold rounded-3xl p-4">
               <div>
                 <img className="h-24" src={classes} alt="" />
@@ -111,9 +110,9 @@ const TutorProfile = () => {
                 <p className="text-xl">5</p>
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="bg-white mt-6">
-            <h4>Income report</h4>
+            <h4 className=" text-xl font-semibold ps-3 mt-3 pt-3 pb-3">Income report</h4>
             <TutorSalesChart />
           </div>
         </div>

@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 import { showNotifications } from "../../api/studentapi";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import { CiCalendarDate } from "react-icons/ci";
 
 const Notifications = () => {
   const { isStudent } = useSelector((state: RootState) => state.auth);
@@ -34,10 +35,11 @@ const Notifications = () => {
         {notifications.map((notify: { title: string; content: string }) => (
           <div className="flex items-center mt-2">
             <div>
-              <div className="bg-yellow-300 p-4 rounded-full mr-4">
+              {notify.type == "wallet" ? <div className="bg-yellow-300 p-4 rounded-full mr-4">
                 {/* Wallet icon or any other wallet-related content */}
                 💰
-              </div>
+              </div> : <div className="mr-4"> <CiCalendarDate style={{ fontSize: "3rem" }} /></div>}
+
             </div>
             <div className="flex flex-col items-start justify-between">
               <div>

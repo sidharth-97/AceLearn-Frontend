@@ -9,13 +9,15 @@ const TutorsCards = () => {
   useEffect(() => {
 const functn=async () => {
   const Tutordata = await getalltutors("")
-  setTutorList(Tutordata?.data.AllTutors);
+  setTutorList(Tutordata?.data.AllTutor);
+  console.log(Tutordata);
   
 }
 functn()
     
   }, [])
   
+  console.log(setTutorList);
   
   return (
     <div className="p-1 flex flex-wrap items-center justify-center">

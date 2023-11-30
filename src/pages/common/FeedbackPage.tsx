@@ -11,7 +11,7 @@ const FeedbackPage = () => {
     const { isTutor } = useSelector((state) => state.auth)
     
     useEffect(() => {
-        isTutor && navigate('/')
+        isTutor && navigate('/tutor/tutordashboard')
     })
     
     useEffect(() => {

@@ -135,12 +135,12 @@ const Signin: React.FC<propstype> = ({ user }) => {
       } onError={()=>console.log("Error")
       }/>
                   </div></> }
-              <a
-                href="/#"
+              <Link
+                to={"/forgot-password"}
                 className="mb-2 inline-block text-base text-[#adadad] hover:text-primary hover:underline"
               >
                 Forget Password?
-              </a>
+              </Link>
               <p className="text-base text-[#adadad]">
                 Not a member yet?
                 <Link to={user=='student'?'/student/signup':'/tutor/signup'} className="text-primary hover:underline">Sign Up</Link>

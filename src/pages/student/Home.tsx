@@ -5,10 +5,55 @@ import icon2 from "../../assets/26220662-623f-4697-bd29-b27e3ef7f513fdf.jpg";
 import icon3 from "../../assets/6fsfsdfsf.jpg";
 import icon4 from "../../assets/26220662-623f-4697-bd29-b27e3ef7f513.jpg";
 import icon5 from "../../assets/clipart2614421.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import TutorsCards from "../../components/common/TutorsCards";
+import { studentPremium } from "../../api/studentapi";
+import { useQuery } from "react-query";
+import { getPremiumPrice } from "../../api/adminapi";
+import { loadStripe } from "@stripe/stripe-js";
+import { useState } from "react";
+import { buyTutorPremium } from "../../api/tutorapi";
+import { useSelector } from "react-redux";
 
 function Home() {
+  const [stripe, setStripe] = useState(null);
+  const stripePromise = loadStripe(
+    "pk_test_51OA4ziSEjtBzAge5ZAWJV2Y2EW4v8d0iUt4DHgoUX09VWYiYhsJcUCARpvHLYj5ZLmjxNyCYLyEgJwcQugm6C3YL00VmY9Z4jW"
+  );
+  const { data: PremiumPrice } = useQuery({
+   queryFn:()=>getPremiumPrice()
+  })
+  console.log(PremiumPrice);
+  const navigate=useNavigate()
+  const { isStudent } = useSelector((state) => state.auth)
+  const {isTutor}=useSelector((state)=>state.auth)
+
+  const buyStudentPremium = async (price) => {
+if(!isStudent)navigate('/login')
+    if (!stripe) {
+      const stripeInstance = await stripePromise;
+      setStripe(stripeInstance);
+    }
+    const response = await studentPremium({fees:price})
+    console.log(response);
+    if (response) {
+      window.location.href = response.data.url;
+    }
+  } 
+
+  const buytutorPremium = async (price) => {
+    if(!isTutor)navigate('/login')
+    if (!stripe) {
+      const stripeInstance = await stripePromise;
+      setStripe(stripeInstance);
+    }
+    const response = await buyTutorPremium({fees:price})
+    console.log(response);
+    if (response) {
+      window.location.href = response.data.url;
+    }
+  }
+
   return (
     <>
       <Navbar />
@@ -89,8 +134,6 @@ function Home() {
     </div>
   </div>
 </div>
-
-
       </div>
       <h1 className="text-4xl text-center font-bold mt-7">Out Top Tutors</h1>
       <TutorsCards />
@@ -119,9 +162,9 @@ function Home() {
                   <li>Can join unlimited classes.</li>
                   <li>Can post unlimited questions.</li>
                 </ul>
-                <p>$10/month</p>
+                <p>Rs.{PremiumPrice?.data.student}/month</p>
                 <div className="mt-4 flex justify-start">
-                  <button className="bg-blue-500 text-white py-2 px-4 rounded mt-4">
+                  <button onClick={()=>buyStudentPremium(PremiumPrice?.data.student)} className="bg-blue-500 text-white py-2 px-4 rounded mt-4">
                     Subscribe
                   </button>
                 </div>
@@ -146,9 +189,9 @@ function Home() {
                     Can solve 15 questions per month; otherwise, 5 per month.
                   </li>
                 </ul>
-                <p>$20/month</p>
+                <p>Rs. {PremiumPrice?.data.tutor}/month</p>
                 <div className="mt-4 flex justify-start">
-                  <button className="bg-yellow-500 text-white py-2 px-4 rounded">
+                  <button onClick={()=>buytutorPremium(PremiumPrice?.data.tutor)} className="bg-yellow-500 text-white py-2 px-4 rounded">
                     Subscribe
                   </button>
                 </div>

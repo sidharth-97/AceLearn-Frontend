@@ -24,7 +24,8 @@ const studentRoutes = {
     studentTimeline: "/students/student-timeline",
     forgetPasswordStep1: "/students/forget-password-step-1",
     forgetPasswordStep2: "/students/forget-password-step-2",
-    forgetPasswordFinal:"/students/forget-password-final"
+    forgetPasswordFinal: "/students/forget-password-final",
+    studentPremium:"/students/buy-student-premium"
 }
 
 export default studentRoutes

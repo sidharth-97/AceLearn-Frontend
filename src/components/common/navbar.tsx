@@ -7,9 +7,11 @@ import { tutorLogout } from "../../api/tutorapi";
 import { logoutTutor, logoutstudent } from "../../slice/authSlice";
 import { toast } from "react-toastify";
 import NotificationDropdown from "./NotificationDropdown";
+import NotificationModal from "./NotificationModal";
 
 const Navbar: React.FC = () => {
   const [open, setOpen] = useState(false);
+  const[sidebar,setSidebar]=useState(false)
 
   const dispatch = useDispatch();
   const { isStudent } = useSelector((state: any) => state.auth);
@@ -118,7 +120,8 @@ const Navbar: React.FC = () => {
                       Logout
                       <span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
                     </button>
-                    <NotificationDropdown/>
+                    
+                    {sidebar ? <NotificationModal setSidebar={setSidebar} /> : <NotificationDropdown setSidebar={setSidebar } />}
                   </div>
                 ) : (
                   <>

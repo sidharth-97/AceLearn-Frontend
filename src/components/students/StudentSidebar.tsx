@@ -16,7 +16,6 @@ const StudentSidebar = () => {
     { name: "Edit profile", link: "/student/profile", icon: AiOutlineUser },
     { name: "Hire a tutor", link: "/student/requesttutor", icon: IoIosList },
     { name: "Requests", link: "/student/requests", icon: TbReportAnalytics, margin: true },
-    { name: "Notifications", link: "/student/notifications", icon: MdOutlineNotificationsActive },
     { name: "Messenger", link: "/student/messenger", icon: FiMessageSquare },
     { name: "Schedule", link: "/student/schedule", icon: GrSchedule, margin: true },
     { name: "Homework help", link: "/student/homework-help", icon: RiSettings4Line },

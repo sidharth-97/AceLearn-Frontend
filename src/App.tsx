@@ -5,7 +5,6 @@ import Signin from "./components/common/Signin";
 import Signup from "./pages/student/Signup";
 import Navbar from "./components/common/navbar";
 import TutorSignup from "./pages/tutor/TutorSignup";
-import OTPInput from "./components/common/OTPInput";
 import TutorOnBoard from "./components/tutors/tutorOnBoard";
 import TutorProfile from "./pages/tutor/TutorProfile";
 import StudentProfile from "./pages/student/StudentProfile";
@@ -17,21 +16,17 @@ import AdminDash from "./pages/admin/adminDash";
 import AdminLogin from "./pages/admin/AdminLogin";
 import StudentManagement from "./pages/admin/StudentManagement";
 import TutorManagement from "./pages/admin/TutorManagement";
-import { useEffect } from "react";
 import DisplayTutor from "./pages/tutor/displayTutor";
 import BookTutor from "./pages/student/BookTutor";
 import RequestTutor from "./pages/student/HireTutor";
 import Requests from "./pages/student/Requests";
 import TutorJobs from "./pages/tutor/TutorJobs";
-import TutorCardGrid from "./pages/tutor/TutorCardGrid";
 import SuccessPage from "./components/common/SucessPage";
 import PaymentFailed from "./components/common/PaymentFailed";
 import VideoCall from "./components/common/VideoCall";
 import FeedbackPage from "./pages/common/FeedbackPage";
 import Subjects from "./pages/admin/Subjects";
 import AllTutors from "./pages/tutor/AllTutors";
-import NotificationsPage from "./pages/student/NotificationsPage";
-import NotificationPage from "./pages/tutor/NotificationPage";
 import Messenger from "./pages/student/Messenger";
 import MessengerTutor from "./pages/tutor/Messenger";
 import TutorSchedulePage from "./pages/tutor/SchedulePage";
@@ -69,7 +64,6 @@ function App() {
         { path: "booktutor/:id", element: <BookTutor /> },
         { path: "requesttutor", element: <RequestTutor /> },
         { path: "requests", element: <Requests /> },
-        { path: "notifications", element: <NotificationsPage /> },
         { path: "messenger", element: <Messenger /> },
         { path: "schedule", element: <StudentSchedule /> },
         { path:"homework-help",element:<HomeworkHelp/>}
@@ -86,7 +80,6 @@ function App() {
         { path: "edit-profile", element: <TutorPrivate><EditTutorProfile /></TutorPrivate> },
         { path: "tutorProfile/:id", element: <DisplayTutor /> },
         { path: "tutorjobs", element: <TutorJobs /> },
-        { path: "notifications", element: <NotificationPage /> },
         { path: "messenger", element: <MessengerTutor /> },
         { path: "tutor-schedule", element: <TutorSchedulePage /> },
         {path:"homework-help",element:<SolveQuestionsPage/>}

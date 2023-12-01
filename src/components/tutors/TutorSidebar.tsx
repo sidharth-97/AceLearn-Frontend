@@ -16,7 +16,6 @@ const TutorSidebar = () => {
     { name: "Profile", link: "/tutor/edit-profile", icon: AiOutlineUser },
     { name: "tutor jobs", link: "/tutor/tutorjobs", icon: IoIosList },
     { name: "shedules", link: "/tutor/tutor-schedule", icon:GrSchedule, margin: true },
-    { name: "notifications", link: "/tutor/notifications", icon: MdOutlineNotificationsActive },
     { name: "messenger", link: "/tutor/messenger", icon: FiMessageSquare},
     { name: "Homework Help", link: "/tutor/homework-help", icon: AiOutlineHeart, margin: true },
     { name: "Setting", link: "/", icon: RiSettings4Line },

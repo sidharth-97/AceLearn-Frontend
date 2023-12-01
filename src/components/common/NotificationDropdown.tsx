@@ -6,7 +6,7 @@ import NotificationModal from "./NotificationModal";
 import { useNavigate } from "react-router-dom";
 import { CiCalendarDate } from "react-icons/ci";
 
-const NotificationDropdown = () => {
+const NotificationDropdown = ({setSidebar}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [notifications, setNotifications] = useState([])
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -38,8 +38,8 @@ const NotificationDropdown = () => {
   }, [isStudent, isTutor]);
   
   const handleModal = () => {
-    if(isStudent) navigate("/student/notifications")
-   if(isTutor)navigate('/tutor/notifications')
+    setSidebar(true)
+    setIsOpen(false)
   };
  
 
@@ -48,10 +48,10 @@ const NotificationDropdown = () => {
       {/* Dropdown toggle button */}
       <button
         onClick={toggleDropdown}
-        className="relative z-10 block p-2 text-gray-700 bg-white border border-transparent rounded-md dark:text-white focus:border-blue-500 focus:ring-opacity-40 dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring dark:bg-gray-800 focus:outline-none"
+        className="relative z-10 block p-2 text-white bg-transparent border border-transparent rounded-md  focus:border-blue-500 focus:ring-opacity-40 focus:ring-blue-300 focus:ring focus:outline-none"
       >
         <svg
-          className="w-5 h-5 text-gray-800 dark:text-white"
+          className="w-5 h-5 text-gray-800 "
           viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -67,14 +67,14 @@ const NotificationDropdown = () => {
       {isOpen && (
         <div
           onClick={() => setIsOpen(false)}
-          className="absolute right-0 z-20 w-64 mt-2 overflow-hidden origin-top-right bg-white rounded-md shadow-lg sm:w-80 dark:bg-gray-800"
+          className="absolute right-0 z-20 w-64 mt-2 overflow-hidden origin-top-right bg-white rounded-md shadow-lg sm:w-80"
         >
           <div className="py-2">
             {/* Notification items */}
             {notifications.slice(-2).map((item, index) => (
               <a
                 href="#"
-                className="flex items-center px-4 py-3 -mx-2 transition-colors duration-300 transform border-b border-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700 dark:border-gray-700"
+                className="flex items-center px-4 py-3 -mx-2 transition-colors duration-300 transform border-b border-gray-100 hover:bg-gray-50 "
               >
                   <div>
               {item.type == "wallet" ? <div className="bg-yellow-300 p-4 rounded-full mr-4">
@@ -84,12 +84,12 @@ const NotificationDropdown = () => {
 
             </div>
                 <div className="flex flex-col items-start">
-                  <p className="mx-2 text-sm text-gray-600 dark:text-white">
+                  <p className="mx-2 text-sm text-gray-600">
                     <span className="font-bold text-blue-500 hover:underline">
                       {item.title}
                     </span>{" "}
                   </p>
-                  <p className="mx-2 text-sm text-gray-600 dark:text-white text-left">
+                  <p className="mx-2 text-sm text-gray-600  text-left">
                     {" "}
                     {item.content}
                   </p>
@@ -100,14 +100,14 @@ const NotificationDropdown = () => {
             {/* Replace the following with your actual notification data */}
             <a
               href="#"
-              className="flex items-center px-4 py-3 -mx-2 transition-colors duration-300 transform border-b border-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700 dark:border-gray-700"
+              className="flex items-center px-4 py-3 -mx-2 transition-colors duration-300 transform border-b border-gray-100 hover:bg-gray-50"
             >
               {/* Notification content */}
             </a>
             {/* Add more notification items as needed */}
           </div>
           {/* See all notifications link */}
-          <li onClick={()=>handleModal()}><NotificationModal setState={isModalOpen} /></li>
+          <li className="bg-black text-white p-2" onClick={()=>handleModal()}>See all notifications</li>
          
         </div>
       )}

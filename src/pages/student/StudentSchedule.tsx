@@ -87,7 +87,7 @@ const StudentSchedule = () => {
         <div>
           <StudentSidebar />
         </div>
-        <div>
+        <div className="w-1/3">
           <div className="bg-white text-black mt-6 p-4">
             <h2 className="font-semibold text-2xl">
               Your schedule for this week

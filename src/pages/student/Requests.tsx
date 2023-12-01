@@ -50,12 +50,12 @@ const Requests = () => {
       <div>
         <Navbar />
       </div>
-      <div className="flex flex-row w-full">
+      <div className="flex flex-row w-full bg-gray-100">
         <StudentSidebar />
-        <div className="flex justify-center items-center flex-col w-full">
-          <h1 className="text-3xl font-bold mb-4">Your Requests</h1>
+        <div className="flex items-center justify-start mt-8 mb-10 flex-col w-full">
+          <h1 className="text-3xl font-bold mt-2 mb-2 text-indigo-800">Your Requests</h1>
           {jobPosting && (
-            <div className="max-w-2xl w-full bg-gray-100 rounded-xl shadow-md p-6">
+            <div className="max-w-6xl w-full bg-white rounded-xl shadow-md p-6">
               <div className="mb-6">
                 <h2 className="text-2xl font-bold mb-4">Job Posting Details</h2>
                 <div className="bg-white p-4 rounded-xl shadow-md">
@@ -81,7 +81,10 @@ const Requests = () => {
                     key={tutor._id}
                     className="bg-white rounded-xl shadow-md mb-4 p-4 flex justify-between items-center"
                   >
-                    <div>
+                    <div className="flex gap-4">
+                      <div className="w-12 flex justify-center items-center">
+<img className="rounded-full" src={tutor.tutor.image} alt="" />
+                      </div><div>
                       <p className="text-lg font-bold">
                         Tutor Name: {tutor.tutor.name}
                       </p>
@@ -94,6 +97,8 @@ const Requests = () => {
                         <strong> Time: </strong>{" "}
                         {new Date(tutor.date).toLocaleTimeString()}{" "}
                       </p>
+                      </div>
+                      
                     </div>
                     <button
                       onClick={() => handleAccept(tutor.tutor._id, tutor.date)}

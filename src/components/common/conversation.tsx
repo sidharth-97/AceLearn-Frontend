@@ -1,48 +1,64 @@
-import React, { useState,useEffect} from 'react'
-import { useQuery } from 'react-query'
+import React, { useState, useEffect } from "react";
+import { useQuery } from "react-query";
 
-import {getAllUsers } from '../../api/studentapi'
+import { getAllUsers } from "../../api/studentapi";
 
-const Conversation = ({ conversation,currentUser }) => {
-    const [user, setUser] = useState(null)
+const Conversation = ({
+  conversation,
+  currentUser,
+  setres,
+  onConversationClick,
+  lastMessage,
+}) => {
+  const [user, setUser] = useState(null);
+  const [view, setView] = useState("");
+  useEffect(() => {
+    if (conversation && conversation.members) {
+      const othersId = conversation.members.find((m) => m !== currentUser);
+      setView(
+        lastMessage.find((mess) => mess.conversationId == conversation._id)
+      );
 
-    
-    useEffect(() => {
-      if (conversation && conversation.members) {
-        const othersId = conversation.members.find((m) => m !== currentUser);
-        console.log(othersId, "othersid");
-  
-        const getUser = async () => {
-          try {
-            const res1 = await getAllUsers(othersId);
-            setUser(res1);
-            console.log(res1, "this is the response 111");
-          } catch (error) {
-            console.error('Error fetching user:', error);
-          }
-        };
-  
-        getUser();
-      }
-  
-    }, [conversation, currentUser]);
-  
-    
+      const getUser = async () => {
+        try {
+          const res1 = await getAllUsers(othersId);
+          setUser(res1);
+          setres(res1?.data);
+        } catch (error) {
+          console.error("Error fetching user:", error);
+        }
+      };
+
+      getUser();
+    }
+  }, [conversation, currentUser, setres]);
+
+  const handleClick = () => {
+    // Pass the image URL to the parent component when conversation is clicked
+    onConversationClick(user?.data);
+  };
 
   return (
-    <div className="flex items-center p-4 cursor-pointer mt-10 conversation hover:bg-gray-100">
-  <img
-    className="w-9 h-9 rounded-full object-cover mr-5"
-    src={user?.data?.image}
-    alt=""
-  />
-      <span className="font-semibold conversationName">
-  {user?.data.username ? user?.data.username : user?.data.name}
-</span>
+    <>
+   <div onClick={handleClick} className="flex items-center p-4 cursor-pointer mt-10 conversation hover:bg-gray-100">
+  <div className="flex items-center">
+    <img
+      className="w-9 h-9 rounded-full object-cover mr-5"
+      src={user?.data?.image}
+      alt=""
+    />
 
+    <div className="flex flex-col">
+      <span className="font-semibold conversationName">
+        {user?.data.username ? user?.data.username : user?.data.name}
+      </span>
+      {view && view?.text.length > 20 ? `${view?.text.slice(0, 20)}......` : view?.text}
+    </div>
+  </div>
 </div>
 
-  )
-}
+    </>
+  );
+};
 
-export default Conversation
+export default Conversation;

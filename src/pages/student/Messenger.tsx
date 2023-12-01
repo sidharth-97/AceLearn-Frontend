@@ -17,13 +17,15 @@ const Messenger = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState(null);
+  const [selectedUser, setSelectedUser] = useState("");
+  const [res, setres] = useState("");
   const scrollRef = useRef();
   const { isStudent } = useSelector((state) => state.auth);
-  const { data: conversations } = useQuery({
+  const { data: conversations,refetch} = useQuery({
     queryFn: () => getConversations(isStudent._id),
-    // Add isStudent._id as a dependency
     enabled: Boolean(isStudent._id),
   });
+
 
   useEffect(() => {
     socket.emit("addUser", isStudent._id);
@@ -31,8 +33,8 @@ const Messenger = () => {
       console.log(users, "socket");
     });
   }, []);
-
-  console.log(conversations, "conv");
+ 
+  console.log(conversations?.data.conv, "conv");
   console.log(currentChat, "curr chat");
 
   useEffect(() => {
@@ -64,6 +66,7 @@ const Messenger = () => {
     console.log(res);
     setMessages([...messages, res?.data]);
     setNewMessage("");
+refetch()
   };
 
   useEffect(() => {
@@ -86,32 +89,55 @@ const Messenger = () => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  const handleConversationClick = (image) => {
+    // Set the image when a conversation is clicked
+    setSelectedUser(image);
+  };
+
+  console.log(selectedUser, "---------------------------------");
+
   return (
     <>
       <Navbar />
       <div className="flex h-screen">
-        <StudentSidebar/>
+        <StudentSidebar />
         <div className="w-1/4 p-4 border-r border-gray-300">
           <input
             placeholder="Search for friends"
             className="w-full p-2 border-b border-gray-300"
           />
-          {conversations?.data.length && conversations?.data?.map((conv) => (
-            <div onClick={() => setCurrentChat(conv)}>
-              <Conversation
-                key={conv?._id}
-                conversation={conv}
-                currentUser={isStudent._id}
-              />
-            </div>
-          ))}
+          {conversations?.data?.conv?.length &&
+            conversations?.data?.conv?.map((conv) => (
+              <div onClick={() => setCurrentChat(conv)}>
+                <Conversation
+                  key={conv?._id}
+                  conversation={conv}
+                  currentUser={isStudent._id}
+                  setres={setres}
+                  onConversationClick={handleConversationClick}
+                  lastMessage={conversations?.data?.messages}                />
+              </div>
+            ))}
         </div>
         <div className="w-1/2 flex flex-col relative">
-          <div className="overflow-y-scroll p-4 flex-grow">
+          <div className="flex items-end p-4">
+            <img
+              src={selectedUser?.image}
+              alt={selectedUser?.username}
+              className="w-12 h-12 rounded-full mr-2"
+            />
+            <h1 className="text-lg font-semibold">{selectedUser?.name}</h1>
+          </div>
+
+          <div className="overflow-y-scroll p-4 flex-grow overflow-x-hidden">
             {/* chatBoxTop content */}
             {messages.map((m) => (
               <div ref={scrollRef}>
-                <Message message={m} own={m.sender == isStudent._id} />
+                <Message
+                  res={selectedUser}
+                  message={m}
+                  own={m.sender == isStudent._id}
+                />
               </div>
             ))}
           </div>

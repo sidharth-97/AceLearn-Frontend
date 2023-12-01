@@ -65,37 +65,38 @@ function TimelineApp() {
 
   return (
     <>
-    { data.length &&
-      <div className='timeline'>
-      <div className="timeline-months">
-        {months.map((_, index) => <Month key={index} index={index} startDate={startDate} />)}
-      </div>
-      <div className="timeline-body">
-        <div className="timeline-weekdays">
-          {weekDays.map((_, index) => <WeekDay key={index} index={index} startDate={startDate} />)}
-        </div>
-        <div className="timeline-cells">
-          {cells.map((_, index) => {
-            let date = moment(startDate).add(index, 'day');
-            let dataPoint = data.find(d => moment(date).format('DDMMYYYY') === moment(d._id).format('DDMMYYYY'));
-            let alpha = colorMultiplier * (dataPoint?.totalClasses || 0); // Use totalClasses from API response
-            let color = `rgba(3, 160, 3, ${alpha})`;
+      {data.length > 0 && (
+        <div className='timeline'>
+          <div className="timeline-months">
+            {months.map((_, index) => (
+              <Month key={index} index={index} startDate={startDate} />
+            ))}
+          </div>
+          <div className="timeline-body">
+            <div className="timeline-weekdays">
+              {weekDays.map((_, index) => (
+                <WeekDay key={index} index={index} startDate={startDate} />
+              ))}
+            </div>
+            <div className="timeline-cells">
+              {cells.map((_, index) => {
+                let date = moment(startDate).add(index, 'day');
+                let dataPoint = data.find(
+                  (d) => moment(date).isSame(d._id, 'day')
+                );
+                let alpha = Math.min(
+                  1,
+                  Math.max(0, colorMultiplier * (dataPoint?.totalClasses || 0))
+                );
+                let color = `rgba(3, 160, 3, ${alpha})`;
 
-            return (
-              <Cell
-                key={index}
-                index={index}
-                date={date}
-                color={color}
-              />
-            );
-          })}
+                return <Cell key={index} color={color} />;
+              })}
+            </div>
+          </div>
         </div>
-      </div>
-    </div>  
-    }
+      )}
     </>
-    
   );
 }
 

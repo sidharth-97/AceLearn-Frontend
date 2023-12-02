@@ -1,18 +1,19 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux/es/hooks/useSelector";
+import { useQuery } from "react-query";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 import {
   changeSchedule,
   getTutorSchedule,
   scheduledate,
 } from "../../api/tutorapi";
-import { useQuery } from "react-query";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import Calendar from "react-calendar";
 
-const TutorScheduleCalender = () => {
+const TutorScheduleCalendar = ({setChange}) => {
   const { isTutor } = useSelector((state: any) => state.auth);
-  const [value, onChange] = useState<Date | [Date, Date]>();
+  const [selectedDates, setSelectedDates] = useState<Date[]>([]);
   const [selectedTime, setSelectedTime] = useState("");
   const [schedule, setSchedule] = useState([]);
 
@@ -27,37 +28,56 @@ const TutorScheduleCalender = () => {
       }
     },
   });
-  const handleTimeChange = (event) => {
+
+  const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedTime(event.target.value);
   };
-  console.log(selectedTime);
-  console.log(value);
+
+  const handleDateClick = (value: Date) => {
+    setSelectedDates((prevDates) => {
+      const dateExists = prevDates.find((date) => date.toDateString() === value.toDateString());
+
+      if (dateExists) {
+        // Deselect the date
+        return prevDates.filter((date) => date.toDateString() !== value.toDateString());
+      } else {
+        // Select the date
+        return [...prevDates, value];
+      }
+    });
+  };
 
   const handleSchedule = async () => {
-    if (!value) {
-      return toast.error("Pick a date and time");
+    if (selectedDates.length === 0 || !selectedTime) {
+      return toast.error("Pick date(s) and time");
     }
-    const givenDate = new Date(`${value}`);
-    const givenHour = selectedTime;
-    console.log(givenDate);
 
-    const [hours, minutes] = givenHour.split(":").map(Number);
+    for (const selectedDate of selectedDates) {
+      const givenDate = new Date(selectedDate);
 
-    givenDate.setHours(hours + 5); // Adding 5 hours to adjust for the time zone
-    givenDate.setMinutes(minutes + 30);
+      const [hours, minutes] = selectedTime.split(":").map(Number);
 
-    console.log(givenDate, "divvng");
-    const data = {
-      tutor: isTutor._id,
-      timing: {
-        date: `${givenDate}`,
-      },
-    };
-    console.log(data);
+      givenDate.setHours(hours + 5); // Adding 5 hours to adjust for the time zone
+      givenDate.setMinutes(minutes + 30);
 
-    const reponse = await scheduledate(data);
-    if (reponse?.status == 200) toast.success("Scheduling success");
+      const data = {
+        tutor: isTutor._id,
+        timing: {
+          date: givenDate.toISOString(),
+        },
+      };
+
+      const response = await scheduledate(data);
+
+      if (response?.status === 200) {
+        toast.success("Scheduling success");
+        setChange(true)
+      }
+    }
   };
+  
+  console.log(selectedDates,"selectedndat");
+  
 
   return (
     <div>
@@ -70,11 +90,11 @@ const TutorScheduleCalender = () => {
             <div>
               {" "}
               <Calendar
-                value={value}
-                tileDisabled={({ date }) => date < new Date()}
-                onChange={onChange}
-                className="my-custom-calendar"
-              />
+          onChange={handleDateClick}
+          value={selectedDates}
+          tileDisabled={({ date }) => date < new Date()}
+          className="my-custom-calendar"
+        />
             </div>
             <div>
               <p className="font-serif text-xl font-bold text-blue-900">
@@ -86,10 +106,13 @@ const TutorScheduleCalender = () => {
                 onChange={handleTimeChange}
                 className="mt-2 p-2.5 rounded-lg border  border-blue-300 bg-blue-100 text-blue-800 outline-none ring-opacity-30 focus:ring focus:ring-blue-300"
               />
-              {value && (
+              {selectedDates && (
                 <p className="pt-5 text-lg font-semibold">
-                  Class on {value instanceof Date && value.toDateString()} at{" "}
-                  {selectedTime}
+                  Classes on{" "}
+                  {Array.isArray(selectedDates) && selectedDates.length > 0
+                    ? selectedDates.map((date) => date.toDateString()).join(", ")
+                    : selectedDates.toString()}{" "}
+                  at {selectedTime}
                 </p>
               )}
               <button
@@ -106,4 +129,4 @@ const TutorScheduleCalender = () => {
   );
 };
 
-export default TutorScheduleCalender;
+export default TutorScheduleCalendar;

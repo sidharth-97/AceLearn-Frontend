@@ -14,7 +14,7 @@ interface schedule{
   fee: Number
 }
 
-const TutorSchedule = () => {
+const TutorSchedule = ({change,setChange}) => {
   const { isTutor } = useSelector((state: any) => state.auth);
   const [schedule, setSchedule] = useState([]);
   const [toggle, setToggle] = useState(true);
@@ -50,6 +50,15 @@ const TutorSchedule = () => {
     if (response?.status == 200) toast.success("Cancelled Successfully");
     await refetchSchedule();
   };
+
+  useEffect(() => {
+    // Check if the 'change' prop is true, then trigger the refetch
+    if (change) {
+      refetchSchedule();
+      // Reset the 'change' prop to false after triggering the refetch
+      setChange(false);
+    }
+  }, [change, refetchSchedule, setChange]);
 
   //socket io
   const Socket = socket;

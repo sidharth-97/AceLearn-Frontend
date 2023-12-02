@@ -11,6 +11,8 @@ import {
 } from "../../api/studentapi";
 import socket from "../../services/socket";
 import StudentSidebar from "../../components/students/StudentSidebar";
+import send from "../../assets/send-message.png"
+import attach from "../../assets/attachment.png"
 
 const Messenger = () => {
   const [currentChat, setCurrentChat] = useState(null);
@@ -19,7 +21,7 @@ const Messenger = () => {
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [selectedUser, setSelectedUser] = useState("");
   const [res, setres] = useState("");
-  const scrollRef = useRef();
+  const [image, setImage] = useState<File | null>(null);  const scrollRef = useRef();
   const { isStudent } = useSelector((state) => state.auth);
   const { data: conversations,refetch} = useQuery({
     queryFn: () => getConversations(isStudent._id),
@@ -46,33 +48,61 @@ const Messenger = () => {
     getMessages();
   }, [currentChat]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const message = {
-      sender: isStudent._id,
-      text: newMessage,
-      conversationId: currentChat._id,
-    };
-    const receiverId = currentChat.members.find(
-      (member) => member != isStudent._id
-    );
+    
+    const formData = new FormData();
+    console.log("isStudent._id:", isStudent._id);
+    formData.append("sender", isStudent._id);
+    console.log("After appending sender:", { ...formData });
+    
+    console.log("newMessage:", newMessage);
+    formData.append("text", newMessage);
+    console.log("After appending text:", { ...formData });
+    
+    if (currentChat) {
+      console.log("currentChat._id:", currentChat._id);
+      formData.append("conversationId", currentChat._id);
+    }
+    console.log("After appending conversationId:", { ...formData });
+    
+    if (image) {
+      console.log("image:", image);
+      formData.append("image", image);
+    }
+    console.log("After appending image:", { ...formData });
+    
 
-    socket.emit("sendMessage", {
+    const receiverId = currentChat.members.find(
+      (member) => member !== isStudent._id
+    );
+  
+   
+  
+    try {
+      const res = await addMessages(formData);
+      console.log(res); socket.emit("sendMessage", {
       senderId: isStudent._id,
-      receiverId,
+        receiverId,
+      image:res?.data.image,
       text: newMessage,
     });
-    const res = await addMessages(message);
-    console.log(res);
-    setMessages([...messages, res?.data]);
-    setNewMessage("");
-refetch()
+      setMessages([...messages, res?.data]);
+      setNewMessage("");
+      setImage(null)
+      refetch();
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
   };
+  
 
   useEffect(() => {
     socket.on("getMessage", (data) => {
+      console.log("Received message with image:", data.image);
       setArrivalMessage({
         sender: data.senderId,
+        image:data.image,
         text: data.text,
         createdAt: Date.now(),
       });
@@ -97,9 +127,9 @@ refetch()
   console.log(selectedUser, "---------------------------------");
 
   return (
-    <>
+    <div className="h-screen">
       <Navbar />
-      <div className="flex h-screen">
+      <div className="flex h-full">
         <StudentSidebar />
         <div className="w-1/4 p-4 border-r border-gray-300">
           <input
@@ -120,7 +150,7 @@ refetch()
             ))}
         </div>
         <div className="w-1/2 flex flex-col relative">
-          <div className="flex items-end p-4">
+          <div className="flex items-center gap-1 p-4">
             <img
               src={selectedUser?.image}
               alt={selectedUser?.username}
@@ -141,20 +171,50 @@ refetch()
               </div>
             ))}
           </div>
-          <div className="p-4 flex items-center justify-between">
-            <textarea
-              className="w-3/4 h-24 p-2 border border-gray-300"
-              placeholder="write something..."
-              onChange={(e) => setNewMessage(e.target.value)}
-              value={newMessage}
-            ></textarea>
-            <button
-              type="submit"
-              className="w-1/4 h-10 bg-teal-500 text-white rounded"
-              onClick={handleSubmit}
+          <div className="p-4 flex items-center">
+            <form
+              onSubmit={handleSubmit}
+              encType="multipart/form-data"
+              className="w-full flex items-center"
             >
-              Send
-            </button>
+              <textarea
+                className="w-full h-16 p-2 border border-gray-300 mr-4"
+                placeholder="write something..."
+                onChange={(e) => setNewMessage(e.target.value)}
+                value={newMessage}
+                name="text"
+              ></textarea>{" "}
+              <label className="relative cursor-pointer">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => setImage(e.target.files?.[0] || null)}
+                  name="image"
+                  className="hidden"
+                />
+                {image && (
+                  <img
+                    className="object-cover h-16 ms-1"
+                    src={""}
+                    alt="Selected Image"
+                  />
+                )}
+                {!image && (
+                  <img
+                    className="object-cover h-16 ms-1"
+                    src={attach}
+                    alt="Send Icon"
+                  />
+                )}
+              </label>
+              <button type="submit">
+                <img
+                  className="object-cover h-16 ms-1"
+                  src={send}
+                  alt="Send Icon"
+                />
+              </button>
+            </form>
           </div>
           <span className="absolute top-10 text-5xl text-gray-300 cursor-default"></span>
         </div>
@@ -162,7 +222,7 @@ refetch()
         
         </div> */}
       </div>
-    </>
+    </div>
   );
 };
 

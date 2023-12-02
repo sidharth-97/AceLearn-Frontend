@@ -40,10 +40,10 @@ const Conversation = ({
 
   return (
     <>
-   <div onClick={handleClick} className="flex items-center p-4 cursor-pointer mt-10 conversation hover:bg-gray-100">
+   <div onClick={handleClick} className="flex items-center p-4 cursor-pointer mt-1 conversation border-b border-gray-200 hover:bg-gray-100">
   <div className="flex items-center">
     <img
-      className="w-9 h-9 rounded-full object-cover mr-5"
+      className="w-12 h-12 rounded-full object-cover mr-5"
       src={user?.data?.image}
       alt=""
     />

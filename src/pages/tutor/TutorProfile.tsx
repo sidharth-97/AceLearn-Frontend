@@ -1,53 +1,20 @@
-import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import icon from "../../assets/online-lecturing-distance-learning-opportunities-self-education-internet-courses-e-learning-technologies_335657-3279.svg";
-import classes from "../../assets/Screenshot 2023-10-24 212602.png";
 import Navbar from "../../components/common/navbar";
 import TutorSidebar from "../../components/tutors/TutorSidebar";
 import "react-calendar/dist/Calendar.css";
-import Calendar from "react-calendar";
-import socket from "../../services/socket";
-
 import WalletHistory from "../../components/common/WalletHistory";
-import NotificationModal from "../../components/common/NotificationModal";
 import TutorSalesChart from "../../components/tutors/tutorSalesChart";
+import { useQuery } from "react-query";
+import { TutorDetails } from "../../api/tutorapi";
+import { FaWallet } from "react-icons/fa";
 
 const TutorProfile = () => {
   const { isTutor } = useSelector((state: any) => state.auth);
-
-  //socket io
-  const Socket = socket;
-  const tutor = isTutor._id;
-
-  const StartClass = useCallback(
-    (schedule) => {
-      const room = schedule._id;
-      Socket.emit("room:join", { tutor, room });
-      const data = {
-        tutor: isTutor._id,
-        student: schedule.student,
-      };
-      localStorage.setItem("videocall", JSON.stringify(data));
-    },
-    [Socket]
-  );
-
-  const handleJoinRoom = useCallback(
-    (data: { tutor: string; room: string }) => {
-      const { tutor, room } = data;
-      navigate(`/room/${room}`);
-    },
-    []
-  );
-
-  useEffect(() => {
-    Socket.on("room:join", handleJoinRoom);
-
-    // Clean up event listener when component unmounts
-    return () => {
-      Socket.off("room:join");
-    };
-  }, []);
+  const { data: stdData } = useQuery({
+    queryFn: () => TutorDetails(isTutor._id),
+    queryKey:["tutorData"]
+})
+console.log(stdData);
 
   return (
     <>
@@ -57,29 +24,70 @@ const TutorProfile = () => {
         <TutorSidebar />
 
         <div className="w-full p-4 bg-9ED0F5">
-          <div className="flex bg-white justify-center items-center p-5 rounded-3xl">
-            {" "}
-            <div>
-              <h2 className="font-semibold text-2xl">
-                Welcome {isTutor.name},
-              </h2>
-              <p className="py-2">
-                Thank you for being an essential part of our educational
-                journey. Your knowledge and experience will make a positive
-                impact on countless lives. Let's embark on this educational
-                adventure together and create a brighter future for our
-                students.
-              </p>
-              <p className="py-1 text-base">
-                💰 Wallet Rs: {isTutor.wallet ?? 0}
-              </p>
-              {/* <p className="text-base">Email verified : true</p> */}
-              {/* <p className="py-1 text-base">Mobile verified :</p> */}
-              <WalletHistory walletHistory={isTutor.walletHistory} />
+        <div className="bg-white shadow-md rounded-md p-6 w-full">
+            <div style={{ position: "relative" }}>
+              <img
+                className="h-20 w-full object-cover"
+                src="https://static.vecteezy.com/system/resources/previews/001/228/721/non_2x/blue-gradient-with-dynamic-blended-line-design-vector.jpg"
+                alt=""
+              />
+              <div
+                style={{
+                  position: "absolute",
+                  top: "",
+                  left: "08%",
+                  transform: "translate(-50%, -50%)",
+                }}
+              >
+                <img
+                  src={stdData?.data.image}
+                  alt={stdData?.data.image}
+                  className="w-24 h-24 rounded-full object-cover"
+                />
+              </div>
             </div>
-            <div>
-              <img className="w-128" src={icon} alt="" />
+            <div className="flex justify-between">
+              <div className="flex flex-col mt-16">
+                <h2 className="text-2xl font-semibold">{isTutor.name}</h2>
+                <div>
+                  <p className="text-gray-500">Email: {isTutor.email}</p>
+                  <p className="text-gray-500">Phone: {stdData?.data.mobile}</p>
+                  <p className="text-gray-500">Subjects: {stdData?.data.subject.join(",")}</p>
+                  <p className="text-gray-500">Rating: {stdData?.data.rating.toFixed(2)}</p>
+                </div>
+              </div>
+              <div className="mt-16 flex items-center justify-center space-x-3">
+                <div className="flex flex-col items-center">
+                  <div className="flex items-center">
+                    <FaWallet
+                      className="text-blue-500"
+                      style={{ fontSize: "2.5rem" }}
+                    />
+                    <h1 className="text-xl text-yellow-700 font-bold">
+                      {`Rs ${stdData?.data?.wallet ?? 0}`}
+                    </h1>
+                  </div>
+
+                  <WalletHistory walletHistory={stdData?.data.walletHistory} />
+                </div>
+              </div>
             </div>
+
+            {/* <div className="mt-4 flex justify-between items-center">
+            
+              <div className="flex items-center">
+                <div className="bg-yellow-300 p-4 rounded-full mr-4">
+                  💰
+                </div>
+              
+                <div>
+                  <p className="text-gray-700 font-semibold">Wallet Balance</p>
+                  <p className="text-xl text-yellow-700 font-bold">{`Rs ${
+                    stdData?.data?.wallet ?? 0
+                  } `}</p>  <WalletHistory walletHistory={stdData?.data.walletHistory}/>
+                </div>
+              </div>
+            </div> */}
           </div>
 
           {/* <div className="flex flex-row h-24 justify-between mt-3 mx-1">

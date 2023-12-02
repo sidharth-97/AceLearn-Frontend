@@ -1,6 +1,6 @@
 import "./App.css";
 import { useRoutes } from "react-router-dom";
-import Home from "./pages/student/Home";
+import Home from "./pages/common/Home";
 import Signin from "./components/common/Signin";
 import Signup from "./pages/student/Signup";
 import Navbar from "./components/common/navbar";

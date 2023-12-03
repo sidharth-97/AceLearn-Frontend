@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useQuery } from "react-query";
 
 import { getAllUsers } from "../../api/studentapi";
+import { format } from "timeago.js";
 
 const Conversation = ({
   conversation,
@@ -40,23 +41,30 @@ const Conversation = ({
 
   return (
     <>
-   <div onClick={handleClick} className="flex items-center p-4 cursor-pointer mt-1 conversation border-b border-gray-200 hover:bg-gray-100">
-  <div className="flex items-center">
-    <img
-      className="w-12 h-12 rounded-full object-cover mr-5"
-      src={user?.data?.image}
-      alt=""
-    />
+      <div
+        onClick={handleClick}
+        className="flex items-center w-full p-4 cursor-pointer mt-1 conversation border-b border-gray-200 hover:bg-gray-100"
+      >
+        <div className="flex items-center w-full">
+          <img
+            className="w-12 h-12 rounded-full object-cover mr-5"
+            src={user?.data?.image}
+            alt=""
+          />
 
-    <div className="flex flex-col">
-      <span className="font-semibold conversationName">
-        {user?.data.username ? user?.data.username : user?.data.name}
-      </span>
-      {view && view?.text.length > 20 ? `${view?.text.slice(0, 20)}......` : view?.text}
-    </div>
-  </div>
-</div>
-
+          <div className="flex flex-col w-full">
+            <span className="font-semibold conversationName flex justify-between">
+              <div>
+                {user?.data.username ? user?.data.username : user?.data.name}
+              </div>
+              <div className="text-gray-400 text-xs"> {view && format(view?.createdAt)}</div>
+            </span>
+            {view && view?.text.length > 20
+              ? `${view?.text.slice(0, 20)}......`
+              : view?.text}
+          </div>
+        </div>
+      </div>
     </>
   );
 };

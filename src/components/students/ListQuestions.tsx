@@ -12,7 +12,7 @@ const ListQuestions = ({ toggleFunction }) => {
   console.log(data?.data);
 
   return (
-    <div className="flex w-full flex-col items-start w-full p-6">
+    <div className="flex  flex-col items-start w-full p-6">
       <h1 className="text-3xl text-center font-bold mb-6">Homework Help</h1>
 
       <button
@@ -53,7 +53,7 @@ const ListQuestions = ({ toggleFunction }) => {
               </div>
 
               <div className="flex-shrink-0 ml-4">
-                {ques.tutor ? (
+                {ques.tutor.length ? (
                   <span className="text-green-500 font-semibold">Answered</span>
                 ) : (
                   <span className="text-red-500 font-semibold">
@@ -66,7 +66,7 @@ const ListQuestions = ({ toggleFunction }) => {
             </li>
           ))}
         </div>
-        <div className="mt-4 w-1/2">
+       { data?.data.length?(<div className="mt-4 w-1/2">
           <h1 className="text-2xl font-bold mb-2">Question</h1>
           <h3 className="text-lg font-semibold mb-2">
            Subject : {data?.data[index].subject}
@@ -79,11 +79,25 @@ const ListQuestions = ({ toggleFunction }) => {
             {data?.data[index].solution && (
               <>
                 <p className="text-gray-700 mb-2">
-                  {data?.data[index].solution.text ?? ""}
+                  {data?.data[index]?.solution[0]?.text ?? ""}
                 </p>
-                {data?.data[index].solution.image && (
+                {data?.data[index]?.solution[0]?.image && (
                   <img
-                    src={data?.data[index].solution.image ?? ""}
+                    src={data?.data[index]?.solution[0]?.image ?? ""}
+                    alt="Solution Image"
+                    className="mb-4 max-w-full"
+                  />
+                )}
+              </>
+            )}
+              {data?.data[index].solution && (
+              <>
+                <p className="text-gray-700 mb-2">
+                  {data?.data[index]?.solution[1]?.text ?? ""}
+                </p>
+                {data?.data[index]?.solution[1]?.image && (
+                  <img
+                    src={data?.data[index]?.solution[1]?.image ?? ""}
                     alt="Solution Image"
                     className="mb-4 max-w-full"
                   />
@@ -91,7 +105,7 @@ const ListQuestions = ({ toggleFunction }) => {
               </>
             )}
           </div>
-        </div>
+        </div>):<h1>Not posted any questions</h1>}
       </div>
     </div>
   );

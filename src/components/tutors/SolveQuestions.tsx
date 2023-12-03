@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { useQuery } from "react-query";
 import { submitSolution } from "../../api/tutorapi";
 import {toast} from 'react-toastify'
+import { useNavigate } from "react-router-dom";
 
 const SolveQuestions = ({ question }) => {
   const [solution, setSolution] = useState("");
   const [img, setImg] = useState<File | null>(null);
-
+const navigate=useNavigate()
   const handleSolution = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData();
@@ -15,6 +16,7 @@ const SolveQuestions = ({ question }) => {
     formData.append("id",question)
     const result = await submitSolution(formData);
     toast.success("Solution submitted")
+    navigate("/homework-help")
     console.log(result);
   };
 

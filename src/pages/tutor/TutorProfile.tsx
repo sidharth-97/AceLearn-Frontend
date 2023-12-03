@@ -53,7 +53,7 @@ console.log(stdData);
                   <p className="text-gray-500">Email: {isTutor.email}</p>
                   <p className="text-gray-500">Phone: {stdData?.data.mobile}</p>
                   <p className="text-gray-500">Subjects: {stdData?.data.subject.join(",")}</p>
-                  <p className="text-gray-500">Rating: {stdData?.data.rating.toFixed(2)}</p>
+                  <p className="text-gray-500">Rating: {stdData?.data.rating?.toFixed(2)}</p>
                 </div>
               </div>
               <div className="mt-16 flex items-center justify-center space-x-3">

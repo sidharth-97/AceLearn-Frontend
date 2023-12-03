@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useCallback } from "react";
 import { useQuery } from "react-query";
 import { viewQuestions } from "../../api/tutorapi";
 import SolveQuestions from "./SolveQuestions";
@@ -9,14 +9,20 @@ const StudentQuestionsView = ({ toggler }) => {
   const [solve, setSolve] = useState(false);
   const [timeLeft, setTimeLeft] = useState(600); // 10 minutes in seconds
 
-  const {
-    data: questionData,
-    isLoading,
-    refetch,
-  } = useQuery({
-    queryFn: () => viewQuestions(),
-    
+  const fetchQuestions = useCallback(() => viewQuestions(), []);
+
+  const { data: questionData, isLoading, refetch } = useQuery({
+    queryFn: fetchQuestions,
+    queryKey: ["ques"],
+    staleTime: 60000, // 1 minute in milliseconds
+    onSuccess: (data) => {
+      console.log(data);
+      
+    }
   });
+  
+  
+
 
   useEffect(() => {
     let timer;
@@ -33,7 +39,6 @@ const StudentQuestionsView = ({ toggler }) => {
     return () => clearInterval(timer); // Cleanup the interval on component unmount
   }, [timeLeft, solve, toggler]);
 
-  console.log(questionData, "response");
 
   const handleSkipQuestion = async () => {
     console.log("skippppp");

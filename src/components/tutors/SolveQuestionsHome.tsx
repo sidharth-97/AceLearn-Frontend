@@ -3,14 +3,15 @@ import React from 'react'
 const SolveQuestionsHome = ({toggler}) => {
 
   return (
-    <body className="bg-gray-100 font-sans">
-          <div className="container mx-auto p-4">
-            <header className="mb-8 text-center">
-              <h1 className="text-3xl font-bold">Expert Q&A</h1>
-              <p className="text-gray-600">
+    <body className="bg-gray-100 font-sans h-screen">
+      <div className="container mx-auto p-4">
+        <h1 className="text-3xl font-bold">Welcome Expert,</h1>
+            <header className="mb-8 text-center mt-4">
+              <h1 className="text-3xl font-bold text-indigo-800">Expert Q&A</h1>
+              {/* <p className="text-gray-600">
                 Students love reading clear, step-by-step solutions. Author
                 well-explained solutions using our in-built editor tools.
-              </p>
+              </p> */}
             </header>
 
             <section className="flex">

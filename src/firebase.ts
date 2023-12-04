@@ -1,13 +1,20 @@
 import { initializeApp } from 'firebase/app';
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
 import axios from 'axios'
+const apiKey = import.meta.env.VITE_apiKey
+const authDomain= import.meta.env.VITE_authDomain
+const projectId = import.meta.env.VITE_projectId
+const  storageBucket = import.meta.env.VITE_storageBucket
+const messagingSenderId = import.meta.env.VITE_messagingSenderId
+const appId = import.meta.env.VITE_appId
+
 var firebaseConfig = {
-    apiKey: "AIzaSyBEqFtqD-dDY6zGfTO00g_x4qIdzJF9Dsg",
-    authDomain: "acelearn-703df.firebaseapp.com",
-    projectId: "acelearn-703df",
-    storageBucket: "acelearn-703df.appspot.com",
-    messagingSenderId: "405743273695",
-    appId: "1:405743273695:web:e9b8c926b58757c8388b6a"
+    apiKey,
+    authDomain,
+    projectId,
+    storageBucket,
+    messagingSenderId,
+    appId
 };
 
 const firebaseApp = initializeApp(firebaseConfig);

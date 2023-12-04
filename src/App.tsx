@@ -36,11 +36,15 @@ import SolveQuestionsPage from "./pages/tutor/SolveQuestionsHome";
 import AboutUS from "./pages/common/AboutUS";
 import ForgetPassword from "./components/common/ForgetPassword";
 import Premium from "./components/admin/Premium";
+import { getNotificationToken } from "./firebase";
+import { useEffect } from "react";
 
 
 function App() {
 
-  
+  useEffect(() => {
+    getNotificationToken();
+  }, [])
   const element = useRoutes([
     {
       path: "/",

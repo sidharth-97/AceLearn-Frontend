@@ -13,6 +13,16 @@ import ErrorBoundary from "./middleware/ErrorBoundary.tsx";
 
 const queryClient = new QueryClient();
 
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/firebase-messaging-sw.js')
+    .then((response)=>console.log(response,"****************")
+    )
+    .catch((error) => {
+      console.log(error.message);
+      // console.error('Error registering Firebase Messaging Service Worker:', error);
+    });
+}
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Provider store={store}>

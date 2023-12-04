@@ -11,6 +11,7 @@ import ColorToggleButton from "../UI/ToggleButton";
 import { Link } from "react-router-dom";
 import { GoogleLogin,CredentialResponse } from "@react-oauth/google";
 import {jwtDecode} from 'jwt-decode';
+import { getNotificationToken } from "../../firebase";
 
 
 interface login {
@@ -52,8 +53,10 @@ const Signin: React.FC<propstype> = ({ user }) => {
       toast.error("Please fill all fields")
       return
     }
+    const FCMToken = await getNotificationToken()
+    
     const formData={
-      email,password
+      email,password,FCMToken
     }
     if (user == 'student') {
       let response = await login(formData)

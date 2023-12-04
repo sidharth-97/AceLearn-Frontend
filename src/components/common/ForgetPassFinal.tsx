@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { forgetPasswordFinal, forgetPasswordStep2 } from "../../api/studentapi";
+import { TforgetPasswordFinal } from "../../api/tutorapi";
 import Navbar from "./navbar";
 
-const ForgetPassFinal = ({ email }) => {
+const ForgetPassFinal = ({ email,tutor }) => {
   const [password, setPassword] = useState("");
   const [cpassword, setCpassword] = useState("");
 
@@ -12,8 +13,12 @@ const ForgetPassFinal = ({ email }) => {
       email,
       password,
     };
-    const response = await forgetPasswordFinal(data);
-    console.log(response);
+    if (tutor) { 
+      const response = await TforgetPasswordFinal(data);
+    } else {
+      const response = await forgetPasswordFinal(data);
+
+    }
   };
 
   return (

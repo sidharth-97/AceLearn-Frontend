@@ -51,7 +51,9 @@ function App() {
         { path: "room/:roomId", element: <VideoCall /> },
         { path: "feedback-page/:id", element: <PrivateRoute><FeedbackPage /></PrivateRoute> },
         { path: "about-us", element: <AboutUS /> },
-        {path:"forgot-password",element:<ForgetPassword/>}
+        { path: "forgot-password", element: <ForgetPassword tutor={false} /> },
+        { path: "tutor-forgot-password", element: <ForgetPassword tutor={true} /> }
+
     ]},
     {
       path: "/student",

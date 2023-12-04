@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import OTPInput from "./OTPInput";
 import { forgetPasswordStep1, forgetPasswordStep2 } from "../../api/studentapi";
+import { TforgetPasswordStep1,TforgetPasswordStep2 } from "../../api/tutorapi";
 import ForgetPassFinal from "./ForgetPassFinal";
 import Navbar from "./navbar";
 
-const ForgetPassword = () => {
+const ForgetPassword = ({tutor}) => {
   const [email, setEmail] = useState("");
   const [next, setNext] = useState(false);
   const [otp, setOTP] = useState("");
@@ -16,8 +17,11 @@ const ForgetPassword = () => {
         email,
         username:email
       }
-      const response = await forgetPasswordStep1(obj)
-      console.log(response);
+      if (tutor) {
+        const response = await TforgetPasswordStep1(obj)
+      } else {
+        const response = await forgetPasswordStep1(obj)
+      }
       
         setNext(true)
   };
@@ -27,9 +31,14 @@ const ForgetPassword = () => {
 
   const submitOtp = async (e) => {
     e.preventDefault()
-    const response = await forgetPasswordStep2({otp: otp })
-    console.log(response);
-    if(response?.status==200) setFinal(true)
+    if (tutor) {
+      const response = await TforgetPasswordStep2({ otp: otp })
+      if(response?.status==200) setFinal(true)
+    } else {
+      const response = await forgetPasswordStep2({otp: otp })
+      if(response?.status==200) setFinal(true)
+    }
+    
 }
 
   return (
@@ -105,7 +114,7 @@ const ForgetPassword = () => {
                 </div>
               )
             ) : (
-              <ForgetPassFinal email={email}/>
+                <ForgetPassFinal email={email} tutor={tutor} />
             )}
           </div>
         </div>

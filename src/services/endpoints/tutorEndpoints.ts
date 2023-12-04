@@ -26,7 +26,10 @@ const tutorRoutes = {
     viewQuestions: "/tutors/show-unsolved",
     submitSolution: "/tutors/submit-solution",
     tutorSales: "/tutors/tutor-sales",
-    buyTutorPremium:"/tutors/buy-tutor-premium"
+    buyTutorPremium: "/tutors/buy-tutor-premium",
+    forgetPasswordStep1: "/tutors/forget-password-step-1",
+    forgetPasswordStep2: "/tutors/forget-password-step-2",
+    forgetPasswordFinal: "/tutors/forget-password-final",
 }
 
 export default tutorRoutes

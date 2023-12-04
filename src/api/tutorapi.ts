@@ -376,3 +376,33 @@ export const buyTutorPremium = async (data:any) => {
     
   }
 }
+
+export const TforgetPasswordStep1 = async (obj:{email:string,username:string}) => {
+  try {
+    const response = await Api.post(tutorRoutes.forgetPasswordStep1,obj)
+    return response
+  } catch (error) {
+    console.log(error);
+    
+  }
+}
+
+export const TforgetPasswordStep2 = async (otp:{otp:string})=>{
+  try {
+    const response = await Api.post(tutorRoutes.forgetPasswordStep2, otp)
+    return response
+  } catch (error) {
+    console.log(error);
+    
+  }
+}
+
+export const TforgetPasswordFinal = async (data:any) => {
+  try {
+    const response = await Api.post(tutorRoutes.forgetPasswordFinal, data)
+    return response
+  } catch (error) {
+    console.log(error);
+    
+  }
+}

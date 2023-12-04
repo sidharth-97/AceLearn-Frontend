@@ -140,7 +140,7 @@ function Home() {
         <div className="flex flex-col">
           <div className="flex-1 flex">
             <motion.div
-              className="flex items-center p-4 m-2 rounded-lg  hover:scale-110"
+              className="flex items-center p-4 m-2 rounded-lg  hover:scale-110 w-1/2"
               initial={{ x: "-100%", opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 1 }}
@@ -148,7 +148,7 @@ function Home() {
               <img
                 src={icon1}
                 alt="Image Description"
-                className="w-1/4 max-h-36 mr-4"
+                className="w-36 h-36 mr-4"
               />
               <div className="flex-1">
                 <h2 className="text-xl font-bold">Online Tutoring</h2>
@@ -156,7 +156,7 @@ function Home() {
               </div>
             </motion.div>
             <motion.div
-              className="flex items-center p-4 m-2 rounded-lg  hover:scale-110"
+              className="flex items-center p-4 m-2 rounded-lg  hover:scale-110 w-1/2"
               initial={{ x: "100%", opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 1 }}
@@ -165,7 +165,7 @@ function Home() {
               <img
                 src={icon2}
                 alt="Image Description"
-                className="w-1/4 max-h-36 mr-4"
+                className="w-36 h-36 mr-4"
               />
               <div className="flex-1">
                 <h2 className="text-xl font-bold">Study Materials</h2>
@@ -175,7 +175,7 @@ function Home() {
           </div>
           <div className="flex-1 flex">
             <motion.div
-              className="flex items-center p-4 m-2 rounded-lg  hover:scale-110"
+              className="flex items-center p-4 m-2 rounded-lg  hover:scale-110 w-1/2"
               initial={{ x: "-100%", opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 1 }}
@@ -184,7 +184,7 @@ function Home() {
               <img
                 src={icon3}
                 alt="Image Description"
-                className="w-1/4 max-h-36 mr-4"
+                className="w-36 h-36 mr-4"
               />
               <div className="flex-1">
                 <h2 className="text-xl font-bold">Homework Help</h2>
@@ -193,7 +193,7 @@ function Home() {
               </div>
             </motion.div>
             <motion.div
-              className="flex items-center p-4 m-2 rounded-lg  hover:scale-110"
+              className="flex items-center p-4 m-2 rounded-lg  hover:scale-110 w-1/2"
               initial={{ x: "100%", opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 1 }}
@@ -202,7 +202,7 @@ function Home() {
               <img
                 src={icon4}
                 alt="Image Description"
-                className="w-1/4 max-h-36 mr-4"
+                className="w-36 h-36 mr-4"
               />
               <div className="flex-1">
                 <h2 className="text-xl font-bold">Mentoring</h2>

@@ -1,20 +1,28 @@
 import { initializeApp } from 'firebase/app';
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
 import axios from 'axios'
+const apiKey = import.meta.env.VITE_apiKey
+const authDomain= import.meta.env.VITE_authDomain
+const projectId = import.meta.env.VITE_projectId
+const  storageBucket = import.meta.env.VITE_storageBucket
+const messagingSenderId = import.meta.env.VITE_messagingSenderId
+const appId = import.meta.env.VITE_appId
+const vapidKey=import.meta.env.VITE_vapidKey
+
 var firebaseConfig = {
-    apiKey: "AIzaSyBEqFtqD-dDY6zGfTO00g_x4qIdzJF9Dsg",
-    authDomain: "acelearn-703df.firebaseapp.com",
-    projectId: "acelearn-703df",
-    storageBucket: "acelearn-703df.appspot.com",
-    messagingSenderId: "405743273695",
-    appId: "1:405743273695:web:e9b8c926b58757c8388b6a"
+    apiKey,
+    authDomain,
+    projectId,
+    storageBucket,
+    messagingSenderId,
+    appId
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
 const messaging = getMessaging(firebaseApp);
 
 export const getNotificationToken = async() => {
-  const browserToken=await getToken(messaging, { vapidKey: 'BIfLy7_lef878KCkEfkfhN7S2mh1ynoJxwgeMzBgQy0f5nztIywGkoyY7hD4Cgu0qlYGZTHO9TVKiMqfFY5TtdI' }).then(async(currentToken) => {
+  const browserToken=await getToken(messaging, { vapidKey:vapidKey }).then(async(currentToken) => {
         // debugger
         if (currentToken) {
             

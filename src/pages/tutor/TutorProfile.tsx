@@ -58,7 +58,7 @@ console.log(stdData);
               </div>
               <div className="mt-16 flex items-center justify-center space-x-3">
                 <div className="flex flex-col items-center">
-                  <div className="flex items-center">
+                  <div className="flex items-center gap-1">
                     <FaWallet
                       className="text-blue-500"
                       style={{ fontSize: "2.5rem" }}

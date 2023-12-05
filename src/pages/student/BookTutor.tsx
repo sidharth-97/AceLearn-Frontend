@@ -157,19 +157,19 @@ const BookTutor = () => {
       <div className="w-full bg-blue-50 pt-7">
         <div className="mx-auto max-w-screen-lg grid grid-cols-4 gap-8 p-6 pb-20 shadow-xl shadow-gray-300 bg-white">
           <div className="col-span-2 flex flex-col justify-center">
-            <h1 className="text-3xl font-bold text-blue-900 text-center">
+            <h1 className="text:xl sm:text-3xl font-bold text-blue-900 text-center">
               Book an appointment
             </h1>
-            <p className="text-lg text-blue-900 text-center">
+            <p className="text-sm sm:text-lg text-blue-900 text-center">
               Get an appointment with our experienced tutors
             </p>
           </div>
 
           <div className="col-span-2">
-            <img className="h-72 w-full object-cover" src={img} alt="" />
+            <img className=" sm:h-72 w-full object-cover" src={img} alt="" />
           </div>
         </div>
-        <div className="mx-auto max-w-screen-lg grid grid-cols-2 gap-8 p-6 pb-20 mt-10 bg-white">
+        <div className="mx-auto max-w-screen-lg grid sm:grid-cols-2 gap-8 p-6 pb-20 mt-10 bg-white">
           <div>
             <p className="font-serif text-xl font-bold text-blue-900">
               Select a date

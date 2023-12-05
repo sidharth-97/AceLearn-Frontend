@@ -153,7 +153,7 @@ const EditProfile: React.FC<{ data: Student }> = ({ data }) => {
                   className="block w-full mt-1 border rounded-md shadow-sm focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 />
               </div>
-              <button type="submit">Change Password</button>
+              <button   className="inline-flex items-center px-4 py-2 mt-2 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-gray-900 border border-transparent rounded-md active:bg-gray-900 false" type="submit">Change Password</button>
             </form>
           </div>
         )}

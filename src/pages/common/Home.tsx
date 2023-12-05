@@ -91,13 +91,13 @@ function Home() {
           animate="visible"
         >
           <motion.div
-            className="max-w-[50%] text-center md:text-left p-4 md:p-0"
+            className="w-full text-center md:text-left p-4 md:p-0 sm:max-w-[50%]"
             initial={{ y: -50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 1 }}
           >
-            <h1 className="text-6xl">Take the first step</h1>
-            <h1 className="text-6xl">to Learn with us</h1>
+            <h1 className=" text-3xl font-medium w-full sm:text-6xl">Take the first step</h1>
+            <h1 className="text-2xl font-medium w-full sm:text-6xl">to Learn with us</h1>
             <p className="mt-3">
               This is a cutting-edge private tutor platform designed to connect
               eager learners with experienced and passionate tutors in a safe
@@ -138,9 +138,9 @@ function Home() {
       <h1 className="text-4xl font-bold text-center mt-7">WHAT WE OFFER</h1>
       <div className="p-4 flex items-center justify-center">
         <div className="flex flex-col">
-          <div className="flex-1 flex">
+          <div className="flex-1 flex flex-col sm:flex-row ">
             <motion.div
-              className="flex items-center p-4 m-2 rounded-lg  hover:scale-110 w-1/2"
+              className="flex items-center p-4 m-2 rounded-lg  hover:scale-110 sm:w-1/2"
               initial={{ x: "-100%", opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 1 }}
@@ -156,7 +156,7 @@ function Home() {
               </div>
             </motion.div>
             <motion.div
-              className="flex items-center p-4 m-2 rounded-lg  hover:scale-110 w-1/2"
+              className="flex items-center p-4 m-2 rounded-lg  hover:scale-110 sm:w-1/2"
               initial={{ x: "100%", opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 1 }}
@@ -173,9 +173,9 @@ function Home() {
               </div>
             </motion.div>
           </div>
-          <div className="flex-1 flex">
+          <div className="flex-1 flex flex-col sm:flex-row">
             <motion.div
-              className="flex items-center p-4 m-2 rounded-lg  hover:scale-110 w-1/2"
+              className="flex items-center p-4 m-2 rounded-lg  hover:scale-110 sm:w-1/2"
               initial={{ x: "-100%", opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 1 }}

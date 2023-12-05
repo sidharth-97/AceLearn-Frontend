@@ -52,8 +52,8 @@ const DisplayTutor = () => {
               <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">
                 {typedTutor?.name}
               </h1>
-              <h3 className="text-gray-600 font-lg text-semibold leading-6">
-                Owner at Her Company Inc.
+              <h3 className="text-gray-600 font-lg text-semibold leading-6 my-1" >
+                Teaches : {typedTutor?.subject?.join(",")}
               </h3>
               <p className="text-sm text-gray-500 hover:text-gray-600 leading-6">
                 {typedTutor.bio}
@@ -75,14 +75,14 @@ const DisplayTutor = () => {
             </div>
             <div className="my-4 flex flex-col">
               <Link to={`/student/booktutor/${tutorId.id}`}>
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mb-2">
+              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mb-2 w-full">
                 {" "}
              
                   Book a lesson{" "}
                
               </button>
               </Link>
-              <Link to={"/student/messenger"}> <button onClick={addContact} className="bg-white hover:bg-blue-200 text-blue-500 font-bold py-2 px-4 rounded-full">
+              <Link to={"/student/messenger"}> <button onClick={addContact} className="bg-white hover:bg-blue-200 text-blue-500 font-bold py-2 px-4 rounded-full w-full">
                 Contact Me
               </button></Link>
              

@@ -115,7 +115,7 @@ export default function AllTutors() {
       <Navbar />
       <div className=" h-36 bg-3447AE text-white">
         <div className="text-right">
-          <h1 className=" text-5xl font-bold me-32">
+          <h1 className=" text-5xl font-bold me-2 sm:me-32">
             Find Your <br />
             Perfect Tutor
           </h1>

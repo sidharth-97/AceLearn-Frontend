@@ -23,8 +23,8 @@ const StudentProfile = () => {
       <div className="flex flex-row">
         <StudentSidebar />
 
-        <div className="p-5 lg:p-14 xl:p-16 bg-gray-100 w-full">
-          <div className="bg-white shadow-md rounded-md p-6 w-full">
+        <div className="lg:p-14 xl:p-16 bg-gray-100 w-full sm:p-5">
+          <div className="bg-white shadow-md rounded-md w-full sm:p-6">
             {/* <div className="flex items-center space-x-4">
               <img
                 src={stdData?.data.image}
@@ -61,17 +61,17 @@ const StudentProfile = () => {
                 />
               </div>
             </div>
-            <div className="flex justify-between">
-              <div className="flex flex-col mt-16">
+            <div className="flex justify-between flex-col sm:flex-row">
+              <div className="flex flex-col mt-16 p-2">
                 <h2 className="text-2xl font-semibold">{isStudent.username}</h2>
                 <div>
                   <p className="text-gray-500">Email: {isStudent.email}</p>
-                  <p className="text-gray-500">Phone: +123 456 7890</p>
+                  <p className="text-gray-500">Phone: {isStudent.mobile}</p>
                 </div>
               </div>
               <div className="mt-16 flex items-center justify-center space-x-3">
-                <div className="flex flex-col items-center">
-                  <div className="flex items-center">
+                <div className="flex items-center gap-1 sm:flex-col ">
+                  <div className="flex items-center gap-1">
                     <FaWallet
                       className="text-blue-500"
                       style={{ fontSize: "2.5rem" }}
@@ -104,7 +104,7 @@ const StudentProfile = () => {
           </div>
           <div className="bg-white mt-5 pt-2 ps-3 text-lg">
             <h1>Class timeline</h1>
-            <div className="flex flex-row justify-between mt-3 mx-1 bg-white">
+            <div className="flex flex-row justify-between mt-3 mx-1 bg-white overflow-y-auto">
               <TimelineApp />
             </div>
           </div>

@@ -1,20 +1,28 @@
 import StudentSidebar from "../../components/students/StudentSidebar";
 import Navbar from "../../components/common/navbar";
 import { useMutation, useQuery } from "react-query";
-import { bookTutorByPost, viewRequest } from "../../api/studentapi";
+import { bookTutorByPost, paymentsession, viewRequest } from "../../api/studentapi";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { RootState } from "../../store";
+import { loadStripe } from "@stripe/stripe-js";
+import { useState } from "react";
 
 interface objectData {
   tutor: string;
+  fees: number;
   timing: {
-    date: Date;
+    date:[Date];
     student: string;
+    fee:number
   };
 }
 
+const stripePromise = loadStripe(
+  "pk_test_51OA4ziSEjtBzAge5ZAWJV2Y2EW4v8d0iUt4DHgoUX09VWYiYhsJcUCARpvHLYj5ZLmjxNyCYLyEgJwcQugm6C3YL00VmY9Z4jW"
+);
 const Requests = () => {
+  const [stripe, setStripe] = useState(null);
   const { isStudent } = useSelector((state: RootState) => state.auth);
 
   const {
@@ -27,22 +35,28 @@ const Requests = () => {
   });
   console.log(jobPosting);
 
-  const acceptTutormutation = useMutation((object) => bookTutorByPost(object));
 
   console.log(jobPosting?.data.requests);
-  const handleAccept = async (id:string, date:Date) => {
+  const handleAccept = async (tutor:any, date:Date) => {
     const object: objectData = {
-      tutor: id,
+      tutor: tutor._id,
+      fees:tutor.fee,
       timing: {
-        date: date,
+        date: [date],
         student: isStudent._id,
+        fee:tutor.fee
       },
     };
 
-    const response = await acceptTutormutation.mutateAsync(object as any);
-    if (response?.status == 200) {
-      toast.success("Booking confirmed");
+    if (!stripe) {
+      const stripeInstance = await stripePromise;
+      setStripe(stripeInstance);
     }
+    const response = await paymentsession(object);
+    if (response) {
+      window.location.href = response.data.url;
+    }
+  
   };
 
   return (
@@ -101,7 +115,7 @@ const Requests = () => {
                       
                     </div>
                     <button
-                      onClick={() => handleAccept(tutor.tutor._id, tutor.date)}
+                      onClick={() => handleAccept(tutor.tutor, tutor.date)}
                       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                     >
                       Accept
@@ -118,3 +132,7 @@ const Requests = () => {
 };
 
 export default Requests;
+function setStripe(stripeInstance: import("@stripe/stripe-js").Stripe | null) {
+  throw new Error("Function not implemented.");
+}
+

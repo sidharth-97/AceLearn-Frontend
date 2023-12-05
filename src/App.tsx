@@ -68,11 +68,11 @@ function App() {
         { path: "dashboard", element: <StudentProfile /> },
         { path: "profile", element: <PrivateRoute><EditStudentProfile /></PrivateRoute> },
         { path: "booktutor/:id", element: <BookTutor /> },
-        { path: "requesttutor", element: <RequestTutor /> },
-        { path: "requests", element: <Requests /> },
-        { path: "messenger", element: <Messenger /> },
-        { path: "schedule", element: <StudentSchedule /> },
-        { path:"homework-help",element:<HomeworkHelp/>}
+        { path: "requesttutor", element: <PrivateRoute><RequestTutor /></PrivateRoute> },
+        { path: "requests", element:<PrivateRoute><Requests /></PrivateRoute>  },
+        { path: "messenger", element:<PrivateRoute><Messenger /></PrivateRoute>  },
+        { path: "schedule", element:<PrivateRoute><StudentSchedule /></PrivateRoute>  },
+        { path:"homework-help",element:<PrivateRoute><HomeworkHelp/></PrivateRoute>}
       ],
     },
     {
@@ -85,10 +85,10 @@ function App() {
         { path: "tutordashboard", element: <TutorPrivate><TutorProfile /></TutorPrivate> },
         { path: "edit-profile", element: <TutorPrivate><EditTutorProfile /></TutorPrivate> },
         { path: "tutorProfile/:id", element: <DisplayTutor /> },
-        { path: "tutorjobs", element: <TutorJobs /> },
-        { path: "messenger", element: <MessengerTutor /> },
-        { path: "tutor-schedule", element: <TutorSchedulePage /> },
-        {path:"homework-help",element:<SolveQuestionsPage/>}
+        { path: "tutorjobs", element:<TutorPrivate> <TutorJobs /></TutorPrivate> },
+        { path: "messenger", element:<TutorPrivate><MessengerTutor /> </TutorPrivate> },
+        { path: "tutor-schedule", element:<TutorPrivate><TutorSchedulePage /></TutorPrivate>  },
+        {path:"homework-help",element:<TutorPrivate><SolveQuestionsPage/></TutorPrivate>}
        
       ],
     },
@@ -99,8 +99,8 @@ function App() {
         { path: "dashboard", element: <AdminDash /> },
         { path: 'students', element:<AdminPrivate><StudentManagement /></AdminPrivate>  },
         { path: 'tutors', element: <AdminPrivate><TutorManagement /></AdminPrivate> },
-        { path: "subjects", element: <Subjects /> },
-        { path:"premium",element:<Premium/>}
+        { path: "subjects", element:<AdminPrivate><Subjects /> </AdminPrivate> },
+        { path:"premium",element:<AdminPrivate><Premium/></AdminPrivate>}
       ]
     },
     { path: "*", element: <><Navbar /><ErrorPage /></> },

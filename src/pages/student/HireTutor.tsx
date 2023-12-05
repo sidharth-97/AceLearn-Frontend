@@ -3,11 +3,12 @@ import StudentSidebar from "../../components/students/StudentSidebar";
 import Navbar from "../../components/common/navbar";
 import TextField from "@mui/material/TextField";
 import { useQuery, useMutation } from "react-query";
-import { postJob } from "../../api/studentapi";
+import { postJob, studentDetails } from "../../api/studentapi";
 import { useSelector } from "react-redux";
 import { ClassNames } from "@emotion/react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import PremiumMessage from "../../components/common/PremiumMessage";
 
 const RequestTutor = () => {
   const [subject, setSubject] = useState("");
@@ -17,6 +18,9 @@ const RequestTutor = () => {
   const navigate = useNavigate();
 
   const { isStudent } = useSelector((state: any) => state.auth);
+  const { data } = useQuery({
+    queryFn:()=>studentDetails(isStudent._id)
+  })
 
   const postJobMutation = useMutation((formData) => postJob(formData));
 
@@ -50,7 +54,7 @@ const RequestTutor = () => {
           <h2 className="text-3xl text-center mt-3 font-bold mb-5 text-indigo-800">
             Hire a tutor
           </h2>
-         
+          {data?.data.premium?
             <form className="max-w-6xl mx-auto" onSubmit={handleSubmit}>
             <div className="flex flex-col bg-white p-6 rounded shadow-md">
                 <label
@@ -125,7 +129,7 @@ const RequestTutor = () => {
                 </button>
               </div></div>
             
-            </form>
+            </form>:<PremiumMessage/>}
           </div>
         
       </div>

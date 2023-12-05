@@ -70,13 +70,6 @@ const Navbar: React.FC = () => {
                   <span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
                 </Link>
                 <Link
-                  to={"/"}
-                  className="text-white text-sm font-semibold relative inline-block mr-4 group"
-                >
-                  Resource
-                  <span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
-                </Link>
-                <Link
                   to={"/tutor/all-tutors"}
                   className="text-white text-sm font-semibold relative inline-block mr-4 group"
                 >
@@ -161,36 +154,31 @@ const Navbar: React.FC = () => {
               }`}
             >
               <div className="flex flex-col">
-                <a
-                  href="#"
+                <Link
+                  to={"/"}
                   className="text-white text-sm font-semibold hover:underline hover:text-white mb-1"
                 >
                   Home
-                </a>
-                <a
-                  href="#"
+                </Link>
+                <Link
+                  to={"/about-us"}
                   className="text-white text-sm font-semibold hover:text-purple-600 mb-1"
                 >
                   About
-                </a>
-                <a
-                  href="#"
-                  className="text-white text-sm font-semibold hover:text-purple-600 mb-1"
-                >
-                  Resource
-                </a>
-                <a
-                  href="#"
+                </Link>
+            
+                <Link
+                  to={"/tutor/all-tutors"}
                   className="text-white text-sm font-semibold hover:text-purple-600 mb-1"
                 >
                   Find Tutor
-                </a>
-                <a
-                  href="#"
+                </Link>
+                <Link
+                  to={"/tutor/signup"}
                   className="text-white text-sm font-semibold hover:text-purple-600 mb-1"
                 >
                   Become Tutor
-                </a>
+                </Link>
 
                 <div className="flex justify-between items-center border-t-2 pt-2">
                   <a

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
 import { useSelector } from "react-redux";
@@ -18,9 +18,6 @@ const StudentSchedule = () => {
   const navigate = useNavigate();
 
   const {
-    data,
-    isLoading,
-    isError,
     refetch: refetchSchedule,
   } = useQuery({
     queryFn: () => getStudentSchedule(isStudent._id),
@@ -49,7 +46,7 @@ const StudentSchedule = () => {
   );
   const handleJoinRoom = useCallback(
     (data: { tutor: string; room: string }) => {
-      const { tutor, room } = data;
+      const { room } = data;
       navigate(`/room/${room}`);
     },
     []

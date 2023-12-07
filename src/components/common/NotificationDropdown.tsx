@@ -1,24 +1,26 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { TutorDetails } from "../../api/tutorapi";
 import { studentDetails } from "../../api/studentapi";
-import NotificationModal from "./NotificationModal";
-import { useNavigate } from "react-router-dom";
 import { CiCalendarDate } from "react-icons/ci";
+import { RootState } from "../../store";
 
-const NotificationDropdown = ({setSidebar}) => {
+interface NotificationDropdownProps {
+  setSidebar: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const NotificationDropdown:React.FC<NotificationDropdownProps> = ({setSidebar}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [notifications, setNotifications] = useState([])
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const navigate=useNavigate()
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
-  const { isStudent } = useSelector((state) => state.auth);
+  const { isStudent } = useSelector((state:RootState) => state.auth);
 
-  const { isTutor } = useSelector((state) => state.auth)
+  const { isTutor } = useSelector((state:RootState) => state.auth)
 
   const tutorData = async () => {
     const tutor = await TutorDetails(isTutor._id)
@@ -71,7 +73,7 @@ const NotificationDropdown = ({setSidebar}) => {
         >
           <div className="py-2">
             {/* Notification items */}
-            {notifications.slice(-2).map((item, index) => (
+            {notifications.slice(-2).map((item:{type:string,title:string,content:string}, index) => (
               <a
                 href="#"
                 className="flex items-center px-4 py-3 -mx-2 transition-colors duration-300 transform border-b border-gray-100 hover:bg-gray-50 "

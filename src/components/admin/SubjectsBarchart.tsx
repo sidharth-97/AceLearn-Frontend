@@ -1,7 +1,6 @@
-import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
-const SubjectsBarchart = ({ data }) => {
+const SubjectsBarchart:React.FC<any> = ({ data }) => {
     console.log(data);
     
     const chartdata = Object.entries(data).map(([name, count]) => ({

@@ -1,16 +1,21 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { TutorDetails } from "../../api/tutorapi";
 import { studentDetails } from "../../api/studentapi";
 import { CiCalendarDate } from "react-icons/ci";
 import { motion, AnimatePresence } from "framer-motion";
+import { RootState } from "../../store";
 
-const NotificationModal = ({ setSidebar }) => {
+interface NotificationDropdownProps {
+  setSidebar: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const NotificationModal:React.FC<NotificationDropdownProps> = ({ setSidebar }) => {
   const [isOpen, setIsOpen] = useState(true);
   const [notifications, setNotifications] = useState([]);
 
-  const { isStudent } = useSelector((state) => state.auth);
-  const { isTutor } = useSelector((state) => state.auth);
+  const { isStudent } = useSelector((state:RootState) => state.auth);
+  const { isTutor } = useSelector((state:RootState) => state.auth);
 
   const getData = async () => {
     if (isStudent) {
@@ -71,7 +76,7 @@ const NotificationModal = ({ setSidebar }) => {
             </div>
             <div className="relative flex-auto overflow-y-auto">
               <div className="py-2 px-2">
-                {notifications.map((item, index) => (
+                {notifications.map((item:{type:string,title:string,content:string}, index) => (
                   <a
                     href="#"
                     className="flex items-center px-4 py-3 -mx-2 transition-colors duration-300 transform border-b border-gray-100 hover:bg-gray-50"

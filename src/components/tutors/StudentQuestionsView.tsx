@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useCallback } from "react";
+import  { useState, useEffect,useCallback } from "react";
 import { useQuery } from "react-query";
 import { viewQuestions } from "../../api/tutorapi";
 import SolveQuestions from "./SolveQuestions";

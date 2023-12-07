@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
 import socket from "../../services/socket";
-import ReactPlayer from "react-player";
 import peer from "../../services/peer";
 import camera from "../../assets/camera.png";
 import invite from "../../assets/invite.png";

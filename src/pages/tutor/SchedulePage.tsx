@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import {useState} from "react";
 import Navbar from "../../components/common/navbar";
 import TutorSidebar from "../../components/tutors/TutorSidebar";
 import TutorSchedule from "../../components/tutors/TutorSchedule";

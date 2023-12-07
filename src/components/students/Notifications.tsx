@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import { useQuery } from "react-query";
 import { showNotifications } from "../../api/studentapi";
 import { useSelector } from "react-redux";

@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'https://cdn.skypack.dev/react?min';
 import moment from 'moment';
 import { useQuery } from 'react-query';
 import { studentTimeline } from '../../api/studentapi';

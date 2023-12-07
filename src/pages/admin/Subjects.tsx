@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import AdminSidebar from "../../components/admin/AdminHome";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { addSubjects, deleteSubject, findSubjects } from "../../api/adminapi";

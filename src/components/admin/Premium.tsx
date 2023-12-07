@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { getPremiumPrice, setPremiumPrice } from '../../api/adminapi';
 import {toast} from 'react-toastify'
@@ -13,7 +13,7 @@ const Premium = () => {
   const [studentPremium, setStudentPremium] = useState(data?.data.student);
 console.log(data?.data);
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = {
       student: studentPremium,

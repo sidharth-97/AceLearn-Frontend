@@ -1,4 +1,3 @@
-import React from "react";
 import { useQuery } from "react-query";
 import { getTutorReview } from "../../api/tutorapi";
 import { useParams } from "react-router-dom";
@@ -14,7 +13,7 @@ const ReviewArticle = () => {
     <>
        <h1 className="text-center text-2xl font-bold mb-4">Student Reviews</h1>
       {!isLoading && reviews?.data.length &&
-        reviews?.data.map((item) => {
+        reviews?.data.map((item:any) => {
           {
             console.log(item);
           }

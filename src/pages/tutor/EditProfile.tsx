@@ -1,4 +1,3 @@
-import React from 'react'
 import Navbar from '../../components/common/navbar'
 import TutorSidebar from '../../components/tutors/TutorSidebar'
 import EditProfileComponent from '../../components/tutors/EditProfileComponent'

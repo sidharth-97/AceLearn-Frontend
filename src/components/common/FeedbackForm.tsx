@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import Typography from '@mui/material/Typography';
 import Rating from '@mui/material/Rating';
 import { useMutation, useQuery } from 'react-query';
@@ -6,19 +6,22 @@ import { addReview, getOldReview } from '../../api/tutorapi';
 import { useSelector } from 'react-redux';
 import {toast} from 'react-toastify'
 import { useNavigate } from 'react-router-dom';
+import { RootState } from '../../store';
 
 const FeedbackForm = () => {
   const [value, setValue] = useState(0);
   const [comment, setComment] = useState('');
   const navigate=useNavigate()
 
-  const { isStudent } = useSelector((state)=>state.auth)
+  const { isStudent } = useSelector((state:RootState)=>state.auth)
 
-  const handleRatingChange = (event, newValue) => {
+  const handleRatingChange: (newValue: number) => void = (newValue) => {
     setValue(newValue);
   };
+  
+  
 
-  const handleCommentChange = (e) => {
+  const handleCommentChange = (e:React.ChangeEvent<HTMLTextAreaElement>) => {
     setComment(e.target.value);
   };
 
@@ -61,10 +64,12 @@ const FeedbackForm = () => {
       <div className="mb-4">
         <Typography component="legend">Rating</Typography>
         <Rating
-          name="simple-controlled"
-          value={oldReview?.data.rating}
-          onChange={handleRatingChange}
-        />
+  name="simple-controlled"
+  value={oldReview?.data.rating}
+  onChange={() => handleRatingChange(value)}
+/>
+
+
       </div>
 
       <div className="mb-4">

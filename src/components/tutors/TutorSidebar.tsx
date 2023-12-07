@@ -4,7 +4,6 @@ import { MdOutlineDashboard } from "react-icons/md";
 import { RiSettings4Line } from "react-icons/ri";
 import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
 import { FiMessageSquare} from "react-icons/fi";
-import { MdOutlineNotificationsActive } from "react-icons/md";
 import { GrSchedule } from "react-icons/gr";
 import { IoIosList } from "react-icons/io";
 

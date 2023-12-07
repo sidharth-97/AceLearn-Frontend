@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import  { useState, useEffect, useRef } from "react";
 import TutorSidebar from "../../components/tutors/TutorSidebar";
 import Navbar from "../../components/common/navbar";
 import Conversation from "../../components/common/conversation";
@@ -13,6 +13,7 @@ import socket from "../../services/socket";
 import { useQuery } from "react-query";
 import send from "../../assets/send-message.png"
 import attach from '../../assets/attachment.png'
+import { RootState } from "../../store";
 
 const MessengerTutor = () => {
   const [currentChat, setCurrentChat] = useState(null);
@@ -20,10 +21,10 @@ const MessengerTutor = () => {
   const [newMessage, setNewMessage] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [selectedUser, setSelectedUser] = useState("");
-  const [res, setres] = useState("");
+  const [ setres] = useState("");
   const [image, setImage] = useState<File | null>(null); 
   const scrollRef = useRef();
-  const { isTutor } = useSelector((state) => state.auth);
+  const { isTutor } = useSelector((state:RootState) => state.auth);
 
   const { data: conversations } = useQuery({
     queryFn: () => tutorConversations(isTutor._id),

@@ -5,7 +5,7 @@ import Step1 from './step1';
 import Step2 from './step2';
 import Step3 from './step3';
 import OTPInput from '../common/OTPInput';
-import { signup, signupFinal } from '../../api/tutorapi';
+import {  signupFinal } from '../../api/tutorapi';
 import { useNavigate } from 'react-router-dom';
 import {toast} from 'react-toastify'
 

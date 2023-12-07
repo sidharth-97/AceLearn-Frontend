@@ -4,7 +4,6 @@ import { TutorEditProfile } from "../../api/tutorapi";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { Input } from "@mui/material";
 import { Tutor } from "../../model/tutorModel";
 import { RootState } from "../../store";
 

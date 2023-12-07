@@ -2,7 +2,6 @@ import tutorRoutes from "../services/endpoints/tutorEndpoints";
 import Api from "../services/api";
 import { toast } from "react-toastify";
 import { handleErrors } from "../middleware/ErrorHandler";
-import studentRoutes from "../services/endpoints/studentEndpoints";
 import { AxiosError } from "axios";
 
 interface ErrorResponse {
@@ -213,7 +212,7 @@ export const addReview = async (data: {
   }
 };
 
-export const getTutorReview = async (id: string) => {
+export const getTutorReview = async (id:any) => {
   try {
     const response = await Api.get(`${tutorRoutes.getTutorReview}/${id}`);
     return response;

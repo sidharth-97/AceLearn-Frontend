@@ -1,17 +1,17 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import OTPInput from "./OTPInput";
 import { forgetPasswordStep1, forgetPasswordStep2 } from "../../api/studentapi";
 import { TforgetPasswordStep1,TforgetPasswordStep2 } from "../../api/tutorapi";
 import ForgetPassFinal from "./ForgetPassFinal";
 import Navbar from "./navbar";
 
-const ForgetPassword = ({tutor}) => {
+const ForgetPassword:React.FC<{tutor:boolean}>= ({tutor}) => {
   const [email, setEmail] = useState("");
   const [next, setNext] = useState(false);
   const [otp, setOTP] = useState("");
   const [final,setFinal]=useState(false)
 
-    const handleEmail = async (e) => {
+    const handleEmail = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
       const obj = {
         email,
@@ -19,8 +19,12 @@ const ForgetPassword = ({tutor}) => {
       }
       if (tutor) {
         const response = await TforgetPasswordStep1(obj)
+        console.log(response);
+        
       } else {
         const response = await forgetPasswordStep1(obj)
+        console.log(response);
+        
       }
       
         setNext(true)
@@ -29,7 +33,7 @@ const ForgetPassword = ({tutor}) => {
     setOTP(otp);
   }
 
-  const submitOtp = async (e) => {
+  const submitOtp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (tutor) {
       const response = await TforgetPasswordStep2({ otp: otp })

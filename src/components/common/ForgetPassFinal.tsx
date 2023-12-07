@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { forgetPasswordFinal, forgetPasswordStep2 } from "../../api/studentapi";
+import { useState } from "react";
+import { forgetPasswordFinal } from "../../api/studentapi";
 import { TforgetPasswordFinal } from "../../api/tutorapi";
-import Navbar from "./navbar";
 
-const ForgetPassFinal = ({ email,tutor }) => {
+
+const ForgetPassFinal:React.FC<{email:string,tutor:boolean}> = ({ email,tutor }) => {
   const [password, setPassword] = useState("");
   const [cpassword, setCpassword] = useState("");
 
-  const handlePassword = async (e) => {
+  const handlePassword = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = {
       email,
@@ -15,8 +15,11 @@ const ForgetPassFinal = ({ email,tutor }) => {
     };
     if (tutor) { 
       const response = await TforgetPasswordFinal(data);
-    } else {
+      console.log(response);
+          } else {
       const response = await forgetPasswordFinal(data);
+      console.log(response);
+      
 
     }
   };

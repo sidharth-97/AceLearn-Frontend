@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import imagee from "../../assets/WhatsApp Image 2023-10-13 at 1.41.45 PM.jpeg";
 import { signup, signupfinal } from "../../api/studentapi";
 import OTPInput from "../../components/common/OTPInput";
@@ -70,8 +70,9 @@ const Signup = () => {
     formData.append("username", name)
     formData.append("email", email)
     formData.append("password", password)
-    formData.append("mobile", mobile)
-   formData.append("image", image)
+   formData.append("mobile", mobile)
+   if(image)formData.append("image", image)
+  
    formData.append("otp",otp)
    const result = await signupfinal(formData)
    console.log(result);
@@ -90,7 +91,7 @@ const Signup = () => {
 
   const getGoogleUser = async (response: CredentialResponse) => {
     
-    const decode: Object = jwtDecode(response.credential as string)
+    const decode: {email:string,name:string} = jwtDecode(response.credential as string)
     const data = {
       email: decode.email,
       username: decode.name,

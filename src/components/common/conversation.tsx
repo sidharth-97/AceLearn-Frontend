@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useQuery } from "react-query";
+import { useState, useEffect } from "react";
+
 
 import { getAllUsers } from "../../api/studentapi";
 import { format } from "timeago.js";

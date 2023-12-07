@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { blockStudent, getUserData } from "../../api/adminapi";
 import { useQuery } from "react-query";
 import Modal from "../UI/Modal";
 import { useDispatch } from "react-redux";
-import { closeModal, openModal } from "../../slice/modalSlice";
+import { openModal } from "../../slice/modalSlice";
 import Pagination from "../UI/Pagination";
 import MySkeleton from "../UI/Skeleton";
 
@@ -22,7 +22,7 @@ const Students = () => {
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [activePage,setActivePage]=useState(1)
 
-  const { data: userDataa, error, isLoading } = useQuery("userData", getUserData);
+  const { data: userDataa, isLoading } = useQuery("userData", getUserData);
 
   useEffect(() => {
     if (userDataa) {
@@ -54,7 +54,7 @@ console.log(filteredUsers,"users");
   };
   const dispatch = useDispatch()
   
-  const handleBlockButton = (id:string) => {
+  const handleBlockButton = (id:any) => {
     setSelectedUserId(id);
   dispatch(openModal())
 }

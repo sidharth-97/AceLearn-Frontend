@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from 'react'
+import {useEffect,useState} from 'react'
 import { getalltutors } from '../../api/tutorapi'
 import { Link } from 'react-router-dom'
 

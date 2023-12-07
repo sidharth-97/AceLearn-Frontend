@@ -1,14 +1,15 @@
-import React, { useEffect,useState } from 'react';
+import { useEffect,useState } from 'react';
 import FeedbackForm from '../../components/common/FeedbackForm';
 import { useNavigate, useParams } from 'react-router-dom';
 import { tutorPayment } from '../../api/tutorapi';
 import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
 
 const FeedbackPage = () => {
     const params = useParams()
-    const [state, setState] = useState("")
+    const [setState] = useState("")
     const navigate=useNavigate()
-    const { isTutor } = useSelector((state) => state.auth)
+    const { isTutor } = useSelector((state:RootState) => state.auth)
     
     useEffect(() => {
         isTutor && navigate('/tutor/tutordashboard')
@@ -16,7 +17,7 @@ const FeedbackPage = () => {
     
     useEffect(() => {
         if (localStorage.getItem("student")) {
-            let videoCallData = JSON.parse(localStorage.getItem("videocall")) 
+            let videoCallData = JSON.parse(localStorage.getItem("videocall"))
             setState(videoCallData)
         const data = {
             id: params.id,

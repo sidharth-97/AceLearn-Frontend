@@ -1,7 +1,6 @@
 import React,{useState} from "react";
 import image from "../../assets/WhatsApp Image 2023-10-13 at 1.41.45 PM.jpeg";
 import { signup } from "../../api/tutorapi";
-import { formToJSON } from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../../components/common/navbar";
 import {toast} from 'react-toastify'

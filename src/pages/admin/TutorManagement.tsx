@@ -1,4 +1,3 @@
-import React from 'react'
 import AdminSidebar from '../../components/admin/AdminHome'
 import Tutors from '../../components/admin/Tutors'
 

@@ -5,7 +5,6 @@ import TextField from "@mui/material/TextField";
 import { useQuery, useMutation } from "react-query";
 import { postJob, studentDetails } from "../../api/studentapi";
 import { useSelector } from "react-redux";
-import { ClassNames } from "@emotion/react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import PremiumMessage from "../../components/common/PremiumMessage";

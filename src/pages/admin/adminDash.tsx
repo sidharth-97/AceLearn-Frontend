@@ -1,6 +1,4 @@
-import React from "react";
 import AdminSidebar from "../../components/admin/AdminHome";
-import Students from "../../components/admin/Students";
 import { useQuery } from "react-query";
 import { userCount } from "../../api/adminapi";
 import { PiStudentFill } from "react-icons/pi";

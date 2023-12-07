@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useQuery } from "react-query";
 import { submitSolution } from "../../api/tutorapi";
 import {toast} from 'react-toastify'
 import { useNavigate } from "react-router-dom";

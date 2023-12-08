@@ -1,4 +1,5 @@
 export interface Student{
+    premium: any
     _id: string,
     username: string
     email: string,

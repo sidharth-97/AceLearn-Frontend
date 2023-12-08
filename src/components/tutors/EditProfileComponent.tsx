@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useState } from "react";
 import { useSelector } from "react-redux";
 import { TutorEditProfile } from "../../api/tutorapi";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { Tutor } from "../../model/tutorModel";
@@ -12,7 +12,7 @@ const EditProfileComponent: React.FC<{data:Tutor }> = ({ data }) => {
   const [mobile, setMobile] = useState(data.mobile);
   const [bio, setBio] = useState(data.bio);
   const [fees, setFees] = useState(data.fee);
-  const [subject, setSubject] = useState(data.subject);
+  const [subject, setSubject] = useState<any>(data.subject);
   const [image, setImage] = useState<File | null>(null);
   const [toggle, setToggle] = useState(true);
 
@@ -31,7 +31,7 @@ const EditProfileComponent: React.FC<{data:Tutor }> = ({ data }) => {
   };
 
   const queryClient = useQueryClient();
-  const { status, mutate } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: TutorEditProfile,
     onSuccess: (data) => {
       queryClient.setQueryData([], data);

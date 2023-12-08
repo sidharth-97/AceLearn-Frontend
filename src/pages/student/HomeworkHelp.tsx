@@ -5,10 +5,11 @@ import PostQuestions from "../../components/students/PostQuestions";
 import ListQuestions from "../../components/students/ListQuestions";
 import { useSelector } from "react-redux";
 import PremiumMessage from "../../components/common/PremiumMessage";
+import { RootState } from "../../store";
 
 const HomeworkHelp = () => {
   const [toggle, setToggle] = useState(true);
-const{isStudent}=useSelector((state)=>state.auth)
+const{isStudent}=useSelector((state:RootState)=>state.auth)
   return (
     <div>
       <Navbar />

@@ -15,8 +15,8 @@ type UserData = {
 
 const VideoCall: React.FC = () => {
   const [remoteSocketId, setremoteSocketId] = useState(null);
-  const [myStream, setMyStream] = useState("");
-  const [remoteStream, setRemoteStream] = useState("");
+  const [myStream, setMyStream] = useState<MediaStream | string>("");
+  const [remoteStream, setRemoteStream] = useState<MediaStream | string>("");
   const [isScreenSharing, setIsScreenSharing] = useState(false);
   const [screenStream, setScreenStream] = useState<MediaStream | null>(null);
 
@@ -45,7 +45,7 @@ const VideoCall: React.FC = () => {
   }, [remoteSocketId, socket]);
 
   const handleIncommingCall = useCallback(
-    async ({ from, offer }: { offer: string; from: string }) => {
+    async ({ from, offer }: { offer: RTCSessionDescriptionInit; from: string }) => {
       setremoteSocketId(from as any);
       const stream = await navigator.mediaDevices.getUserMedia({
         audio: true,
@@ -62,13 +62,17 @@ const VideoCall: React.FC = () => {
   );
 
   const sendStreams = useCallback(() => {
+    if (typeof myStream === 'string') {
+      console.error("Invalid myStream type");
+      return;
+    }
     for (const track of myStream.getTracks()) {
       peer.peer.addTrack(track, myStream);
     }
   }, [myStream]);
 
   const handleCallAccepted = useCallback(
-    ({ from, ans }) => {
+    ({ from, ans }:{from:any,ans:any}) => {
       console.log(`Received call accepted from ${from}, ans:`, ans);
 
       peer.setLocalDescription(ans);
@@ -90,19 +94,19 @@ const VideoCall: React.FC = () => {
   }, [handleNegoNeeded]);
 
   const handleNegoNeedIncomming = useCallback(
-    async ({ from, offer }) => {
+    async ({ from, offer }:{from:any,offer:any}) => {
       const ans = await peer.getAnswer(offer);
       socket.emit("peer:nego:done", { to: from, ans });
     },
     [socket]
   );
 
-  const handleNegoNeedFinal = useCallback(async ({ ans }) => {
+  const handleNegoNeedFinal = useCallback(async ({ ans }:any) => {
     await peer.setLocalDescription(ans);
   }, []);
 
   useEffect(() => {
-    peer.peer.addEventListener("track", async (ev) => {
+    peer.peer.addEventListener("track", async (ev: { streams: any; }) => {
       const remoteStream = ev.streams;
       setRemoteStream(remoteStream[0]);
     });
@@ -134,13 +138,18 @@ const VideoCall: React.FC = () => {
 
   const handleStartScreenShare = async () => {
     try {
+      if (typeof myStream === 'string') {
+        // Handle the case where myStream is a string (if needed)
+        console.error("Invalid myStream type");
+        return;
+      }
       const screenStream = await peer.startScreenShare(myStream);
       socket.emit("startScreenShare", { to: remoteSocketId });
 
       // Send the new screen stream to the peer
-      peer.sendStreams(screenStream);
+      peer.sendStreams(screenStream as MediaStream);
       setIsScreenSharing(true);
-      setScreenStream(screenStream);
+      setScreenStream(screenStream as MediaStream);
     } catch (error) {
       console.error("Error starting screen share:", error);
     }
@@ -148,7 +157,7 @@ const VideoCall: React.FC = () => {
 
   const handleStopScreenShare = async () => {
     try {
-      peer.stopScreenShare(myStream, screenStream);
+      peer.stopScreenShare(myStream as MediaStream, screenStream);
       socket.emit("stopScreenShare", { to: remoteSocketId });
 
       // Stop screen sharing locally

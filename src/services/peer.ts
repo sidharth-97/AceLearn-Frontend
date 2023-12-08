@@ -62,7 +62,9 @@ class PeerService {
     }
   }
 
-  stopScreenShare(myStream: MediaStream, screenStream: MediaStream): void {
+  stopScreenShare(myStream: MediaStream, screenStream: any): void {
+    console.log(screenStream);
+    
     this.replaceTracks(myStream, myStream);
   }
 

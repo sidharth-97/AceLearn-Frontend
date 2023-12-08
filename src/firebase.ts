@@ -1,6 +1,5 @@
 import { initializeApp } from 'firebase/app';
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
-import axios from 'axios'
 const apiKey = import.meta.env.VITE_apiKey
 const authDomain= import.meta.env.VITE_authDomain
 const projectId = import.meta.env.VITE_projectId

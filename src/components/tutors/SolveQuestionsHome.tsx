@@ -1,5 +1,7 @@
-
-const SolveQuestionsHome = ({toggler}) => {
+type SolveQuestionsHomeProps = {
+  toggler: React.Dispatch<React.SetStateAction<boolean>>;
+};
+const SolveQuestionsHome:React.FC<SolveQuestionsHomeProps> = ({toggler}) => {
 
   return (
     <body className="bg-gray-100 font-sans h-screen">
@@ -15,7 +17,7 @@ const SolveQuestionsHome = ({toggler}) => {
 
             <section className="flex">
               <div className="w-3/4 pr-4">
-                <button onClick={(e)=>toggler(true)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                <button onClick={(_e)=>toggler(true)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                   Start Solving
                 </button>
 

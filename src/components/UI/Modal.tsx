@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "../../slice/modalSlice";
 
-export default function Modal({ functionToCall, id }) {
-  const { modalOpen } = useSelector((state) => state.modal);
+export default function Modal({ functionToCall, id }:any) {
+  const { modalOpen } = useSelector((state:any) => state.modal);
   const [showModal, setShowModal] = React.useState(modalOpen);
   const dispatch = useDispatch();
   const handleClick = () => {

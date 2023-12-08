@@ -2,13 +2,13 @@ import moment from 'moment';
 import { useQuery } from 'react-query';
 import { studentTimeline } from '../../api/studentapi';
 
-const DayNames = {
+const DayNames:any = {
   1: 'Mon',
   3: 'Wed',
   5: 'Fri'
 };
 
-function Cell({ color }) {
+function Cell({ color }:{color:string}) {
   let style = {
     backgroundColor: color
   };
@@ -18,7 +18,7 @@ function Cell({ color }) {
   );
 }
 
-function Month({ startDate, index }) {
+function Month({ startDate, index }:{startDate: moment.Moment ,index:number}) {
   let date = moment(startDate).add(index * 7, 'day');
   let monthName = date.format('MMM');
 
@@ -29,7 +29,9 @@ function Month({ startDate, index }) {
   );
 }
 
-function WeekDay({ index }) {
+function WeekDay({ index, startDate }: { index: number; startDate: moment.Moment }) {
+  console.log(startDate)
+  
   return (
     <div className='timeline-weekdays-weekday'>
       {DayNames[index]}
@@ -43,7 +45,7 @@ function TimelineApp() {
   });
   console.log(stdData?.data, 'from timeline');
 
-  const mostAttendedDate = stdData?.data.length > 0 ? moment(stdData.data[0]._id).toDate() : null;
+  // const mostAttendedDate = stdData?.data.length > 0 ? moment(stdData.data[0]._id).toDate() : null;
 
     const data = stdData?.data || [];
     console.log(data,"data from timeliene");
@@ -57,8 +59,8 @@ function TimelineApp() {
   let weekDays = Array.from(new Array(7));
   let months = Array.from(new Array(Math.floor(days / 7)));
 
-  let min =data.length && Math.min(0, ...data.map(d => d.totalClasses || 0));
-  let max =data.length && Math.max(...data.map(d => d.totalClasses || 0));
+  let min =data.length && Math.min(0, ...data.map((d: { totalClasses: any; }) => d.totalClasses || 0));
+  let max =data.length && Math.max(...data.map((d: { totalClasses: any; }) => d.totalClasses || 0));
 
   let colorMultiplier = 1 / (max - min);
 
@@ -81,7 +83,7 @@ function TimelineApp() {
               {cells.map((_, index) => {
                 let date = moment(startDate).add(index, 'day');
                 let dataPoint = data.find(
-                  (d) => moment(date).isSame(d._id, 'day')
+                  (d: { _id: moment.MomentInput; }) => moment(date).isSame(d._id, 'day')
                 );
                 let alpha = Math.min(
                   1,

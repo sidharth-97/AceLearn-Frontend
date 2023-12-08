@@ -8,6 +8,7 @@ export default function ColorToggleButton() {
   const navigate = useNavigate();
 
   const handleChange = (
+    _e: React.MouseEvent<HTMLElement>,
     newAlignment: string,
   ) => {
     if (newAlignment) {

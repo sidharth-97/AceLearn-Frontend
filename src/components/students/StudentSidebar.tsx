@@ -6,7 +6,6 @@ import { TbReportAnalytics } from "react-icons/tb";
 import { AiOutlineUser} from "react-icons/ai";
 import { FiMessageSquare} from "react-icons/fi";
 import { Link } from "react-router-dom";
-import { MdOutlineNotificationsActive } from "react-icons/md";
 import { GrSchedule } from "react-icons/gr";
 import { IoIosList } from "react-icons/io";
 

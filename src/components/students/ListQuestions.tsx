@@ -2,7 +2,11 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 import { viewMyQuestions } from "../../api/studentapi";
 
-const ListQuestions = ({ toggleFunction }) => {
+interface ListQuestionProps {
+  toggleFunction: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const ListQuestions = ({ toggleFunction }:ListQuestionProps) => {
   const [index, setIndex] = useState(0);
 
   const { data } = useQuery({
@@ -16,7 +20,7 @@ const ListQuestions = ({ toggleFunction }) => {
       <h1 className="text-3xl text-center font-bold mb-6">Homework Help</h1>
 
       <button
-        onClick={(e) => toggleFunction(false)}
+        onClick={(_e) => toggleFunction(false)}
         className="mb-4 bg-blue-500 text-white px-4 py-2 rounded-md"
       >
         Post a new question
@@ -25,9 +29,9 @@ const ListQuestions = ({ toggleFunction }) => {
         {" "}
         <div className="w-1/2">
           <h1 className="text-2xl font-bold mb-4">My Questions</h1>
-          {data?.data.map((ques, index) => (
+          {data?.data.map((ques:{date:string,description:string,tutor:string}, index:number) => (
             <li
-              onClick={(e) => setIndex(index)}
+              onClick={() => setIndex(index)}
               key={index}
               className="w-full flex items-center justify-between border-b border-gray-300 p-4"
             >

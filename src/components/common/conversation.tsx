@@ -1,29 +1,59 @@
 import { useState, useEffect } from "react";
-
-
 import { getAllUsers } from "../../api/studentapi";
 import { format } from "timeago.js";
 
-const Conversation = ({
+interface Message {
+  conversationId: string;
+  text: string;
+  createdAt:Date
+}
+
+interface CurrentChat {
+  _id: string;
+  members: string[];
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
+interface Conversation{
+  conversation: CurrentChat,
+  currentUser: string,
+  setres: React.Dispatch<React.SetStateAction<any>>;
+  onConversationClick: any;
+  lastMessage: Message[];
+}
+
+interface User{
+  data: {
+    image: string,
+    name?: string,
+    username?:string
+  }
+}
+
+const Conversation:React.FC<Conversation>= ({
   conversation,
   currentUser,
   setres,
   onConversationClick,
   lastMessage,
 }) => {
-  const [user, setUser] = useState(null);
-  const [view, setView] = useState("");
+  
+  const [user, setUser] = useState<User|null>(null);
+  const [view, setView] = useState<Message | null|undefined>(null);
+
   useEffect(() => {
     if (conversation && conversation.members) {
-      const othersId = conversation.members.find((m) => m !== currentUser);
+      const othersId = conversation.members.find((m:string) => m !== currentUser);
       setView(
         lastMessage.find((mess) => mess.conversationId == conversation._id)
       );
 
       const getUser = async () => {
         try {
-          const res1 = await getAllUsers(othersId);
-          setUser(res1);
+          const res1 = await getAllUsers(othersId as string);
+          setUser(res1||null);
           setres(res1?.data);
         } catch (error) {
           console.error("Error fetching user:", error);
@@ -35,7 +65,6 @@ const Conversation = ({
   }, [conversation, currentUser, setres]);
 
   const handleClick = () => {
-    // Pass the image URL to the parent component when conversation is clicked
     onConversationClick(user?.data);
   };
 

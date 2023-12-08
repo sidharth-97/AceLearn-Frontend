@@ -159,7 +159,7 @@ export const getConversations = async (id: string) => {
   }
 };
 
-export const getMesssages = async (id: string) => {
+export const getMesssages = async (id: string|undefined) => {
   try {
     const response = await Api.get(`${studentRoutes.getMessages}/${id}`);
     return response;
@@ -265,7 +265,7 @@ export const forgetPasswordFinal = async (data:any) => {
   }
 }
 
-export const studentPremium = async (data:{fee:string}) => {
+export const studentPremium = async (data:{fees:string}) => {
   try {
     const response = await Api.post(studentRoutes.studentPremium,data)
     return response

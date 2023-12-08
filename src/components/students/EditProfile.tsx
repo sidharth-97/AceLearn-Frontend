@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { editStudent } from "../../api/studentapi";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { RootState } from "../../store";
 import { Student } from "../../model/studentModel";
 
@@ -14,8 +13,6 @@ const EditProfile: React.FC<{ data: Student }> = ({ data }) => {
   const [image, setImage] = useState<File | null>(null);
 
   const { isStudent } = useSelector((state: RootState) => state.auth);
-
-  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,6 +31,8 @@ const EditProfile: React.FC<{ data: Student }> = ({ data }) => {
       password,
     };
     const response = await editStudent(formData);
+    console.log(response);
+    
   };
 
   return (

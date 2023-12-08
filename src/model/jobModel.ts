@@ -1,7 +1,9 @@
 export interface Job{
-    student: string;
+  student: string;
+  _id:string
     subject: string;
-    timeRange: string;
+  timeRange: string;
+  description:string
     class: string;
     requests: {
       tutor: string;

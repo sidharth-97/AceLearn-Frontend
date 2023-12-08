@@ -59,7 +59,7 @@ const Tutors = () => {
 
   const dispatch = useDispatch();
 
-  const handleBlockButton = (id) => {
+  const handleBlockButton = (id:any) => {
     setSelectedUserId(id);
     dispatch(openModal());
   };
@@ -214,7 +214,7 @@ const Tutors = () => {
           </tbody>
         </table>
         <div className="text-black flex justify-center h-10 w-full p-1 mb-1">
-        <Pagination active={activePage} setActive={setActivePage} limit={ limit} />
+        <Pagination activePage={activePage} setActive={setActivePage} limit={ limit} />
         </div>
       </div>
     </div>

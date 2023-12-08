@@ -11,7 +11,7 @@ import {toast} from 'react-toastify'
 
 const TutorOnBoard: React.FC = () => {
   const [step, setStep] = useState(0);
-  const [title, setTitle] = useState(['Step1', 'Step2', 'Step3','Step4']);
+  const [title] = useState(['Step1', 'Step2', 'Step3','Step4']);
   const [otp, setOTP] = useState("")
   
   const navigate=useNavigate()
@@ -79,7 +79,7 @@ const TutorOnBoard: React.FC = () => {
                     ></div>
                   </div>
                   <div className="step-indicators flex justify-between mt-2">
-                    {title.map((stepTitle, index) => (
+                    {title.map((_stepTitle,index) => (
                       <div
                         key={index}
                         className={`step-number ${

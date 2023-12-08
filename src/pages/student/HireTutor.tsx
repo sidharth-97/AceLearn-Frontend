@@ -21,7 +21,7 @@ const RequestTutor = () => {
     queryFn:()=>studentDetails(isStudent._id)
   })
 
-  const postJobMutation = useMutation((formData) => postJob(formData));
+  const postJobMutation = useMutation((formData:{ student: string; subject: string; timeRange: string; class: string; }) => postJob(formData));
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

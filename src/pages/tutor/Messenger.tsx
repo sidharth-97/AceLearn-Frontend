@@ -15,20 +15,43 @@ import send from "../../assets/send-message.png"
 import attach from '../../assets/attachment.png'
 import { RootState } from "../../store";
 
+interface CurrentChat {
+  _id: string;
+  members: string[]; // Assuming it's an array of string member IDs
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+interface Messagee {
+  conversationId?: string;
+  createdAt?: Date|Number;
+  sender: string;
+  text: string;
+  image?:string
+  updatedAt?: string;
+  __v?: number;
+  _id?: string;
+}
+
+interface SelectedUser{
+  image: string,
+  username: string,
+  name: string,
+  _id:string
+}
+
 const MessengerTutor = () => {
-  const [currentChat, setCurrentChat] = useState(null);
-  const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState([]);
-  const [arrivalMessage, setArrivalMessage] = useState(null);
-  const [selectedUser, setSelectedUser] = useState("");
-  const [ setres] = useState("");
+  const [currentChat, setCurrentChat] = useState<CurrentChat | null>(null);
+  const [messages, setMessages] = useState<Messagee[]>([]);
+  const [newMessage, setNewMessage] = useState("");
+  const [arrivalMessage, setArrivalMessage] = useState<Messagee|null>(null);
+  const [selectedUser, setSelectedUser] = useState<SelectedUser>();
+  const [ setres] = useState<any>("");
   const [image, setImage] = useState<File | null>(null); 
-  const scrollRef = useRef();
-  const { isTutor } = useSelector((state:RootState) => state.auth);
+  const scrollRef = useRef<null | HTMLDivElement>(null);  const { isTutor } = useSelector((state:RootState) => state.auth);
 
   const { data: conversations } = useQuery({
     queryFn: () => tutorConversations(isTutor._id),
-    // Add isTutor._id as a dependency
     enabled: Boolean(isTutor._id),
   });
 
@@ -48,11 +71,12 @@ const MessengerTutor = () => {
     getMessageses();
   }, [currentChat]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e:React.FormEvent) => {
     e.preventDefault();
     const formData = new FormData()
     formData.append("sender", isTutor._id)
     formData.append("text", newMessage)
+    if(currentChat)
     formData.append("conversationId",currentChat._id)
     // const message = {
     //   sender: isTutor._id,
@@ -63,7 +87,7 @@ const MessengerTutor = () => {
       console.log("image:", image);
       formData.append("image", image);
     }
-    const receiverId = currentChat.members.find(
+    const receiverId = currentChat?.members.find(
       (member) => member != isTutor._id
     );
 
@@ -103,7 +127,7 @@ setImage(null)
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const handleConversationClick = (image) => {
+  const handleConversationClick = (image:any) => {
     // Set the image when a conversation is clicked
     setSelectedUser(image);
   };
@@ -120,7 +144,7 @@ setImage(null)
             className="w-full p-2 border-b border-gray-300"
           />
           {conversations?.data?.conv?.length &&
-            conversations?.data?.conv?.map((conv) => (
+            conversations?.data?.conv?.map((conv:CurrentChat) => (
             <div onClick={() => setCurrentChat(conv)}>
               <Conversation
                 key={conv?._id}
@@ -144,7 +168,7 @@ setImage(null)
           </div>
           <div className="overflow-y-scroll p-4 flex-grow">
             {/* chatBoxTop content */}
-            {messages.map((m) => (
+            {messages.map((m:any) => (
               <div ref={scrollRef}>
                 <Message res={selectedUser} message={m} own={m.sender == isTutor._id} />
               </div>

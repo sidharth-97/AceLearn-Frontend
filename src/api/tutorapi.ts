@@ -180,7 +180,7 @@ export const applyTutorJobs = async (data: {
   id: string;
   tutor: string;
   fee: string;
-  date: Date;
+  date: string;
 }) => {
   try {
     const response = await Api.post(tutorRoutes.applyTutorJobs, data);
@@ -310,7 +310,7 @@ export const tutorConversations = async (id: string) => {
   }
 };
 
-export const getMessages = async (id: string) => {
+export const getMessages = async (id:any) => {
   try {
     const response = await Api.get(`${tutorRoutes.getMessages}/${id}`);
     return response;

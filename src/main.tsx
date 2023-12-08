@@ -9,7 +9,6 @@ import { Provider } from "react-redux";
 import store from "./store.tsx";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import ErrorBoundary from "./middleware/ErrorBoundary.tsx";
 
 const queryClient = new QueryClient();
 

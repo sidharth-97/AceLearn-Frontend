@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useQuery } from "react-query";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import {
@@ -10,15 +9,14 @@ import {
   scheduledate,
 } from "../../api/tutorapi";
 
-const TutorScheduleCalendar = ({setChange}) => {
+const TutorScheduleCalendar = ({setChange}:any) => {
   const { isTutor } = useSelector((state: any) => state.auth);
   const [selectedDates, setSelectedDates] = useState<Date[]>([]);
   const [selectedTime, setSelectedTime] = useState("");
   const [schedule, setSchedule] = useState([]);
 
-  const navigate = useNavigate();
 
-  const { data, isLoading, isError } = useQuery({
+  const {isLoading} = useQuery({
     queryFn: () => getTutorSchedule(isTutor._id),
     queryKey: ["timeline"],
     onSuccess: (data) => {
@@ -27,12 +25,16 @@ const TutorScheduleCalendar = ({setChange}) => {
       }
     },
   });
-
+  if (isLoading) {
+  <div>Loading...</div>
+  }
+  console.log(schedule);
+  
   const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedTime(event.target.value);
   };
 
-  const handleDateClick = (value: Date) => {
+  const handleDateClick = (value: any) => {
     setSelectedDates((prevDates) => {
       const dateExists = prevDates.find((date) => date.toDateString() === value.toDateString());
 
@@ -90,8 +92,8 @@ const TutorScheduleCalendar = ({setChange}) => {
               {" "}
               <Calendar
           onChange={handleDateClick}
-          value={selectedDates}
-          tileDisabled={({ date }) => date < new Date()}
+                value={selectedDates as any}
+                tileDisabled={({ date }) => date < new Date()}
           className="my-custom-calendar"
         />
             </div>

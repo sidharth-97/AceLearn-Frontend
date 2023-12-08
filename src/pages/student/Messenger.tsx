@@ -13,20 +13,49 @@ import socket from "../../services/socket";
 import StudentSidebar from "../../components/students/StudentSidebar";
 import send from "../../assets/send-message.png"
 import attach from "../../assets/attachment.png"
+import { RootState } from "../../store";
+
+interface CurrentChat {
+  _id: string;
+  members: string[]; // Assuming it's an array of string member IDs
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+interface Messagee {
+  conversationId?: string;
+  createdAt?: Date|Number;
+  sender: string;
+  text: string;
+  image?: string;
+  updatedAt?: string;
+  __v?: number;
+  _id?: string;
+}
+
+interface SelectedUser{
+  image: string,
+  username: string,
+  name: string,
+  _id:string
+}
+
 
 const Messenger = () => {
-  const [currentChat, setCurrentChat] = useState(null);
-  const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState([]);
-  const [arrivalMessage, setArrivalMessage] = useState(null);
-  const [selectedUser, setSelectedUser] = useState("");
+  const [currentChat, setCurrentChat] = useState<CurrentChat | null>(null);
+  const [messages, setMessages] = useState<Messagee[]>([]);
+  const [newMessage, setNewMessage] = useState("");
+  const [arrivalMessage, setArrivalMessage] = useState<Messagee|null>(null);
+  const [selectedUser, setSelectedUser] = useState<SelectedUser>();
   const [res, setres] = useState("");
-  const [image, setImage] = useState<File | null>(null);  const scrollRef = useRef();
-  const { isStudent } = useSelector((state) => state.auth);
+  const [image, setImage] = useState<File | null>(null);
+  const scrollRef = useRef<null | HTMLDivElement>(null);
+  const { isStudent } = useSelector((state:RootState) => state.auth);
   const { data: conversations,refetch} = useQuery({
     queryFn: () => getConversations(isStudent._id),
     enabled: Boolean(isStudent._id),
   });
+console.log(res);
 
 
   useEffect(() => {
@@ -36,13 +65,13 @@ const Messenger = () => {
     });
   }, []);
  
-  console.log(conversations?.data.conv, "conv");
-  console.log(currentChat, "curr chat");
+  
+
 
   useEffect(() => {
     const getMessages = async () => {
       const res = await getMesssages(currentChat?._id);
-      console.log(res, "messsages response");
+ 
       setMessages(res?.data);
     };
     getMessages();
@@ -52,11 +81,10 @@ const Messenger = () => {
     e.preventDefault();
     
     const formData = new FormData();
-    console.log("isStudent._id:", isStudent._id);
+
     formData.append("sender", isStudent._id);
-    console.log("After appending sender:", { ...formData });
-    
-    console.log("newMessage:", newMessage);
+
+
     formData.append("text", newMessage);
     console.log("After appending text:", { ...formData });
     
@@ -73,7 +101,7 @@ const Messenger = () => {
     console.log("After appending image:", { ...formData });
     
 
-    const receiverId = currentChat.members.find(
+    const receiverId = currentChat?.members.find(
       (member) => member !== isStudent._id
     );
   
@@ -81,7 +109,7 @@ const Messenger = () => {
   
     try {
       const res = await addMessages(formData);
-      console.log(res); socket.emit("sendMessage", {
+    socket.emit("sendMessage", {
       senderId: isStudent._id,
         receiverId,
       image:res?.data.image,
@@ -99,7 +127,6 @@ const Messenger = () => {
 
   useEffect(() => {
     socket.on("getMessage", (data) => {
-      console.log("Received message with image:", data.image);
       setArrivalMessage({
         sender: data.senderId,
         image:data.image,
@@ -119,7 +146,7 @@ const Messenger = () => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const handleConversationClick = (image) => {
+  const handleConversationClick = (image:any) => {
     // Set the image when a conversation is clicked
     setSelectedUser(image);
   };
@@ -137,7 +164,7 @@ const Messenger = () => {
             className="w-full p-2 border-b border-gray-300"
           />
           {conversations?.data?.conv?.length &&
-            conversations?.data?.conv?.map((conv) => (
+            conversations?.data?.conv?.map((conv:CurrentChat) => (
               <div onClick={() => setCurrentChat(conv)}>
                 <Conversation
                   key={conv?._id}
@@ -161,7 +188,7 @@ const Messenger = () => {
 
           <div className="overflow-y-scroll p-4 flex-grow overflow-x-hidden">
             {/* chatBoxTop content */}
-            {messages.map((m) => (
+            {messages.map((m:any) => (
               <div ref={scrollRef}>
                 <Message
                   res={selectedUser}
@@ -180,7 +207,7 @@ const Messenger = () => {
               <textarea
                 className="w-full h-16 p-2 border border-gray-300 mr-4"
                 placeholder="write something..."
-                onChange={(e) => setNewMessage(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setNewMessage(e.target.value)}
                 value={newMessage}
                 name="text"
               ></textarea>{" "}

@@ -20,31 +20,38 @@ const sortOptions = [
   { name: "Price: High to Low", value: "high", current: false },
 ];
 
-function classNames(...classes) {
+function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
+type Filters = {
+  [sectionId: string]: string[];
+};
+
 export default function AllTutors() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
-  const { data, isLoading } = useQuery("findSubjects", findSubjects);
-  const [selectedFilters, setSelectedFilters] = useState({});
-  const [value, setValue] = useState([0, 0]);
+  const { data } = useQuery("findSubjects", findSubjects);
+  const [selectedFilters, setSelectedFilters] = useState<Filters>({});
+  const [value] = useState([0, 0]);
   const rawData = data?.data;
   const [sortOption, setSortOption] = useState("Best Rating"); // Add sorting state
 
-  const [filteredData, setFilteredData] = useState({
+  console.log(sortOption);
+  
+
+  const [filteredData] = useState<Filters>({
     subjects: [],
     classes: [],
   });
-
+var filters: any[]=[]
   if (rawData) {
-    var filters = Object.keys(rawData)
+    filters = Object.keys(rawData)
       .map((key) => {
         if (Array.isArray(rawData[key])) {
           return {
             id: key,
             name: key.charAt(0).toUpperCase() + key.slice(1),
-            options: rawData[key].map((value) => ({
+            options: rawData[key].map((value: string) => ({
               value: value,
               label: value.charAt(0).toUpperCase() + value.slice(1),
               checked: false,
@@ -54,10 +61,10 @@ export default function AllTutors() {
         return null; // Handle non-array values if necessary
       })
       .filter(Boolean);
-    console.log(filters);
+    console.log(filters,"this is the firleree to solve");
   }
 
-  const handleCheckboxChange = (sectionId, optionValue, isChecked) => {
+  const handleCheckboxChange = (sectionId: string, optionValue: any, isChecked: any) => {
     console.log(
       `Checkbox change: Section ${sectionId}, Option ${optionValue}, Checked: ${isChecked}`
     );
@@ -72,7 +79,7 @@ export default function AllTutors() {
         ];
       } else {
         updatedFilters[sectionId] = (updatedFilters[sectionId] || []).filter(
-          (value) => value !== optionValue
+          (value: any) => value !== optionValue
         );
       }
 
@@ -82,33 +89,40 @@ export default function AllTutors() {
     });
   };
 
-  const applyFilters = () => {
-    const selectedSubjects = selectedFilters.subjects || [];
-    const selectedClasses = selectedFilters.classes || [];
+  // const applyFilters = () => {
+  //   const selectedSubjects = selectedFilters.subjects || [];
+  //   const selectedClasses = selectedFilters.classes || [];
 
-    console.log("Selected Subjects:", selectedSubjects);
-    console.log("Selected Classes:", selectedClasses);
+  //   console.log("Selected Subjects:", selectedSubjects);
+  //   console.log("Selected Classes:", selectedClasses);
 
-    setFilteredData({
-      subjects: selectedSubjects,
-      classes: selectedClasses,
-    });
+  //   setFilteredData({
+  //     subjects: selectedSubjects,
+  //     classes: selectedClasses,
+  //   });
 
-    console.log("Filtered Data:", filteredData);
-  };
+  //   console.log("Filtered Data:", filteredData);
+  // };
 
   console.log(filteredData);
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-    setSelectedFilters({ ...selectedFilters, price: value });
+  const handleChange = (event: Event, value: number | number[], activeThumb: number) => {
+    // Convert value to string or string[]
+    console.log(event,activeThumb);
+    
+    const priceValue = Array.isArray(value) ? value.map(String) : [String(value)];
+  
+    setSelectedFilters({ ...selectedFilters, price: priceValue });
   };
+  
+  
   console.log(selectedFilters, "this is the selected filters");
 
 
-  const handleSortChange = (selectedSortOption) => {
+  const handleSortChange = (selectedSortOption: string) => {
     setSortOption(selectedSortOption);
     setSelectedFilters({ ...selectedFilters, sort: [selectedSortOption.toLowerCase()] });
   };
+  
 
   return (
     <>
@@ -171,7 +185,7 @@ export default function AllTutors() {
                     <form className="mt-4 border-t border-gray-200">
                       <h3 className="sr-only">Categories</h3>
 
-                      {filters &&
+                      {filters && filters.length &&
                         filters.map((section) => (
                           <Disclosure
                             as="div"
@@ -203,7 +217,7 @@ export default function AllTutors() {
                                 <Disclosure.Panel className="pt-6">
                                   <div className="space-y-6">
                                     {section.options.map(
-                                      (option, optionIdx) => (
+                                      (option:any, optionIdx:any) => (
                                         <div
                                           key={option.value}
                                           className="flex items-center"
@@ -214,7 +228,7 @@ export default function AllTutors() {
                                             defaultValue={option.value}
                                             onClick={(e) => {
                                               const isChecked =
-                                                e.target.checked;
+                                              (e.target as HTMLInputElement).checked;
                                               console.log("dsffsda");
 
                                               handleCheckboxChange(
@@ -372,7 +386,7 @@ export default function AllTutors() {
                           </h3>
                           <Disclosure.Panel className="pt-6">
                             <div className="space-y-4">
-                              {section.options.map((option, optionIdx) => (
+                              {section.options.map((option:any, optionIdx:any) => (
                                 <div
                                   key={option.value}
                                   className="flex items-center"
@@ -383,7 +397,7 @@ export default function AllTutors() {
                                     defaultValue={option.value}
                                     type="checkbox"
                                     onClick={(e) => {
-                                      const isChecked = e.target.checked;
+                                      const isChecked = (e.target as HTMLInputElement).checked;
 
                                       handleCheckboxChange(
                                         section.id,

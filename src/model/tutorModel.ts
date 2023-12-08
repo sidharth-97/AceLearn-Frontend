@@ -12,5 +12,6 @@ export interface Tutor{
     wallet: number,
     review: object,
     qualifications: string,
-    notifications:Array<object>
+    notifications: Array<object>
+    rating:number
 }

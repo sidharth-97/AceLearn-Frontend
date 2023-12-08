@@ -1,4 +1,3 @@
-import classes from "../../assets/Screenshot 2023-10-24 212602.png";
 import StudentSidebar from "../../components/students/StudentSidebar";
 import Navbar from "../../components/common/navbar";
 import { useQuery } from "react-query";

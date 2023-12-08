@@ -32,7 +32,9 @@ const Notifications = () => {
     <div className="flex justify-center items-center">
       {" "}
       <div className="bg-white border border-gray-300 p-4 mb-4 shadow-md rounded-md">
-        {notifications.map((notify: { title: string; content: string }) => (
+        {notifications.map((notify: {
+          type: string; title: string; content: string 
+}) => (
           <div className="flex items-center mt-2">
             <div>
               {notify.type == "wallet" ? <div className="bg-yellow-300 p-4 rounded-full mr-4">

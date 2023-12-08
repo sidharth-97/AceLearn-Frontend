@@ -1,14 +1,18 @@
-import React from "react";
+interface Pagination{
+  activePage: number,
+  setActive: React.Dispatch<React.SetStateAction<any>>;
+  limit:number
+}
 
-const Pagination = ({ activePage, setActive, limit }) => {
-  const handleNext = (e) => {
+const Pagination:React.FC<Pagination> = ({ activePage, setActive, limit }) => {
+  const handleNext = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     const next = activePage === limit ? 1 : activePage + 1;
     console.log("Next page:", next);
     setActive(next);
   };
 
-  const handlePrev = (e) => {
+  const handlePrev = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     const prev = activePage === 1 ? limit : activePage - 1;
     console.log("Prev page:", prev);

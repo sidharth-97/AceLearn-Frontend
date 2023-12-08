@@ -73,7 +73,7 @@ const NotificationDropdown:React.FC<NotificationDropdownProps> = ({setSidebar}) 
         >
           <div className="py-2">
             {/* Notification items */}
-            {notifications.slice(-2).map((item:{type:string,title:string,content:string}, index) => (
+            {notifications.slice(-2).map((item:{type:string,title:string,content:string}) => (
               <a
                 href="#"
                 className="flex items-center px-4 py-3 -mx-2 transition-colors duration-300 transform border-b border-gray-100 hover:bg-gray-50 "

@@ -1,4 +1,3 @@
-import React from "react";
 import Navbar from "../../components/common/navbar";
 import icon from "../../assets/about us page.png"
 

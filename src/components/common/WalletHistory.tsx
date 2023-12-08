@@ -1,8 +1,19 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { FaArrowAltCircleUp } from "react-icons/fa";
 import { FaArrowCircleDown } from "react-icons/fa";
 
-const WalletHistory = ({ walletHistory }) => {
+interface Transaction{
+  title: string;
+  details: string;
+  amount: number,
+  type: string,
+  date:Date
+}
+interface WalletHistoryProps {
+  walletHistory?: Transaction[];
+}
+
+const WalletHistory:React.FC<WalletHistoryProps> = ({ walletHistory }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const toggleModal = () => {
@@ -29,7 +40,7 @@ const WalletHistory = ({ walletHistory }) => {
       <div
         id="static-modal"
         data-modal-backdrop="static"
-        tabIndex="-1"
+        tabIndex={-1}
         aria-hidden="true"
         className={`${
           modalVisible
@@ -89,7 +100,7 @@ const WalletHistory = ({ walletHistory }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {walletHistory?.map((transaction, index) => (
+                    {walletHistory?.map((transaction:Transaction, index:number) => (
                       <tr
                         key={index}
                         className={index % 2 === 0 ? "bg-gray-100" : ""}

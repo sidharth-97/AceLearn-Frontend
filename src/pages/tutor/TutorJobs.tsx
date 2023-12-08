@@ -5,13 +5,22 @@ import { useMutation, useQuery } from "react-query";
 import { applyTutorJobs, getAllJobs } from "../../api/tutorapi";
 import { useSelector } from "react-redux";
 import {toast} from 'react-toastify'
+import { RootState } from "../../store";
+import { Job } from "../../model/jobModel";
+
+interface ApplyJobFormData {
+  id: string;
+  tutor: string;
+  fee: string;
+  date: string;
+}
 
 const TutorJobs = () => {
   const [time, setTime] = useState("");
   const [tutorJobs, setTutorJobs] = useState([]);
   console.log(time, "this is the time");
 
-  const { isTutor } = useSelector((state) => state.auth);
+  const { isTutor } = useSelector((state:RootState) => state.auth);
 
   const { data, isLoading, isError, refetch } = useQuery({
     queryFn: () => getAllJobs(),
@@ -26,7 +35,7 @@ const TutorJobs = () => {
   useEffect(() => {
     refetch();
   }, [refetch]);
-  const applyjobmutation = useMutation((formData) => applyTutorJobs(formData));
+  const applyjobmutation = useMutation((formData:ApplyJobFormData) => applyTutorJobs(formData));
   console.log(data);
 
   if (isLoading) {
@@ -37,13 +46,8 @@ const TutorJobs = () => {
     return <div>Error occurred while fetching data.</div>;
   }
 
-  const handleApply = async (id: {
-    id: string;
-    tutor: string;
-    fee: string;
-    date: Date;
-  }) => {
-    const formData = {
+  const handleApply = async (id: string) => {
+    const formData:ApplyJobFormData = {
       id: id,
       tutor: isTutor._id,
       fee: isTutor.fee,
@@ -67,7 +71,7 @@ const TutorJobs = () => {
             <h1 className="text-3xl font-bold mb-4">
               Available Jobs for Tutors
             </h1>
-            {tutorJobs.map((job) => (
+            {tutorJobs.map((job:Job) => (
               <div
                 key={job._id}
                 className="max-w-2xl bg-gray-100 rounded-xl shadow-md p-6 mb-4 w-full"

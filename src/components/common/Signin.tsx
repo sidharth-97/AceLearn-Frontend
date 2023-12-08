@@ -84,7 +84,7 @@ const Signin: React.FC<propstype> = ({ user }) => {
   
   const getGoogleUser = async (response: CredentialResponse) => {
     
-    const decode: Object = jwtDecode(response.credential as string)
+    const decode:{email:string} = jwtDecode(response.credential as string)
     const data = {
       email: decode.email,
       password: "123"

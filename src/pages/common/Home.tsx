@@ -4,7 +4,6 @@ import icon1 from "../../assets/26220662-623f-4697-bd29-b27e3ef7f513hth.jpg";
 import icon2 from "../../assets/26220662-623f-4697-bd29-b27e3ef7f513fdf.jpg";
 import icon3 from "../../assets/6fsfsdfsf.jpg";
 import icon4 from "../../assets/26220662-623f-4697-bd29-b27e3ef7f513.jpg";
-import icon5 from "../../assets/clipart2614421.png";
 import { Link, useNavigate } from "react-router-dom";
 import TutorsCards from "../../components/common/TutorsCards";
 import { studentPremium } from "../../api/studentapi";
@@ -14,11 +13,11 @@ import { loadStripe } from "@stripe/stripe-js";
 import { useState } from "react";
 import { buyTutorPremium } from "../../api/tutorapi";
 import { useSelector } from "react-redux";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { useEffect } from "react";
-
+import { RootState } from "../../store";
 function Home() {
-  const [stripe, setStripe] = useState(null);
+  const [stripe, setStripe] = useState<any>();
   const [showNavbar, setShowNavbar] = useState(false);
   const stripePromise = loadStripe(
     "pk_test_51OA4ziSEjtBzAge5ZAWJV2Y2EW4v8d0iUt4DHgoUX09VWYiYhsJcUCARpvHLYj5ZLmjxNyCYLyEgJwcQugm6C3YL00VmY9Z4jW"
@@ -28,10 +27,10 @@ function Home() {
   });
   console.log(PremiumPrice);
   const navigate = useNavigate();
-  const { isStudent } = useSelector((state) => state.auth);
-  const { isTutor } = useSelector((state) => state.auth);
+  const { isStudent } = useSelector((state:RootState) => state.auth);
+  const { isTutor } = useSelector((state:RootState) => state.auth);
 
-  const buyStudentPremium = async (price) => {
+  const buyStudentPremium = async (price:string) => {
     if (!isStudent) navigate("/login");
     if (!stripe) {
       const stripeInstance = await stripePromise;
@@ -44,7 +43,7 @@ function Home() {
     }
   };
 
-  const buytutorPremium = async (price) => {
+  const buytutorPremium = async (price: any) => {
     if (!isTutor) navigate("/login");
     if (!stripe) {
       const stripeInstance = await stripePromise;
@@ -59,10 +58,6 @@ function Home() {
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { duration: 1, ease: "easeIn" } },
-  };
-  const cardVariants = {
-    hidden: { x: "100%", opacity: 0 },
-    visible: { x: 0, opacity: 1, transition: { duration: 1 } },
   };
   useEffect(() => {
     // Show the navbar after a delay (adjust the delay as needed)

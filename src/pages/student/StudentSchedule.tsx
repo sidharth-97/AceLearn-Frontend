@@ -9,7 +9,24 @@ import Navbar from "../../components/common/navbar";
 import StudentSidebar from "../../components/students/StudentSidebar";
 import { toast } from "react-toastify";
 import { RootState } from "../../store";
-import { Schedule } from "../../model/scheduleModel";
+
+interface SingleSchedule {
+  tutor: any;
+  timing: {
+    _id: string;
+    date: string;
+    fee: number;
+    student: string;
+    status: string; // Add the appropriate type for status
+    // ... other properties
+  };
+  tutorDetails: {
+    image: string;
+    name: string;
+    // ... other properties
+  }[];
+  // ... other properties
+}
 
 const StudentSchedule = () => {
   const [schedule, setSchedule] = useState([]);
@@ -32,7 +49,7 @@ const StudentSchedule = () => {
 
   const student = isStudent._id;
   const StartClass = useCallback(
-    (id: string, schedule: Schedule) => {
+    (id: string, schedule: SingleSchedule) => {
       console.log("Callback");
       let room = id;
       socket.emit("room:join", { student, room });
@@ -115,9 +132,9 @@ const StudentSchedule = () => {
 
               {toggle ? (
                 <ol className="relative border-l border-gray-200 my-5">
-                  {schedule.map((schedules: Schedule, index) =>
-                  (  new Date(schedules?.timing.date) >= new Date() && schedules.timing.status !=="Cancelled By Student") ? (
-                      <li className="mb-10 ml-6">
+                  {schedule.map((schedules: SingleSchedule, index:any) =>
+                  (  new Date(schedules?.timing?.date) >= new Date() && schedules.timing.status !=="Cancelled By Student") ? (
+                      <li id={index} className="mb-10 ml-6">
                         <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-8 ring-white">
                           <svg
                             className="w-2.5 h-2.5 text-blue-800"
@@ -179,9 +196,9 @@ const StudentSchedule = () => {
                 </ol>
               ) : (
                 <ol className="relative border-l border-gray-200">
-                  {schedule.map((schedules, index) =>
+                  {schedule.map((schedules:SingleSchedule, index:any) =>
                      (
-                      <li className="mb-10 ml-6">
+                      <li id={index} className="mb-10 ml-6">
                       <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-8 ring-white">
                         <svg
                           className="w-2.5 h-2.5 text-blue-800"

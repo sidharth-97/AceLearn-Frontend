@@ -1,18 +1,16 @@
 import { useQuery } from 'react-query';
-import { useSelector } from 'react-redux';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import { tutorSales } from '../../api/tutorapi';
 import moment from 'moment';
 
 const TutorSalesChart = () => {
-    const { isTutor } = useSelector((state) => state.auth);
     const { data } = useQuery({
         queryFn: () => tutorSales(),
     });
 
     let dataa = [];
     if (data?.data.length) {
-        dataa = data?.data?.map((item) => ({
+        dataa = data?.data?.map((item:{totalFee:number,_id:any}) => ({
             name: moment().month(item?._id.month - 1).format('MMMM'), // Convert month number to month name
             pv: item?.totalFee,
         }));

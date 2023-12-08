@@ -4,7 +4,7 @@ import { findSubjects } from "../../api/adminapi";
 import { addQuestions } from "../../api/studentapi";
 import { toast } from "react-toastify";
 
-const PostQuestions = ({ toggleFunction }) => {
+const PostQuestions = ({ toggleFunction }:{toggleFunction:React.Dispatch<React.SetStateAction<boolean>>;}) => {
   const [subject, setSubject] = useState("");
   const [image, setImage] = useState<File | null>(null);
   const [question, setQuestion] = useState("");
@@ -20,15 +20,15 @@ const PostQuestions = ({ toggleFunction }) => {
     const formData = new FormData();
     formData.append("description", question);
     formData.append("subject", subject);
-    formData.append("image", image);
+    if(image)formData.append("image", image);
     const result = await addQuestions(formData);
     console.log(result);
     toast.success("Posted success");
   };
 
-  const handleButtonClick = (e) => {
+  const handleButtonClick = (e:any) => {
     e.preventDefault();
-    const index = e.target.id;
+    // const index = e.target.id;
     const selectedSubject = e.target.textContent;
     setSubject(selectedSubject);
   };
@@ -38,7 +38,7 @@ const PostQuestions = ({ toggleFunction }) => {
       <div className="mb-8">
         <div className="flex items-center mb-4">
           <button
-            onClick={(e) => toggleFunction(true)}
+            onClick={() => toggleFunction(true)}
             className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
           >
             Back
@@ -88,13 +88,13 @@ const PostQuestions = ({ toggleFunction }) => {
               Select Subject
             </label>
             <div className="grid grid-cols-2 gap-2 w-1/2">
-              {subjects?.data?.subject.map((item, index) => (
+              {subjects?.data?.subject.map((item:string, index:string) => (
                 <button
                   onClick={handleButtonClick}
                   id={index}
                   className="p-2 text-sm border border-gray-300 rounded focus:outline-none focus:border-blue-500 hover:bg-blue-100"
                 >
-                  {console.log(item)}
+                 
                   {item}
                 </button>
               ))}

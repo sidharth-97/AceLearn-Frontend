@@ -1,14 +1,15 @@
 import React from 'react';
 
-type FormData = {
-    subject: string;
-    fee: string;
-    bio: string;
-  };
+// type FormData = {
+//     subject: string;
+//     rate?: string;
+//   bio: string;
+//     fee?:string
+//   };
 
   interface Step2Props {
-    formData: FormData;
-    setFormData: React.Dispatch<React.SetStateAction<FormData>>;
+    formData: any;
+    setFormData: React.Dispatch<React.SetStateAction<any>>;
 }
 
 const Step2:React.FC<Step2Props> = ({ formData, setFormData }) => {

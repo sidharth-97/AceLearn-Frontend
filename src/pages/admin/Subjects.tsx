@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import  { Key, useState } from "react";
 import AdminSidebar from "../../components/admin/AdminHome";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { addSubjects, deleteSubject, findSubjects } from "../../api/adminapi";
@@ -7,7 +7,7 @@ const Subjects = () => {
   const [subject, setSubject] = useState("");
   const [classInfo, setClassInfo] = useState("");
 
-  const { data: response, isLoading } = useQuery({
+  const { data: response} = useQuery({
     queryFn: () => findSubjects(),
     queryKey: ["subjects"],
   });
@@ -15,7 +15,7 @@ const Subjects = () => {
   const queryClient = useQueryClient();
 
   const addSubjectMutation = useMutation(
-    (subjectData) => addSubjects(subjectData),
+    (subjectData:any) => addSubjects(subjectData),
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["subjects"]);
@@ -24,7 +24,7 @@ const Subjects = () => {
   );
 
   const deleteSubjectMutation = useMutation(
-    (subjectData) => deleteSubject(subjectData),
+    (subjectData:any) => deleteSubject(subjectData),
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["subjects"]);
@@ -89,7 +89,7 @@ const Subjects = () => {
             </button>
           </div>
           <ul>
-            {response?.data.subject.map((subject, index) => (
+            {response?.data.subject.map((subject:string, index: Key | null | undefined) => (
               <li
                 key={index}
                 className="flex justify-between items-center border-b py-3"
@@ -124,7 +124,7 @@ const Subjects = () => {
             </button>
           </div>
           <ul>
-            {response?.data.class.map((classInfo, index) => (
+            {response?.data.class.map((classInfo:string, index: Key | null | undefined) => (
               <li
                 key={index}
                 className="flex justify-between items-center border-b py-3"

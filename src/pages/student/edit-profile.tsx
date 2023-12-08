@@ -1,16 +1,12 @@
-import React, { useEffect } from "react";
 import StudentSidebar from "../../components/students/StudentSidebar";
 import Navbar from "../../components/common/navbar";
 import EditProfile from "../../components/students/EditProfile";
 import { useQuery } from "react-query";
 import { studentDetails } from "../../api/studentapi";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import MySkeleton from "../../components/UI/Skeleton";
 
 const EditStudentProfile = () => {
-  const navigate = useNavigate();
 
   const { isStudent } = useSelector((state: any) => state.auth);
 

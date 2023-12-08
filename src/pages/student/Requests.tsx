@@ -1,19 +1,20 @@
 import StudentSidebar from "../../components/students/StudentSidebar";
 import Navbar from "../../components/common/navbar";
-import {  useQuery } from "react-query";
-import {  paymentsession, viewRequest } from "../../api/studentapi";
+import { useQuery } from "react-query";
+import { paymentsession, viewRequest } from "../../api/studentapi";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { loadStripe } from "@stripe/stripe-js";
 import { useState } from "react";
+import { Stripe } from "@stripe/stripe-js";
 
 interface objectData {
   tutor: string;
   fees: number;
   timing: {
-    date:[Date];
+    date: [Date];
     student: string;
-    fee:number
+    fee: number;
   };
 }
 
@@ -21,29 +22,24 @@ const stripePromise = loadStripe(
   "pk_test_51OA4ziSEjtBzAge5ZAWJV2Y2EW4v8d0iUt4DHgoUX09VWYiYhsJcUCARpvHLYj5ZLmjxNyCYLyEgJwcQugm6C3YL00VmY9Z4jW"
 );
 const Requests = () => {
-  const [stripe, setStripe] = useState(null);
+  const [stripe, setStripe] = useState<Stripe | null>(null);
   const { isStudent } = useSelector((state: RootState) => state.auth);
 
-  const {
-    data: jobPosting,
-    isLoading,
-    isError,
-  } = useQuery({
+  const { data: jobPosting } = useQuery({
     queryFn: () => viewRequest(isStudent._id),
     queryKey: ["jobPosting"],
   });
   console.log(jobPosting);
 
-
   console.log(jobPosting?.data.requests);
-  const handleAccept = async (tutor:any, date:Date) => {
+  const handleAccept = async (tutor: any, date: Date) => {
     const object: objectData = {
       tutor: tutor._id,
-      fees:tutor.fee,
+      fees: tutor.fee,
       timing: {
         date: [date],
         student: isStudent._id,
-        fee:tutor.fee
+        fee: tutor.fee,
       },
     };
 
@@ -55,7 +51,6 @@ const Requests = () => {
     if (response) {
       window.location.href = response.data.url;
     }
-  
   };
 
   return (
@@ -66,7 +61,9 @@ const Requests = () => {
       <div className="flex flex-row w-full bg-gray-100">
         <StudentSidebar />
         <div className="flex items-center justify-start mt-8 mb-10 flex-col w-full">
-          <h1 className="text-3xl font-bold mt-2 mb-2 text-indigo-800">Your Requests</h1>
+          <h1 className="text-3xl font-bold mt-2 mb-2 text-indigo-800">
+            Your Requests
+          </h1>
           {jobPosting && (
             <div className="max-w-6xl w-full bg-white rounded-xl shadow-md p-6">
               <div className="mb-6">
@@ -89,29 +86,33 @@ const Requests = () => {
 
               <div>
                 <h2 className="text-2xl font-bold mb-4">Applied Tutors</h2>
-                {jobPosting?.data.requests.map((tutor:any) => (
+                {jobPosting?.data.requests.map((tutor: any) => (
                   <div
                     key={tutor._id}
                     className="bg-white rounded-xl shadow-md mb-4 p-4 flex justify-between items-center"
                   >
                     <div className="flex gap-4">
                       <div className="w-12 flex justify-center items-center">
-<img className="rounded-full" src={tutor.tutor.image} alt="" />
-                      </div><div>
-                      <p className="text-lg font-bold">
-                        Tutor Name: {tutor.tutor.name}
-                      </p>
-                      <p>
-                        <strong>Fee:</strong> {tutor.fee}
-                      </p>
-                      <p>
-                        <strong>Date: </strong>
-                        {new Date(tutor.date).toLocaleDateString()}
-                        <strong> Time: </strong>{" "}
-                        {new Date(tutor.date).toLocaleTimeString()}{" "}
-                      </p>
+                        <img
+                          className="rounded-full"
+                          src={tutor.tutor.image}
+                          alt=""
+                        />
                       </div>
-                      
+                      <div>
+                        <p className="text-lg font-bold">
+                          Tutor Name: {tutor.tutor.name}
+                        </p>
+                        <p>
+                          <strong>Fee:</strong> {tutor.fee}
+                        </p>
+                        <p>
+                          <strong>Date: </strong>
+                          {new Date(tutor.date).toLocaleDateString()}
+                          <strong> Time: </strong>{" "}
+                          {new Date(tutor.date).toLocaleTimeString()}{" "}
+                        </p>
+                      </div>
                     </div>
                     <button
                       onClick={() => handleAccept(tutor.tutor, tutor.date)}
@@ -131,7 +132,6 @@ const Requests = () => {
 };
 
 export default Requests;
-function setStripe(stripeInstance: import("@stripe/stripe-js").Stripe | null) {
-  throw new Error("Function not implemented.");
-}
-
+// function setStripe(stripeInstance: import("@stripe/stripe-js").Stripe | null) {
+//   throw new Error("Function not implemented.");
+// }

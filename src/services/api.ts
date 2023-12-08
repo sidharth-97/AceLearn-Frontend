@@ -1,5 +1,5 @@
 import axios from "axios";
 
-const Api = axios.create({ baseURL:"https://acelearn.online/api/",withCredentials:true });
+const Api = axios.create({ baseURL:"http://localhost:3001/api/",withCredentials:true });
 
 export default Api;

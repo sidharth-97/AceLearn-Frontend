@@ -3,18 +3,18 @@ import { useQuery } from "react-query";
 import { viewQuestions } from "../../api/tutorapi";
 import SolveQuestions from "./SolveQuestions";
 
-// ... (import statements)
 
-const StudentQuestionsView = ({ toggler }) => {
+
+const StudentQuestionsView = ({ toggler }:{toggler:React.Dispatch<React.SetStateAction<boolean>>}) => {
   const [solve, setSolve] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(600); // 10 minutes in seconds
+  const [timeLeft, setTimeLeft] = useState(600); 
 
   const fetchQuestions = useCallback(() => viewQuestions(), []);
 
-  const { data: questionData, isLoading, refetch } = useQuery({
+  const { data: questionData, refetch } = useQuery({
     queryFn: fetchQuestions,
     queryKey: ["ques"],
-    staleTime: 60000, // 1 minute in milliseconds
+    staleTime: 60000, 
     onSuccess: (data) => {
       console.log(data);
       
@@ -25,18 +25,18 @@ const StudentQuestionsView = ({ toggler }) => {
 
 
   useEffect(() => {
-    let timer;
+    let timer: string | number | NodeJS.Timeout | undefined;
 
     if (timeLeft > 0) {
       timer = setInterval(() => {
         setTimeLeft((prevTime) => prevTime - 1);
       }, 1000);
     } else if (timeLeft === 0 && !solve) {
-      // When the time is up, set the toggler to true
+    
       toggler(true);
     }
 
-    return () => clearInterval(timer); // Cleanup the interval on component unmount
+    return () => clearInterval(timer);
   }, [timeLeft, solve, toggler]);
 
 
@@ -44,7 +44,7 @@ const StudentQuestionsView = ({ toggler }) => {
     console.log("skippppp");
     
     await refetch();
-    setSolve(false); // Set solve to false after skipping the question
+    setSolve(false); 
   };
 
   return (

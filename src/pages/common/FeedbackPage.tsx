@@ -7,7 +7,7 @@ import { RootState } from '../../store';
 
 const FeedbackPage = () => {
     const params = useParams()
-    const [setState] = useState("")
+    const [state,setState] = useState<string>("")
     const navigate=useNavigate()
     const { isTutor } = useSelector((state:RootState) => state.auth)
     
@@ -17,8 +17,10 @@ const FeedbackPage = () => {
     
     useEffect(() => {
         if (localStorage.getItem("student")) {
-            let videoCallData = JSON.parse(localStorage.getItem("videocall"))
+            let videoCallData = JSON.parse(localStorage.getItem("videocall") || "{}");
             setState(videoCallData)
+            console.log(state);
+            
         const data = {
             id: params.id,
             tutor:videoCallData.tutor

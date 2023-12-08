@@ -63,7 +63,7 @@ export const blockTutor = async (id: string) => {
   }
 };
 
-export const addSubjects = async (subject: string) => {
+export const addSubjects = async (subject: any) => {
   try {
     const response = await Api.post(AdminRoutes.addSubjects, subject);
     return response;

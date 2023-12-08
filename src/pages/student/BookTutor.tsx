@@ -3,42 +3,36 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import Navbar from "../../components/common/navbar";
 import img from "../../assets/Screenshot_2023-11-02_000343-removebg-preview.png";
-import { useQuery, useMutation } from "react-query";
-import { TutorDetails, bookTutor, getTutorSchedule } from "../../api/tutorapi";
-import { useNavigate, useParams } from "react-router-dom";
+import { useQuery} from "react-query";
+import { TutorDetails,getTutorSchedule } from "../../api/tutorapi";
+import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { loadStripe } from "@stripe/stripe-js";
 import { bookWithWallet, paymentsession } from "../../api/studentapi";
-
 const stripePromise = loadStripe(
   "pk_test_51OA4ziSEjtBzAge5ZAWJV2Y2EW4v8d0iUt4DHgoUX09VWYiYhsJcUCARpvHLYj5ZLmjxNyCYLyEgJwcQugm6C3YL00VmY9Z4jW"
 );
 
 const BookTutor = () => {
   const today = new Date();
-  const [value, onChange] = useState<Date>(today);
+  const [value, onChange] = useState<any>(today);
   const [tutorSchedule, setTutorSchedule] = useState<any>({});
   const [timeArray, setTimeArray] = useState(new Set());
   const [includedDates, setIncludedDates] = useState<Date[]>([]);
-  const [stripe, setStripe] = useState(null);
-
-  const navigate = useNavigate();
+  const [stripe, setStripe] = useState<any>();
   const params: any = useParams();
   const { isStudent } = useSelector((state: any) => state.auth);
   const {
-    data: schedules,
     isLoading,
-    isError,
-    refetch,
   } = useQuery("schedule", () => getTutorSchedule(params.id), {
     onSuccess: (data) => {
-      const included = data.data[0].timing
-        .filter((item) => !item.student)
-        .map((item) => new Date(item.date));
+      const included = data?.data[0].timing
+        .filter((item: { student: any; }) => !item.student)
+        .map((item: { date: string | number | Date; }) => new Date(item.date));
       setIncludedDates(included); //
 
-      const groupedDates = data.data[0].timing.reduce(
+      const groupedDates = data?.data[0].timing.reduce(
         (grouped: any, item: any) => {
           includedDates.push(item.date);
           if (!item.student) {
@@ -61,7 +55,9 @@ const BookTutor = () => {
       setTutorSchedule(groupedDates);
     },
   });
-
+  if (isLoading) {
+  <div>Loading....</div>
+}
   // const bookTutorMutation = useMutation(bookTutor, {
   //   onSuccess: (data) => {
 
@@ -195,7 +191,7 @@ const BookTutor = () => {
             </p>
             <div className="grid grid-cols-4 gap-2 lg:max-w-xl">
               {tutorSchedule[value.toLocaleDateString()] &&
-                tutorSchedule[value.toLocaleDateString()].map((time, index) => (
+                tutorSchedule[value.toLocaleDateString()].map((time:any, index:any) => (
                   <button
                     onClick={() => handleClick(time)}
                     key={index}
@@ -211,7 +207,7 @@ const BookTutor = () => {
                 Selected Times
               </p>
               <ul>
-                {Array.from(timeArray).map((utcDateString, index) => {
+                {Array.from(timeArray).map((utcDateString:any, index) => {
                   const [datePart, timePart] = utcDateString.split("T");
                   const [hours, minutes] = timePart.split(":");
 

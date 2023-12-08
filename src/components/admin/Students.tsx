@@ -103,7 +103,7 @@ console.log(filteredUsers,"users");
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="flex-shrink flex-grow flex-auto leading-normal tracking-wide w-px flex-1 border border-none border-l-0 rounded rounded-l-none px-3 relative focus:outline-none text-xxs lg:text-xs lg:text-base text-gray-500 font-thin"
+                className="flex-shrink flex-grow flex-auto leading-normal tracking-wide w-px border border-none border-l-0 rounded rounded-l-none px-3 relative focus:outline-none text-xxs lg:text-xs text-gray-500 font-thin"
                 placeholder="Search"
               />
             </div>
@@ -264,7 +264,7 @@ console.log(filteredUsers,"users");
               </div>
             </nav>
           </div> */}
-          <Pagination active={activePage} setActive={setActivePage} limit={ limit} />
+          <Pagination activePage={activePage} setActive={setActivePage} limit={ limit} />
         </div>
       </div>
     </div>

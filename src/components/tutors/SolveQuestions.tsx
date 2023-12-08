@@ -3,7 +3,7 @@ import { submitSolution } from "../../api/tutorapi";
 import {toast} from 'react-toastify'
 import { useNavigate } from "react-router-dom";
 
-const SolveQuestions = ({ question }) => {
+const SolveQuestions = ({ question }:{question:string}) => {
   const [solution, setSolution] = useState("");
   const [img, setImg] = useState<File | null>(null);
 const navigate=useNavigate()
@@ -11,6 +11,7 @@ const navigate=useNavigate()
     e.preventDefault();
     const formData = new FormData();
     formData.append("text", solution);
+    if(img)
     formData.append("image", img);
     formData.append("id",question)
     const result = await submitSolution(formData);

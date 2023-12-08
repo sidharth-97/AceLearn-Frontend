@@ -6,7 +6,10 @@ import { useSelector } from "react-redux";
 import socket from "../../services/socket";
 import { useNavigate } from "react-router-dom";
 
-
+interface TutorScheduleProps {
+  change: boolean;
+  setChange: React.Dispatch<React.SetStateAction<boolean>>;
+}
 interface schedule{
   _id:string,
   date: Date,
@@ -14,7 +17,7 @@ interface schedule{
   fee: Number
 }
 
-const TutorSchedule = ({change,setChange}) => {
+const TutorSchedule:React.FC<TutorScheduleProps> = ({change,setChange}) => {
   const { isTutor } = useSelector((state: any) => state.auth);
   const [schedule, setSchedule] = useState([]);
   const [toggle, setToggle] = useState(true);
@@ -22,9 +25,6 @@ const TutorSchedule = ({change,setChange}) => {
   const navigate = useNavigate();
 
   const {
-    data,
-    isLoading,
-    isError,
     refetch: refetchSchedule,
   } = useQuery({
     queryFn: () => getTutorSchedule(isTutor._id),
@@ -79,7 +79,7 @@ const TutorSchedule = ({change,setChange}) => {
 
   const handleJoinRoom = useCallback(
     (data: { tutor: string; room: string }) => {
-      const { tutor, room } = data;
+      const { room } = data;
       navigate(`/room/${room}`);
     },
     []
@@ -128,7 +128,7 @@ const TutorSchedule = ({change,setChange}) => {
             {toggle ? (
               <div className="grid gap-4 mx-4 sm:grid-cols-12">
                 <div className="relative col-span-12 px-4 space-y-6 sm:col-span-9 my-5">
-                  {schedule.map((schedules:schedule, index) =>
+                  {schedule.map((schedules:schedule) =>
                     new Date(schedules.date) >= new Date() ? (
                       <div className="col-span-12 space-y-12 relative px-4 sm:col-span-8 sm:space-y-8 sm:before:absolute sm:before:top-2 sm:before:bottom-0 sm:before:w-0.5 sm:before:-left-3 before:bg-gray-700">
                         <div className="flex flex-col sm:relative sm:before:absolute sm:before:top-2 sm:before:w-4 sm:before:h-4 sm:before:rounded-full sm:before:left-[-35px] sm:before:z-[1] before:bg-blue-400">
@@ -184,7 +184,7 @@ const TutorSchedule = ({change,setChange}) => {
 				                      </div>
 		                      	</div> */}
                 <div className="relative col-span-12 px-4 space-y-6 sm:col-span-9">
-                  {schedule.map((schedules:schedule, index) =>
+                  {schedule.map((schedules:schedule) =>
                     new Date(schedules.date) <= new Date() ? (
                       <div className="col-span-12 space-y-12 relative px-4 sm:col-span-8 sm:space-y-8 sm:before:absolute sm:before:top-2 sm:before:bottom-0 sm:before:w-0.5 sm:before:-left-3 before:bg-gray-700">
                         <div className="flex flex-col sm:relative sm:before:absolute sm:before:top-2 sm:before:w-4 sm:before:h-4 sm:before:rounded-full sm:before:left-[-35px] sm:before:z-[1] before:bg-blue-400">

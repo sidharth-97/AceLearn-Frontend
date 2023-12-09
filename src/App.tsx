@@ -1,7 +1,6 @@
 import "./App.css";
-import { lazy } from "react";
 import { useRoutes } from "react-router-dom";
-const Home = lazy(() => import("./pages/common/Home"));
+import Home from "./pages/common/Home"
 import Signin from "./components/common/Signin";
 import Signup from "./pages/student/Signup";
 import Navbar from "./components/common/navbar";

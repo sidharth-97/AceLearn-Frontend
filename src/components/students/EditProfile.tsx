@@ -32,31 +32,42 @@ const EditProfile: React.FC<{ data: Student }> = ({ data }) => {
     };
     const response = await editStudent(formData);
     console.log(response);
-    
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0 bg-D9E2EC">
+    <div className="container mx-auto p-4 bg-gray-100 h-screen">
+      <h1 className="text-3xl font-bold mb-2 text-indigo-800">
+        Account Setting
+      </h1>
       <div className="w-full px-6 py-4 mt-6 overflow-hidden bg-white shadow-md sm:max-w-3xl sm:rounded-lg">
         {" "}
         {/* Updated max-width */}
-        <div>
-          <h3 className="text-4xl text-center font-bold text-black pb-6 mb-3">
-            Account Setting
-          </h3>
-        </div>
-        <div>
+        <div></div>
+        <div className="text-lg">
           <ul className="flex gap-5 p-5">
-            <li onClick={() => setToggle(true)}>Profile</li>
-            <li onClick={() => setToggle(false)}>Password</li>
+            <li
+              className={`cursor-pointer ${
+                toggle && "border-b-4 border-blue-400"
+              }`}
+              onClick={() => setToggle(true)}
+            >
+              Profile
+            </li>
+            <li
+              className={`cursor-pointer ${
+                !toggle && "border-b-4 border-blue-400"
+              }`}
+              onClick={() => setToggle(false)}
+            >
+              Password
+            </li>
           </ul>
         </div>
         {toggle ? (
-          <div className="flex flex-row">
-            <div className="w-1/4 mr-6">
-              {/* Add your profile picture component or code here */}
+          <div className="flex flex-col justify-around items-center sm:flex-row">
+            <div className="w-1/2 sm:w-1/4 mr-6">
               <img
-                src={isStudent.image} // Replace with the actual image source
+                src={isStudent.image}
                 alt="Profile"
                 className="w-full h-auto rounded-full"
               />
@@ -75,7 +86,7 @@ const EditProfile: React.FC<{ data: Student }> = ({ data }) => {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     name="name"
-                    className="block w-full mt-1 border rounded-md shadow-sm focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                    className="border-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-2 px-4 text-base text-body-color placeholder-[#ACB6BE] outline-none focus:border-primary focus-visible:shadow-none"
                   />
                 </div>
                 <div className="mt-4">
@@ -90,7 +101,7 @@ const EditProfile: React.FC<{ data: Student }> = ({ data }) => {
                     value={mobile}
                     onChange={(e) => setMobile(e.target.value)}
                     name="mobile"
-                    className="block w-full mt-1 border rounded-md shadow-sm focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                    className="border-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-2 px-4 text-base text-body-color placeholder-[#ACB6BE] outline-none focus:border-primary focus-visible:shadow-none"
                   />
                 </div>
                 <div className="mt-4">
@@ -98,7 +109,7 @@ const EditProfile: React.FC<{ data: Student }> = ({ data }) => {
                     htmlFor="mobile"
                     className="block text-sm font-medium text-gray-700"
                   >
-                    Mobile
+                    Profile picture
                   </label>
                   <input
                     type="file"
@@ -108,10 +119,10 @@ const EditProfile: React.FC<{ data: Student }> = ({ data }) => {
                     className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                   />
                 </div>
-                <div className="flex items-center justify-center mt-4">
+                <div className="flex items-start justify-center mt-4 sm:items-center">
                   <button
                     type="submit"
-                    className="inline-flex items-center px-4 py-2 ml-4 text-xs font-semibold text-white uppercase transition duration-150 ease-in-out bg-gray-900 border border-transparent rounded-md active:bg-gray-900"
+                    className="bg-blue-500 w-32 text-white p-2 rounded-md hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue"
                   >
                     Edit
                   </button>
@@ -134,7 +145,7 @@ const EditProfile: React.FC<{ data: Student }> = ({ data }) => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   name="password"
-                  className="block w-full mt-1 border rounded-md shadow-sm focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                  className="border-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-2 px-4 text-base text-body-color placeholder-[#ACB6BE] outline-none focus:border-primary focus-visible:shadow-none"
                 />
               </div>
               <div className="mt-4">
@@ -149,10 +160,17 @@ const EditProfile: React.FC<{ data: Student }> = ({ data }) => {
                   value={cpassword}
                   onChange={(e) => setCpassword(e.target.value)}
                   name="password_confirmation"
-                  className="block w-full mt-1 border rounded-md shadow-sm focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                  className="border-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-2 px-4 text-base text-body-color placeholder-[#ACB6BE] outline-none focus:border-primary focus-visible:shadow-none"
                 />
               </div>
-              <button   className="inline-flex items-center px-4 py-2 mt-2 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-gray-900 border border-transparent rounded-md active:bg-gray-900 false" type="submit">Change Password</button>
+              <div className="flex items-center mt-2">
+                <button
+                  type="submit"
+                  className="inline bg-blue-500 min-w-32 text-white p-2 rounded-md hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue whitespace-nowrap"
+                >
+                  Change Password
+                </button>
+              </div>
             </form>
           </div>
         )}

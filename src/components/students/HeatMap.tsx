@@ -19,7 +19,7 @@ function Cell({ color }:{color:string}) {
 }
 
 function Month({ startDate, index }:{startDate: moment.Moment ,index:number}) {
-  let date = moment(startDate).add(index * 7, 'day');
+  let date = moment(startDate).add(index * 7.5, 'day');
   let monthName = date.format('MMM');
 
   return (

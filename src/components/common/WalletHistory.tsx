@@ -1,19 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaArrowAltCircleUp } from "react-icons/fa";
 import { FaArrowCircleDown } from "react-icons/fa";
 
-interface Transaction{
+interface Transaction {
   title: string;
   details: string;
-  amount: number,
-  type: string,
-  date:Date
+  amount: number;
+  type: string;
+  date: Date;
 }
 interface WalletHistoryProps {
   walletHistory?: Transaction[];
 }
 
-const WalletHistory:React.FC<WalletHistoryProps> = ({ walletHistory }) => {
+const WalletHistory: React.FC<WalletHistoryProps> = ({ walletHistory }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const toggleModal = () => {
@@ -23,6 +23,20 @@ const WalletHistory:React.FC<WalletHistoryProps> = ({ walletHistory }) => {
   const hideModal = () => {
     setModalVisible(false);
   };
+
+  useEffect(() => {
+    // Add or remove 'overflow-hidden' class to body based on modal visibility
+    if (modalVisible) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+
+    // Cleanup effect
+    return () => {
+      document.body.classList.remove("overflow-hidden");
+    };
+  }, [modalVisible]);
 
   return (
     <div>
@@ -54,9 +68,9 @@ const WalletHistory:React.FC<WalletHistoryProps> = ({ walletHistory }) => {
           } transition-opacity duration-300`}
           onClick={hideModal}
         ></div>
-        <div className="relative p-4 w-full max-w-2xl max-h-full">
+        <div className="relative p-4 w-full max-w-2xl h-full">
           {/* Modal content */}
-          <div className="relative bg-white rounded-lg shadow ">
+          <div className="relative bg-white rounded-lg shadow h-full overflow-y-auto">
             {/* Modal header */}
             <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
               <h3 className="text-xl font-semibold text-gray-900 ">
@@ -100,7 +114,7 @@ const WalletHistory:React.FC<WalletHistoryProps> = ({ walletHistory }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {walletHistory?.map((transaction:Transaction, index:number) => (
+                    {walletHistory?.map((transaction: Transaction, index: number) => (
                       <tr
                         key={index}
                         className={index % 2 === 0 ? "bg-gray-100" : ""}

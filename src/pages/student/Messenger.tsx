@@ -14,6 +14,7 @@ import StudentSidebar from "../../components/students/StudentSidebar";
 import send from "../../assets/send-message.png"
 import attach from "../../assets/attachment.png"
 import { RootState } from "../../store";
+import { IoIosArrowBack } from "react-icons/io";
 
 interface CurrentChat {
   _id: string;
@@ -43,6 +44,9 @@ interface SelectedUser{
 
 const Messenger = () => {
   const [currentChat, setCurrentChat] = useState<CurrentChat | null>(null);
+  const [mobile, setMobile] = useState(false)
+  const [viewChat, setViewChat] = useState(true)
+  const [desktop,setDesktop]=useState(false)
   const [messages, setMessages] = useState<Messagee[]>([]);
   const [newMessage, setNewMessage] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState<Messagee|null>(null);
@@ -153,19 +157,31 @@ console.log(res);
 
   console.log(selectedUser, "---------------------------------");
 
+  useEffect(() => {
+    if (window.innerWidth < 768) {
+      setMobile(true)
+    } else {
+      setDesktop(true)
+    }
+  },[])
+
   return (
     <div className="h-screen">
       <Navbar />
       <div className="flex h-full">
         <StudentSidebar />
-        <div className="w-1/4 p-4 border-r border-gray-300">
+
+        {
+
+        }
+     { !viewChat ||desktop &&  <div className={`${mobile?'w-full':'w-1/4'} p-4 border-r border-gray-300`}>
           <input
             placeholder="Search for friends"
             className="w-full p-2 border-b border-gray-300"
           />
           {conversations?.data?.conv?.length &&
             conversations?.data?.conv?.map((conv:CurrentChat) => (
-              <div onClick={() => setCurrentChat(conv)}>
+              <div onClick={() => { setCurrentChat(conv); setViewChat(true)}}>
                 <Conversation
                   key={conv?._id}
                   conversation={conv}
@@ -175,76 +191,86 @@ console.log(res);
                   lastMessage={conversations?.data?.messages}                />
               </div>
             ))}
-        </div>
-        <div className="w-1/2 flex flex-col relative">
-          <div className="flex items-center gap-1 p-4">
-            <img
-              src={selectedUser?.image}
-              alt={selectedUser?.username}
-              className="w-12 h-12 rounded-full mr-2"
-            />
-            <h1 className="text-lg font-semibold">{selectedUser?.name}</h1>
-          </div>
+        </div>}
 
-          <div className="overflow-y-scroll p-4 flex-grow overflow-x-hidden">
-            {/* chatBoxTop content */}
-            {messages.map((m:any) => (
-              <div ref={scrollRef}>
-                <Message
-                  res={selectedUser}
-                  message={m}
-                  own={m.sender == isStudent._id}
-                />
-              </div>
-            ))}
-          </div>
-          <div className="p-4 flex items-center">
-            <form
-              onSubmit={handleSubmit}
-              encType="multipart/form-data"
-              className="w-full flex items-center"
-            >
-              <textarea
-                className="w-full h-16 p-2 border border-gray-300 mr-4"
-                placeholder="write something..."
-                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setNewMessage(e.target.value)}
-                value={newMessage}
-                name="text"
-              ></textarea>{" "}
-              <label className="relative cursor-pointer">
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => setImage(e.target.files?.[0] || null)}
-                  name="image"
-                  className="hidden"
-                />
-                {image && (
-                  <img
-                    className="object-cover h-16 ms-1"
-                    src={""}
-                    alt="Selected Image"
-                  />
-                )}
-                {!image && (
-                  <img
-                    className="object-cover h-16 ms-1"
-                    src={attach}
-                    alt="Send Icon"
-                  />
-                )}
-              </label>
-              <button type="submit">
-                <img
-                  className="object-cover h-16 ms-1"
-                  src={send}
-                  alt="Send Icon"
-                />
-              </button>
-            </form>
-          </div>
-          <span className="absolute top-10 text-5xl text-gray-300 cursor-default"></span>
+
+    {(!mobile || viewChat) &&<div className={`${mobile?"w-full":"w-1/2 "}flex flex-col relative`}>
+          <div className="flex items-center gap-1 p-4">
+          <div className="flex items-center ">
+          <button
+            onClick={()=> setViewChat(false)}
+            className=" text-gray-700 font-bold py-2 px-4 rounded"
+          >
+                <IoIosArrowBack size={32}/>
+          </button>
         </div>
+        <img
+          src={selectedUser?.image}
+          alt={selectedUser?.username ||selectedUser?.name}
+          className="w-12 h-12 rounded-full mr-2"
+        />
+        <h1 className="text-lg font-semibold">{selectedUser?.name||selectedUser?.username}</h1>
+      </div>
+
+      <div className="overflow-y-scroll p-4 flex-grow overflow-x-hidden">
+        {/* chatBoxTop content */}
+        {messages.map((m:any) => (
+          <div ref={scrollRef}>
+            <Message
+              res={selectedUser}
+              message={m}
+              own={m.sender == isStudent._id}
+            />
+          </div>
+        ))}
+      </div>
+      <div className="p-4 flex items-center">
+        <form
+          onSubmit={handleSubmit}
+          encType="multipart/form-data"
+          className="w-full flex items-center"
+        >
+          <textarea
+            className="w-full h-16 p-2 border border-gray-300 mr-4"
+            placeholder="write something..."
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setNewMessage(e.target.value)}
+            value={newMessage}
+            name="text"
+          ></textarea>{" "}
+          <label className="relative cursor-pointer">
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => setImage(e.target.files?.[0] || null)}
+              name="image"
+              className="hidden"
+            />
+            {image && (
+              <img
+                className="object-cover h-16 ms-1"
+                src={""}
+                alt="Selected Image"
+              />
+            )}
+            {!image && (
+              <img
+                className="object-cover h-16 ms-1"
+                src={attach}
+                alt="Send Icon"
+              />
+            )}
+          </label>
+          <button type="submit">
+            <img
+              className="object-cover h-16 ms-1"
+              src={send}
+              alt="Send Icon"
+            />
+          </button>
+        </form>
+      </div>
+      <span className="absolute top-10 text-5xl text-gray-300 cursor-default"></span>
+    </div>}
         {/* <div className="w-1/4 p-4 border-l border-gray-300">
         
         </div> */}

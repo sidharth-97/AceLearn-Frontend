@@ -11,7 +11,7 @@ import NotificationModal from "./NotificationModal";
 
 const Navbar: React.FC = () => {
   const [open, setOpen] = useState(false);
-  const[sidebar,setSidebar]=useState(false)
+  const [sidebar, setSidebar] = useState(false);
 
   const dispatch = useDispatch();
   const { isStudent } = useSelector((state: any) => state.auth);
@@ -88,7 +88,6 @@ const Navbar: React.FC = () => {
               <div className="hidden sm:flex sm:items-center">
                 {isStudent || isTutor ? (
                   <div className="flex justify-center items-center text-center">
-                   
                     <Link
                       to={
                         isStudent
@@ -98,13 +97,16 @@ const Navbar: React.FC = () => {
                       className="text-white text-sm font-semibold relative inline-block mr-4 group"
                     >
                       <div className="flex flex-row justify-center items-center">
-                         {isTutor && (
-                        <img className="w-6 rounded-full mr-1"  src={isTutor.image} alt="" />
-                      )}
-                       My Profile
-                      <span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
+                        {isTutor && (
+                          <img
+                            className="w-6 rounded-full mr-1"
+                            src={isTutor.image}
+                            alt=""
+                          />
+                        )}
+                        My Profile
+                        <span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
                       </div>
-                     
                     </Link>
                     <button
                       onClick={handleLogout}
@@ -113,8 +115,12 @@ const Navbar: React.FC = () => {
                       Logout
                       <span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
                     </button>
-                    
-                    {sidebar ? <NotificationModal setSidebar={setSidebar} /> : <NotificationDropdown setSidebar={setSidebar } />}
+
+                    {sidebar ? (
+                      <NotificationModal setSidebar={setSidebar} />
+                    ) : (
+                      <NotificationDropdown setSidebar={setSidebar} />
+                    )}
                   </div>
                 ) : (
                   <>
@@ -127,7 +133,7 @@ const Navbar: React.FC = () => {
                     </Link>
                     <Link
                       to={"/student/signup"}
-                      className="text-white text-sm font-semibold border px-4 py-2 rounded-lg hover:text-purple-600 hover:border-purple-600"
+                      className="text-white text-sm font-semibold border px-4 py-2 rounded-lg hover:text-blue-600 hover:border-blue-600"
                     >
                       Sign up
                     </Link>
@@ -138,7 +144,7 @@ const Navbar: React.FC = () => {
               <div className="sm:hidden cursor-pointer" onClick={toggleNavbar}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="w-6 h-6 text-purple-600"
+                  className="w-6 h-6 text-white"
                   viewBox="0 0 24 24"
                 >
                   <path
@@ -162,37 +168,64 @@ const Navbar: React.FC = () => {
                 </Link>
                 <Link
                   to={"/about-us"}
-                  className="text-white text-sm font-semibold hover:text-purple-600 mb-1"
+                  className="text-white text-sm font-semibold hover:underline hover:text-white mb-1"
                 >
                   About
                 </Link>
-            
+
                 <Link
                   to={"/tutor/all-tutors"}
-                  className="text-white text-sm font-semibold hover:text-purple-600 mb-1"
+                  className="text-white text-sm font-semibold hover:underline hover:text-white mb-1"
                 >
                   Find Tutor
                 </Link>
                 <Link
                   to={"/tutor/signup"}
-                  className="text-white text-sm font-semibold hover:text-purple-600 mb-1"
+                  className="text-white text-sm font-semibold hover:underline hover:text-white mb-1"
                 >
                   Become Tutor
                 </Link>
 
                 <div className="flex justify-between items-center border-t-2 pt-2">
-                  <a
-                    href="#"
-                    className="text-white text-sm font-semibold hover:text-purple-600 mr-4"
-                  >
-                    Sign in
-                  </a>
-                  <a
-                    href="#"
-                    className="text-white text-sm font-semibold border px-4 py-1 rounded-lg hover:text-purple-600 hover:border-purple-600"
-                  >
-                    Sign up
-                  </a>
+                  {isStudent || isTutor ? (
+                    <>
+                      <span className="text-white text-sm font-semibold hover:underline hover:text-white mr-4">
+                        <Link
+                          to={
+                            isStudent
+                              ? "/student/dashboard"
+                              : "/tutor/tutordashboard"
+                          }
+                        >
+                          {" "}
+                          My profile
+                        </Link>
+                      </span>
+                      <span className="text-white text-sm font-semibold border px-4 py-1 rounded-lg hover:underline hover:text-white ">
+                        <button
+                          onClick={handleLogout}
+                          className="text-white text-sm font-semibold relative inline-block mr-4 group"
+                        >
+                          Logout
+                          <span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
+                        </button>
+                        {sidebar ? (
+                          <NotificationModal setSidebar={setSidebar} />
+                        ) : (
+                          <NotificationDropdown setSidebar={setSidebar} />
+                        )}
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      <span className="text-white text-sm font-semibold hover:underline hover:text-white mr-4">
+                        <Link to={"/student/login"}> Sign in</Link>
+                      </span>
+                      <span className="text-white text-sm font-semibold border px-4 py-1 rounded-lg hover:underline hover:text-white ">
+                        <Link to={"/student/signup"}> Sign up</Link>
+                      </span>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

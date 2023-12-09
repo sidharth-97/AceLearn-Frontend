@@ -23,7 +23,7 @@ const StudentProfile = () => {
         <StudentSidebar />
 
         <div className="lg:p-14 xl:p-16 bg-gray-100 w-full sm:p-5">
-          <div className="bg-white shadow-md rounded-md w-full sm:p-6">
+          <div className="bg-white shadow-md rounded-md w-full overflow-x-hidden sm:p-6">
             {/* <div className="flex items-center space-x-4">
               <img
                 src={stdData?.data.image}
@@ -49,9 +49,10 @@ const StudentProfile = () => {
                 style={{
                   position: "absolute",
                   top: "",
-                  left: "08%",
+                 
                   transform: "translate(-50%, -50%)",
                 }}
+                className="left-1/2 sm:left-16"
               >
                 <img
                   src={stdData?.data.image}
@@ -60,7 +61,7 @@ const StudentProfile = () => {
                 />
               </div>
             </div>
-            <div className="flex justify-between flex-col sm:flex-row">
+            <div className="flex justify-between flex-col overflow-x-hidden sm:flex-row">
               <div className="flex flex-col mt-16 p-2">
                 <h2 className="text-2xl font-semibold">{isStudent.username}</h2>
                 <div>
@@ -68,7 +69,7 @@ const StudentProfile = () => {
                   <p className="text-gray-500">Phone: {isStudent.mobile}</p>
                 </div>
               </div>
-              <div className="mt-16 flex items-center justify-center space-x-3">
+              <div className="mt-6 mb-2 flex items-center justify-center space-x-3 sm:mt-16">
                 <div className="flex items-center gap-1 sm:flex-col ">
                   <div className="flex items-center gap-1">
                     <FaWallet

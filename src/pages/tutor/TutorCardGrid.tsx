@@ -4,6 +4,7 @@ import { getalltutors } from "../../api/tutorapi";
 import { Link } from "react-router-dom";
 import Pagination from "../../components/UI/Pagination";
 import { Tutor } from "../../model/tutorModel";
+import TutorCard from "../../components/UI/TutorCard";
 
 const TutorCardGrid = ({ selectedFilters }:any) => {
   const [tutorData, setTutorData] = useState([]);
@@ -119,40 +120,8 @@ const TutorCardGrid = ({ selectedFilters }:any) => {
                 </div>
               ))
             : tutorData.map((tutor: Tutor, index) => (
-                <Link to={`/tutor/tutorProfile/${tutor._id}`} key={index}>
-                  <div className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
-                    <a href="#">
-                      <img
-                        src={`${tutor.image}`}
-                        alt="Product"
-                        className=" h-60 w-72 object-contain rounded-t-xl"
-                      />
-                      <div className="px-4 py-3 w-72">
-                        <span className="text-gray-400 mr-3 uppercase text-xs">
-                          {tutor.subject}
-                        </span>
-                        <p className="text-lg font-bold text-black truncate block capitalize">
-                          {tutor.name}
-                        </p>
-                        <div className="flex items-center">
-                          <p className="text-lg font-semibold text-black cursor-auto my-3">
-                            Rs. {tutor.fee}
-                          </p>
-                          <del>
-                            <p className="text-sm text-gray-600 cursor-auto ml-2">
-                              Rs. {tutor.fee}
-                            </p>
-                          </del>
-                          <div className="ml-auto">
-                            &#11088;
-                            {tutor.rating !== null && tutor.rating !== undefined
-                              ? Math.floor(tutor.rating)
-                              : "not rated"}
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-                  </div>
+                <Link to={`/tutor/tutorProfile/${tutor._id}`} key={index}>   
+                <TutorCard tutor={tutor} />
                 </Link>
               ))}
         </section>

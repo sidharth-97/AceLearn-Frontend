@@ -405,3 +405,13 @@ export const TforgetPasswordFinal = async (data:any) => {
     
   }
 }
+
+export const tutoravilable = async (id: string) => {
+  try {
+    const response = await Api.get(`${tutorRoutes.tutoravilable}/${id}`)
+    return response
+  } catch (error) {
+    console.log(error);
+    
+  }
+}

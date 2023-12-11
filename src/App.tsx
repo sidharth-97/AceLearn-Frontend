@@ -40,6 +40,7 @@ import { getNotificationToken } from "./firebase";
 import { useEffect } from "react";
 import LiveClassTutor from "./pages/tutor/LiveClassTutor";
 import LiveClass from "./pages/student/LiveClass";
+import RoomPage from "./pages/common/RoomPage";
 
 
 function App() {
@@ -59,7 +60,8 @@ function App() {
         { path: "about-us", element: <AboutUS /> },
         { path: "forgot-password", element: <ForgetPassword tutor={false} /> },
         { path: "tutor-forgot-password", element: <ForgetPassword tutor={true} /> },
-        { path:"live-classroom",element:<LiveClass/>}
+        { path: "live-classroom", element: <LiveClass /> },
+        {path:"classroom/:roomId",element:<RoomPage/>}
     ]},
     {
       path: "/student",

@@ -1,6 +1,6 @@
-import React from "react";
 
-const LiveClassCard = ({ data }) => {
+
+const LiveClassCard = ({ data }:any) => {
   return (
     <div className="w-72 bg-white shadow-md rounded-xl transform duration-500 hover:scale-105 hover:shadow-xl">
       <div className="flex justify-between p-4 border-b border-gray-200">

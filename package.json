@@ -19,6 +19,7 @@
     "@reduxjs/toolkit": "^1.9.7",
     "@stripe/stripe-js": "^2.1.11",
     "@types/jwt-decode": "^3.1.0",
+    "@zegocloud/zego-uikit-prebuilt": "^1.8.15",
     "axios": "^1.5.1",
     "firebase": "^10.7.0",
     "framer-motion": "^10.16.12",

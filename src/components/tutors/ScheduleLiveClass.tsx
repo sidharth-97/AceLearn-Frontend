@@ -17,9 +17,16 @@ const ScheduleLiveClass = () => {
     queryKey: ["Subjects"],
   });
 
-    const liveClassMutation=useMutation((data)=>scheduleLiveClass(data))
+    const liveClassMutation=useMutation((data: {
+        subject: string;
+        time: string;
+        topic: string;
+        duration: string;
+        fee: number;
+        description: string;
+    })=>scheduleLiveClass(data))
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = {
@@ -34,11 +41,11 @@ const ScheduleLiveClass = () => {
       liveClassMutation.mutate(formData)
   };
 
-  const handleButtonClick = (value) => {
+  const handleButtonClick = (value:string) => {
     setDuration(value);
   };
 
-  const handleClassTypeButtonClick = (value) => {
+  const handleClassTypeButtonClick = (value:string) => {
     setClassType(value);
   };
 

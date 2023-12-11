@@ -30,7 +30,8 @@ const tutorRoutes = {
     forgetPasswordStep1: "/tutors/forget-password-step-1",
     forgetPasswordStep2: "/tutors/forget-password-step-2",
     forgetPasswordFinal: "/tutors/forget-password-final",
-    tutoravilable:"/tutors/tutor-avilable"
+    tutoravilable: "/tutors/tutor-avilable",
+    scheduleLiveClass:"/tutors/schedule-live-class"
 }
 
 export default tutorRoutes

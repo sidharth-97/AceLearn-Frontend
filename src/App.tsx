@@ -38,6 +38,7 @@ import ForgetPassword from "./components/common/ForgetPassword";
 import Premium from "./components/admin/Premium";
 import { getNotificationToken } from "./firebase";
 import { useEffect } from "react";
+import LiveClassTutor from "./pages/tutor/LiveClassTutor";
 
 
 function App() {
@@ -88,8 +89,8 @@ function App() {
         { path: "tutorjobs", element:<TutorPrivate> <TutorJobs /></TutorPrivate> },
         { path: "messenger", element:<TutorPrivate><MessengerTutor /> </TutorPrivate> },
         { path: "tutor-schedule", element:<TutorPrivate><TutorSchedulePage /></TutorPrivate>  },
-        {path:"homework-help",element:<TutorPrivate><SolveQuestionsPage/></TutorPrivate>}
-       
+        { path:"homework-help",element:<TutorPrivate><SolveQuestionsPage/></TutorPrivate>},
+        { path:"live-class",element:<LiveClassTutor/>}
       ],
     },
     {

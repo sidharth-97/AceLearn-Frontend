@@ -415,3 +415,12 @@ export const tutoravilable = async (id: string) => {
     
   }
 }
+
+export const scheduleLiveClass = async (data: any) => {
+  try {
+    const liveClass = await Api.post(tutorRoutes.scheduleLiveClass,data)
+    return liveClass
+  } catch (error) {
+    console.log(error);
+  }
+}

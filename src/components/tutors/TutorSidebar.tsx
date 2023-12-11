@@ -17,7 +17,7 @@ const TutorSidebar = () => {
     { name: "shedules", link: "/tutor/tutor-schedule", icon:GrSchedule, margin: true },
     { name: "messenger", link: "/tutor/messenger", icon: FiMessageSquare},
     { name: "Homework Help", link: "/tutor/homework-help", icon: AiOutlineHeart, margin: true },
-    { name: "Setting", link: "/", icon: RiSettings4Line },
+    { name: "Live class", link: "/tutor/live-class", icon: RiSettings4Line },
   ];
   const [open, setOpen] = useState(true);
   return (

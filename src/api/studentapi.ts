@@ -265,12 +265,21 @@ export const forgetPasswordFinal = async (data:any) => {
   }
 }
 
-export const studentPremium = async (data:{fees:string}) => {
+export const studentPremium = async (data: { fees: string }) => {
   try {
-    const response = await Api.post(studentRoutes.studentPremium,data)
+    const response = await Api.post(studentRoutes.studentPremium, data)
     return response
   } catch (error) {
     console.log(error);
     
   }
 }
+
+  export const listLiveClass = async () => {
+    try {
+      const response = await Api.get(studentRoutes.listLiveClass)
+      return response
+    } catch (error) {
+      console.log(error);
+    }
+  }

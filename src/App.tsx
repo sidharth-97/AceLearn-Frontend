@@ -39,6 +39,7 @@ import Premium from "./components/admin/Premium";
 import { getNotificationToken } from "./firebase";
 import { useEffect } from "react";
 import LiveClassTutor from "./pages/tutor/LiveClassTutor";
+import LiveClass from "./pages/student/LiveClass";
 
 
 function App() {
@@ -57,8 +58,8 @@ function App() {
         { path: "feedback-page/:id", element: <PrivateRoute><FeedbackPage /></PrivateRoute> },
         { path: "about-us", element: <AboutUS /> },
         { path: "forgot-password", element: <ForgetPassword tutor={false} /> },
-        { path: "tutor-forgot-password", element: <ForgetPassword tutor={true} /> }
-
+        { path: "tutor-forgot-password", element: <ForgetPassword tutor={true} /> },
+        { path:"live-classroom",element:<LiveClass/>}
     ]},
     {
       path: "/student",

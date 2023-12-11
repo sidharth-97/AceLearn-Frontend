@@ -33,7 +33,7 @@ const NotificationModal:React.FC<NotificationDropdownProps> = ({ setSidebar }) =
 
   const modalContainerStyles = {
     height: "100%",
-    width: "20%",
+   
     maxWidth: "100%",
     backgroundColor: "white",
     borderLeft: "1px solid #e2e8f0",
@@ -52,13 +52,13 @@ const NotificationModal:React.FC<NotificationDropdownProps> = ({ setSidebar }) =
           transition={{ duration: 0.5, ease: "easeInOut" }}
           className="fixed inset-0 z-50 flex items-center justify-end overflow-x-hidden overflow-y-auto"
         >
-          <div style={modalContainerStyles}>
+          <div style={modalContainerStyles} className=" w-3/4 sm:w-1/4 ">
             <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200">
-              <div className="flex items-center justify-around w-full">
-                <h3 className="text-2xl font-semibold">Notifications</h3>
+              <div className="flex items-center justify-between w-full">
+                <h3 className="text-2xl font-semibold text-center w-full">Notifications</h3>
                 <button
                   type="button"
-                  className="py-3 px-3 text-sm font-medium text-gray-500 rounded-full border border-gray-300 bg-white hover:bg-gray-50 focus:outline-none focus:ring focus:border-blue-300"
+                  className=" text-xl font-bold"
                   onClick={() => {
                     setIsOpen(false);
                     setSidebar(false);

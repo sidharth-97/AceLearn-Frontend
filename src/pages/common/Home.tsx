@@ -67,7 +67,7 @@ function Home() {
   }, []);
   return (
     <>
-      <div>
+      <div className="containerr">
         {showNavbar && (
           <motion.div
             key="navbar"
@@ -80,7 +80,11 @@ function Home() {
         )}
 
         <motion.div
-          className="min-h-screen flex flex-col md:flex-row justify-center items-center bg-9ED0F5"
+          className="min-h-screen flex flex-col md:flex-row justify-center items-center bg-9ED0F5"  style={{
+            opacity: 1,
+            background:
+              "linear-gradient(180deg, rgb(40 173 235) 0%, rgb(73 100 186) 70%, rgba(62,82,146,1) 100%)",
+          }}
           variants={containerVariants}
           initial="hidden"
           animate="visible"
@@ -91,9 +95,9 @@ function Home() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 1 }}
           >
-            <h1 className=" text-3xl font-medium w-full sm:text-6xl">Take the first step</h1>
-            <h1 className="text-2xl font-medium w-full sm:text-6xl">to Learn with us</h1>
-            <p className="mt-3">
+            <h1 className=" text-3xl font-medium w-full text-white sm:text-6xl">Take the first step</h1>
+            <h1 className="text-2xl font-medium w-full text-white sm:text-6xl">to Learn with us</h1>
+            <p className="mt-3 text-gray-200">
               This is a cutting-edge private tutor platform designed to connect
               eager learners with experienced and passionate tutors in a safe
               and dynamic online environment.
@@ -105,9 +109,9 @@ function Home() {
             >
               <motion.button
                 type="button"
-                className="mt-3 inline-block rounded bg-3447AE px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-3447AE-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-3447AE-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-3447AE-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+                className="mt-3 inline-block rounded-full bg-white px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-3447AE-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-3447AE-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-3447AE-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
               >
-                <Link className="text-white" to={"/student/signup"}>
+                <Link className="text-blue-400 text-lg font-bold " to={"/student/signup"}>
                   Join as Student
                 </Link>
               </motion.button>

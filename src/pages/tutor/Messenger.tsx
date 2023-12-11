@@ -14,6 +14,7 @@ import { useQuery } from "react-query";
 import send from "../../assets/send-message.png"
 import attach from '../../assets/attachment.png'
 import { RootState } from "../../store";
+import { IoIosArrowBack } from "react-icons/io";
 
 interface CurrentChat {
   _id: string;
@@ -42,6 +43,9 @@ interface SelectedUser{
 
 const MessengerTutor = () => {
   const [currentChat, setCurrentChat] = useState<CurrentChat | null>(null);
+  const [mobile, setMobile] = useState(false)
+  const [viewChat, setViewChat] = useState(true)
+  const [desktop,setDesktop]=useState(false)
   const [messages, setMessages] = useState<Messagee[]>([]);
   const [newMessage, setNewMessage] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState<Messagee|null>(null);
@@ -132,20 +136,28 @@ setImage(null)
     setSelectedUser(image);
   };
 
+  useEffect(() => {
+    if (window.innerWidth < 768) {
+      setMobile(true)
+    } else {
+      setDesktop(true)
+    }
+  },[])
+
 
   return (
     <div className="h-screen">
       <Navbar />
       <div className="flex h-full">
         <TutorSidebar />
-        <div className="w-1/4 p-4 border-r border-gray-300">
+        { !viewChat ||desktop &&  <div className={`${mobile?'w-full':'w-1/4'} p-4 border-r border-gray-300`}>
           <input
             placeholder="Search for friends"
             className="w-full p-2 border-b border-gray-300"
           />
           {conversations?.data?.conv?.length &&
             conversations?.data?.conv?.map((conv:CurrentChat) => (
-            <div onClick={() => setCurrentChat(conv)}>
+              <div onClick={() => { setCurrentChat(conv); setViewChat(true)}}>
               <Conversation
                 key={conv?._id}
                 conversation={conv}
@@ -156,9 +168,17 @@ setImage(null)
               />
             </div>
           ))}
-        </div>
-        <div className="w-1/2 flex flex-col relative">
-        <div className="flex items-center gap-1 p-4">
+        </div>}
+        {(!mobile || viewChat) &&<div className={`${mobile?"w-full":"w-1/2 "}flex flex-col relative`}>
+          <div className="flex items-center gap-1 p-4">
+        { mobile && <div className="flex items-center ">
+          <button
+            onClick={()=> setViewChat(false)}
+            className=" text-gray-700 font-bold py-2 px-4 rounded"
+          >
+                <IoIosArrowBack size={32}/>
+          </button>
+        </div>}
             <img
               src={selectedUser?.image}
               alt={selectedUser?.name}
@@ -166,7 +186,7 @@ setImage(null)
             />
             <h1 className="text-lg font-semibold">{selectedUser?.username}</h1>
           </div>
-          <div className="overflow-y-scroll p-4 flex-grow">
+          <div className="overflow-y-scroll overflow-x-hidden p-4 flex-grow">
             {/* chatBoxTop content */}
             {messages.map((m:any) => (
               <div ref={scrollRef}>
@@ -220,7 +240,7 @@ setImage(null)
             </form>
           </div>
           <span className="absolute top-10 text-5xl text-gray-300 cursor-default"></span>
-        </div>
+        </div>}
       </div>
     </div>
   );

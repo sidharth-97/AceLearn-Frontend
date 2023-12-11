@@ -23,8 +23,8 @@ console.log(stdData);
       <div className="flex">
         <TutorSidebar />
 
-        <div className="w-full p-4 bg-9ED0F5">
-        <div className="bg-white shadow-md rounded-md p-6 w-full">
+        <div className="lg:p-14 xl:p-16 bg-gray-100 w-full sm:p-5 overflow-hidden">
+        <div className="bg-white shadow-md rounded-md w-full overflow-x-hidden sm:p-6">
             <div style={{ position: "relative" }}>
               <img
                 className="h-20 w-full object-cover"
@@ -35,9 +35,9 @@ console.log(stdData);
                 style={{
                   position: "absolute",
                   top: "",
-                  left: "08%",
                   transform: "translate(-50%, -50%)",
                 }}
+                className="left-1/2 sm:left-16"
               >
                 <img
                   src={stdData?.data.image}
@@ -46,8 +46,8 @@ console.log(stdData);
                 />
               </div>
             </div>
-            <div className="flex justify-between">
-              <div className="flex flex-col mt-16">
+            <div className="flex justify-between flex-col overflow-x-hidden sm:flex-row">
+              <div className="flex flex-col mt-16 p-2">
                 <h2 className="text-2xl font-semibold">{isTutor.name}</h2>
                 <div>
                   <p className="text-gray-500">Email: {isTutor.email}</p>
@@ -56,8 +56,8 @@ console.log(stdData);
                   <p className="text-gray-500">Rating: {stdData?.data.rating?.toFixed(2)}</p>
                 </div>
               </div>
-              <div className="mt-16 flex items-center justify-center space-x-3">
-                <div className="flex flex-col items-center">
+              <div className="mt-6 mb-2 flex items-center justify-center space-x-3 sm:mt-16">
+              <div className="flex items-center gap-1 sm:flex-col ">
                   <div className="flex items-center gap-1">
                     <FaWallet
                       className="text-blue-500"
@@ -119,9 +119,12 @@ console.log(stdData);
               </div>
             </div>
           </div> */}
-          <div className="bg-white mt-6">
+          <div className="bg-white mt-5 pt-2 ps-3 text-lg">
             <h4 className=" text-xl font-semibold ps-3 mt-3 pt-3 pb-3">Income report</h4>
-            <TutorSalesChart />
+            <div className="flex flex-row justify-between mt-3 mx-1 bg-white overflow-y-auto">
+              <TutorSalesChart />
+            </div>
+            
           </div>
         </div>
       </div>

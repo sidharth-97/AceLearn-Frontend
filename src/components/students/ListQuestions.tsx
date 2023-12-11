@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect} from "react";
 import { useQuery } from "react-query";
 import { viewMyQuestions } from "../../api/studentapi";
 
@@ -8,12 +8,24 @@ interface ListQuestionProps {
 
 const ListQuestions = ({ toggleFunction }:ListQuestionProps) => {
   const [index, setIndex] = useState(0);
+  const [mobile, setMobile] = useState(false)
+  const [viewSol, setViewSol] = useState(false)
+  const [desktop,setDesktop]=useState(false)
+console.log(mobile,viewSol,desktop,"877787878");
 
   const { data } = useQuery({
     queryFn: () => viewMyQuestions(),
     queryKey: ["myQuestions"],
   });
   console.log(data?.data);
+
+  useEffect(() => {
+    if (window.innerWidth < 768) {
+      setMobile(true)
+    } else {
+      setDesktop(true)
+    }
+  },[])
 
   return (
     <div className="flex  flex-col items-start w-full p-6">
@@ -27,11 +39,11 @@ const ListQuestions = ({ toggleFunction }:ListQuestionProps) => {
       </button>
       <div className="flex w-full">
         {" "}
-        <div className="w-1/2">
+   { (desktop || !viewSol) && <div className="w-1/2">
           <h1 className="text-2xl font-bold mb-4">My Questions</h1>
           {data?.data.map((ques:{date:string,description:string,tutor:string}, index:number) => (
             <li
-              onClick={() => setIndex(index)}
+              onClick={() => { setIndex(index); setViewSol(true)}}
               key={index}
               className="w-full flex items-center justify-between border-b border-gray-300 p-4"
             >
@@ -69,13 +81,13 @@ const ListQuestions = ({ toggleFunction }:ListQuestionProps) => {
               {/* Date Section */}
             </li>
           ))}
-        </div>
-       { data?.data.length?(<div className="mt-4 w-1/2">
+        </div>}
+        {(!mobile || viewSol) && <div>{data?.data.length ? (<div className="mt-4 w-1/2">
           <h1 className="text-2xl font-bold mb-2">Question</h1>
           <h3 className="text-lg font-semibold mb-2">
-           Subject : {data?.data[index].subject}
+            Subject : {data?.data[index].subject}
           </h3>
-          {}
+          { }
           <p className="text-gray-700 mb-4">{data?.data[index].description}</p>
 
           <div>
@@ -94,7 +106,7 @@ const ListQuestions = ({ toggleFunction }:ListQuestionProps) => {
                 )}
               </>
             )}
-              {data?.data[index].solution && (
+            {data?.data[index].solution && (
               <>
                 <p className="text-gray-700 mb-2">
                   {data?.data[index]?.solution[1]?.text ?? ""}
@@ -109,7 +121,7 @@ const ListQuestions = ({ toggleFunction }:ListQuestionProps) => {
               </>
             )}
           </div>
-        </div>):<h1>Not posted any questions</h1>}
+        </div>) : <h1>Not posted any questions</h1>}</div>}
       </div>
     </div>
   );

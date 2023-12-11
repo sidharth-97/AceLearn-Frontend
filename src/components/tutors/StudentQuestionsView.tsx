@@ -48,7 +48,7 @@ const StudentQuestionsView = ({ toggler }:{toggler:React.Dispatch<React.SetState
   };
 
   return (
-    <>
+    <div className="flex flex-col sm:flex-row w-full">
       <div className={`bg-gray-100 font-sans p-6 ${!solve && "w-full"}`}>
         <div className={`${!solve && "flex"} justify-between mb-4`}>
           <div className="flex items-center mb-4">
@@ -89,7 +89,7 @@ const StudentQuestionsView = ({ toggler }:{toggler:React.Dispatch<React.SetState
         )}
       </div>
       {solve && <SolveQuestions question={questionData?.data._id} />}
-    </>
+    </div>
   );
 };
 

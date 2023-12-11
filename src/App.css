@@ -219,3 +219,8 @@ html, body {
 .timeline-cells-cell:hover {
   border: 1px solid rgba(0, 0, 0, 0.3);
 }
+
+
+.containerr {
+  background: linear-gradient(180deg, rgb(40 173 235) 0%, rgb(73 100 186) 70%, rgba(62,82,146,1) 100%) !important;
+}

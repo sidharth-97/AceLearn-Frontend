@@ -109,7 +109,7 @@ const NotificationDropdown:React.FC<NotificationDropdownProps> = ({setSidebar}) 
             {/* Add more notification items as needed */}
           </div>
           {/* See all notifications link */}
-          <li className="bg-black text-white p-2" onClick={()=>handleModal()}>See all notifications</li>
+          <li className="bg-gray-200 text-black p-2 list-none" onClick={()=>handleModal()}>See all notifications</li>
          
         </div>
       )}

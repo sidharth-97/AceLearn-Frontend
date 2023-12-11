@@ -66,25 +66,37 @@ const EditProfileComponent: React.FC<{data:Tutor }> = ({ data }) => {
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0 bg-light-blue">
-    <div className="w-1/2 px-6 py-4 mt-6 overflow-hidden bg-white shadow-md sm:max-w-lg sm:rounded-lg">
-      <div>
-        <h3 className="text-4xl text-left font-bold text-black pb-6 mb-3">
-          Edit Profile
-        </h3>
-      </div>
-      <div>
-        <ul className="flex gap-5 p-5">
-          <li onClick={() => setToggle(true)}>Profile</li>
-          <li onClick={() => setToggle(false)}>Password</li>
+    <div className="container mx-auto p-4 bg-gray-100 h-screen">
+      <h1 className="text-3xl font-bold mb-2 text-indigo-800">
+        Account Setting
+      </h1>
+      <div className="w-full px-6 py-4 mt-6 overflow-hidden bg-white shadow-md sm:max-w-3xl sm:rounded-lg">
+     
+        <div className="text-lg">
+          <ul className="flex gap-5 p-5">
+          <li
+              className={`cursor-pointer ${
+                toggle && "border-b-4 border-blue-400"
+              }`}
+              onClick={() => setToggle(true)}
+            >
+              Profile
+            </li>
+            <li
+              className={`cursor-pointer ${
+                !toggle && "border-b-4 border-blue-400"
+              }`}
+              onClick={() => setToggle(false)}
+            >
+              Password
+            </li>
         </ul>
       </div>
         {toggle ? (
-            <div className="flex flex-row">
-            <div className="w-1/4 mr-6">
-              {/* Add your profile picture component or code here */}
+          <div className="flex flex-col justify-around items-center sm:flex-row">
+            <div className="w-1/2 sm:w-1/4 mr-6">
               <img
-                src={data.image} // Replace with the actual image source
+                src={data.image}  
                 alt="Profile"
                 className="w-full h-auto rounded-full"
               />
@@ -104,7 +116,7 @@ const EditProfileComponent: React.FC<{data:Tutor }> = ({ data }) => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 name="name"
-                className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                className="border-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-2 px-4 text-base text-body-color placeholder-[#ACB6BE] outline-none focus:border-primary focus-visible:shadow-none"
               />
             </div>
           </div>
@@ -121,7 +133,7 @@ const EditProfileComponent: React.FC<{data:Tutor }> = ({ data }) => {
                 value={mobile}
                 onChange={(e) => setMobile(e.target.value)}
                 name="mobileNo"
-                className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                className="border-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-2 px-4 text-base text-body-color placeholder-[#ACB6BE] outline-none focus:border-primary focus-visible:shadow-none"
               />
             </div>
 
@@ -148,7 +160,7 @@ const EditProfileComponent: React.FC<{data:Tutor }> = ({ data }) => {
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
                 name="subject"
-                className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                className="border-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-2 px-4 text-base text-body-color placeholder-[#ACB6BE] outline-none focus:border-primary focus-visible:shadow-none"
               />
             </div>
           </div>
@@ -165,7 +177,7 @@ const EditProfileComponent: React.FC<{data:Tutor }> = ({ data }) => {
                 value={fees}
                 onChange={(e) => setFees(e.target.value)}
                 name="fee"
-                className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                className="border-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-2 px-4 text-base text-body-color placeholder-[#ACB6BE] outline-none focus:border-primary focus-visible:shadow-none"
               />
             </div>
           </div>
@@ -182,7 +194,7 @@ const EditProfileComponent: React.FC<{data:Tutor }> = ({ data }) => {
                 value={bio}
                 onChange={(e) => setBio(e.target.value)}
                 name="bio"
-                className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                className="border-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-2 px-4 text-base text-body-color placeholder-[#ACB6BE] outline-none focus:border-primary focus-visible:shadow-none"
               />
             </div>
           </div>
@@ -191,7 +203,7 @@ const EditProfileComponent: React.FC<{data:Tutor }> = ({ data }) => {
           <div className="flex items-center justify-center mt-4">
               <button
                 type="submit"
-                className="inline-flex items-center px-4 py-2 ml-4 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-gray-900 border border-transparent rounded-md active:bg-gray-900 false"
+                className="bg-blue-500 w-32 text-white p-2 rounded-md hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue"
               >
                 Edit
               </button>
@@ -213,7 +225,7 @@ const EditProfileComponent: React.FC<{data:Tutor }> = ({ data }) => {
                 value={password}
                 onChange={inputHandler}
                 name="password"
-                className="block w-full mt-1 border rounded-md shadow-sm focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                className="border-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-2 px-4 text-base text-body-color placeholder-[#ACB6BE] outline-none focus:border-primary focus-visible:shadow-none"
               />
             </div>
             <div className="mt-4">
@@ -228,14 +240,14 @@ const EditProfileComponent: React.FC<{data:Tutor }> = ({ data }) => {
                 value={cpassword}
                 onChange={inputHandler}
                 name="cpassword"
-                className="block w-full mt-1 border rounded-md shadow-sm focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                className="border-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-2 px-4 text-base text-body-color placeholder-[#ACB6BE] outline-none focus:border-primary focus-visible:shadow-none"
               />
             </div>
             <div className="flex items-center justify-center mt-4">
               <button
                 type="submit"
-                className="inline-flex items-center px-4 py-2 ml-4 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-gray-900 border border-transparent rounded-md active:bg-gray-900 false"
-              >
+                className="inline bg-blue-500 min-w-32 text-white p-2 rounded-md hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue whitespace-nowrap"
+                >
                 Change Password
               </button>
             </div>

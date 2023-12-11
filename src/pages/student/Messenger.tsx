@@ -18,7 +18,7 @@ import { IoIosArrowBack } from "react-icons/io";
 
 interface CurrentChat {
   _id: string;
-  members: string[]; // Assuming it's an array of string member IDs
+  members: string[];
   createdAt: string;
   updatedAt: string;
   __v: number;
@@ -170,10 +170,6 @@ console.log(res);
       <Navbar />
       <div className="flex h-full">
         <StudentSidebar />
-
-        {
-
-        }
      { !viewChat ||desktop &&  <div className={`${mobile?'w-full':'w-1/4'} p-4 border-r border-gray-300`}>
           <input
             placeholder="Search for friends"
@@ -196,14 +192,14 @@ console.log(res);
 
     {(!mobile || viewChat) &&<div className={`${mobile?"w-full":"w-1/2 "}flex flex-col relative`}>
           <div className="flex items-center gap-1 p-4">
-          <div className="flex items-center ">
+      {mobile&&    <div className="flex items-center ">
           <button
             onClick={()=> setViewChat(false)}
             className=" text-gray-700 font-bold py-2 px-4 rounded"
           >
                 <IoIosArrowBack size={32}/>
           </button>
-        </div>
+        </div>}
         <img
           src={selectedUser?.image}
           alt={selectedUser?.username ||selectedUser?.name}

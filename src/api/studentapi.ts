@@ -283,3 +283,13 @@ export const studentPremium = async (data: { fees: string }) => {
       console.log(error);
     }
   }
+
+export const regiterLiveclass = async (data:{student:string,id:string}) => {
+    try {
+      const response = await Api.post(studentRoutes.regiterLiveclass, data)
+      return response
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }

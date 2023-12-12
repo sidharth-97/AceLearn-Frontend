@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import { findSubjects } from "../../api/adminapi";
 import { scheduleLiveClass } from "../../api/tutorapi";
+import  {toast} from 'react-toastify'
 
 const ScheduleLiveClass = () => {
   const [subject, setSubject] = useState("");
@@ -19,7 +20,7 @@ const ScheduleLiveClass = () => {
 
     const liveClassMutation=useMutation((data: {
         subject: string;
-        time: string;
+        date: string;
         topic: string;
         duration: string;
         fee: number;
@@ -31,23 +32,18 @@ const ScheduleLiveClass = () => {
 
     const formData = {
       subject,
-      time,
+      date:time,
       topic,
       duration,
       fee,
       description,
     };
       console.log(formData);
-      liveClassMutation.mutate(formData)
+    liveClassMutation.mutate(formData)
+    toast.success("Class scheduled")
   };
 
-  const handleButtonClick = (value:string) => {
-    setDuration(value);
-  };
 
-  const handleClassTypeButtonClick = (value:string) => {
-    setClassType(value);
-  };
 
   return (
     <div className="w-full">
@@ -75,7 +71,8 @@ const ScheduleLiveClass = () => {
               </label>
               <div className="grid grid-cols-2 gap-2 w-1/2">
                 <button
-                  onClick={() => handleButtonClick("30 min")}
+                  type="button"
+                  onClick={() => setDuration("30 min")}
                   className={`p-2 text-sm border rounded focus:outline-none ${
                     duration === "30 min" ? "bg-blue-100" : "border-gray-300"
                   }`}
@@ -83,7 +80,8 @@ const ScheduleLiveClass = () => {
                   30 min
                 </button>
                 <button
-                  onClick={() => handleButtonClick("1 hour")}
+                  type="button"
+                  onClick={() =>setDuration("1 hour")}
                   className={`p-2 text-sm border rounded focus:outline-none ${
                     duration === "1 hour" ? "bg-blue-100" : "border-gray-300"
                   }`}
@@ -109,6 +107,7 @@ const ScheduleLiveClass = () => {
               <div className="grid grid-cols-2 gap-2 w-1/2">
                 {subjects?.data?.subject.map((item: string, index: string) => (
                   <button
+                    type="button"
                     onClick={() => setSubject(item)}
                     id={index}
                     className="p-2 text-sm border border-gray-300 rounded focus:outline-none focus:border-blue-500 hover:bg-blue-100"
@@ -134,7 +133,8 @@ const ScheduleLiveClass = () => {
               </label>
               <div className="grid grid-cols-2 gap-2 w-1/2">
                 <button
-                  onClick={() => handleClassTypeButtonClick("Free")}
+                  type="button"
+                  onClick={() =>setClassType("Free")}
                   className={`p-2 text-sm border rounded focus:outline-none ${
                     classType === "Free" ? "bg-blue-100" : "border-gray-300"
                   }`}
@@ -142,7 +142,8 @@ const ScheduleLiveClass = () => {
                   Free Class
                 </button>
                 <button
-                  onClick={() => handleClassTypeButtonClick("Paid")}
+                  type="button"
+                  onClick={() =>setClassType("Paid")}
                   className={`p-2 text-sm border rounded focus:outline-none ${
                     classType === "Paid" ? "bg-blue-100" : "border-gray-300"
                   }`}

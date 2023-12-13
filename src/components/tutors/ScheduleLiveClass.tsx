@@ -1,10 +1,10 @@
-import { useState } from "react";
+import React, { SetStateAction, useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import { findSubjects } from "../../api/adminapi";
 import { scheduleLiveClass } from "../../api/tutorapi";
 import  {toast} from 'react-toastify'
 
-const ScheduleLiveClass = () => {
+const ScheduleLiveClass = ({toggle}:{ toggle: React.Dispatch<SetStateAction<boolean>>; }) => {
   const [subject, setSubject] = useState("");
   const [time, setTime] = useState("");
   const [topic, setTopic] = useState("");
@@ -48,6 +48,14 @@ const ScheduleLiveClass = () => {
   return (
     <div className="w-full">
       <div className="container mx-auto p-4 bg-gray-100">
+      <div className="flex items-center mb-4">
+            <button
+              onClick={() => toggle(false)}
+              className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
+            >
+              Back
+            </button>
+          </div>
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2 text-indigo-800">
             Schedule Your Live Class

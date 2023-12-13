@@ -101,7 +101,7 @@ const StudentSchedule = () => {
         <div>
           <StudentSidebar />
         </div>
-        <div className="w-1/3">
+        <div className="w-full sm:w-1/3">
           <div className="bg-white text-black mt-6 p-4">
             <h2 className="font-semibold text-2xl">
               Your schedule for this week
@@ -171,7 +171,7 @@ const StudentSchedule = () => {
                               </p>
 
                               <button
-                                className="text-green-600 text-lg"
+                                className="text-green-600 text-lg me-2"
                                 onClick={() =>
                                   StartClass(schedules.timing._id, schedules)
                                 }
@@ -234,7 +234,7 @@ const StudentSchedule = () => {
                               Tutor : {schedules.tutorDetails[0].name}
                             </p>
                             <p className="pt-1">
-                            Status: {schedules.timing.status}
+                            Status: {schedules.timing.status==("Booked"||"booked")?"Completed":schedules.timing.status}
                             </p>
                           </div>
                         </div>

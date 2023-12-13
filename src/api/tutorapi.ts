@@ -424,3 +424,22 @@ export const scheduleLiveClass = async (data: any) => {
     console.log(error);
   }
 }
+
+export const viewLiveClassSchedule = async () => {
+  try {
+    const classes = await Api.get(tutorRoutes.viewLiveClassSchedule)
+    return classes
+  } catch (error) {
+    console.log(error);
+    
+  }
+}
+
+export const cancelLiveClass = async (id:string) => {
+  try {
+    const response = await Api.post(`${tutorRoutes.cancelLiveClass}/${id}`)
+    return response
+  } catch (error) {
+    console.log(error);
+  }
+}

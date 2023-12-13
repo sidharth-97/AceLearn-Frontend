@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { MdOutlineDashboard } from "react-icons/md";
-import { RiSettings4Line } from "react-icons/ri";
-import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
+import { AiOutlineUser} from "react-icons/ai";
 import { FiMessageSquare} from "react-icons/fi";
 import { GrSchedule } from "react-icons/gr";
 import { IoIosList } from "react-icons/io";
+import { MdOutlineLiveTv } from "react-icons/md";
+import { TfiWrite } from "react-icons/tfi";
 
 import { Link } from "react-router-dom";
 
@@ -16,8 +17,8 @@ const TutorSidebar = () => {
     { name: "tutor jobs", link: "/tutor/tutorjobs", icon: IoIosList },
     { name: "shedules", link: "/tutor/tutor-schedule", icon:GrSchedule, margin: true },
     { name: "messenger", link: "/tutor/messenger", icon: FiMessageSquare},
-    { name: "Homework Help", link: "/tutor/homework-help", icon: AiOutlineHeart, margin: true },
-    { name: "Live class", link: "/tutor/live-class", icon: RiSettings4Line },
+    { name: "Homework Help", link: "/tutor/homework-help", icon: TfiWrite, margin: true },
+    { name: "Live class", link: "/tutor/live-class", icon: MdOutlineLiveTv },
   ];
   const [open, setOpen] = useState(true);
   return (

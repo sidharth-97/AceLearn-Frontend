@@ -17,6 +17,7 @@ const LiveClassCard = ({ data }: any) => {
   console.log(registerMutation,"register mutation");
   
   const handleClick = async () => {
+    (!isStudent)&&navigate("/student/login")
     if (!stripe) {
       const stripeInstance = await stripePromise;
       setStripe(stripeInstance);

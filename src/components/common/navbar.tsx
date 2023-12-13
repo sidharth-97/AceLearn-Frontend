@@ -33,7 +33,7 @@ const Navbar: React.FC = () => {
       await tutorLogout();
       dispatch(logoutTutor());
       toast.success("Logout Success");
-      navigate("/tutor/login");
+      navigate("/student/login");
     }
   };
 
@@ -69,13 +69,13 @@ const Navbar: React.FC = () => {
                   About
                   <span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
                 </Link>
-                <Link
+              { ! isTutor && <Link
                   to={"/live-classroom"}
                   className="text-white text-sm font-semibold relative inline-block mr-4 group"
                 >
                   Classroom
                   <span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
-                </Link>
+                </Link>}
                 {!(isStudent || isTutor) ?
                 <><Link
                     to={"/tutor/all-tutors"}
@@ -165,13 +165,13 @@ const Navbar: React.FC = () => {
               <div className="sm:hidden">
 
               </div>
-              <div className="sm:hidden cursor-pointer flex items-end justify-end">
+            {(isStudent ||isTutor) &&  <div className="sm:hidden cursor-pointer flex items-end justify-end">
                    {(isTutor || isStudent) && sidebar ? (
                           <NotificationModal setSidebar={setSidebar} />
                         ) : (
                           <NotificationDropdown setSidebar={setSidebar} />
                         )}
-              </div>
+              </div>}
            
               <div className="sm:hidden cursor-pointer" onClick={toggleNavbar}>
                 <div className="flex items-center gap-2">
@@ -215,6 +215,13 @@ const Navbar: React.FC = () => {
                 >
                   Find Tutor
                 </Link>
+                { ! isTutor && <Link
+                  to={"/live-classroom"}
+                  className="text-white text-sm font-semibold relative inline-block mr-4 group"
+                >
+                  Classroom
+                  <span className="absolute inset-x-0 bottom-0 h-0.5 bg-white origin-bottom transform scale-x-0 transition duration-300 group-hover:scale-x-100"></span>
+                </Link>}
                 <Link
                   to={"/tutor/signup"}
                   className="text-white text-sm font-semibold hover:underline hover:text-white mb-1"

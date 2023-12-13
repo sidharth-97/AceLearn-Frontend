@@ -2,40 +2,53 @@ import { useQuery } from "react-query";
 import LiveClassCard from "../../components/common/LiveClassCard";
 import Navbar from "../../components/common/navbar";
 import { listLiveClass } from "../../api/studentapi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { findSubjects } from "../../api/adminapi";
+import Skeleton from "react-loading-skeleton";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
+import { useNavigate } from "react-router-dom";
 
 const LiveClass = () => {
-  const { data: classData } = useQuery({
+  const navigate = useNavigate()
+  const { data: classData, isLoading } = useQuery({
     queryFn: () => listLiveClass(),
     queryKey: ["class"],
   });
 
   const { data: subjets } = useQuery({
-    queryFn:()=>findSubjects()
-  })
+    queryFn: () => findSubjects(),
+  });
+
+  const {isStudent}=useSelector((state:RootState)=>state.auth)
 
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState("All");
 
-  const filteredData = classData?.data.filter((item: any) => {
+  const filteredData = classData?.data?.filter((item: any) => {
     const toolName = item.topic.toLowerCase();
     const searchTermLowerCase = searchTerm.toLowerCase();
     const isToolNameMatch = toolName.includes(searchTermLowerCase);
 
-    const isPricingTypeMatch = filterType === "All" || item.subject === filterType;
+    const isPricingTypeMatch =
+      filterType === "All" || item.subject === filterType;
 
     return isToolNameMatch && isPricingTypeMatch;
   });
 
+  useEffect(() => {
+    (!isStudent)&&navigate("/student/login")
+
+  },[])
+
   return (
     <div>
       <Navbar />
-      <div className=" h-36 bg-3447AE text-white mb-5">
+      <div className="h-36 bg-3447AE text-white mb-5">
         <div className="text-right">
-          <h1 className=" text-3xl font-bold me-2 sm:me-32">
+          <h1 className="text-3xl font-bold me-2 sm:me-32">
             Join <br />
-           Our Live Classroom
+            Our Live Classroom
           </h1>
         </div>
       </div>
@@ -49,7 +62,10 @@ const LiveClass = () => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <button type="submit" className="bg-sky-500 text-white rounded-r px-2 md:px-3 py-0 md:py-1">
+            <button
+              type="submit"
+              className="bg-sky-500 text-white rounded-r px-2 md:px-3 py-0 md:py-1"
+            >
               Search
             </button>
           </div>
@@ -61,18 +77,27 @@ const LiveClass = () => {
             onChange={(e) => setFilterType(e.target.value)}
           >
             <option value="All">All</option>
-            {
-            (subjets?.data?.subject && subjets?.data?.subject.length) || 0
-            &&  subjets?.data?.subject.map((item:any)=><option value={`${item}`}>{item}</option>)
-            } 
+            {subjets?.data?.subject?.map((item: any) => (
+              <option value={`${item}`} key={item}>
+                {item}
+              </option>
+            ))}
           </select>
         </form>
       </div>
 
       <div className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
-        {filteredData?.map((item: any) => (
-          <LiveClassCard key={item.id} data={item} />
-        ))}
+        {isLoading ? (
+          Array.from({ length: 6 }).map((_, index) => (
+            <div key={index} className="w-full bg-white p-4 rounded-md shadow-md">
+              <Skeleton height={150} width={300}/>
+            </div>
+          ))
+        ) : (
+          filteredData?.map((item: any) => (
+            <LiveClassCard key={item.id} data={item} />
+          ))
+        )}
       </div>
     </div>
   );

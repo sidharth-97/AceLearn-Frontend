@@ -11,11 +11,14 @@ export default function ColorToggleButton() {
     _e: React.MouseEvent<HTMLElement>,
     newAlignment: string,
   ) => {
+    console.log(newAlignment,"new");
+    
     if (newAlignment) {
       navigate(`/${newAlignment}/login`);
       setAlignment(newAlignment);
     }
   };
+console.log(alignment,"ali");
 
   return (
     <ToggleButtonGroup

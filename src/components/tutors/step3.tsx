@@ -1,7 +1,7 @@
 import React from 'react';
 
 type FormData = {
-    subject: string;
+    subjects:string[];
     rate: string;
     bio: string;
   };

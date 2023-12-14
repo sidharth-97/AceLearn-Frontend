@@ -21,7 +21,7 @@ const TutorOnBoard: React.FC = () => {
   }
 
   const [formData, setFormData] = useState({
-    subject: '',
+    subjects: [] as string[],
     rate: '',
     bio: '',
   });

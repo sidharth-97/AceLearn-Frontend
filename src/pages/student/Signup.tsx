@@ -284,7 +284,7 @@ const Signup = () => {
                     <p className="text-base text-[#adadad]">
                       Already a member
                       <Link
-                        to={"/student/login"}
+                        to={"/student"}
                         className="text-primary hover:underline"
                       >
                         {" "}

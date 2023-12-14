@@ -47,10 +47,10 @@ const TutorSignup = () => {
     const result = await signup(formData)
     console.log(result);
     
-    if (result) {
+    if (result?.status==200) {
       localStorage.setItem('signupStepCompleted', 'true');
       navigate("/tutor/tutorOnboarding")
-    }
+    } 
   };
 
   return (
@@ -172,7 +172,7 @@ const TutorSignup = () => {
               </a> */}
               <p className="text-base text-[#adadad]">
                 Already a member?
-                  <Link to={'/tutor/login'} className="text-primary hover:underline">Login</Link>
+                  <Link to={'/tutor'} className="text-primary hover:underline">Login</Link>
               </p>
               <div>
                 <span className="absolute top-1 right-1">

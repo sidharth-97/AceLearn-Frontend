@@ -13,8 +13,8 @@ export const handleErrors = (error: AxiosError<ErrorResponse>) => {
       localStorage.removeItem("tutor");
       location.href = "/tutor/login";
     } else {
-      const errorMessage = error.response?.data?.message || "An error occurred";
-      toast.error(errorMessage);
+      const errorMessage = error.response?.data || "An error occurred";
+      toast.error(errorMessage as string);
     }
   }
 };

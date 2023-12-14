@@ -17,7 +17,7 @@ const RequestTutor = () => {
   const navigate = useNavigate();
 
   const { isStudent } = useSelector((state: any) => state.auth);
-  const { data } = useQuery({
+  const { data} = useQuery({
     queryFn:()=>studentDetails(isStudent._id)
   })
 

@@ -53,6 +53,8 @@ const Conversation:React.FC<Conversation>= ({
       const getUser = async () => {
         try {
           const res1 = await getAllUsers(othersId as string);
+          console.log(res1,"*************************");
+          
           setUser(res1||null);
           setres(res1?.data);
         } catch (error) {
@@ -62,11 +64,12 @@ const Conversation:React.FC<Conversation>= ({
 
       getUser();
     }
-  }, [conversation, currentUser, setres]);
+  }, [conversation, currentUser]);
 
   const handleClick = () => {
     onConversationClick(user?.data);
   };
+console.log(user,"this is the user");
 
   return (
     <>
@@ -84,7 +87,7 @@ const Conversation:React.FC<Conversation>= ({
           <div className="flex flex-col w-full">
             <span className="font-semibold conversationName flex justify-between">
               <div>
-                {user?.data.username ? user?.data.username : user?.data.name}
+                {user?.data&&(user?.data.username ? (user?.data.username) : user?.data.name)}
               </div>
               <div className="text-gray-400 text-xs"> {view && format(view?.createdAt)}</div>
             </span>

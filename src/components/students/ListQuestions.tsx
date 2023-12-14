@@ -29,7 +29,7 @@ console.log(mobile,viewSol,desktop,"877787878");
   },[])
 
   return (
-    <div className="flex  flex-col items-start w-full p-6">
+    <div className="flex  flex-col items-start w-full p-6 gap-3">
       <h1 className="text-3xl text-center font-bold mb-6">Homework Help</h1>
 
       <button

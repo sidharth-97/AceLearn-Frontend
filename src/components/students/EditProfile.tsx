@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { editStudent } from "../../api/studentapi";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { Student } from "../../model/studentModel";
+import { toast } from "react-toastify";
+import { loginStudent } from "../../slice/authSlice";
 
 const EditProfile: React.FC<{ data: Student }> = ({ data }) => {
   const [name, setName] = useState(data.username);
@@ -11,8 +13,10 @@ const EditProfile: React.FC<{ data: Student }> = ({ data }) => {
   const [mobile, setMobile] = useState(data.mobile);
   const [toggle, setToggle] = useState(true);
   const [image, setImage] = useState<File | null>(null);
+console.log(data,"edit profile componsene");
 
   const { isStudent } = useSelector((state: RootState) => state.auth);
+const dispatch=useDispatch()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,7 +26,12 @@ const EditProfile: React.FC<{ data: Student }> = ({ data }) => {
     formData.append("mobile", mobile);
     if (image) formData.append("image", image);
     const response = await editStudent(formData);
-    console.log(response);
+    if (response?.status == 200) {
+      dispatch(loginStudent(response.data))
+      toast.success("Profile updated")
+    } else {
+      toast.error("Error")
+    }
   };
 
   const handlePassword = async () => {

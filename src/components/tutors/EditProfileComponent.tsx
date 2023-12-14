@@ -1,11 +1,12 @@
 import React, { ChangeEvent, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { TutorEditProfile } from "../../api/tutorapi";
 import { useMutation, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { Tutor } from "../../model/tutorModel";
 import { RootState } from "../../store";
+import { loginTutor } from "../../slice/authSlice";
 
 const EditProfileComponent: React.FC<{data:Tutor }> = ({ data }) => {
   const [name, setName] = useState(data.name);
@@ -18,7 +19,7 @@ const EditProfileComponent: React.FC<{data:Tutor }> = ({ data }) => {
 
   const { isTutor } = useSelector((state:RootState) => state.auth);
   const navigate = useNavigate();
-
+const dispatch=useDispatch()
   const [formData, setFormData] = useState({
     password: "",
     cpassword: "",
@@ -35,7 +36,11 @@ const EditProfileComponent: React.FC<{data:Tutor }> = ({ data }) => {
     mutationFn: TutorEditProfile,
     onSuccess: (data) => {
       queryClient.setQueryData([], data);
-      if (data?.status !== 200) toast.error("Not updated");
+      if (data?.status !== 200) {
+        toast.error("Not updated");
+      } else {
+        dispatch(loginTutor(data.data))
+      }
     },
   });
   const handleSubmit = async (e: React.FormEvent) => {
@@ -62,7 +67,6 @@ const EditProfileComponent: React.FC<{data:Tutor }> = ({ data }) => {
     mutate(tutorData);
 
     navigate("/tutor/tutordashboard");
-    toast.success("Profile Edited")
   };
 
   return (

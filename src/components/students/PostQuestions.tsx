@@ -23,7 +23,8 @@ const PostQuestions = ({ toggleFunction }:{toggleFunction:React.Dispatch<React.S
     if(image)formData.append("image", image);
     const result = await addQuestions(formData);
     console.log(result);
-    toast.success("Posted success");
+    if (result?.status == 200) toast.success("Posted success");
+    toggleFunction(true)
   };
 
   const handleButtonClick = (e:any) => {
@@ -88,16 +89,16 @@ const PostQuestions = ({ toggleFunction }:{toggleFunction:React.Dispatch<React.S
               Select Subject
             </label>
             <div className="grid grid-cols-2 gap-2 w-1/2">
-              {subjects?.data?.subject.map((item:string, index:string) => (
-                <button
-                  onClick={handleButtonClick}
-                  id={index}
-                  className="p-2 text-sm border border-gray-300 rounded focus:outline-none focus:border-blue-500 hover:bg-blue-100"
-                >
-                 
-                  {item}
-                </button>
-              ))}
+            {subjects?.data?.subject.map((item:string, index:string) => (
+  <button
+    onClick={handleButtonClick}
+    id={index}
+    className={`p-2 text-sm border border-gray-300 rounded focus:outline-none focus:border-blue-500 hover:bg-blue-100 ${subject === item ? "bg-blue-100" : ""}`}
+  >
+    {item}
+  </button>
+))}
+
               {/* Add more buttons as needed */}
             </div>
           </div>

@@ -179,7 +179,7 @@ console.log(mobile,desktop,viewChat);
             placeholder="Search for friends"
             className="w-full p-2 border-b border-gray-300"
           />
-          {conversations?.data?.conv?.length &&
+          {conversations?.data?.conv?.length>0 &&
             conversations?.data?.conv?.map((conv:CurrentChat) => (
               <div onClick={() => { setCurrentChat(conv); setViewChat(true)}}>
                 <Conversation

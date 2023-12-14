@@ -98,7 +98,7 @@ const NotificationDropdown:React.FC<NotificationDropdownProps> = ({setSidebar}) 
                 </div>
               </a>
             ))}
-
+{notifications.length<=0&& <p className="text-center text-lg font-semibold">No new notifications</p>}
             {/* Replace the following with your actual notification data */}
             <a
               href="#"
@@ -109,7 +109,7 @@ const NotificationDropdown:React.FC<NotificationDropdownProps> = ({setSidebar}) 
             {/* Add more notification items as needed */}
           </div>
           {/* See all notifications link */}
-          <li className="bg-gray-200 text-black p-2 list-none" onClick={()=>handleModal()}>See all notifications</li>
+        { notifications.length>0&& <li className="bg-gray-200 text-black p-2 list-none" onClick={()=>handleModal()}>See all notifications</li>}
          
         </div>
       )}

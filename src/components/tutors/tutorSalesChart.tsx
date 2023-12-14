@@ -11,10 +11,11 @@ const TutorSalesChart = () => {
     let dataa = [];
     if (data?.data.length) {
         dataa = data?.data?.map((item:{totalFee:number,_id:any}) => ({
-            name: moment().month(item?._id.month - 1).format('MMMM'), // Convert month number to month name
+            name: moment().month(item?._id.month).format('MMMM'), // Convert month number to month name
             pv: item?.totalFee,
         }));
     }
+console.log(data,"income report");
 
     return (
         <div>

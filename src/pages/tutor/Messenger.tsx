@@ -139,6 +139,7 @@ setImage(null)
   useEffect(() => {
     if (window.innerWidth < 768) {
       setMobile(true)
+      setViewChat(false)
     } else {
       setDesktop(true)
     }
@@ -150,7 +151,7 @@ setImage(null)
       <Navbar />
       <div className="flex h-full">
         <TutorSidebar />
-        { !viewChat ||desktop &&  <div className={`${mobile?'w-full':'w-1/4'} p-4 border-r border-gray-300`}>
+        { (!viewChat ||desktop) &&  <div className={`${mobile?'w-full':'w-1/4'} p-4 border-r border-gray-300`}>
           <input
             placeholder="Search for friends"
             className="w-full p-2 border-b border-gray-300"
@@ -169,7 +170,7 @@ setImage(null)
             </div>
           ))}
         </div>}
-        {(!mobile || viewChat) &&<div className={`${mobile?"w-full":"w-1/2 "}flex flex-col relative`}>
+        {(desktop || viewChat)  &&<div className={`${mobile?"w-full":"w-1/2 "}flex flex-col relative`}>
           <div className="flex items-center gap-1 p-4">
         { mobile && <div className="flex items-center ">
           <button

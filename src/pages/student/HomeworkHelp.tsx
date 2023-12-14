@@ -18,7 +18,7 @@ const{isStudent}=useSelector((state:RootState)=>state.auth)
         {isStudent.premium ?(toggle ? (
           <ListQuestions toggleFunction={setToggle} />
         ) : (
-            <PostQuestions toggleFunction={ setToggle} />
+            <PostQuestions toggleFunction={setToggle} />
         )):<div className="w-full"><PremiumMessage/></div>}
       </div>
     </div>

@@ -1,6 +1,7 @@
 import { useState,useEffect} from "react";
 import { useQuery } from "react-query";
 import { viewMyQuestions } from "../../api/studentapi";
+import { IoIosArrowBack } from "react-icons/io";
 
 interface ListQuestionProps {
   toggleFunction: React.Dispatch<React.SetStateAction<boolean>>;
@@ -39,15 +40,16 @@ console.log(mobile,viewSol,desktop,"877787878");
       </button>
       <div className="flex w-full">
         {" "}
-   { (desktop || !viewSol) && <div className="w-1/2">
+   { (desktop || !viewSol) && <div className="w-full sm:w-1/2">
           <h1 className="text-2xl font-bold mb-4">My Questions</h1>
           {data?.data.map((ques:{date:string,description:string,tutor:string}, index:number) => (
             <li
               onClick={() => { setIndex(index); setViewSol(true)}}
               key={index}
-              className="w-full flex items-center justify-between border-b border-gray-300 p-4"
-            >
-              <div className="flex-shrink-0 ml-4">
+              className="w-full flex flex-col items-start sm:flex-row justify-between border-b border-gray-300 p-4 sm:items-center"
+              >
+              <div className="flex">
+                   <div className="flex-shrink-0 ml-4">
                 <div className="border border-gray-300 p-2 rounded text-center">
                   <span className="text-lg font-bold">
                     {new Date(ques.date).getDate()}
@@ -67,6 +69,8 @@ console.log(mobile,viewSol,desktop,"877787878");
               <div className="flex-1 ms-2">
                 <h3 className="font-bold text-lg">{ques.description}</h3>
               </div>
+              </div>
+           
 
               <div className="flex-shrink-0 ml-4">
                 {ques.tutor.length ? (
@@ -82,7 +86,15 @@ console.log(mobile,viewSol,desktop,"877787878");
             </li>
           ))}
         </div>}
-        {(!mobile || viewSol) && <div>{data?.data.length ? (<div className="mt-4 w-1/2">
+        {(!mobile || viewSol) && <div className="w-1/2">{data?.data.length ? (<div className="mt-4 w-1/2">
+        {mobile&&    <div className="flex items-center ">
+          <button
+            onClick={()=> setViewSol(false)}
+            className=" text-gray-700 font-bold py-2 px-4 rounded"
+          >
+                <IoIosArrowBack size={32}/>
+          </button>
+        </div>}
           <h1 className="text-2xl font-bold mb-2">Question</h1>
           <h3 className="text-lg font-semibold mb-2">
             Subject : {data?.data[index].subject}

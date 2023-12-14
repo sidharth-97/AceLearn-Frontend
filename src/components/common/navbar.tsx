@@ -28,12 +28,12 @@ const Navbar: React.FC = () => {
       await logout();
       dispatch(logoutstudent());
       toast.success("Logout Success");
-      navigate("/student/login");
+      navigate("/student");
     } else if (isTutor) {
       await tutorLogout();
       dispatch(logoutTutor());
       toast.success("Logout Success");
-      navigate("/student/login");
+      navigate("/student");
     }
   };
 
@@ -258,7 +258,7 @@ const Navbar: React.FC = () => {
                   ) : (
                     <>
                       <span className="text-white text-sm font-semibold hover:underline hover:text-white mr-4">
-                        <Link to={"/student/login"}> Sign in</Link>
+                        <Link to={"/student"}> Sign in</Link>
                       </span>
                       <span className="text-white text-sm font-semibold border px-4 py-1 rounded-lg hover:underline hover:text-white ">
                         <Link to={"/student/signup"}> Sign up</Link>

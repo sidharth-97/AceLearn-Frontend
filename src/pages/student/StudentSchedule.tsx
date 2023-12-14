@@ -9,6 +9,7 @@ import Navbar from "../../components/common/navbar";
 import StudentSidebar from "../../components/students/StudentSidebar";
 import { toast } from "react-toastify";
 import { RootState } from "../../store";
+import Skeleton from 'react-loading-skeleton';
 
 interface SingleSchedule {
   tutor: any;
@@ -17,15 +18,13 @@ interface SingleSchedule {
     date: string;
     fee: number;
     student: string;
-    status: string; // Add the appropriate type for status
-    // ... other properties
+    status: string;
   };
   tutorDetails: {
     image: string;
     name: string;
-    // ... other properties
   }[];
-  // ... other properties
+
 }
 
 const StudentSchedule = () => {
@@ -35,7 +34,7 @@ const StudentSchedule = () => {
   const navigate = useNavigate();
 
   const {
-    refetch: refetchSchedule,
+    refetch: refetchSchedule,isLoading
   } = useQuery({
     queryFn: () => getStudentSchedule(isStudent._id),
     queryKey: ["StdSchedule"],
@@ -71,8 +70,6 @@ const StudentSchedule = () => {
 
   useEffect(() => {
     socket.on("room:join", handleJoinRoom);
-
-    // Clean up event listener when component unmounts
     return () => {
       socket.off("room:join");
     };
@@ -132,6 +129,7 @@ const StudentSchedule = () => {
 
               {toggle ? (
                 <ol className="relative border-l border-gray-200 my-5">
+                  {isLoading && <Skeleton width={300} height={100}/>}
                   {schedule.map((schedules: SingleSchedule, index:any) =>
                   (  new Date(schedules?.timing?.date) >= new Date() && schedules.timing.status !=="Cancelled By Student") ? (
                       <li id={index} className="mb-10 ml-6">
@@ -195,7 +193,8 @@ const StudentSchedule = () => {
                   )}
                 </ol>
               ) : (
-                <ol className="relative border-l border-gray-200">
+                  <ol className="relative border-l border-gray-200">
+                         {isLoading && <Skeleton width={300} height={100}/>}
                   {schedule.map((schedules:SingleSchedule, index:any) =>
                      (
                       <li id={index} className="mb-10 ml-6">

@@ -37,7 +37,7 @@ const LiveClass = () => {
   });
 
   useEffect(() => {
-    (!isStudent)&&navigate("/student/login")
+    (!isStudent)&&navigate("/student")
 
   },[])
 
@@ -93,7 +93,7 @@ const LiveClass = () => {
               <Skeleton height={150} width={300}/>
             </div>
           ))
-        ) : (
+        ) : ( isStudent &&
           filteredData?.map((item: any) => (
             <LiveClassCard key={item.id} data={item} />
           ))

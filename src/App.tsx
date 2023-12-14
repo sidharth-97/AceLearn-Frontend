@@ -67,7 +67,7 @@ function App() {
       path: "/student",
       children: [
         { index: true, element: <><Navbar /><Signin user={"student"} /></> },
-        { path: "login", element: <><Navbar /><Signin user={"student"} /></>},
+        // { path: "login", element: <><Navbar /><Signin user={"student"} /></>},
         { path: "signup", element: <Signup /> },
         { path: "dashboard", element: <StudentProfile /> },
         { path: "profile", element: <PrivateRoute><EditStudentProfile /></PrivateRoute> },
@@ -82,7 +82,7 @@ function App() {
     {
       path: "/tutor",
       children: [
-        { path: "login", element:<><Navbar/> <Signin user={"tutor"} /></> },
+        { index: true, element:<><Navbar/> <Signin user={"tutor"} /></> },
         { path: "signup", element: <TutorSignup /> },
         { path: "tutoronboarding", element: <TutorOnBoard /> },
         { path:"all-tutors",element:<AllTutors/>},

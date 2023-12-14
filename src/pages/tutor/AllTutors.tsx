@@ -422,7 +422,7 @@ var filters: any[]=[]
                       )}
                     </Disclosure>
                   ))}
-                  <div className="flex w-64 m-auto items-center h-32 justify-center">
+                  {/* <div className="flex w-64 m-auto items-center h-32 justify-center">
                     <div className="py-1 relative min-w-full">
                       <Slider
                         value={value}
@@ -434,7 +434,7 @@ var filters: any[]=[]
                         max={5000}
                       />
                     </div>
-                  </div>
+                  </div> */}
                 </form>
 
                 {/* Product grid */}

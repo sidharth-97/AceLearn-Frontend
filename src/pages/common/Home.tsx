@@ -31,7 +31,7 @@ function Home() {
   const { isTutor } = useSelector((state:RootState) => state.auth);
 
   const buyStudentPremium = async (price:string) => {
-    if (!isStudent) navigate("/login");
+    if (!isStudent) navigate("/student");
     if (!stripe) {
       const stripeInstance = await stripePromise;
       setStripe(stripeInstance);
@@ -44,7 +44,7 @@ function Home() {
   };
 
   const buytutorPremium = async (price: any) => {
-    if (!isTutor) navigate("/login");
+    if (!isTutor) navigate("/tutor");
     if (!stripe) {
       const stripeInstance = await stripePromise;
       setStripe(stripeInstance);

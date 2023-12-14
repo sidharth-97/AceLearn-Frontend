@@ -10,18 +10,18 @@ interface PrivateRouteProps {
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
   const { isStudent} = useSelector((state:any) => state.auth);
 
-  return isStudent ? children : <Navigate to="/student/login" replace />;
+  return isStudent ? children : <Navigate to="/student" replace />;
 };
 
 export default PrivateRoute;
 
 export const AdminPrivate: React.FC<PrivateRouteProps> = ({ children }) => {
   const { isAdmin } = useSelector((state: any) => state.auth)
-  return isAdmin ? children : <Navigate to='/admin/login' replace />;
+  return isAdmin ? children : <Navigate to='/admin' replace />;
 
 }
 
 export const TutorPrivate: React.FC<PrivateRouteProps> = ({ children }) => {
   const { isTutor } = useSelector((state: any) => state.auth)
-  return isTutor?children:<Navigate to='/tutor/login' replace/>
+  return isTutor?children:<Navigate to='/tutor' replace/>
 }

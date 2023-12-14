@@ -114,7 +114,7 @@ const WalletHistory: React.FC<WalletHistoryProps> = ({ walletHistory }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {walletHistory?.map((transaction: Transaction, index: number) => (
+                    {walletHistory&&[...walletHistory].reverse().map((transaction: Transaction, index: number) => (
                       <tr
                         key={index}
                         className={index % 2 === 0 ? "bg-gray-100" : ""}
@@ -138,7 +138,7 @@ const WalletHistory: React.FC<WalletHistoryProps> = ({ walletHistory }) => {
                         <td className="border-b p-2">{transaction.details}</td>
                         <td className="border-b p-2">{transaction.amount}</td>
                         <td className="border-b p-2">
-                          {transaction?.date?.toString()}
+                          {transaction?.date&&new Date(transaction.date).toDateString()}
                         </td>
                         <td className="border-b p-2">{transaction.type}</td>
                       </tr>
@@ -148,16 +148,7 @@ const WalletHistory: React.FC<WalletHistoryProps> = ({ walletHistory }) => {
               </div>
             </div>
             {/* Modal footer */}
-            <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-              <button
-                data-modal-hide="static-modal"
-                type="button"
-                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-                onClick={hideModal}
-              >
-                Close
-              </button>
-            </div>
+       
           </div>
         </div>
       </div>

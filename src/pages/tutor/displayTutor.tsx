@@ -45,7 +45,7 @@ const DisplayTutor = () => {
               <div className="image overflow-hidden flex items-start justify-start">
                 <img
                   className="h-auto w-1/2 mx-auto "
-                  src={typedTutor.image}
+                  src={typedTutor?.image}
                   alt=""
                 />
               </div>

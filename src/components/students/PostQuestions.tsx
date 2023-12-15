@@ -4,7 +4,11 @@ import { findSubjects } from "../../api/adminapi";
 import { addQuestions } from "../../api/studentapi";
 import { toast } from "react-toastify";
 
-const PostQuestions = ({ toggleFunction }:{toggleFunction:React.Dispatch<React.SetStateAction<boolean>>;}) => {
+const PostQuestions = ({
+  toggleFunction,
+}: {
+  toggleFunction: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const [subject, setSubject] = useState("");
   const [image, setImage] = useState<File | null>(null);
   const [question, setQuestion] = useState("");
@@ -20,14 +24,15 @@ const PostQuestions = ({ toggleFunction }:{toggleFunction:React.Dispatch<React.S
     const formData = new FormData();
     formData.append("description", question);
     formData.append("subject", subject);
-    if(image)formData.append("image", image);
+    if (image) formData.append("image", image);
+    if(!subject||!question)return toast.error("Please fill all")
     const result = await addQuestions(formData);
     console.log(result);
     if (result?.status == 200) toast.success("Posted success");
-    toggleFunction(true)
+    toggleFunction(true);
   };
 
-  const handleButtonClick = (e:any) => {
+  const handleButtonClick = (e: any) => {
     e.preventDefault();
     // const index = e.target.id;
     const selectedSubject = e.target.textContent;
@@ -89,15 +94,17 @@ const PostQuestions = ({ toggleFunction }:{toggleFunction:React.Dispatch<React.S
               Select Subject
             </label>
             <div className="grid grid-cols-2 gap-2 w-1/2">
-            {subjects?.data?.subject.map((item:string, index:string) => (
-  <button
-    onClick={handleButtonClick}
-    id={index}
-    className={`p-2 text-sm border border-gray-300 rounded focus:outline-none focus:border-blue-500 hover:bg-blue-100 ${subject === item ? "bg-blue-100" : ""}`}
-  >
-    {item}
-  </button>
-))}
+              {subjects?.data?.subject.map((item: string, index: string) => (
+                <button
+                  onClick={handleButtonClick}
+                  id={index}
+                  className={`p-2 text-sm border border-gray-300 rounded focus:outline-none focus:border-blue-500 hover:bg-blue-100 ${
+                    subject === item ? "bg-blue-100" : ""
+                  }`}
+                >
+                  {item}
+                </button>
+              ))}
 
               {/* Add more buttons as needed */}
             </div>

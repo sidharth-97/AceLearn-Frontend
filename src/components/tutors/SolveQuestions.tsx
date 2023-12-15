@@ -13,10 +13,11 @@ const navigate=useNavigate()
     formData.append("text", solution);
     if(img)
     formData.append("image", img);
-    formData.append("id",question)
+    formData.append("id", question)
+    if(!solution)return toast.error("Solution required")
     const result = await submitSolution(formData);
     toast.success("Solution submitted")
-    navigate("/homework-help")
+    navigate("/tutor/homework-help")
     console.log(result);
   };
 

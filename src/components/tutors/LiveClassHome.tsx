@@ -19,7 +19,7 @@ const LiveClassHome = ({
   console.log(schedules);
 
   const StartClass = (id: string) => {
-    navigate(`/liveclass/${id}`);
+    navigate(`/classroom/${id}`);
   };
   const cancleClassMutation = useMutation((data: string) =>
     cancelLiveClass(data)

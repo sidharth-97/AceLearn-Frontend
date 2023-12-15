@@ -1,4 +1,4 @@
-import  { useState } from 'react';
+import  { useEffect, useState } from 'react';
 import Typography from '@mui/material/Typography';
 import Rating from '@mui/material/Rating';
 import { useMutation, useQuery } from 'react-query';
@@ -11,6 +11,7 @@ import { RootState } from '../../store';
 const FeedbackForm = () => {
   const [value, setValue] = useState(0);
   const [comment, setComment] = useState('');
+  const [data,setData]=useState({id:""})
   const navigate=useNavigate()
 
   const { isStudent } = useSelector((state:RootState)=>state.auth)
@@ -26,11 +27,21 @@ const FeedbackForm = () => {
   };
 
   const { data:oldReview } = useQuery({
-    queryFn: () => getOldReview("653e3a04f4025f5297ebc07e")
+    queryFn: () => getOldReview(data?.id)
   })
 
+console.log(oldReview);
 
-
+  useEffect(() => {
+    const localStorageData = local ? JSON.parse(local) : {};
+    const data = {
+      id: localStorageData.tutor,
+      student: isStudent._id,
+      rating: value,
+      description:comment
+    }
+    setData(data)
+},[])
   const AddTutorReviewMutation=useMutation((data:{ id: string; student: string; rating: number; description: string; })=>addReview(data))
 
   let local = localStorage.getItem("videocall")

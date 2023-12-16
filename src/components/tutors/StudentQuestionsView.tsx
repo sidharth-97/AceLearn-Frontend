@@ -2,6 +2,7 @@ import  { useState, useEffect,useCallback } from "react";
 import { useQuery } from "react-query";
 import { viewQuestions } from "../../api/tutorapi";
 import SolveQuestions from "./SolveQuestions";
+import LoadingButton from "../UI/LoadingButton";
 
 
 
@@ -11,7 +12,7 @@ const StudentQuestionsView = ({ toggler }:{toggler:React.Dispatch<React.SetState
 
   const fetchQuestions = useCallback(() => viewQuestions(), []);
 
-  const { data: questionData, refetch } = useQuery({
+  const { data: questionData, refetch,isLoading } = useQuery({
     queryFn: fetchQuestions,
     queryKey: ["ques"],
     staleTime: 60000, 
@@ -20,9 +21,6 @@ const StudentQuestionsView = ({ toggler }:{toggler:React.Dispatch<React.SetState
       
     }
   });
-  
-  
-
 
   useEffect(() => {
     let timer: string | number | NodeJS.Timeout | undefined;
@@ -41,10 +39,10 @@ const StudentQuestionsView = ({ toggler }:{toggler:React.Dispatch<React.SetState
 
 
   const handleSkipQuestion = async () => {
-    console.log("skippppp");
-    
+    console.log("Before Refetch - isLoading:", isLoading);
     await refetch();
-    setSolve(false); 
+    console.log("After Refetch - isLoading:", isLoading);
+    setSolve(false);
   };
 
   return (
@@ -69,22 +67,24 @@ const StudentQuestionsView = ({ toggler }:{toggler:React.Dispatch<React.SetState
         <div className="mb-4 text-gray-700">
           {questionData?.data.description}
           {questionData?.data.image && <img src={questionData?.data.image} alt="Question" />}
+          {!questionData?.data&&<p className="text-lg">No questions available at the moment.</p>}
         </div>
 
-        {!solve && (
+        {(!solve && questionData?.data )&& (
           <div className="flex space-x-4">
-            <button
+           { isLoading? <LoadingButton/>:<button
               onClick={handleSkipQuestion}
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             >
               Skip Question
-            </button>
+            </button>}
             <button
               onClick={() => setSolve(true)}
               className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
             >
               Start Solving
             </button>
+           
           </div>
         )}
       </div>

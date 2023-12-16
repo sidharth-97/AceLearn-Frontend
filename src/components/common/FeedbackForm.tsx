@@ -1,17 +1,22 @@
 import  { useEffect, useState } from 'react';
 import Typography from '@mui/material/Typography';
 import Rating from '@mui/material/Rating';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation} from 'react-query';
 import { addReview, getOldReview } from '../../api/tutorapi';
 import { useSelector } from 'react-redux';
 import {toast} from 'react-toastify'
 import { useNavigate } from 'react-router-dom';
 import { RootState } from '../../store';
 
+interface review{
+  description:string,
+  rating:number
+}
+
 const FeedbackForm = () => {
   const [value, setValue] = useState(0);
   const [comment, setComment] = useState('');
-  const [data,setData]=useState({id:""})
+  const [data,setData]=useState<review>()
   const navigate=useNavigate()
 
   const { isStudent } = useSelector((state:RootState)=>state.auth)
@@ -20,17 +25,19 @@ const FeedbackForm = () => {
     setValue(newValue);
   };
   
+  console.log(data,"the data from requeest");
+  
   
 
   const handleCommentChange = (e:React.ChangeEvent<HTMLTextAreaElement>) => {
     setComment(e.target.value);
   };
 
-  const { data:oldReview } = useQuery({
-    queryFn: () => getOldReview(data?.id)
-  })
+  // const { data:oldReview } = useQuery({
+  //   queryFn: () => getOldReview(data?.id)
+  // })
 
-console.log(oldReview);
+// console.log(oldReview);
 
   useEffect(() => {
     const localStorageData = local ? JSON.parse(local) : {};
@@ -40,7 +47,13 @@ console.log(oldReview);
       rating: value,
       description:comment
     }
-    setData(data)
+    async function review() {
+      const response = await getOldReview(data.id)
+      setData(response?.data)
+      setValue(response?.data.rating)
+      setComment(response?.data.description)
+    }
+    review()
 },[])
   const AddTutorReviewMutation=useMutation((data:{ id: string; student: string; rating: number; description: string; })=>addReview(data))
 
@@ -66,6 +79,7 @@ console.log(oldReview);
     setComment('');
     toast.success("Added Review")
     navigate('/')
+    localStorage.removeItem("videocall")
   };
 
   return (
@@ -76,7 +90,7 @@ console.log(oldReview);
         <Typography component="legend">Rating</Typography>
         <Rating
   name="simple-controlled"
-  value={oldReview?.data.rating}
+  value={5}
   onChange={() => handleRatingChange(value)}
 />
 
@@ -87,8 +101,8 @@ console.log(oldReview);
         <label className="block text-gray-700 text-sm font-bold mb-2">Comment</label>
         <textarea
           className="w-full border text-black rounded-md p-2"
-          rows={4}
-          value={ oldReview?.data?.description}
+          rows={value}
+          value={comment}
           onChange={handleCommentChange}
         ></textarea>
       </div>

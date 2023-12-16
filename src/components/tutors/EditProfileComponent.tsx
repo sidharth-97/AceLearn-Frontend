@@ -1,12 +1,14 @@
 import React, { ChangeEvent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { TutorEditProfile } from "../../api/tutorapi";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { Tutor } from "../../model/tutorModel";
 import { RootState } from "../../store";
 import { loginTutor } from "../../slice/authSlice";
+import MultipleSelectCheckmarks from "../UI/MultiselectDropdown";
+import { findSubjects } from "../../api/adminapi";
 
 const EditProfileComponent: React.FC<{data:Tutor }> = ({ data }) => {
   const [name, setName] = useState(data.name);
@@ -24,6 +26,12 @@ const dispatch=useDispatch()
     password: "",
     cpassword: "",
   });
+console.log(subject,"this is formtht utotr eidt f");
+
+  const { data: allSubjects } = useQuery({
+    queryFn: () => findSubjects(),
+    queryKey:["allsubjects"]
+  })
 
   const { password, cpassword } = formData;
 
@@ -39,6 +47,7 @@ const dispatch=useDispatch()
       if (data?.status !== 200) {
         toast.error("Not updated");
       } else {
+        toast.success("Profile updated")
         dispatch(loginTutor(data.data))
       }
     },
@@ -56,7 +65,7 @@ const dispatch=useDispatch()
     tutorData.append("mobile", mobile);
     tutorData.append("bio", bio);
     tutorData.append("fee", fees);
-    tutorData.append("subject", subject);
+    tutorData.append("subject", JSON.stringify(subject));
     if (image) {
       tutorData.append("image", image);
     } else {
@@ -159,13 +168,7 @@ const dispatch=useDispatch()
               Subject
             </label>
             <div className="flex flex-col items-start">
-              <input
-                type="text"
-                value={subject}
-                onChange={(e) => setSubject(e.target.value)}
-                name="subject"
-                className="border-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-2 px-4 text-base text-body-color placeholder-[#ACB6BE] outline-none focus:border-primary focus-visible:shadow-none"
-              />
+                    <MultipleSelectCheckmarks data={subject} setData={setSubject} allData={allSubjects?.data.subject} />
             </div>
           </div>
           <div className="mt-4">

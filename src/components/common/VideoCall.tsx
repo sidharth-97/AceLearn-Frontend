@@ -6,7 +6,9 @@ import invite from "../../assets/invite.png";
 import mic from "../../assets/mic.png";
 import phone from "../../assets/phone.png";
 import { LuScreenShare, LuScreenShareOff } from "react-icons/lu";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 type UserData = {
   tutor: string;
@@ -21,8 +23,15 @@ const VideoCall: React.FC = () => {
   const [screenStream, setScreenStream] = useState<MediaStream | null>(null);
 
   const params = useParams()
+  const navigate=useNavigate()
   console.log(params.roomId,"this is the id");
   
+  const { isStudent } = useSelector((state: RootState) => state.auth)
+  const { isTutor } = useSelector((state: RootState) => state.auth);
+  
+    if(!isStudent && !isTutor) {
+    navigate("/")
+  }
 
   const handleUserJoined = useCallback(({ tutor, id }: UserData) => {
     console.log(tutor, id);

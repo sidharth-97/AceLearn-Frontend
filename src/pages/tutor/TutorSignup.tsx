@@ -29,6 +29,10 @@ const TutorSignup = () => {
     const trimmedPassword = password.trim();
     const trimmedConfirmPassword =Cpassword.trim();
   
+    if (trimmedPassword.length < 6) {
+      toast.error("Weak password")
+      return
+    }
    
     if (!trimmedName || !trimmedEmail || !trimmedPassword || !trimmedConfirmPassword) {
       toast.error('Please fill in all fields.');

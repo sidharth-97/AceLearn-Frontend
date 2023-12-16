@@ -46,6 +46,11 @@ const Signup = () => {
       return;
     }
 
+    if (trimmedPassword.length < 6) {
+      toast.error("Weak password")
+      return
+    }
+
     if (trimmedPassword !== trimmedConfirmPassword) {
       toast.error("Passwords do not match");
       return;

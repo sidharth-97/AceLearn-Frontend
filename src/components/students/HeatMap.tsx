@@ -30,7 +30,6 @@ function Month({ startDate, index }:{startDate: moment.Moment ,index:number}) {
 }
 
 function WeekDay({ index, startDate }: { index: number; startDate: moment.Moment }) {
-  console.log(startDate)
   
   return (
     <div className='timeline-weekdays-weekday'>
@@ -43,12 +42,11 @@ function TimelineApp() {
   const { data: stdData } = useQuery({
     queryFn: studentTimeline
   });
-  console.log(stdData?.data, 'from timeline');
+
 
   // const mostAttendedDate = stdData?.data.length > 0 ? moment(stdData.data[0]._id).toDate() : null;
 
     const data = stdData?.data || [];
-    console.log(data,"data from timeliene");
     
 
   const startDate = moment().add(-365, 'days');

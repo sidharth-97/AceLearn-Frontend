@@ -170,7 +170,7 @@ setImage(null)
             </div>
           ))}
         </div>}
-        {(desktop || viewChat)  &&<div className={`${mobile?"w-full":"w-1/2 "}flex flex-col relative`}>
+        {(desktop || viewChat)  &&<div className={`${mobile?"w-full":"w-1/2 "}flex flex-col relative`}style={{ height: '90%' }}>
           <div className="flex items-center gap-1 p-4">
         { mobile && <div className="flex items-center ">
           <button

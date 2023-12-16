@@ -7,6 +7,8 @@ import { RootState } from "../../store";
 import WalletHistory from "../../components/common/WalletHistory";
 import TimelineApp from "../../components/students/HeatMap";
 import { FaWallet } from "react-icons/fa";
+import { useEffect } from "react";
+import socket from "../../services/socket";
 
 const StudentProfile = () => {
   const { isStudent } = useSelector((state: RootState) => state.auth);
@@ -15,7 +17,28 @@ const StudentProfile = () => {
     queryKey: ["stdDetail"],
   });
   console.log(stdData?.data, "wallet");
-
+  useEffect(() => {
+    socket.on("getMessage", ({ text, image }) => {
+      console.log("*********************************");
+  
+      if (typeof Notification !== "undefined" && Notification.permission === "granted") {
+        new Notification("New Message", {
+          body: text,
+          icon: "path/to/your/icon.png",
+        });
+      } else if (typeof Notification !== "undefined" && Notification.permission !== "denied") {
+        Notification.requestPermission().then((permission) => {
+          if (permission === "granted") {
+            new Notification("New Message", {
+              body: text,
+              icon: "path/to/your/icon.png",
+            });
+          }
+        });
+      }
+    });
+  });
+  
   return (
     <>
       <Navbar />

@@ -18,7 +18,7 @@ const StudentProfile = () => {
   });
   console.log(stdData?.data, "wallet");
   useEffect(() => {
-    socket.on("getMessage", ({ text, image }) => {
+    socket.on("getMessage", ({ text}) => {
       console.log("*********************************");
   
       if (typeof Notification !== "undefined" && Notification.permission === "granted") {

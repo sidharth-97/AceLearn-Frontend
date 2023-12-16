@@ -29,7 +29,7 @@ function Month({ startDate, index }:{startDate: moment.Moment ,index:number}) {
   );
 }
 
-function WeekDay({ index, startDate }: { index: number; startDate: moment.Moment }) {
+function WeekDay({ index}: { index: number; startDate: moment.Moment }) {
   
   return (
     <div className='timeline-weekdays-weekday'>

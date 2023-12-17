@@ -7,8 +7,7 @@ import { RootState } from "../../store";
 import WalletHistory from "../../components/common/WalletHistory";
 import TimelineApp from "../../components/students/HeatMap";
 import { FaWallet } from "react-icons/fa";
-import { useEffect } from "react";
-import socket from "../../services/socket";
+
 
 const StudentProfile = () => {
   const { isStudent } = useSelector((state: RootState) => state.auth);
@@ -17,34 +16,13 @@ const StudentProfile = () => {
     queryKey: ["stdDetail"],
   });
   console.log(stdData?.data, "wallet");
-  useEffect(() => {
-    socket.on("getMessage", ({ text}) => {
-      console.log("*********************************");
-  
-      if (typeof Notification !== "undefined" && Notification.permission === "granted") {
-        new Notification("New Message", {
-          body: text,
-          icon: "path/to/your/icon.png",
-        });
-      } else if (typeof Notification !== "undefined" && Notification.permission !== "denied") {
-        Notification.requestPermission().then((permission) => {
-          if (permission === "granted") {
-            new Notification("New Message", {
-              body: text,
-              icon: "path/to/your/icon.png",
-            });
-          }
-        });
-      }
-    });
-  });
+
   
   return (
     <>
       <Navbar />
       <div className="flex flex-row">
         <StudentSidebar />
-
         <div className="lg:p-14 xl:p-16 bg-gray-100 w-full sm:p-5 overflow-x-hidden">
           <div className="bg-white shadow-md rounded-md w-full overflow-x-hidden sm:p-6">
             {/* <div className="flex items-center space-x-4">
@@ -138,3 +116,4 @@ const StudentProfile = () => {
 };
 
 export default StudentProfile;
+

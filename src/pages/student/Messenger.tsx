@@ -131,6 +131,8 @@ console.log(res);
 
   useEffect(() => {
     socket.on("getMessage", (data) => {
+      console.log(data,"from message")
+      
       setArrivalMessage({
         sender: data.senderId,
         image:data.image,

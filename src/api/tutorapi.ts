@@ -341,8 +341,11 @@ export const viewQuestions = async () => {
     const response = await Api.get(tutorRoutes.viewQuestions)
     return response
   } catch (error) {
-    console.log(error);
-    
+    if (error && (error as AxiosError).isAxiosError) {
+      handleErrors(error as AxiosError<ErrorResponse>);
+    } else {
+      toast.error("Something went wrong");
+    }
   }
 }
 
@@ -351,8 +354,11 @@ export const submitSolution = async (data: any) => {
     const response = await Api.post(tutorRoutes.submitSolution, data)
     return response
   } catch (error) {
-    console.log(error);
-    
+    if (error && (error as AxiosError).isAxiosError) {
+      handleErrors(error as AxiosError<ErrorResponse>);
+    } else {
+      toast.error("Something went wrong");
+    }
   }
 }
 
@@ -361,8 +367,11 @@ export const tutorSales = async () => {
     const response = await Api.get(tutorRoutes.tutorSales)
     return response
   } catch (error) {
-    console.log(error);
-    
+    if (error && (error as AxiosError).isAxiosError) {
+      handleErrors(error as AxiosError<ErrorResponse>);
+    } else {
+      toast.error("Something went wrong");
+    }
   }
 }
 
@@ -371,8 +380,11 @@ export const buyTutorPremium = async (data:any) => {
     const response = await Api.post(tutorRoutes.buyTutorPremium,data)
     return response
   } catch (error) {
-    console.log(error);
-    
+    if (error && (error as AxiosError).isAxiosError) {
+      handleErrors(error as AxiosError<ErrorResponse>);
+    } else {
+      toast.error("Something went wrong");
+    }
   }
 }
 
@@ -381,8 +393,11 @@ export const TforgetPasswordStep1 = async (obj:{email:string,username:string}) =
     const response = await Api.post(tutorRoutes.forgetPasswordStep1,obj)
     return response
   } catch (error) {
-    console.log(error);
-    
+    if (error && (error as AxiosError).isAxiosError) {
+      handleErrors(error as AxiosError<ErrorResponse>);
+    } else {
+      toast.error("Something went wrong");
+    }
   }
 }
 
@@ -391,8 +406,11 @@ export const TforgetPasswordStep2 = async (otp:{otp:string})=>{
     const response = await Api.post(tutorRoutes.forgetPasswordStep2, otp)
     return response
   } catch (error) {
-    console.log(error);
-    
+    if (error && (error as AxiosError).isAxiosError) {
+      handleErrors(error as AxiosError<ErrorResponse>);
+    } else {
+      toast.error("Something went wrong");
+    }
   }
 }
 
@@ -401,8 +419,11 @@ export const TforgetPasswordFinal = async (data:any) => {
     const response = await Api.post(tutorRoutes.forgetPasswordFinal, data)
     return response
   } catch (error) {
-    console.log(error);
-    
+    if (error && (error as AxiosError).isAxiosError) {
+      handleErrors(error as AxiosError<ErrorResponse>);
+    } else {
+      toast.error("Something went wrong");
+    }
   }
 }
 
@@ -411,8 +432,11 @@ export const tutoravilable = async (id: string) => {
     const response = await Api.get(`${tutorRoutes.tutoravilable}/${id}`)
     return response
   } catch (error) {
-    console.log(error);
-    
+    if (error && (error as AxiosError).isAxiosError) {
+      handleErrors(error as AxiosError<ErrorResponse>);
+    } else {
+      toast.error("Something went wrong");
+    }
   }
 }
 
@@ -421,7 +445,11 @@ export const scheduleLiveClass = async (data: any) => {
     const liveClass = await Api.post(tutorRoutes.scheduleLiveClass,data)
     return liveClass
   } catch (error) {
-    console.log(error);
+    if (error && (error as AxiosError).isAxiosError) {
+      handleErrors(error as AxiosError<ErrorResponse>);
+    } else {
+      toast.error("Something went wrong");
+    }
   }
 }
 
@@ -430,8 +458,11 @@ export const viewLiveClassSchedule = async () => {
     const classes = await Api.get(tutorRoutes.viewLiveClassSchedule)
     return classes
   } catch (error) {
-    console.log(error);
-    
+    if (error && (error as AxiosError).isAxiosError) {
+      handleErrors(error as AxiosError<ErrorResponse>);
+    } else {
+      toast.error("Something went wrong");
+    }
   }
 }
 
@@ -440,6 +471,10 @@ export const cancelLiveClass = async (id:string) => {
     const response = await Api.post(`${tutorRoutes.cancelLiveClass}/${id}`)
     return response
   } catch (error) {
-    console.log(error);
+    if (error && (error as AxiosError).isAxiosError) {
+      handleErrors(error as AxiosError<ErrorResponse>);
+    } else {
+      toast.error("Something went wrong");
+    }
   }
 }

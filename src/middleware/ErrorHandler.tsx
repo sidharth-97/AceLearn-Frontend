@@ -11,7 +11,8 @@ export const handleErrors = (error: AxiosError<ErrorResponse>) => {
 
     if (error.response && error.response.data?.message == "Blocked by Admin") {
       localStorage.removeItem("tutor");
-      location.href = "/tutor/login";
+      localStorage.removeItem("student")
+      location.href = "/student";
     } else {
       const errorMessage = error.response?.data || "An error occurred";
       toast.error(errorMessage as string);

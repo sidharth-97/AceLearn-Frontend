@@ -1,7 +1,7 @@
 import StudentSidebar from "../../components/students/StudentSidebar";
 import Navbar from "../../components/common/navbar";
 import { useQuery } from "react-query";
-import { paymentsession, viewRequest } from "../../api/studentapi";
+import { jobComplete, paymentsession, viewRequest } from "../../api/studentapi";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { loadStripe } from "@stripe/stripe-js";
@@ -29,7 +29,7 @@ const Requests = () => {
     queryFn: () => viewRequest(isStudent._id),
     queryKey: ["jobPosting"],
   });
-  console.log(jobPosting);
+  console.log(jobPosting,"job posting");
 
   console.log(jobPosting?.data.requests);
   const handleAccept = async (tutor: any, date: Date) => {
@@ -47,7 +47,9 @@ const Requests = () => {
       const stripeInstance = await stripePromise;
       setStripe(stripeInstance);
     }
-    const response = await paymentsession(object);
+    const response = await jobComplete(object);
+    console.log(response);
+    
     if (response) {
       window.location.href = response.data.url;
     }
@@ -64,7 +66,7 @@ const Requests = () => {
           <h1 className="text-3xl font-bold mt-2 mb-2 text-indigo-800">
             Your Requests
           </h1>
-          {jobPosting && (
+          {jobPosting ? (
             <div className="max-w-6xl w-full bg-white rounded-xl shadow-md p-6">
               <div className="mb-6">
                 <h2 className="text-2xl font-bold mb-4">Job Posting Details</h2>
@@ -114,17 +116,21 @@ const Requests = () => {
                         </p>
                       </div>
                     </div>
-                    <button
+                    {
+
+                       <button
                       onClick={() => handleAccept(tutor.tutor, tutor.date)}
                       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                     >
                       Accept
                     </button>
+                    }
+                   
                   </div>
                 ))}
               </div>
             </div>
-          )}
+          ):<p>No Ongoing job post</p>}
         </div>
       </div>
     </div>

@@ -97,7 +97,8 @@ const TutorSidebar = () => {
   return (
     <div className="h-screen flex items-end justify-end">
       <button
-        className="fixed lg:hidden z-90 bottom-10 right-8 bg-blue-500 w-10 h-10 rounded-full drop-shadow-lg flex justify-center items-center text-black text-4xl hover:bg-blue-200 duration-300"
+        className="fixed lg:hidden z-90 bottom-10 right-8 bg-blue-500 w-10 h-10 rounded-full drop-shadow-lg flex justify-center items-center text-black text-4xl hover:bg-blue-200 duration-300
+        "
         onClick={toggleSidebar}
       >
         <span className="text-white">

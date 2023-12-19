@@ -110,7 +110,7 @@ export const viewRequest = async (id: string) => {
     return response;
   } catch (error) {
     if (error && (error as AxiosError).isAxiosError) {
-      handleErrors(error as AxiosError<ErrorResponse>);
+
     } else {
       toast.error("Something went wrong");
     }
@@ -365,4 +365,17 @@ export const regiterLiveclass = async (data:{student:string,id:string}) => {
         toast.error("Something went wrong");
       }
     }
+}
+  
+export const jobComplete = async (data:any) => {
+  try {
+    const response = await Api.put(studentRoutes.jobComplete,data)
+    return response
+  } catch (error) {
+    if (error && (error as AxiosError).isAxiosError) {
+      handleErrors(error as AxiosError<ErrorResponse>);
+    } else {
+      toast.error("Something went wrong");
+    }
   }
+}

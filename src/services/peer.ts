@@ -81,6 +81,18 @@ class PeerService {
       destinationStream.addTrack(track);
     });
   }
+  
+  replacetracks(newStream: MediaStream): void {
+    this.peer.getSenders().forEach((sender:any) => {
+      this.peer.removeTrack(sender);
+    });
+  
+    newStream.getTracks().forEach((track) => {
+      this.peer.addTrack(track, newStream);
+    });
+  }
+  
+  
 }
 
 export default new PeerService();

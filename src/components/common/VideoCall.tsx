@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
 import socket from "../../services/socket";
 import peer from "../../services/peer";
-import camera from "../../assets/camera.png";
-import invite from "../../assets/invite.png";
-import mic from "../../assets/mic.png";
-import phone from "../../assets/phone.png";
+import { FaVideo } from "react-icons/fa";
+import { AiOutlineAudio } from "react-icons/ai";
+import { HiOutlineUserAdd } from "react-icons/hi";
+import { FaPhone } from "react-icons/fa";
 import { LuScreenShare, LuScreenShareOff } from "react-icons/lu";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -21,6 +21,7 @@ const VideoCall: React.FC = () => {
   const [remoteStream, setRemoteStream] = useState<MediaStream | string>("");
   const [isScreenSharing, setIsScreenSharing] = useState(false);
   const [screenStream, setScreenStream] = useState<MediaStream | null>(null);
+  const [isVideoEnabled, setIsVideoEnabled] = useState(false);
 
   const params = useParams()
   const navigate=useNavigate()
@@ -143,6 +144,7 @@ const VideoCall: React.FC = () => {
     handleCallAccepted,
     handleNegoNeedIncomming,
     handleNegoNeedFinal,
+    myStream,
   ]);
 
   const handleStartScreenShare = async () => {
@@ -185,11 +187,36 @@ const VideoCall: React.FC = () => {
   };
 
   const handleLeaveCall = () => {
+    if (myStream && myStream instanceof MediaStream) {
+      myStream.getTracks().forEach((track) => {
+        track.stop();
+      });
+    }
+  
     setMyStream("");
     setRemoteStream("");
     setIsScreenSharing(false);
     setScreenStream(null);
   };
+  
+
+  
+  const toggleVideo = async () => {
+    if (typeof myStream !== 'string' && myStream) {
+      myStream.getTracks().forEach((track) => {
+        if (track.kind === 'video') {
+          track.enabled = !track.enabled;
+  
+          const newStream = new MediaStream([...myStream.getTracks()]);
+  
+          peer.replacetracks(newStream);
+  
+          setIsVideoEnabled((prev) => !prev);
+        }
+      });
+    }
+  };
+  
 
   return (
     // <div>
@@ -216,6 +243,7 @@ const VideoCall: React.FC = () => {
                 video.srcObject = remoteStream;
               }
             }}
+            style={{ transform: 'scaleX(-1)' }}
           />
         </div>
         <div className="smallFrame">
@@ -230,6 +258,7 @@ const VideoCall: React.FC = () => {
                 video.srcObject = myStream;
               }
             }}
+             style={{ transform: 'scaleX(-1)' }}
           />
         </div>
       </div>
@@ -238,17 +267,18 @@ const VideoCall: React.FC = () => {
 
         {myStream && (
           <div className="control-container" id="camera-btn">
-            <img src={camera} onClick={sendStreams} />{" "}
+             <span onClick={toggleVideo}>  <FaVideo style={{ color: 'white' }}size={24} /></span>
           </div>
         )}
 
         <div className="control-container" id="mic-btn">
-          <img src={mic} />
+        <span >  <AiOutlineAudio style={{ color: 'white' }} size={24}/></span>
         </div>
 
         {remoteSocketId && (
           <div className="control-container" id="mic-invite">
-            <img src={invite} onClick={handleCallUser} />{" "}
+          
+            <span onClick={handleCallUser} >  <HiOutlineUserAdd style={{ color: 'white' }} size={24} /></span>
           </div>
         )}
         {/* {remoteSocketId && <button className=" text-white z-50" >Call</button>} */}
@@ -273,7 +303,7 @@ const VideoCall: React.FC = () => {
             id="leave-btn"
             onClick={handleLeaveCall}
           >
-            <img src={phone} />
+            <span><FaPhone style={{ color: 'white' }} size={24}/></span>
           </div>
         </Link>
       </div>

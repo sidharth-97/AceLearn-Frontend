@@ -12,7 +12,7 @@ const ReviewArticle = () => {
   return (
     <>
        <h1 className="text-center text-2xl font-bold mb-4">Student Reviews</h1>
-      {!isLoading && reviews?.data.length &&
+      {!isLoading && reviews?.data.length>0 ?
         reviews?.data.map((item:any) => {
           {
             console.log(item);
@@ -88,7 +88,7 @@ const ReviewArticle = () => {
             </article>
          
           );
-        })}
+        }):"No reviews yet"}
     </>
   );
 };

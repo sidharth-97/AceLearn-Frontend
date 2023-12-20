@@ -9,6 +9,7 @@ import { LuScreenShare, LuScreenShareOff } from "react-icons/lu";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import { FaVideoSlash } from "react-icons/fa";
 
 type UserData = {
   tutor: string;
@@ -267,7 +268,7 @@ const VideoCall: React.FC = () => {
 
         {myStream && (
           <div className="control-container" id="camera-btn">
-             <span onClick={toggleVideo}>  <FaVideo style={{ color: 'white' }}size={24} /></span>
+             <span onClick={toggleVideo}>  {isVideoEnabled?<FaVideoSlash style={{ color: 'white' }}size={24}/>:<FaVideo style={{ color: 'white' }}size={24} />}</span>
           </div>
         )}
 

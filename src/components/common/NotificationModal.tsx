@@ -5,6 +5,7 @@ import { studentDetails } from "../../api/studentapi";
 import { CiCalendarDate } from "react-icons/ci";
 import { motion, AnimatePresence } from "framer-motion";
 import { RootState } from "../../store";
+import Pagination from "../UI/Pagination";
 
 interface NotificationDropdownProps {
   setSidebar: React.Dispatch<React.SetStateAction<boolean>>;
@@ -13,6 +14,7 @@ interface NotificationDropdownProps {
 const NotificationModal:React.FC<NotificationDropdownProps> = ({ setSidebar }) => {
   const [isOpen, setIsOpen] = useState(true);
   const [notifications, setNotifications] = useState([]);
+  const[activePage,setActivePage]=useState(1)
 
   const { isStudent } = useSelector((state:RootState) => state.auth);
   const { isTutor } = useSelector((state:RootState) => state.auth);
@@ -33,13 +35,19 @@ const NotificationModal:React.FC<NotificationDropdownProps> = ({ setSidebar }) =
 
   const modalContainerStyles = {
     height: "100%",
-   
+    maxHeight: "100vh",
     maxWidth: "100%",
     backgroundColor: "white",
     borderLeft: "1px solid #e2e8f0",
     boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.1)",
     transform: isOpen ? "translateX(0)" : "translateX(100%)",
   };
+  const itemsPerPage = 7
+  const limit = Math.round(notifications.length / 7)
+  console.log(limit,"limit");
+  
+  const startIndex = (activePage - 1) * itemsPerPage
+  const endIndex = activePage * itemsPerPage
 
   return (
     <AnimatePresence>
@@ -50,7 +58,7 @@ const NotificationModal:React.FC<NotificationDropdownProps> = ({ setSidebar }) =
           animate={{ x: isOpen ? 0 : "100%", opacity: 1 }}
           exit={{ x: "100%", opacity: 0 }}
           transition={{ duration: 0.5, ease: "easeInOut" }}
-          className="fixed inset-0 z-50 flex items-center justify-end overflow-x-hidden overflow-y-auto"
+          className="fixed inset-0 z-50 flex items-center justify-end overflow-x-hidden overflow-y-hidden"
         >
           <div style={modalContainerStyles} className=" w-3/4 sm:w-1/4 ">
             <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200">
@@ -76,7 +84,9 @@ const NotificationModal:React.FC<NotificationDropdownProps> = ({ setSidebar }) =
             </div>
             <div className="relative flex-auto overflow-y-auto">
               <div className="py-2 px-2">
-                {notifications.map((item:{type:string,title:string,content:string}, index) => (
+                { notifications&&[...notifications].reverse()
+                  .slice(startIndex,endIndex)
+                  .map((item: { type: string; title: string; content: string }, index) => (
                   <a
                     href="#"
                     className="flex items-center px-4 py-3 -mx-2 transition-colors duration-300 transform border-b border-gray-100 hover:bg-gray-50"
@@ -108,6 +118,11 @@ const NotificationModal:React.FC<NotificationDropdownProps> = ({ setSidebar }) =
                   </a>
                 ))}
               </div>
+              <Pagination
+                activePage={activePage}
+                setActive={setActivePage}
+                limit={limit}
+              />
             </div>
           </div>
         </motion.div>

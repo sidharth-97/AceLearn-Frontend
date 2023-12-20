@@ -1,7 +1,7 @@
 import StudentSidebar from "../../components/students/StudentSidebar";
 import Navbar from "../../components/common/navbar";
 import { useQuery } from "react-query";
-import { jobComplete, paymentsession, viewRequest } from "../../api/studentapi";
+import { jobComplete, viewRequest } from "../../api/studentapi";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { loadStripe } from "@stripe/stripe-js";

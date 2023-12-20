@@ -432,11 +432,7 @@ export const tutoravilable = async (id: string) => {
     const response = await Api.get(`${tutorRoutes.tutoravilable}/${id}`)
     return response
   } catch (error) {
-    if (error && (error as AxiosError).isAxiosError) {
-      handleErrors(error as AxiosError<ErrorResponse>);
-    } else {
-      toast.error("Something went wrong");
-    }
+    console.log(error);
   }
 }
 

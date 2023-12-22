@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import imagee from "../../assets/WhatsApp Image 2023-10-13 at 1.41.45 PM.jpeg";
 import { signup, signupfinal } from "../../api/studentapi";
 import OTPInput from "../../components/common/OTPInput";
@@ -7,6 +7,8 @@ import Navbar from "../../components/common/navbar";
 import { toast } from "react-toastify";
 import { GoogleLogin, CredentialResponse } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 interface register {
   type: string;
@@ -28,6 +30,17 @@ const Signup = () => {
   const [mobile, setMobile] = useState("");
 
   const navigate = useNavigate();
+  const { isStudent } = useSelector((state: RootState) => state.auth)
+  const {isTutor}=useSelector((state:RootState)=>state.auth)
+
+  useEffect(() => {
+    if (isStudent) {
+      navigate("/student/dashboard")
+    } else if(isTutor) (
+      navigate("/tutor/tutordashboard")
+    )
+  },[])
+
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -116,6 +129,7 @@ const Signup = () => {
       console.log("here");
     }
   };
+
   return (
     <>
       <Navbar />

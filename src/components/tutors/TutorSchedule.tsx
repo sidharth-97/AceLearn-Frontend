@@ -96,9 +96,8 @@ const TutorSchedule:React.FC<TutorScheduleProps> = ({change,setChange}) => {
 
   return (
     <>
-      <div>TutorSchedule</div>
       <div className="bg-white text-black mt-6 p-4">
-        <h2 className="font-semibold text-2xl">Your schedule for this week</h2>
+        <h2 className="font-semibold text-2xl">Your schedule</h2>
         {/* <div className="mt-4">
               {schedule.map((schedules, index) => (
                 <div key={index} className="bg-gray-100 p-4 mt-4 rounded-md">

@@ -23,16 +23,16 @@ const VideoCall: React.FC = () => {
   const [isScreenSharing, setIsScreenSharing] = useState(false);
   const [screenStream, setScreenStream] = useState<MediaStream | null>(null);
   const [isVideoEnabled, setIsVideoEnabled] = useState(false);
+  const [started, setStarted] = useState(false);
+  const params = useParams();
+  const navigate = useNavigate();
 
-  const params = useParams()
-  const navigate=useNavigate()
-  console.log(params.roomId,"this is the id");
-  
-  const { isStudent } = useSelector((state: RootState) => state.auth)
+
+  const { isStudent } = useSelector((state: RootState) => state.auth);
   const { isTutor } = useSelector((state: RootState) => state.auth);
-  
-    if(!isStudent && !isTutor) {
-    navigate("/")
+
+  if (!isStudent && !isTutor) {
+    navigate("/");
   }
 
   const handleUserJoined = useCallback(({ tutor, id }: UserData) => {
@@ -53,10 +53,17 @@ const VideoCall: React.FC = () => {
     const offer = await peer.getOffer();
     socket.emit("user:call", { to: remoteSocketId, offer });
     setMyStream(stream as any);
+    setStarted(true);
   }, [remoteSocketId, socket]);
 
   const handleIncommingCall = useCallback(
-    async ({ from, offer }: { offer: RTCSessionDescriptionInit; from: string }) => {
+    async ({
+      from,
+      offer,
+    }: {
+      offer: RTCSessionDescriptionInit;
+      from: string;
+    }) => {
       setremoteSocketId(from as any);
       const stream = await navigator.mediaDevices.getUserMedia({
         audio: true,
@@ -66,14 +73,14 @@ const VideoCall: React.FC = () => {
       console.log("Incomming call from", from, offer);
       const ans = await peer.getAnswer(offer);
       console.log(ans, "first ans");
-
+      setStarted(true);
       socket.emit("call:accepted", { to: from, ans });
     },
     [socket]
   );
 
   const sendStreams = useCallback(() => {
-    if (typeof myStream === 'string') {
+    if (typeof myStream === "string") {
       console.error("Invalid myStream type");
       return;
     }
@@ -83,7 +90,7 @@ const VideoCall: React.FC = () => {
   }, [myStream]);
 
   const handleCallAccepted = useCallback(
-    ({ from, ans }:{from:any,ans:any}) => {
+    ({ from, ans }: { from: any; ans: any }) => {
       console.log(`Received call accepted from ${from}, ans:`, ans);
 
       peer.setLocalDescription(ans);
@@ -105,19 +112,19 @@ const VideoCall: React.FC = () => {
   }, [handleNegoNeeded]);
 
   const handleNegoNeedIncomming = useCallback(
-    async ({ from, offer }:{from:any,offer:any}) => {
+    async ({ from, offer }: { from: any; offer: any }) => {
       const ans = await peer.getAnswer(offer);
       socket.emit("peer:nego:done", { to: from, ans });
     },
     [socket]
   );
 
-  const handleNegoNeedFinal = useCallback(async ({ ans }:any) => {
+  const handleNegoNeedFinal = useCallback(async ({ ans }: any) => {
     await peer.setLocalDescription(ans);
   }, []);
 
   useEffect(() => {
-    peer.peer.addEventListener("track", async (ev: { streams: any; }) => {
+    peer.peer.addEventListener("track", async (ev: { streams: any }) => {
       const remoteStream = ev.streams;
       setRemoteStream(remoteStream[0]);
     });
@@ -147,10 +154,9 @@ const VideoCall: React.FC = () => {
     handleNegoNeedFinal,
     myStream,
   ]);
-
   const handleStartScreenShare = async () => {
     try {
-      if (typeof myStream === 'string') {
+      if (typeof myStream === "string") {
         // Handle the case where myStream is a string (if needed)
         console.error("Invalid myStream type");
         return;
@@ -193,31 +199,28 @@ const VideoCall: React.FC = () => {
         track.stop();
       });
     }
-  
+
     setMyStream("");
     setRemoteStream("");
     setIsScreenSharing(false);
     setScreenStream(null);
   };
-  
 
-  
   const toggleVideo = async () => {
-    if (typeof myStream !== 'string' && myStream) {
+    if (typeof myStream !== "string" && myStream) {
       myStream.getTracks().forEach((track) => {
-        if (track.kind === 'video') {
+        if (track.kind === "video") {
           track.enabled = !track.enabled;
-  
+
           const newStream = new MediaStream([...myStream.getTracks()]);
-  
+
           peer.replacetracks(newStream);
-  
+
           setIsVideoEnabled((prev) => !prev);
         }
       });
     }
   };
-  
 
   return (
     // <div>
@@ -244,7 +247,7 @@ const VideoCall: React.FC = () => {
                 video.srcObject = remoteStream;
               }
             }}
-            style={{ transform: 'scaleX(-1)' }}
+            style={{ transform: "scaleX(-1)" }}
           />
         </div>
         <div className="smallFrame">
@@ -259,7 +262,7 @@ const VideoCall: React.FC = () => {
                 video.srcObject = myStream;
               }
             }}
-             style={{ transform: 'scaleX(-1)' }}
+            style={{ transform: "scaleX(-1)" }}
           />
         </div>
       </div>
@@ -268,45 +271,65 @@ const VideoCall: React.FC = () => {
 
         {myStream && (
           <div className="control-container" id="camera-btn">
-             <span onClick={toggleVideo}>  {isVideoEnabled?<FaVideoSlash style={{ color: 'white' }}size={24}/>:<FaVideo style={{ color: 'white' }}size={24} />}</span>
+            <span onClick={toggleVideo}>
+              {" "}
+              {isVideoEnabled ? (
+                <FaVideoSlash style={{ color: "white" }} size={24} />
+              ) : (
+                <FaVideo style={{ color: "white" }} size={24} />
+              )}
+            </span>
           </div>
         )}
 
-        <div className="control-container" id="mic-btn">
-        <span >  <AiOutlineAudio style={{ color: 'white' }} size={24}/></span>
-        </div>
+        {started && (
+          <div className="control-container" id="mic-btn">
+            <span>
+              {" "}
+              <AiOutlineAudio style={{ color: "white" }} size={24} />
+            </span>
+          </div>
+        )}
 
-        {remoteSocketId && (
+        {remoteSocketId && started == false && (
           <div className="control-container" id="mic-invite">
-          
-            <span onClick={handleCallUser} >  <HiOutlineUserAdd style={{ color: 'white' }} size={24} /></span>
+            <span onClick={handleCallUser}>
+              {" "}
+              <HiOutlineUserAdd style={{ color: "white" }} size={24} />
+            </span>
           </div>
         )}
         {/* {remoteSocketId && <button className=" text-white z-50" >Call</button>} */}
 
-        <div className="control-container" id="screen-share-btn">
-          {isScreenSharing ? (
-            <LuScreenShareOff onClick={handleStopScreenShare} />
-          ) : (
-            // <button >Stop Screen Share</button>
-            <div
-              onClick={handleStartScreenShare}
-              style={{ color: "white", cursor: "pointer" }}
-            >
-              <LuScreenShare size={24} />
-            </div>
-          )}
-        </div>
-
-        <Link to={`/feedback-page/${params.roomId}`}>
-          <div
-            className="control-container"
-            id="leave-btn"
-            onClick={handleLeaveCall}
-          >
-            <span><FaPhone style={{ color: 'white' }} size={24}/></span>
+        {started && (
+          <div className="control-container" id="screen-share-btn">
+            {isScreenSharing ? (
+              <LuScreenShareOff onClick={handleStopScreenShare} />
+            ) : (
+              // <button >Stop Screen Share</button>
+              <div
+                onClick={handleStartScreenShare}
+                style={{ color: "white", cursor: "pointer" }}
+              >
+                <LuScreenShare size={24} />
+              </div>
+            )}
           </div>
-        </Link>
+        )}
+
+        {started && (
+          <Link to={`/feedback-page/${params.roomId}`}>
+            <div
+              className="control-container"
+              id="leave-btn"
+              onClick={handleLeaveCall}
+            >
+              <span>
+                <FaPhone style={{ color: "white" }} size={24} />
+              </span>
+            </div>
+          </Link>
+        )}
       </div>
     </>
 

@@ -101,13 +101,13 @@ const StudentSidebar = () => {
   const toggleSidebar = () => {
     setOpen(!open);
     console.log(subMenuOpen);
-    
-    setSubMenuOpen(false); // Close submenus when closing the sidebar
+    setSubMenuOpen(false);
   };
 
   return (
-    <div className="h-full flex items-end justify-end fixed sm:sticky">
-      <button
+    <div className="h-full flex items-end justify-end fixed sm:sticky z-50">
+      <div>
+          <button
         className="fixed lg:hidden z-90 top-28 right-8 bg-blue-500 w-10 h-10 rounded-full drop-shadow-lg flex justify-center items-center text-black text-4xl hover:bg-blue-400 duration-300 z-10 p-3"
         onClick={toggleSidebar}
       >
@@ -115,6 +115,8 @@ const StudentSidebar = () => {
           <MdOutlineMenu/>
         </span>
       </button>
+      </div>
+    
 
       <div
         className={`${

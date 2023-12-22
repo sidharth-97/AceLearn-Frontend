@@ -32,51 +32,53 @@ const Message: React.FC<Message> = ({ message, own, res }) => {
     return /\.(pdf)$/i.test(url);
   }
   return (
-    <div
-      className={`${
-        own ? "flex flex-col items-end" : "flex flex-col"
-      } mt-5 message`}
-    >
-      <div className="flex flex-col messageTop">
-        {/* { !own && <img
-      className="w-9 h-9 rounded-full object-cover mr-3"
-      src={res?.image}
-      alt=""
-    />} */}
-        {message.text.length > 0 && (
-          <p
-            className={`${
-              !own ? "bg-gray-200 text-black" : "bg-blue-500 text-white"
-            } p-3 rounded-2xl max-w-[300px]`}
+    <>
+      <div
+        className={`flex w-full mt-2 space-x-3 max-w-xs${
+          own ? "ml-auto justify-end" : ""
+        }`}
+      >
+        <div>
+          <div
+            className={`bg-${
+              own
+                ? "blue-600 text-white rounded-l-lg rounded-br-lg"
+                : "gray-300 text-black rounded-r-lg rounded-bl-lg"
+            } p-3`}
+            style={{ whiteSpace: "pre-wrap" }}
           >
-            {message.text}
-          </p>
-        )}
-
-        {message.image && (
-          <div>
-            {isFile(message.image) ? (
-              <a href={message.image} download>
-                Download File
-              </a>
-            ) : (
-              <a href={message.image} target="_blank" rel="noopener noreferrer">
-                <img
-                  className={`${
-                    !own ? "bg-gray-200 text-black" : "bg-blue-500 text-white"
-                  } p-1 rounded-2xl w-1/2`}
-                  src={message.image}
-                  alt="Message Image"
-                />
-              </a>
-            )}
+            <p className={`text-sm ${own && "text-right"}`}>{message.text}</p>
           </div>
-        )}
+
+          <span className="text-xs text-gray-500 leading-none">
+            {format(message.createdAt)}
+          </span>
+        </div>
       </div>
-      <div className="text-xs mt-3 messageBottom">
-        {format(message.createdAt)}
-      </div>
-    </div>
+      {message.image && (
+        <div
+          className={`flex w-full mt-2 space-x-3 max-w-xs ${
+            own ? "ml-auto justify-end" : ""
+          }`}
+        >
+          {isFile(message.image) ? (
+            <a href={message.image} download>
+              Download File
+            </a>
+          ) : (
+            <a href={message.image} target="_blank" rel="noopener noreferrer">
+              <img
+                className={`${
+                  own ? "bg-blue-500 text-white" : "bg-gray-200 text-black"
+                } p-1 rounded-2xl w-1/2`}
+                src={message.image}
+                alt="Message Image"
+              />
+            </a>
+          )}
+        </div>
+      )}
+    </>
   );
 };
 

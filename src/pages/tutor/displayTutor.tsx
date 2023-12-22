@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+
 import { useParams } from "react-router-dom";
 import { TutorDetails } from "../../api/tutorapi";
 import Navbar from "../../components/common/navbar";
@@ -8,20 +8,27 @@ import { addConversations } from "../../api/studentapi";
 import { useSelector } from "react-redux";
 import { Tutor } from "../../model/tutorModel";
 import { RootState } from "../../store";
+import { useQuery } from "react-query";
+import Skeleton from "react-loading-skeleton";
 
 const DisplayTutor = () => {
   const tutorId = useParams();
-  const [tutor, setTutor] = useState<Tutor | {}>({});
+  // const [tutor, setTutor] = useState<Tutor | {}>({});
 
   const {isStudent}=useSelector((state:RootState)=>state.auth)
 
-  useEffect(() => {
-    const getData = async () => {
-      const Tutor = await TutorDetails(tutorId.id as string);
-      setTutor(Tutor?.data);
-    };
-    getData();
-  }, []);
+  const { data: tutor,isLoading } = useQuery({
+    queryFn: () => TutorDetails(tutorId.id as string),
+    queryKey:["TutorDetailss"]
+})
+
+  // useEffect(() => {
+  //   const getData = async () => {
+  //     const Tutor = await TutorDetails(tutorId.id as string);
+  //     setTutor(Tutor?.data);
+  //   };
+  //   getData();
+  // }, []);
 
   const addContact = async () => {
     const data = {
@@ -33,7 +40,8 @@ const DisplayTutor = () => {
     
   }
 
-  const typedTutor = tutor as Tutor;
+  const typedTutor = tutor?.data as Tutor;
+console.log(typedTutor,"typed tutor");
 
   return (
     <>
@@ -42,13 +50,17 @@ const DisplayTutor = () => {
         <div className="md:flex no-wrap md:-mx-2 ">
           <div className="w-full md:w-3/12 md:mx-2">
             <div className="bg-white p-3 border-t-4 border-blue-400">
-              <div className="image overflow-hidden flex items-start justify-start">
-                <img
-                  className="h-auto w-1/2 mx-auto "
-                  src={typedTutor?.image}
-                  alt=""
-                />
-              </div>
+            <div className="image overflow-hidden flex items-start justify-start">
+      {isLoading ? (
+        <Skeleton height={200} width={'50%'} />
+      ) : (
+        <img
+          className="h-auto w-1/2 mx-auto"
+          src={typedTutor?.image}
+          alt=""
+        />
+      )}
+    </div>
               <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">
                 {typedTutor?.name}
               </h1>
@@ -56,7 +68,7 @@ const DisplayTutor = () => {
                 Teaches : {typedTutor?.subject?.join(",")}
               </h3>
               <p className="text-sm text-gray-500 hover:text-gray-600 leading-6">
-                {typedTutor.bio}
+                {typedTutor?.bio}
               </p>
               <ul className="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
                 <li className="flex items-center py-3">
@@ -175,7 +187,7 @@ const DisplayTutor = () => {
               <div className="text-gray-700">
                 <div className="grid md:grid-cols-2 text-sm">
                   <div className="grid grid-cols-2">
-                    <div className="px-4 py-2 font-semibold">{typedTutor.name}</div>
+                    <div className="px-4 py-2 font-semibold">{typedTutor?.name}</div>
                     <div className="px-4 py-2">Jane</div>
                   </div>
                   <div className="grid grid-cols-2">
@@ -188,7 +200,7 @@ const DisplayTutor = () => {
                   </div>
                   <div className="grid grid-cols-2">
                     <div className="px-4 py-2 font-semibold">Contact No.</div>
-                    <div className="px-4 py-2">{typedTutor.mobile}</div>
+                    <div className="px-4 py-2">{typedTutor?.mobile}</div>
                   </div>
                   <div className="grid grid-cols-2">
                     <div className="px-4 py-2 font-semibold">
@@ -213,7 +225,7 @@ const DisplayTutor = () => {
                         className="text-blue-800"
                         href="mailto:jane@example.com"
                       >
-                        {typedTutor.email}
+                        {typedTutor?.email}
                       </a>
                     </div>
                   </div>

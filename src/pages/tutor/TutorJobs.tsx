@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import {toast} from 'react-toastify'
 import { RootState } from "../../store";
 import { Job } from "../../model/jobModel";
+import MySkeleton from "../../components/UI/Skeleton";
 
 interface ApplyJobFormData {
   id: string;
@@ -22,7 +23,7 @@ const TutorJobs = () => {
 
   const { isTutor } = useSelector((state:RootState) => state.auth);
 
-  const { data, isLoading, isError, refetch } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryFn: () => getAllJobs(),
     enabled: false,
     queryKey: ["tutorJobs"],
@@ -37,14 +38,6 @@ const TutorJobs = () => {
   }, [refetch]);
   const applyjobmutation = useMutation((formData:ApplyJobFormData) => applyTutorJobs(formData));
   console.log(data);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (isError) {
-    return <div>Error occurred while fetching data.</div>;
-  }
 
   const handleApply = async (id: string) => {
     const formData:ApplyJobFormData = {
@@ -66,12 +59,12 @@ const TutorJobs = () => {
       <Navbar />
       <div className="flex flex-row w-full">
         <TutorSidebar />
-        <div className="w-full">
-          <div className="flex justify-center items-center flex-col w-full mt-10">
+     <div className="w-full">
+          {isLoading ? <MySkeleton /> : <div className="flex justify-center items-center flex-col w-full mt-10">
             <h1 className="text-3xl font-bold mb-4">
               Available Jobs for Tutors
             </h1>
-            {tutorJobs.map((job:Job) => (
+            {tutorJobs.length > 0 ? tutorJobs.map((job: Job) => (
               <div
                 key={job._id}
                 className="max-w-2xl bg-gray-100 rounded-xl shadow-md p-6 mb-4 w-full"
@@ -113,8 +106,8 @@ const TutorJobs = () => {
                   />
                 </div>
               </div>
-            ))}
-          </div>
+            )) : <p>Not available at the moment</p>}
+          </div>}
         </div>
       </div>
     </div>

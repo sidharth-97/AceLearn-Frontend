@@ -4,6 +4,7 @@ import EditProfileComponent from '../../components/tutors/EditProfileComponent'
 import { useSelector } from 'react-redux'
 import {useQuery} from 'react-query'
 import { TutorDetails } from '../../api/tutorapi'
+import MySkeleton from '../../components/UI/Skeleton'
 
 const EditTutorProfile = () => {
   const { isTutor } = useSelector((state: any) => state.auth)
@@ -14,17 +15,9 @@ const EditTutorProfile = () => {
         queryFn: () => TutorDetails(isTutor._id),
         queryKey:['tutor']
     })
-    if (isLoading) {
-        return (
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-            <div className="loader"></div>
-          </div>
-        )
-  }
+
   if (isError) {
     console.log("errorrrrrrrrrrrrrr");
-    
-    
   }
 
   console.log(tutor,"this is the tutor");
@@ -33,9 +26,13 @@ const EditTutorProfile = () => {
     <div className="text-black bg-9ED0F5">
    <Navbar/>
     <div className="flex flex-row">
+      
       <TutorSidebar/>
-      <div className="w-full">
-         <EditProfileComponent data={tutor?.data} />
+        <div className="w-full">
+          {
+            isLoading?<MySkeleton/>: <EditProfileComponent data={tutor?.data} />
+          }
+        
       </div>
     </div>
   </div>

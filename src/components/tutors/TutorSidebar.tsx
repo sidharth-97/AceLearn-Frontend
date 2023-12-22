@@ -76,9 +76,9 @@ import { Link } from "react-router-dom";
 const Menus = [
     { title: "dashboard", link: "/tutor/tutordashboard", icon: <MdOutlineDashboard/> },
     { title: "Profile", link: "/tutor/edit-profile", icon: <AiOutlineUser/>},
-    { title: "tutor jobs", link: "/tutor/tutorjobs", icon: <IoIosList/> },
-    { title: "shedules", link: "/tutor/tutor-schedule", icon:<GrSchedule/>, gap: true },
-    { title: "messenger", link: "/tutor/messenger", icon: <FiMessageSquare/>},
+    { title: "Tutor jobs", link: "/tutor/tutorjobs", icon: <IoIosList/> },
+    { title: "Schedules", link: "/tutor/tutor-schedule", icon:<GrSchedule/>, gap: true },
+    { title: "Messenger", link: "/tutor/messenger", icon: <FiMessageSquare/>},
     { title: "Homework Help", link: "/tutor/homework-help", icon: <TfiWrite/>, gap: true },
     { title: "Live class", link: "/tutor/live-class", icon: <MdOutlineLiveTv/> },
 ];
@@ -95,9 +95,9 @@ const TutorSidebar = () => {
   };
 
   return (
-    <div className="h-screen flex items-end justify-end">
+    <div className="h-screen flex items-end justify-end fixed sm:sticky z-50">
       <button
-        className="fixed lg:hidden z-90 bottom-10 right-8 bg-blue-500 w-10 h-10 rounded-full drop-shadow-lg flex justify-center items-center text-black text-4xl hover:bg-blue-200 duration-300
+        className="fixed lg:hidden z-90 top-28 right-8 bg-blue-500 w-10 h-10 rounded-full drop-shadow-lg flex justify-center items-center text-black text-4xl hover:bg-blue-200 duration-300 z-10 p-3
         "
         onClick={toggleSidebar}
       >
@@ -130,7 +130,7 @@ const TutorSidebar = () => {
             
           </h1>
         </div>
-        <ul className="pt-6">
+        <ul className="pt-6 relative sm:fixed">
           {open&&Menus.map((Menu, index) => (
             <React.Fragment key={index}>
               <Link to={Menu.link}

@@ -12,11 +12,11 @@ const TutorSchedulePage = () => {
       <div className="flex">
         <TutorSidebar />
 
-        <div className="flex">
+        <div className="sm:flex">
           <div className="flex-grow">
             <TutorScheduleCalender setChange={setChange} />
           </div>
-          <div className="h-3/4 border-l border-gray-300 mx-4"></div>
+          <div className="sm:h-3/4 border-l border-gray-300 mx-4"></div>
           {/* Right Segment */}
           <div className="flex-grow">
             <TutorSchedule change={ change} setChange={ setChange} />

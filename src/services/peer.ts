@@ -45,22 +45,47 @@ class PeerService {
     }
   }
 
-  async startScreenShare(
-    myStream: MediaStream
-  ): Promise<MediaStream | undefined> {
+  async startScreenShare(myStream: MediaStream): Promise<MediaStream | undefined> {
     try {
       const screenStream = await navigator.mediaDevices.getDisplayMedia({
         video: true,
+        audio: true, // Include audio tracks if needed
       });
-
-      this.replaceTracks(myStream, screenStream);
-
+  
+      // Replace existing tracks with the new screen sharing tracks
+      this.replaceSTracks(myStream, screenStream);
+  
       return screenStream;
     } catch (error) {
       console.error("Error starting screen share:", error);
       throw error;
     }
   }
+  
+  replaceSTracks(destinationStream: MediaStream, sourceStream: MediaStream): void {
+    // Remove existing tracks from the destination stream
+    destinationStream.getTracks().forEach((track) => {
+      track.stop();
+      destinationStream.removeTrack(track);
+    });
+  
+    // Add the new tracks from the source stream to the destination stream
+    sourceStream.getTracks().forEach((track) => {
+      destinationStream.addTrack(track);
+    });
+  
+    // Replace tracks in the peer connection
+    this.peer.getSenders().forEach((sender: RTCRtpSender) => {
+      if (sender.track && sender.track.kind === 'video') {
+        this.peer.removeTrack(sender);
+      }
+    });
+  
+    sourceStream.getTracks().forEach((track) => {
+      this.peer.addTrack(track, sourceStream);
+    });
+  }
+  
 
   stopScreenShare(myStream: MediaStream, screenStream: any): void {
     console.log(screenStream);

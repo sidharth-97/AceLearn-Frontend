@@ -171,7 +171,7 @@ setImage(null)
           ))}
         </div>}
         {(desktop || viewChat)  &&<div className={`${mobile?"w-full":"w-1/2 "}flex flex-col relative`}style={{ height: '90%' }}>
-          <div className="flex items-center gap-1 p-4">
+         {currentChat ? <div className="flex items-center gap-1 p-4">
         { mobile && <div className="flex items-center ">
           <button
             onClick={()=> setViewChat(false)}
@@ -186,7 +186,7 @@ setImage(null)
               className="w-12 h-12 rounded-full mr-2"
             />
             <h1 className="text-lg font-semibold">{selectedUser?.username}</h1>
-          </div>
+          </div>:<div className="h-full flex flex-col justify-center items-center"><p className="text-3xl font-medium">Please select a someone from left</p><p>Provide notes and clear doubts of students</p></div>}
           <div className="overflow-y-scroll overflow-x-hidden p-4 flex-grow">
             {/* chatBoxTop content */}
             {messages.map((m:any) => (
@@ -195,7 +195,7 @@ setImage(null)
               </div>
             ))}
           </div>
-          <div className="p-4 flex items-center">
+          {currentChat && <div className="p-4 flex items-center">
             <form
               onSubmit={handleSubmit}
               encType="multipart/form-data"
@@ -239,7 +239,7 @@ setImage(null)
                 />
               </button>
             </form>
-          </div>
+          </div>}
           <span className="absolute top-10 text-5xl text-gray-300 cursor-default"></span>
         </div>}
       </div>

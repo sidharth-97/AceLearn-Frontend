@@ -27,6 +27,7 @@ const FeedbackForm = () => {
   
   console.log(data,"the data from requeest");
   
+  console.log(value,"this is the value");
   
 
   const handleCommentChange = (e:React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -90,8 +91,8 @@ const FeedbackForm = () => {
         <Typography component="legend">Rating</Typography>
         <Rating
   name="simple-controlled"
-  value={5}
-  onChange={() => handleRatingChange(value)}
+  value={value}
+  onChange={(e:any) => handleRatingChange(e.target.value)}
 />
 
 

@@ -116,7 +116,7 @@ const Signup = () => {
     const data = {
       email: decode.email,
       username: decode.name,
-      password: "123",
+      password: "111",
     };
     const result = await signupfinal(data);
     console.log(result);

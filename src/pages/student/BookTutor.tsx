@@ -120,6 +120,7 @@ const BookTutor = () => {
 
   const PayWithWallet = async () => {
     const tutordetails = await TutorDetails(params.id);
+    if(timeArray.size ==0) return toast.error("Pick a date")
     let object1;
     if (tutordetails) {
       object1 = {

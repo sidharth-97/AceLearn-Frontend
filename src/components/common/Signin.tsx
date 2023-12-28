@@ -96,12 +96,11 @@ const Signin: React.FC<propstype> = ({ user }) => {
     console.log(result);
   
     if (result?.status == 200) {
-      toast.success("Login Successfull")
+      toast.success("Login successfull")
+      dispatch(loginStudent(result?.data))
       navigate('/')
     } else {
-      toast.error("Email already exists");
-      console.log("here");
-    
+      toast.error("Invalid credentials")
     }
   }
 

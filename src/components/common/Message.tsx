@@ -42,7 +42,7 @@ const Message: React.FC<Message> = ({ message, own, res }) => {
           <div
             className={`bg-${
               own
-                ? "blue-600 text-white rounded-l-lg rounded-br-lg"
+                ? "blue-100 text-black rounded-l-lg rounded-br-lg"
                 : "gray-300 text-black rounded-r-lg rounded-bl-lg"
             } p-3`}
             style={{ whiteSpace: "pre-wrap" }}

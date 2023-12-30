@@ -130,7 +130,7 @@ const TutorSidebar = () => {
             
           </h1>
         </div>
-        <ul className="pt-6 relative sm:fixed">
+        <ul className="pt-6 relative">
           {open&&Menus.map((Menu, index) => (
             <React.Fragment key={index}>
               <Link to={Menu.link}

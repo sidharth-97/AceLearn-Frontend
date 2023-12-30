@@ -1,4 +1,3 @@
-
 import { useParams } from "react-router-dom";
 import { TutorDetails } from "../../api/tutorapi";
 import Navbar from "../../components/common/navbar";
@@ -15,12 +14,12 @@ const DisplayTutor = () => {
   const tutorId = useParams();
   // const [tutor, setTutor] = useState<Tutor | {}>({});
 
-  const {isStudent}=useSelector((state:RootState)=>state.auth)
+  const { isStudent } = useSelector((state: RootState) => state.auth);
 
-  const { data: tutor,isLoading } = useQuery({
+  const { data: tutor, isLoading } = useQuery({
     queryFn: () => TutorDetails(tutorId.id as string),
-    queryKey:["TutorDetailss"]
-})
+    queryKey: ["TutorDetailss"],
+  });
 
   // useEffect(() => {
   //   const getData = async () => {
@@ -33,38 +32,37 @@ const DisplayTutor = () => {
   const addContact = async () => {
     const data = {
       receiverId: tutorId.id,
-      senderId:isStudent._id
-    }
-    const res = await addConversations(data)
+      senderId: isStudent._id,
+    };
+    const res = await addConversations(data);
     console.log(res);
-    
-  }
+  };
 
   const typedTutor = tutor?.data as Tutor;
-console.log(typedTutor,"typed tutor");
+  console.log(typedTutor, "typed tutor");
 
   return (
     <>
       <Navbar />
       <div className="container mx-auto my-5 p-5">
-        <div className="md:flex no-wrap md:-mx-2 ">
+      {typedTutor?.image &&  <div className="md:flex no-wrap md:-mx-2 ">
           <div className="w-full md:w-3/12 md:mx-2">
             <div className="bg-white p-3 border-t-4 border-blue-400">
-            <div className="image overflow-hidden flex items-start justify-start">
-      {isLoading ? (
-        <Skeleton height={200} width={'50%'} />
-      ) : (
-        <img
-          className="h-auto w-1/2 mx-auto"
-          src={typedTutor?.image}
-          alt=""
-        />
-      )}
-    </div>
+              <div className="image overflow-hidden flex items-start justify-start">
+                {isLoading ? (
+                  <Skeleton height={200} width={"50%"} />
+                ) : (
+                  <img
+                    className="h-auto w-1/2 mx-auto"
+                    src={typedTutor?.image}
+                    alt=""
+                  />
+                )}
+              </div>
               <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">
                 {typedTutor?.name}
               </h1>
-              <h3 className="text-gray-600 font-lg text-semibold leading-6 my-1" >
+              <h3 className="text-gray-600 font-lg text-semibold leading-6 my-1">
                 Teaches : {typedTutor?.subject?.join(",")}
               </h3>
               <p className="text-sm text-gray-500 hover:text-gray-600 leading-6">
@@ -86,18 +84,23 @@ console.log(typedTutor,"typed tutor");
               </ul>
             </div>
             <div className="my-4 flex flex-col">
-              <Link to={isStudent?`/student/booktutor/${tutorId.id}`:"/student"}>
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mb-2 w-full">
-                {" "}
-             
+              <Link
+                to={isStudent ? `/student/booktutor/${tutorId.id}` : "/student"}
+              >
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mb-2 w-full">
+                  {" "}
                   Book a lesson{" "}
-               
-              </button>
+                </button>
               </Link>
-              <Link to={"/student/messenger"}> <button onClick={addContact} className="bg-white hover:bg-blue-200 text-blue-500 font-bold py-2 px-4 rounded-full w-full">
-                Contact Me
-              </button></Link>
-             
+              <Link to={"/student/messenger"}>
+                {" "}
+                <button
+                  onClick={addContact}
+                  className="bg-white hover:bg-blue-200 text-blue-500 font-bold py-2 px-4 rounded-full w-full"
+                >
+                  Contact Me
+                </button>
+              </Link>
             </div>
             <div className="bg-white p-3 hover:shadow">
               {/* <div className="flex items-center space-x-3 font-semibold text-gray-900 text-xl leading-8">
@@ -187,7 +190,9 @@ console.log(typedTutor,"typed tutor");
               <div className="text-gray-700">
                 <div className="grid md:grid-cols-2 text-sm">
                   <div className="grid grid-cols-2">
-                    <div className="px-4 py-2 font-semibold">{typedTutor?.name}</div>
+                    <div className="px-4 py-2 font-semibold">
+                      {typedTutor?.name}
+                    </div>
                     <div className="px-4 py-2">Jane</div>
                   </div>
                   <div className="grid grid-cols-2">
@@ -346,11 +351,10 @@ console.log(typedTutor,"typed tutor");
               </div>
             </div> */}
             <div className="mt-5">
-                <ReviewArticle/>
+              <ReviewArticle />
             </div>
-            
           </div>
-        </div>
+        </div>}
       </div>
     </>
   );

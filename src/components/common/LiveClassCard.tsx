@@ -5,6 +5,7 @@ import { regiterLiveclass } from "../../api/studentapi";
 import { RootState } from "../../store";
 import { loadStripe } from "@stripe/stripe-js";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const LiveClassCard = ({ data }: any) => {
   const [stripe, setStripe] = useState<any>();
@@ -13,8 +14,8 @@ const LiveClassCard = ({ data }: any) => {
   const stripePromise = loadStripe(
     "pk_test_51OA4ziSEjtBzAge5ZAWJV2Y2EW4v8d0iUt4DHgoUX09VWYiYhsJcUCARpvHLYj5ZLmjxNyCYLyEgJwcQugm6C3YL00VmY9Z4jW"
   );
-  const registerMutation = useMutation((dataa: { id: string, student: string }) => regiterLiveclass(dataa))
-  console.log(registerMutation,"register mutation");
+  // const registerMutation = useMutation((dataa: { id: string, student: string }) => regiterLiveclass(dataa))
+  // console.log(registerMutation,"register mutation");
   
   const handleClick = async () => {
     (!isStudent)&&navigate("/student/login")
@@ -26,13 +27,17 @@ const LiveClassCard = ({ data }: any) => {
       id: data._id,
       student:isStudent._id
     }
-    registerMutation.mutate(formData)
+    const response = await regiterLiveclass(formData)
+    if (response?.status == 200) {
+      window.location.href = response.data.url;
+      toast.success("Booking successfull")
+    } else {
+      toast.error("Booking failed")
+    }
 }
   console.log(data);
   
-  if (registerMutation.data) {
-    window.location.href=registerMutation?.data?.data?.url
-  }
+  
 
   const handleJoin = () => {
     navigate(`/classroom/${data._id}`)

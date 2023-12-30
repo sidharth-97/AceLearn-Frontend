@@ -360,7 +360,7 @@ export const regiterLiveclass = async (data:{student:string,id:string}) => {
       return response
     } catch (error) {
       if (error && (error as AxiosError).isAxiosError) {
-        handleErrors(error as AxiosError<ErrorResponse>);
+        // handleErrors(error as AxiosError<ErrorResponse>);
       } else {
         toast.error("Something went wrong");
       }

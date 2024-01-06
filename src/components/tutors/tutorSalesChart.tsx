@@ -19,7 +19,7 @@ console.log(data,"income report");
 
     return (
         <div>
-            {data?.data.length && (
+            {data?.data.length>0 ? (
                 <LineChart width={730} height={250} data={dataa} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" />
@@ -29,7 +29,7 @@ console.log(data,"income report");
                     <Line type="monotone" dataKey="pv" stroke="#8884d8" />
                     {/* Add more lines if needed */}
                 </LineChart>
-            )}
+            ):<p className='ps-5 pb-2'>Not enough data to show graph</p>}
         </div>
     );
 };

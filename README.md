@@ -1,27 +1,31 @@
-# React + TypeScript + Vite
+# AceLearn(A Private Tutor Platform) Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the frontend repository for the AceLearn, an online education platform that connects students with tutors.
 
-Currently, two official plugins are available:
+## Getting Started
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+These instructions will help you set up and run the backend of the Private Tutor Platform on your local machine for development and testing.
 
-## Expanding the ESLint configuration
+### Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+1. Clone the repository:
 
-- Configure the top-level `parserOptions` property like this:
+git clone https://github.com/sidharth-97/AceLearn-Frontend.git
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+2. Navigate to the project directory
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+3. Install dependencies:
+
+npm install
+
+4. Set up environment variables:
+
+Create a '.env' file in the root of your project and configure the necessary environment variables, such as database connection details, authentication secrets, and other relevant settings.
+
+VITE_APP_CLIENT_ID and VITE_apiKey from google auth
+VITE_authDomain,VITE_projectId,VITE_storageBucket,VITE_messagingSenderId,VITE_appId,VITE_vapidKey from firebase for web push notification
+VITE_SOCKET_URL,VITE_AXIOS_URL from backend 
+VITE_APPID,VITE_SERVERSECRET from Zegocloud
+
+5. Start the server:
+npm run dev

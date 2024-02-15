@@ -64,7 +64,7 @@ function TimelineApp() {
 
   return (
     <>
-      {data.length > 0 && (
+      {data.length > 0 ? (
         <div className='timeline'>
           <div className="timeline-months">
             {months.map((_, index) => (
@@ -94,7 +94,9 @@ function TimelineApp() {
             </div>
           </div>
         </div>
-      )}
+      ) : (<div className=' h-24 flex justify-center items-center w-full'>
+          <h1>Not enough data to show the timeline</h1>
+      </div>)}
     </>
   );
 }

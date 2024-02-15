@@ -104,7 +104,7 @@ const StudentProfile = () => {
             </div> */}
           </div>
           <div className="bg-white mt-5 pt-2 ps-3 text-lg">
-            <h1>Class timeline</h1>
+            <h1 className=" font-semibold text-2xl">Class timeline</h1>
             <div className="flex flex-row justify-between mt-3 mx-1 bg-white overflow-y-auto">
               <TimelineApp />
             </div>
